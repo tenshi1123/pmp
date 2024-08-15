@@ -1,0 +1,264 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/utils/constants/color.dart';
+import 'package:percent_indicator/percent_indicator.dart';
+import 'package:pmp_english/utils/constants/styles.dart';
+
+class CourseScreen extends StatefulWidget {
+  const CourseScreen({super.key});
+
+  @override
+  State<CourseScreen> createState() => _CourseScreenState();
+}
+
+class _CourseScreenState extends State<CourseScreen>
+    with TickerProviderStateMixin {
+  late TabController _tabController;
+  final _tabs = [
+    const Tab(text: 'Tất cả'),
+    const Tab(text: 'Đang học'),
+    const Tab(text: 'Hoàn thành'),
+  ];
+  @override
+  void initState() {
+    _tabController = TabController(length: 3, vsync: this);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.grey.shade200,
+      body: Column(
+        children: [
+          SizedBox(
+            height: 180.h,
+            child: Stack(
+              children: [
+                Positioned(
+                  top: 0,
+                  child: Container(
+                    width: 390.w,
+                    height: 140.h,
+                    decoration: BoxDecoration(gradient: mainGradient),
+                  ),
+                ),
+                Positioned(
+                  top: 115.h,
+                  left: 20.h,
+                  child: Container(
+                    width: 350.w,
+                    height: 66.h,
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    child: TabBar(
+                      controller: _tabController,
+                      indicator: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.0),
+                          gradient: mainGradient2),
+                      labelStyle: const TextStyle(
+                          fontSize: 14, fontWeight: FontWeight.w500),
+                      labelColor: Colors.white,
+                      unselectedLabelColor: Colors.black,
+                      tabs: _tabs,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  bottom: 70.h,
+                  left: 22.w,
+                  child: Text(
+                    'Khóa học của bạn',
+                    style: defaultText20B.copyWith(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  bottom: 60.h,
+                  left: 250.w,
+                  child: Image.asset(
+                    'assets/images/course_icon.png',
+                    width: 115.w,
+                    height: 92.h,
+                    fit: BoxFit.fill,
+                  ),
+                )
+              ],
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+                shrinkWrap: true,
+                physics: const ClampingScrollPhysics(),
+                itemCount: 5,
+                itemBuilder: (BuildContext context, int index) {
+                  return CourseItem(
+                    index: index,
+                  );
+                }),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class CourseItem extends StatelessWidget {
+  const CourseItem({super.key, required this.index});
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 20.w),
+      height: 402.h,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(
+          Radius.circular(16),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(16),
+              topRight: Radius.circular(16),
+            ),
+            child: Image.asset('assets/images/course_image.png'),
+          ),
+          SizedBox(
+            height: 10.h,
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.w),
+            child: SizedBox(
+              width: 330.w,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'TOEIC 4 kỹ năng',
+                    style: TextStyle(
+                      color: key1Color,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14.sp,
+                    ),
+                  ),
+                  Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                    decoration: BoxDecoration(
+                      gradient: mainGradient3,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(4.r),
+                      ),
+                    ),
+                    child: Text(
+                      'Đang học',
+                      style: defaultText12B.copyWith(color: Colors.white),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 10.h,
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.w),
+            child: Text(
+              'Giảng viên: Nguyễn Phú',
+              style: defaultText14M.copyWith(
+                color: key1Color.withOpacity(0.5),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 10.h,
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.w),
+            child: Text(
+              'Lớp: THH 499 - Cơ sở: Lê Văn Việt',
+              style: defaultText14M.copyWith(
+                color: key1Color.withOpacity(0.5),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 10.h,
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.w),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  '66%',
+                  style: defaultText14M.copyWith(color: main1Color),
+                ),
+                RichText(
+                  text: TextSpan(
+                    text: '26',
+                    style: defaultText14M,
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: '/40 buổi',
+                        style: defaultText14M.copyWith(
+                          color: key1Color.withOpacity(0.5),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 10.h,
+          ),
+          LinearPercentIndicator(
+            //width: 332.w,
+            animation: true,
+            lineHeight: 20.0,
+            animationDuration: 2000,
+            percent: 0.66,
+            center: const Text("66.0%"),
+            barRadius: const Radius.circular(16),
+            linearGradient: mainGradient,
+            backgroundColor: state2,
+          ),
+          SizedBox(
+            height: 10.h,
+          ),
+          Container(
+            height: 39.h,
+            margin: EdgeInsets.symmetric(horizontal: 10.w),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8.0),
+                border: Border.all(
+                  color: key2Color,
+                )),
+            child: Center(
+              child: Text(
+                'Chi tiết',
+                style: TextStyle(
+                  color: key1Color,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14.sp,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

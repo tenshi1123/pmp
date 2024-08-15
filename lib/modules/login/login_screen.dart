@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/modules/bottombar/bottom_bar_screen.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -188,7 +188,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 30.h,
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: ((context) => const Bottombar(0)),
+                      ),
+                    );
+                  },
                   child: Container(
                     height: 48.h,
                     width: 191.w,

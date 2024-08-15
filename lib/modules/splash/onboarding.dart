@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pmp_english/modules/login/login_screen.dart';
 import 'package:pmp_english/utils/constants/color.dart';
+import 'package:pmp_english/utils/constants/styles.dart';
 import '../../../utils/constants/mediaqury.dart';
 import '../../../utils/constants/vn_languegua.dart';
 
@@ -75,7 +76,7 @@ class _OnbondingState extends State<Onbonding> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Container(
-                    color: primeryColor,
+                    color: Colors.white,
                     height: height,
                     child: PageView(
                       physics: const ClampingScrollPhysics(),
@@ -126,10 +127,7 @@ class _OnbondingState extends State<Onbonding> {
                                     Text(
                                       VnString.itisrecommended,
                                       textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontFamily: 'Gilroy_Medium',
-                                          color: greay,
-                                          fontSize: height / 43),
+                                      style: defaultText18M,
                                     ),
                                   ],
                                 ),
@@ -183,10 +181,7 @@ class _OnbondingState extends State<Onbonding> {
                                     Text(
                                       VnString.thaksforfunevent,
                                       textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontFamily: 'Gilroy_Medium',
-                                          color: greay,
-                                          fontSize: height / 43),
+                                      style: defaultText18M,
                                     ),
                                   ],
                                 ),
@@ -209,17 +204,14 @@ class _OnbondingState extends State<Onbonding> {
                                       VnString.timelynotification,
                                       style: TextStyle(
                                           fontFamily: 'Gilroy_Bold',
-                                          color: blue,
+                                          color: key1Color,
                                           fontSize: height / 30),
                                     ),
                                     SizedBox(height: height / 40),
                                     Text(
                                       VnString.withtimelynotification,
                                       textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontFamily: 'Gilroy_Medium',
-                                          color: greay,
-                                          fontSize: height / 43),
+                                      style: defaultText18M,
                                     ),
                                   ],
                                 ),
@@ -323,7 +315,7 @@ class _OnbondingState extends State<Onbonding> {
                                   child: Icon(
                                     Icons.keyboard_arrow_right,
                                     size: 30.h,
-                                    color: wihitecolor,
+                                    color: baseColor,
                                   ),
                                 )),
                           ),
