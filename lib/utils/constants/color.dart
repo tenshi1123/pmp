@@ -12,12 +12,12 @@ Color key2Color = const Color(0xff254FA7);
 Color state1 = const Color(0xffE0E0E0);
 Color state2 = const Color(0xffF4F1F3);
 
-Color baseColor = const Color(0xffFFF7F6);
+Color baseColor = const Color(0xffF3F6F9);
 Color keyBlack = const Color(0xff1A2A4D);
 
 LinearGradient mainGradient = const LinearGradient(
   begin: Alignment.topLeft,
-  end: Alignment(0.8, 1),
+  end: Alignment(1, 0.8),
   colors: [
     Color(0xff4EB2FF),
     Color(0xff66D5FF),

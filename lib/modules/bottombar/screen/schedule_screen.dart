@@ -5,7 +5,7 @@ import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import 'utils.dart';
+import '../utils.dart';
 
 class ScheduleScreen extends StatefulWidget {
   const ScheduleScreen({super.key});
@@ -236,28 +236,53 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                               return Container(
                                 margin: EdgeInsets.fromLTRB(
                                     120.w, 14.h, 20.w, 30.h),
+                                padding: EdgeInsets.only(left: 15.w),
                                 width: 250.w,
                                 height: 184.h,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12.0),
                                   color:
-                                      const Color.fromARGB(255, 255, 212, 206),
+                                      const Color.fromARGB(255, 250, 224, 220),
                                 ),
                                 child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    SizedBox(
+                                      height: 10.h,
+                                    ),
                                     Text(
                                       '${value[index]}',
                                       style: defaultText18B,
+                                    ),
+                                    SizedBox(
+                                      height: 10.h,
                                     ),
                                     Container(
                                       width: 217.w,
                                       height: 38.h,
                                       decoration: BoxDecoration(
                                         borderRadius:
-                                            BorderRadius.circular(12.0),
+                                            BorderRadius.circular(4.0),
                                         color: const Color.fromARGB(
-                                            255, 252, 183, 174),
+                                            255, 255, 204, 197),
                                       ),
+                                      child: Row(
+                                        children: [
+                                          const CircleAvatar(
+                                            backgroundColor: Color.fromARGB(
+                                                255, 248, 248, 248),
+                                            radius: 12,
+                                            child: Text('NP'),
+                                          ),
+                                          Text(
+                                            'Nguyễn Phú',
+                                            style: defaultText14Re,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10.h,
                                     ),
                                     Text(
                                       '${value[index]}',

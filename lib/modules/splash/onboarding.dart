@@ -305,19 +305,20 @@ class _OnbondingState extends State<Onbonding> {
                               );
                             },
                             child: Container(
-                                height: 42.h,
-                                width: 42.w,
-                                decoration: BoxDecoration(
-                                    color: sub1Color,
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(16.r))),
-                                child: Center(
-                                  child: Icon(
-                                    Icons.keyboard_arrow_right,
-                                    size: 30.h,
-                                    color: baseColor,
-                                  ),
-                                )),
+                              height: 42.h,
+                              width: 42.w,
+                              decoration: BoxDecoration(
+                                  color: sub1Color,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(16.r))),
+                              child: Center(
+                                child: Icon(
+                                  Icons.keyboard_arrow_right,
+                                  size: 30.h,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       ),
