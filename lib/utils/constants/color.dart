@@ -23,6 +23,14 @@ LinearGradient mainGradient = const LinearGradient(
     Color(0xff66D5FF),
   ],
 );
+LinearGradient asdjajsdhasjidas = const LinearGradient(
+  begin: Alignment.topLeft,
+  end: Alignment(1, 0.8),
+  colors: [
+    Color.fromARGB(255, 150, 208, 252),
+    Color.fromARGB(255, 234, 248, 253),
+  ],
+);
 LinearGradient mainGradient2 = const LinearGradient(
   begin: Alignment.topLeft,
   end: Alignment(0.8, 1),

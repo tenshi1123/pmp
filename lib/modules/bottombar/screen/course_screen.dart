@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/modules/course/course_details.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
@@ -91,16 +92,39 @@ class _CourseScreenState extends State<CourseScreen>
             ),
           ),
           Expanded(
-            child: ListView.builder(
-                shrinkWrap: true,
-                physics: const ClampingScrollPhysics(),
-                itemCount: 5,
-                itemBuilder: (BuildContext context, int index) {
-                  return CourseItem(
-                    index: index,
-                  );
-                }),
-          )
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                ListView.builder(
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    itemCount: 5,
+                    itemBuilder: (BuildContext context, int index) {
+                      return CourseItem(
+                        index: index,
+                      );
+                    }),
+                ListView.builder(
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    itemCount: 5,
+                    itemBuilder: (BuildContext context, int index) {
+                      return CourseItem(
+                        index: index,
+                      );
+                    }),
+                ListView.builder(
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    itemCount: 5,
+                    itemBuilder: (BuildContext context, int index) {
+                      return CourseItem(
+                        index: index,
+                      );
+                    }),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -238,21 +262,31 @@ class CourseItem extends StatelessWidget {
           SizedBox(
             height: 10.h,
           ),
-          Container(
-            height: 39.h,
-            margin: EdgeInsets.symmetric(horizontal: 10.w),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.0),
-                border: Border.all(
-                  color: key2Color,
-                )),
-            child: Center(
-              child: Text(
-                'Chi tiết',
-                style: TextStyle(
-                  color: key1Color,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14.sp,
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const CourseDetails(),
+                ),
+              );
+            },
+            child: Container(
+              height: 39.h,
+              margin: EdgeInsets.symmetric(horizontal: 10.w),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  border: Border.all(
+                    color: key2Color,
+                  )),
+              child: Center(
+                child: Text(
+                  'Chi tiết',
+                  style: TextStyle(
+                    color: key1Color,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14.sp,
+                  ),
                 ),
               ),
             ),

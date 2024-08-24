@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pmp_english/modules/chat/screen/list_conversation_screen.dart';
+import 'package:pmp_english/modules/diemdanh/diem_danh_screen.dart';
+import 'package:pmp_english/modules/notification/notification.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 
@@ -58,11 +61,32 @@ class _HomeScreenState extends State<HomeScreen> {
                       SizedBox(
                         width: 60.w,
                       ),
-                      _chatNoti(icon: 'assets/icons/chat.svg'),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const ListConversationScreen(),
+                            ),
+                          );
+                        },
+                        child: _chatNoti(icon: 'assets/icons/chat.svg'),
+                      ),
                       SizedBox(
                         width: 10.w,
                       ),
-                      _chatNoti(icon: 'assets/icons/ring.svg'),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const NotificationScreen(),
+                            ),
+                          );
+                        },
+                        child: _chatNoti(icon: 'assets/icons/ring.svg'),
+                      ),
                     ],
                   ),
                   SizedBox(
@@ -172,7 +196,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       SizedBox(
                         width: 15.w,
                       ),
-                      _stackDiemDanh(),
+                      GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const DiemDanhScreen(),
+                              ),
+                            );
+                          },
+                          child: _stackDiemDanh()),
                     ],
                   )
                 ],
@@ -584,16 +617,13 @@ Widget _chatNoti({
           child: Container(
             height: 33.h,
             width: 33.w,
+            padding: const EdgeInsets.all(6),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: main2Color,
             ),
+            child: SvgPicture.asset(icon),
           ),
-        ),
-        Positioned(
-          top: 7.h,
-          left: 7.w,
-          child: SvgPicture.asset(icon),
         ),
         Positioned(
           top: 0,
