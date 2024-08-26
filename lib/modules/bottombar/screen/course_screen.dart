@@ -254,7 +254,6 @@ class CourseItem extends StatelessWidget {
             lineHeight: 20.0,
             animationDuration: 2000,
             percent: 0.66,
-            center: const Text("66.0%"),
             barRadius: const Radius.circular(16),
             linearGradient: mainGradient,
             backgroundColor: state2,

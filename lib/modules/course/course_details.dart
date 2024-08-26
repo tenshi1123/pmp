@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pmp_english/modules/course/lich_hoc.dart';
+import 'package:pmp_english/modules/course/reportage.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 
@@ -117,18 +118,10 @@ class _CourseDetailsState extends State<CourseDetails>
           Expanded(
             child: TabBarView(
               controller: _tabController,
-              children: [
-                const LichHocScreen(),
-                const ExcerciseScreen(),
-                ListView.builder(
-                    shrinkWrap: true,
-                    physics: const ClampingScrollPhysics(),
-                    itemCount: 5,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                        height: 400,
-                      );
-                    }),
+              children: const [
+                LichHocScreen(),
+                ExcerciseScreen(),
+                ReportageScreen(),
               ],
             ),
           )

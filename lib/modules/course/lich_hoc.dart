@@ -209,7 +209,7 @@ class LichHocScreen extends StatelessWidget {
           SizedBox(
               height: 330.h,
               width: 390.w,
-              child: const NestedTabBar('Flights')),
+              child: const LichhocTabBar('Flights')),
           // const Lesson(
           //   title1: '',
           //   title2: '',
@@ -221,16 +221,16 @@ class LichHocScreen extends StatelessWidget {
   }
 }
 
-class NestedTabBar extends StatefulWidget {
-  const NestedTabBar(this.outerTab, {super.key});
+class LichhocTabBar extends StatefulWidget {
+  const LichhocTabBar(this.outerTab, {super.key});
 
   final String outerTab;
 
   @override
-  State<NestedTabBar> createState() => _NestedTabBarState();
+  State<LichhocTabBar> createState() => _LichhocTabBarState();
 }
 
-class _NestedTabBarState extends State<NestedTabBar>
+class _LichhocTabBarState extends State<LichhocTabBar>
     with TickerProviderStateMixin {
   late final TabController _tabController;
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 
@@ -129,11 +130,11 @@ class ExcerciseItem extends StatelessWidget {
               shape: BoxShape.circle,
               gradient: mainGradient2,
             ),
-            child: Text(
-              '21',
-              style: defaultText20B.copyWith(
-                color: Colors.white,
-              ),
+            child: SvgPicture.asset(
+              'assets/icons/excercise.svg',
+              height: 18.h,
+              width: 18.w,
+              fit: BoxFit.scaleDown,
             ),
           ),
           SizedBox(

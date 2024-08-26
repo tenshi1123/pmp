@@ -46,30 +46,30 @@ class ExcerciseScreen extends StatelessWidget {
           SizedBox(
               height: 330.h,
               width: 390.w,
-              child: const NestedTabBar('Flights')),
+              child: const ExcerciseTabBar('Flights')),
         ],
       ),
     );
   }
 }
 
-class NestedTabBar extends StatefulWidget {
-  const NestedTabBar(this.outerTab, {super.key});
+class ExcerciseTabBar extends StatefulWidget {
+  const ExcerciseTabBar(this.outerTab, {super.key});
 
   final String outerTab;
 
   @override
-  State<NestedTabBar> createState() => _NestedTabBarState();
+  State<ExcerciseTabBar> createState() => _ExcerciseTabBarState();
 }
 
-class _NestedTabBarState extends State<NestedTabBar>
+class _ExcerciseTabBarState extends State<ExcerciseTabBar>
     with TickerProviderStateMixin {
   late final TabController _tabController;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
   }
 
   @override
@@ -101,8 +101,9 @@ class _NestedTabBarState extends State<NestedTabBar>
           labelColor: keyBlack,
           controller: _tabController,
           tabs: <Widget>[
-            homeTab(title: 'Sắp tới', isSeprator: false),
-            homeTab(title: 'Đã xong'),
+            homeTab(title: 'Toàn bộ', isSeprator: false),
+            homeTab(title: 'Chưa làm'),
+            homeTab(title: 'Hoàn thành'),
           ],
         ),
         Expanded(
@@ -116,6 +117,11 @@ class _NestedTabBarState extends State<NestedTabBar>
                   itemBuilder: (BuildContext context, int index) {
                     return const ExcerciseItem();
                   }),
+              Card(
+                margin: const EdgeInsets.all(16.0),
+                child: Center(
+                    child: Text('${widget.outerTab}: Specifications tab')),
+              ),
               Card(
                 margin: const EdgeInsets.all(16.0),
                 child: Center(
