@@ -30,17 +30,7 @@ class ReportageScreen extends StatelessWidget {
               SizedBox(
                 height: 120.h,
                 width: 120.w,
-                child: Stack(
-                  children: [
-                    const PieChart(),
-                    Center(
-                      child: Text(
-                        '70%',
-                        style: defaultText20B,
-                      ),
-                    ),
-                  ],
-                ),
+                child: const PieChart(),
               ),
               SizedBox(
                 height: 90.h,

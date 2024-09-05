@@ -36,10 +36,13 @@ class ExcerciseScreen extends StatelessWidget {
                 ),
               ],
             ),
-            child: const Column(
+            child: Column(
               children: [
-                ExcerciseItem(),
-                ExcerciseItem(),
+                SizedBox(
+                  height: 10.h,
+                ),
+                const ExcerciseItem(),
+                const ExcerciseItem(),
               ],
             ),
           ),

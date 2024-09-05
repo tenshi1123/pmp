@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pmp_english/modules/diemdanh/diem_danh_screen.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
+import 'package:pmp_english/utils/widget/custom_widget.dart';
 
 class AttendanceDetails extends StatelessWidget {
   const AttendanceDetails({super.key});
@@ -255,58 +256,6 @@ Widget _tabSection(
           ]),
         ),
       ],
-    ),
-  );
-}
-
-Widget homeTab(
-    {required String title,
-    bool isSeprator = true,
-    bool hasNumber = true,
-    int count = 0}) {
-  return Tab(
-    child: Container(
-      // width: 130.w,
-      height: 20,
-      decoration: isSeprator
-          ? const BoxDecoration(
-              border: Border(
-                left: BorderSide(
-                  color: Colors.grey,
-                  width: 1,
-                  style: BorderStyle.solid,
-                ),
-              ),
-            )
-          : null,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          SizedBox(
-            width: 10.w,
-          ),
-          Text(
-            title,
-          ),
-          hasNumber
-              ? Container(
-                  decoration: BoxDecoration(
-                    color: keyBlack,
-                    borderRadius: BorderRadius.all(Radius.circular(10.r)),
-                  ),
-                  height: 20.h,
-                  padding: EdgeInsets.symmetric(horizontal: 8.h),
-                  margin: EdgeInsets.only(left: 8.h),
-                  child: Center(
-                    child: Text(
-                      '10',
-                      style: defaultText12B.copyWith(color: Colors.white),
-                    ),
-                  ),
-                )
-              : const SizedBox(),
-        ],
-      ),
     ),
   );
 }

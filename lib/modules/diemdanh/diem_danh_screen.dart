@@ -121,7 +121,11 @@ class Noti extends StatelessWidget {
         width: 330.w,
         child: Row(
           children: [
-            SizedBox(height: 160.h, width: 160.w, child: const PieChart()),
+            SizedBox(
+              height: 160.h,
+              width: 160.w,
+              child: const PieChart(),
+            ),
             SizedBox(
               height: 151.h,
               width: 160.w,
@@ -223,39 +227,49 @@ class PieChart extends StatelessWidget {
       OrdinalData(domain: 'v', measure: 1, color: sub2Color),
       OrdinalData(domain: 'c', measure: 15, color: state2),
     ];
-    return AspectRatio(
-      aspectRatio: 1,
-      child: DChartPieO(
-        data: ordinalDataList,
-        customLabel: (ordinalData, index) {
-          return "${ordinalData.domain}:${ordinalData.measure}";
-        },
-        configRenderPie: ConfigRenderPie(
-          arcLabelDecorator: ArcLabelDecorator(
-            labelPosition: ArcLabelPosition.auto,
-            insideLabelStyle: const LabelStyle(
-              color: Colors.black,
-              fontSize: 18,
+    return Stack(
+      children: [
+        AspectRatio(
+          aspectRatio: 1,
+          child: DChartPieO(
+            data: ordinalDataList,
+            customLabel: (ordinalData, index) {
+              return "${ordinalData.domain}:${ordinalData.measure}";
+            },
+            configRenderPie: ConfigRenderPie(
+              arcLabelDecorator: ArcLabelDecorator(
+                labelPosition: ArcLabelPosition.auto,
+                insideLabelStyle: const LabelStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                ),
+                outsideLabelStyle: const LabelStyle(
+                  color: Colors.red,
+                  fontSize: 16,
+                ),
+                labelPadding: 10,
+                leaderLineStyle: const ArcLabelLeaderLineStyle(
+                  color: Colors.transparent,
+                  length: 30,
+                  thickness: 0,
+                ),
+                showLeaderLines: true,
+              ),
+              arcLength: 2 * pi,
+              arcRatio: 0.2,
+              //arcWidth: 10,
+              startAngle: -pi / 2,
+              strokeWidthPx: 0,
             ),
-            outsideLabelStyle: const LabelStyle(
-              color: Colors.red,
-              fontSize: 16,
-            ),
-            labelPadding: 10,
-            leaderLineStyle: const ArcLabelLeaderLineStyle(
-              color: Colors.transparent,
-              length: 30,
-              thickness: 0,
-            ),
-            showLeaderLines: true,
           ),
-          arcLength: 2 * pi,
-          arcRatio: 0.2,
-          //arcWidth: 10,
-          startAngle: -pi / 2,
-          strokeWidthPx: 0,
         ),
-      ),
+        Center(
+          child: Text(
+            '70%',
+            style: defaultText20B,
+          ),
+        ),
+      ],
     );
   }
 }
