@@ -127,7 +127,7 @@ class _OnbondingState extends State<Onbonding> {
                                     Text(
                                       VnString.itisrecommended,
                                       textAlign: TextAlign.center,
-                                      style: defaultText18M,
+                                      style: defaultText16M,
                                     ),
                                   ],
                                 ),
@@ -181,7 +181,7 @@ class _OnbondingState extends State<Onbonding> {
                                     Text(
                                       VnString.thaksforfunevent,
                                       textAlign: TextAlign.center,
-                                      style: defaultText18M,
+                                      style: defaultText16M,
                                     ),
                                   ],
                                 ),
@@ -191,31 +191,47 @@ class _OnbondingState extends State<Onbonding> {
                         ),
                         SingleChildScrollView(
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Center(
-                                child: Column(
-                                  children: [
-                                    Image.asset(
-                                      "assets/images/onboard1.png",
-                                    ),
-                                    SizedBox(height: height / 13),
-                                    Text(
-                                      VnString.timelynotification,
-                                      style: TextStyle(
-                                          fontFamily: 'Gilroy_Bold',
-                                          color: key1Color,
-                                          fontSize: height / 30),
-                                    ),
-                                    SizedBox(height: height / 40),
-                                    Text(
-                                      VnString.withtimelynotification,
-                                      textAlign: TextAlign.center,
-                                      style: defaultText18M,
-                                    ),
-                                  ],
+                              Image.asset(
+                                "assets/images/onboard3.png",
+                              ),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 18.w),
+                                child: RichText(
+                                  text: TextSpan(
+                                    text: 'Xây dựng nền tảng ',
+                                    style: TextStyle(
+                                        color: key1Color,
+                                        fontSize: 32.sp,
+                                        fontWeight: FontWeight.bold),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                        text: 'ngôn ngữ ',
+                                        style: TextStyle(
+                                            color: main1Color,
+                                            fontSize: 32.sp,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      TextSpan(
+                                        text: 'vững vàng',
+                                        style: TextStyle(
+                                            color: key1Color,
+                                            fontSize: 32.sp,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              )
+                              ),
+                              SizedBox(height: height / 40),
+                              Text(
+                                VnString.withtimelynotification,
+                                textAlign: TextAlign.center,
+                                style: defaultText16M,
+                              ),
                             ],
                           ),
                         ),

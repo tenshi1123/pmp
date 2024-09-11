@@ -181,7 +181,7 @@ Widget homeTab(
   return Tab(
     child: Container(
       //width: 70.w,
-      height: 20.h,
+      height: 30.h,
       decoration: isSeprator
           ? const BoxDecoration(
               border: Border(

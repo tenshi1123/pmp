@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/modules/notification/webview_screen.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 
@@ -93,54 +94,64 @@ class Noti extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 10.w),
-      height: 112.h,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: state2),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(16),
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const WebViewExample(),
+          ),
+        );
+      },
+      child: Container(
+        margin: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 10.w),
+        height: 112.h,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(color: state2),
+          borderRadius: const BorderRadius.all(
+            Radius.circular(16),
+          ),
         ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.w),
-            child: SizedBox(
-              width: 330.w,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Lớp học sắp diễn ra',
-                    style: TextStyle(
-                      color: key1Color,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14.sp,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              child: SizedBox(
+                width: 330.w,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Lớp học sắp diễn ra',
+                      style: TextStyle(
+                        color: key1Color,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14.sp,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.w),
-            child: Text(
-              'Cras interdum dolor nisi, eu imperdiet lacus faucibus in. Sed at arcu condimentum, blandit ipsum nec, feugiat dui. Fusce eu consequat nunc. Fusce faucibus ligula velit,',
-              style: defaultText12Re,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              child: Text(
+                'Cras interdum dolor nisi, eu imperdiet lacus faucibus in. Sed at arcu condimentum, blandit ipsum nec, feugiat dui. Fusce eu consequat nunc. Fusce faucibus ligula velit,',
+                style: defaultText12Re,
+              ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.w),
-            child: Text(
-              '09:03',
-              style: defaultText12Re,
-            ),
-          )
-        ],
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              child: Text(
+                '09:03',
+                style: defaultText12Re,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

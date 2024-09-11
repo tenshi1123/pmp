@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:pmp_english/modules/infoAccount/redeem_reward_screen.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 
@@ -171,15 +172,75 @@ class _AccountScreenState extends State<AccountScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Image.asset(
-                'assets/images/bg_diemthuong.png',
-                height: 68.h,
-                width: 168.w,
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const RedeemRewardScreen(),
+                    ),
+                  );
+                },
+                child: Stack(
+                  children: [
+                    Image.asset(
+                      'assets/images/bg_diemthuong.png',
+                      height: 68.h,
+                      width: 168.w,
+                    ),
+                    Positioned(
+                      top: 10.h,
+                      right: 20.w,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            'Điểm thưởng',
+                            style: defaultText12Re.copyWith(
+                              color: Colors.white,
+                            ),
+                          ),
+                          Text(
+                            '30 điểm',
+                            style: defaultText16B.copyWith(
+                              color: Colors.white,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              Image.asset(
-                'assets/images/bg_chungchi.png',
-                height: 68.h,
-                width: 168.w,
+              Stack(
+                children: [
+                  Image.asset(
+                    'assets/images/bg_chungchi.png',
+                    height: 68.h,
+                    width: 168.w,
+                  ),
+                  Positioned(
+                    top: 10.h,
+                    right: 20.w,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          'Xem chi tiết',
+                          style: defaultText12Re.copyWith(
+                            color: Colors.white,
+                          ),
+                        ),
+                        Text(
+                          'Chứng chỉ',
+                          style: defaultText16B.copyWith(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -197,13 +258,14 @@ class _AccountScreenState extends State<AccountScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                Image.asset('assets/images/fee.png'),
                 Text(
-                  'Lịch sử giao dịch',
-                  style: defaultText14M.copyWith(
+                  'Học phí và thanh toán',
+                  style: defaultText14B.copyWith(
                     color: Colors.white,
                   ),
                 ),
-                SvgPicture.asset('assets/icons/history.svg'),
+                //SvgPicture.asset('assets/icons/history.svg'),
               ],
             ),
           ),
@@ -268,17 +330,20 @@ class _AccountScreenState extends State<AccountScreen> {
                     ),
                   ],
                 ),
-                Container(
-                  height: 49.h,
-                  width: 315.w,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: state1,
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Đăng xuất',
-                      style: defaultText14M,
+                GestureDetector(
+                  onTap: () => _dialogBuilder(context),
+                  child: Container(
+                    height: 49.h,
+                    width: 315.w,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: state1,
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Đăng xuất',
+                        style: defaultText14M,
+                      ),
                     ),
                   ),
                 ),
@@ -289,4 +354,38 @@ class _AccountScreenState extends State<AccountScreen> {
       ),
     );
   }
+}
+
+Future<void> _dialogBuilder(BuildContext context) {
+  return showDialog<void>(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Tài khoản'),
+        content: const Text(
+          'Bạn có chắc muốn đăng xuất ?',
+        ),
+        actions: <Widget>[
+          TextButton(
+            style: TextButton.styleFrom(
+              textStyle: Theme.of(context).textTheme.labelLarge,
+            ),
+            child: const Text('Hủy'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+            style: TextButton.styleFrom(
+              textStyle: Theme.of(context).textTheme.labelLarge,
+            ),
+            child: const Text('Xác nhận'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }

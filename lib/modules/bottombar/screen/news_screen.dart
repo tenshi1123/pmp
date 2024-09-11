@@ -118,15 +118,7 @@ class CourseItem extends StatelessWidget {
                 ),
                 color: main2Color),
             child: Center(
-              child: Text(
-                'Đây là \n1 hình ảnh',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: key1Color,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14.sp,
-                ),
-              ),
+              child: Image.asset('assets/images/logo.png'),
             ),
           ),
           SizedBox(

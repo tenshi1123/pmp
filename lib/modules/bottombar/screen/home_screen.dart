@@ -2,10 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pmp_english/modules/chat/screen/list_conversation_screen.dart';
+import 'package:pmp_english/modules/course/course_details.dart';
 import 'package:pmp_english/modules/diemdanh/diem_danh_screen.dart';
+import 'package:pmp_english/modules/feature_home/academic_report_screen.dart';
+import 'package:pmp_english/modules/feature_home/evaluate_screen.dart';
+import 'package:pmp_english/modules/feature_home/exam_schedule_screen.dart';
+import 'package:pmp_english/modules/lesson/detail_lesson_screen.dart';
 import 'package:pmp_english/modules/notification/notification.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
+
+import '../../feature_home/exercise_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -218,12 +225,52 @@ class _HomeScreenState extends State<HomeScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _homeIcon(title: 'Lịch thi', image: 'assets/images/lich_thi.png'),
-              _homeIcon(title: 'Bài tập', image: 'assets/images/bai_tap.png'),
-              _homeIcon(
-                  title: 'Báo cáo điểm',
-                  image: 'assets/images/bao_cao_diem.png'),
-              _homeIcon(title: 'Đánh giá', image: 'assets/images/danh_gia.png'),
+              GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ExamScheduleScreen(),
+                      ),
+                    );
+                  },
+                  child: _homeIcon(
+                      title: 'Lịch thi', image: 'assets/images/lich_thi.png')),
+              GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ExerciseScreen(),
+                      ),
+                    );
+                  },
+                  child: _homeIcon(
+                      title: 'Bài tập', image: 'assets/images/bai_tap.png')),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AcademicReportScreen(),
+                    ),
+                  );
+                },
+                child: _homeIcon(
+                    title: 'Báo cáo điểm',
+                    image: 'assets/images/bao_cao_diem.png'),
+              ),
+              GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const EvaluateScreen(),
+                      ),
+                    );
+                  },
+                  child: _homeIcon(
+                      title: 'Đánh giá', image: 'assets/images/danh_gia.png')),
             ],
           ),
           // Học phí
@@ -257,168 +304,189 @@ class _HomeScreenState extends State<HomeScreen> {
             '    Lịch học gần nhất',
             style: defaultText16B,
           ),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-            height: 222.h,
-            width: 349.w,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(8.r),
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const DetailLessonScreen(),
                 ),
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.2),
-                    spreadRadius: 5,
-                    blurRadius: 7,
-                    offset: const Offset(0, 2), // changes position of shadow
+              );
+            },
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+              height: 222.h,
+              width: 349.w,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(8.r),
                   ),
-                ]),
-            child: Column(
-              //mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                SizedBox(
-                  height: 10.h,
-                ),
-                Row(
-                  children: [
-                    SizedBox(
-                      width: 10.w,
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.2),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: const Offset(0, 2), // changes position of shadow
                     ),
-                    Container(
-                      height: 70.h,
-                      width: 70.w,
-                      decoration: BoxDecoration(
-                        gradient: mainGradient2,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(12.r),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 15.w,
-                    ),
-                    SizedBox(
-                      height: 70.h,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text(
-                            'TOEIC 4 kỹ năng - Buổi 3',
-                            style: defaultText16B,
-                          ),
-                          Text(
-                            '21/05/2024',
-                            style: defaultText14Re,
-                          ),
-                          Text(
-                            '08:00 - 11:00 ~ 3 tiếng',
-                            style: defaultText14Re,
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                Container(
-                  height: 74.h,
-                  width: 325.w,
-                  decoration: BoxDecoration(
-                    color: key1Color.withOpacity(0.1),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(8.r),
-                    ),
+                  ]),
+              child: Column(
+                //mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  SizedBox(
+                    height: 10.h,
                   ),
-                  child: Row(
+                  Row(
                     children: [
                       SizedBox(
                         width: 10.w,
                       ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Phòng học',
-                            style: defaultText14Re,
+                      Container(
+                        height: 70.h,
+                        width: 70.w,
+                        decoration: BoxDecoration(
+                          gradient: mainGradient2,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(12.r),
                           ),
-                          Text(
-                            'Nội dung',
-                            style: defaultText14Re,
-                          ),
-                        ],
+                        ),
+                        child: (Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              '21\nTháng 5 ',
+                              style: defaultText16B.copyWith(
+                                color: Colors.white,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        )),
                       ),
                       SizedBox(
-                        width: 40.w,
+                        width: 15.w,
                       ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'P101 - Giáo viên 1',
-                            style: defaultText14B,
+                      SizedBox(
+                        height: 70.h,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              'TOEIC 4 kỹ năng - Buổi 3',
+                              style: defaultText16B,
+                            ),
+                            Text(
+                              '21/05/2024',
+                              style: defaultText14Re,
+                            ),
+                            Text(
+                              '08:00 - 11:00 ~ 3 tiếng',
+                              style: defaultText14Re,
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Container(
+                    height: 74.h,
+                    width: 325.w,
+                    decoration: BoxDecoration(
+                      color: key1Color.withOpacity(0.1),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(8.r),
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 10.w,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Phòng học',
+                              style: defaultText14Re,
+                            ),
+                            Text(
+                              'Nội dung',
+                              style: defaultText14Re,
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          width: 40.w,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'P101 - Giáo viên 1',
+                              style: defaultText14B,
+                            ),
+                            Text(
+                              'Lorem ipsum',
+                              style: defaultText14B,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 12.w,
+                      ),
+                      Container(
+                        height: 14.h,
+                        width: 14.w,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 4.w,
+                      ),
+                      Text(
+                        'Chưa điểm danh',
+                        style: defaultText14M,
+                      ),
+                      SizedBox(
+                        width: 80.w,
+                      ),
+                      Container(
+                        height: 29.h,
+                        width: 90.w,
+                        decoration: BoxDecoration(
+                          color: sub2Color,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(4.r),
                           ),
-                          Text(
-                            'Lorem ipsum',
-                            style: defaultText14B,
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Xin nghỉ',
+                            style: defaultText14B.copyWith(
+                              color: Colors.white,
+                            ),
                           ),
-                        ],
+                        ),
                       ),
                     ],
                   ),
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                Row(
-                  children: [
-                    SizedBox(
-                      width: 12.w,
-                    ),
-                    Container(
-                      height: 14.h,
-                      width: 14.w,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 4.w,
-                    ),
-                    Text(
-                      'Chưa điểm danh',
-                      style: defaultText14M,
-                    ),
-                    SizedBox(
-                      width: 80.w,
-                    ),
-                    Container(
-                      height: 29.h,
-                      width: 90.w,
-                      decoration: BoxDecoration(
-                        color: sub2Color,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(4.r),
-                        ),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Xin nghỉ',
-                          style: defaultText14B.copyWith(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           Text(
@@ -436,7 +504,16 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
               itemCount: 4,
               itemBuilder: (BuildContext context, int index) {
-                return _reComment();
+                return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const CourseDetails(),
+                        ),
+                      );
+                    },
+                    child: _reComment());
               },
             ),
           ),

@@ -7,12 +7,12 @@ class VnString {
   static String get funevent => "Nâng tầm học tập";
 
   static String get thaksforfunevent =>
-      "Giải pháp cho mọi nhu cầu học tập,\n dễ dàng giao diếp với giáo viên";
+      "Đáp ứng nhu cầu học tập đa dạng thông qua các \nchương trình học chuẩn quốc tế";
 
   static String get timelynotification => "Thông báo kịp thời";
 
   static String get withtimelynotification =>
-      "Với thông báo kịp thời,\n bạn sẽ không bỏ lỡ những thông tin quan trọng";
+      "Giáo trình được xây dựng và phát triển độc quyền\n bởi đội ngũ giáo viên kinh nghiệm dày dặn,\n năng động, nhiệt huyết.";
 
   static String get loginaccount => "Đăng nhập";
 
