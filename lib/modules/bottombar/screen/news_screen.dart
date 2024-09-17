@@ -35,7 +35,7 @@ class _NewsScreenState extends State<NewsScreen> with TickerProviderStateMixin {
                   ),
                 ),
                 Positioned(
-                  bottom: 70.h,
+                  bottom: 30.h,
                   left: 22.w,
                   child: Text(
                     'Tin tức PMP ENGLISH ',

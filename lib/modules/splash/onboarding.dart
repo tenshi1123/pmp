@@ -202,26 +202,26 @@ class _OnbondingState extends State<Onbonding> {
                                 padding: EdgeInsets.symmetric(horizontal: 18.w),
                                 child: RichText(
                                   text: TextSpan(
-                                    text: 'Xây dựng nền tảng ',
+                                    text: 'Đội ngũ giáo viên ',
                                     style: TextStyle(
                                         color: key1Color,
                                         fontSize: 32.sp,
                                         fontWeight: FontWeight.bold),
                                     children: <TextSpan>[
                                       TextSpan(
-                                        text: 'ngôn ngữ ',
+                                        text: 'giàu kinh nghiệm',
                                         style: TextStyle(
                                             color: main1Color,
                                             fontSize: 32.sp,
                                             fontWeight: FontWeight.bold),
                                       ),
-                                      TextSpan(
-                                        text: 'vững vàng',
-                                        style: TextStyle(
-                                            color: key1Color,
-                                            fontSize: 32.sp,
-                                            fontWeight: FontWeight.bold),
-                                      ),
+                                      // TextSpan(
+                                      //   text: 'vững vàng',
+                                      //   style: TextStyle(
+                                      //       color: key1Color,
+                                      //       fontSize: 32.sp,
+                                      //       fontWeight: FontWeight.bold),
+                                      // ),
                                     ],
                                   ),
                                 ),

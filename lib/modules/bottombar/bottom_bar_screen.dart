@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pmp_english/modules/bottombar/screen/account_screen.dart';
+import 'package:pmp_english/modules/bottombar/screen/user_info/account_screen.dart';
 import 'package:pmp_english/modules/bottombar/screen/news_screen.dart';
 import 'package:pmp_english/modules/bottombar/screen/schedule_screen.dart';
 import 'package:pmp_english/utils/constants/color.dart';

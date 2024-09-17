@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 
@@ -79,14 +77,18 @@ class _RedeemRewardScreenState extends State<RedeemRewardScreen> {
                 width: 390.w,
                 height: 600.h,
                 child: GridView.count(
-                    crossAxisCount: 2,
-                    //childAspectRatio: (1 / .35),
-                    //shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    children: List.generate(8, (i) {
+                  crossAxisCount: 2,
+                  //childAspectRatio: (1 / .35),
+                  //shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  children: List.generate(
+                    8,
+                    (i) {
                       return const PresentItem();
-                    })),
-              )
+                    },
+                  ),
+                ),
+              ),
             ],
           ),
           Align(

@@ -16,75 +16,12 @@ class ReportageScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Sắp đến hạn',
+            'Đánh giá tổng quan',
             style: defaultText16B,
           ),
-          const Column(
-            children: [
-              ExcerciseItem(),
-              ExcerciseItem(),
-            ],
-          ),
-          Row(
-            children: [
-              SizedBox(
-                height: 120.h,
-                width: 120.w,
-                child: const PieChart(),
-              ),
-              SizedBox(
-                height: 90.h,
-                width: 130.w,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Lớp',
-                          style: defaultText12Re,
-                        ),
-                        Text(
-                          'TTH4',
-                          style: defaultText12B,
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Bắt đầu',
-                          style: defaultText12Re,
-                        ),
-                        Text(
-                          '07/05/2024',
-                          style: defaultText12B,
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Kết thúc',
-                          style: defaultText12Re,
-                        ),
-                        Text(
-                          '07/10/2024',
-                          style: defaultText12B,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                width: 20.w,
-              ),
-            ],
-          ),
+          chartItem(width: 350, percents: 92, title: 'Chuyên cần'),
+          chartItem(width: 350, percents: 75, title: 'Bài tập'),
+          chartItem(width: 350, percents: 100, title: 'Thái độ'),
         ],
       ),
     );

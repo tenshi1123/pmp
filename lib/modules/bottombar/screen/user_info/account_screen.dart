@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:pmp_english/modules/infoAccount/my_certificate_screen.dart';
 import 'package:pmp_english/modules/infoAccount/redeem_reward_screen.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -13,6 +15,14 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
+  Future<void> _makePhoneCall(String phoneNumber) async {
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: phoneNumber,
+    );
+    await launchUrl(launchUri);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -34,7 +44,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   child: Container(
                     height: 242.h,
                     width: 349.w,
-                    padding: EdgeInsets.symmetric(horizontal: 15.w),
+                    padding: EdgeInsets.symmetric(horizontal: 18.w),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
                       color: Colors.white,
@@ -49,23 +59,33 @@ class _AccountScreenState extends State<AccountScreen> {
                             SizedBox(
                               width: 120.w,
                             ),
-                            Text(
-                              'Nguyễn Hồng Anh',
-                              style: defaultText18B,
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Nguyễn Hồng Anh',
+                                  style: defaultText18B,
+                                ),
+                                Text(
+                                  'Mã học viên: 214-32D',
+                                  style: defaultText12Re,
+                                )
+                              ],
                             ),
-                            SizedBox(
-                              width: 10.w,
-                            ),
-                            Container(
-                              height: 25.h,
-                              width: 25.w,
-                              padding: const EdgeInsets.all(3),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                gradient: mainGradient2,
+                            const Spacer(),
+                            GestureDetector(
+                              onTap: () {},
+                              child: Container(
+                                height: 25.h,
+                                width: 25.w,
+                                padding: const EdgeInsets.all(3),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  gradient: mainGradient2,
+                                ),
+                                child:
+                                    SvgPicture.asset('assets/icons/pencil.svg'),
                               ),
-                              child:
-                                  SvgPicture.asset('assets/icons/pencil.svg'),
                             ),
                           ],
                         ),
@@ -74,8 +94,8 @@ class _AccountScreenState extends State<AccountScreen> {
                         ),
                         Divider(
                           thickness: 1,
-                          indent: 15.w,
-                          endIndent: 15.w,
+                          // indent: 15.w,
+                          // endIndent: 15.w,
                           color: Colors.black.withOpacity(0.5),
                         ),
                         Row(
@@ -212,35 +232,45 @@ class _AccountScreenState extends State<AccountScreen> {
                   ],
                 ),
               ),
-              Stack(
-                children: [
-                  Image.asset(
-                    'assets/images/bg_chungchi.png',
-                    height: 68.h,
-                    width: 168.w,
-                  ),
-                  Positioned(
-                    top: 10.h,
-                    right: 20.w,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          'Xem chi tiết',
-                          style: defaultText12Re.copyWith(
-                            color: Colors.white,
-                          ),
-                        ),
-                        Text(
-                          'Chứng chỉ',
-                          style: defaultText16B.copyWith(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MyCertificateScreen(),
                     ),
-                  ),
-                ],
+                  );
+                },
+                child: Stack(
+                  children: [
+                    Image.asset(
+                      'assets/images/bg_chungchi.png',
+                      height: 68.h,
+                      width: 168.w,
+                    ),
+                    Positioned(
+                      top: 10.h,
+                      right: 20.w,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            'Xem chi tiết',
+                            style: defaultText12Re.copyWith(
+                              color: Colors.white,
+                            ),
+                          ),
+                          Text(
+                            'Chứng chỉ',
+                            style: defaultText16B.copyWith(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -315,20 +345,25 @@ class _AccountScreenState extends State<AccountScreen> {
                     ),
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Hotline hỗ trợ',
-                      style: defaultText14M,
-                    ),
-                    Text(
-                      '1900 8978',
-                      style: defaultText14M.copyWith(
-                        color: sub1Color,
+                GestureDetector(
+                  onTap: () {
+                    _makePhoneCall('19008978');
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Hotline hỗ trợ',
+                        style: defaultText14M,
                       ),
-                    ),
-                  ],
+                      Text(
+                        '1900 8978',
+                        style: defaultText14M.copyWith(
+                          color: sub1Color,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 GestureDetector(
                   onTap: () => _dialogBuilder(context),

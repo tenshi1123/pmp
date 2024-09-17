@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pmp_english/modules/bottombar/bottom_bar_screen.dart';
 import 'package:pmp_english/utils/constants/color.dart';
+import 'package:pmp_english/utils/constants/styles.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -15,6 +18,14 @@ class _LoginScreenState extends State<LoginScreen> {
   final _focusNode1 = FocusNode();
   TextEditingController? passController = TextEditingController();
   TextEditingController? studenIdController = TextEditingController();
+  Future<void> _makePhoneCall(String phoneNumber) async {
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: phoneNumber,
+    );
+    await launchUrl(launchUri);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -213,6 +224,33 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
+                  ),
+                ),
+                SizedBox(
+                  height: 140.h,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    _makePhoneCall('1900 8978');
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      SvgPicture.asset('assets/icons/phone_dialer.svg'),
+                      Text(
+                        ' Hotline hỗ trợ ',
+                        style: defaultText12M,
+                      ),
+                      Container(
+                        height: 1.h,
+                        width: 168.w,
+                        color: key1Color,
+                      ),
+                      Text(
+                        '1900 8978',
+                        style: defaultText14M.copyWith(color: sub1Color),
+                      )
+                    ],
                   ),
                 ),
               ],

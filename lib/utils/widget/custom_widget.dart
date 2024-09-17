@@ -197,10 +197,10 @@ Widget homeTab(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           SizedBox(
-            width: 12.w,
+            width: 3.w,
           ),
           SizedBox(
-            width: 55.w,
+            width: 77.w,
             child: Center(
               child: Text(
                 title,
@@ -214,8 +214,7 @@ Widget homeTab(
                     borderRadius: BorderRadius.all(Radius.circular(10.r)),
                   ),
                   height: 15.h,
-                  padding: EdgeInsets.symmetric(horizontal: 8.h),
-                  margin: EdgeInsets.only(left: 8.h),
+                  padding: EdgeInsets.symmetric(horizontal: 4.h),
                   child: Center(
                     child: Text(
                       '10',
@@ -228,6 +227,56 @@ Widget homeTab(
                 ),
         ],
       ),
+    ),
+  );
+}
+
+Widget chartItem({
+  required int width,
+  required int percents,
+  required String title,
+}) {
+  return Container(
+    height: 34.h,
+    width: width.w,
+    margin: EdgeInsets.only(bottom: 10.h),
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(4.r),
+      color: state2,
+    ),
+    child: Stack(
+      children: [
+        Positioned(
+            left: 0,
+            child: Container(
+              height: 34.h,
+              width: width.w * percents / 100,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(4.r),
+                gradient: mainGradient,
+              ),
+            )),
+        Positioned(
+          left: 10.w,
+          right: 10.w,
+          child: SizedBox(
+            height: 34.h,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  title,
+                  style: defaultText14B.copyWith(color: Colors.white),
+                ),
+                Text(
+                  '$percents%',
+                  style: defaultText14B,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     ),
   );
 }

@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pmp_english/modules/diemdanh/attendance_details.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:pmp_english/utils/widget/custom_widget.dart';
@@ -285,7 +283,7 @@ class _DetailLessonTabbarState extends State<DetailLessonTabbar>
 
 //hai người đàn bà và một con vịt thành cái chợ
 class _VideoWidget extends StatelessWidget {
-  const _VideoWidget({super.key});
+  const _VideoWidget();
 
   @override
   Widget build(BuildContext context) {
@@ -317,13 +315,12 @@ class _VideoWidget extends StatelessWidget {
 }
 
 class _FeedbackItem extends StatelessWidget {
-  const _FeedbackItem({super.key});
+  const _FeedbackItem();
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      
-      decoration: BoxDecoration(),
+      decoration: const BoxDecoration(),
     );
   }
 }

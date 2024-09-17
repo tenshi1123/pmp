@@ -5,14 +5,14 @@ import 'package:pmp_english/modules/chat/screen/list_conversation_screen.dart';
 import 'package:pmp_english/modules/course/course_details.dart';
 import 'package:pmp_english/modules/diemdanh/diem_danh_screen.dart';
 import 'package:pmp_english/modules/feature_home/academic_report_screen.dart';
-import 'package:pmp_english/modules/feature_home/evaluate_screen.dart';
+import 'package:pmp_english/modules/feature_home/evaluate/evaluate_screen.dart';
 import 'package:pmp_english/modules/feature_home/exam_schedule_screen.dart';
 import 'package:pmp_english/modules/lesson/detail_lesson_screen.dart';
 import 'package:pmp_english/modules/notification/notification.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 
-import '../../feature_home/exercise_screen.dart';
+import '../../feature_home/exercise/exercise_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
