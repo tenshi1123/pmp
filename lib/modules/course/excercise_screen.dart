@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:pmp_english/utils/constants/styles.dart';
-import 'package:pmp_english/utils/widget/Excercise_tab_widget.dart';
+import 'package:pmp_english/utils/widget/excercise_tab_widget.dart';
 import 'package:pmp_english/utils/widget/custom_widget.dart';
 
 class ExcerciseScreen extends StatelessWidget {
@@ -21,7 +21,7 @@ class ExcerciseScreen extends StatelessWidget {
           ),
           Container(
             margin: EdgeInsets.symmetric(vertical: 20.h),
-            height: 222.h,
+            height: 200.h,
             width: 349.w,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(

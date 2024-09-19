@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pmp_english/modules/diemdanh/diem_danh_screen.dart';
+import 'package:pmp_english/modules/feature_home/exercise/exercise_detail_screen.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
-import 'package:pmp_english/utils/widget/Excercise_tab_widget.dart';
+import 'package:pmp_english/utils/widget/excercise_tab_widget.dart';
 import 'package:pmp_english/utils/widget/custom_widget.dart';
 
 class ExerciseScreen extends StatelessWidget {
@@ -145,12 +146,19 @@ class ExerciseScreen extends StatelessWidget {
               textAlign: TextAlign.left,
             ),
           ),
-          const ExcerciseItem(),
+          GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const TestScreen(),
+                ));
+              },
+              child: const ExcerciseItem()),
           const ExcerciseItem(),
           SizedBox(
-              height: 330.h,
-              width: 390.w,
-              child: const ExcerciseTabBar('Flights')),
+            height: 330.h,
+            width: 390.w,
+            child: const ExcerciseTabBar('Flights'),
+          ),
         ],
       ),
     );

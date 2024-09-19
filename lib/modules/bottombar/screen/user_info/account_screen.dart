@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:pmp_english/modules/bottombar/screen/user_info/edit_info_screen.dart';
 import 'package:pmp_english/modules/infoAccount/my_certificate_screen.dart';
+import 'package:pmp_english/modules/infoAccount/payment_history.dart';
 import 'package:pmp_english/modules/infoAccount/redeem_reward_screen.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
@@ -74,7 +76,15 @@ class _AccountScreenState extends State<AccountScreen> {
                             ),
                             const Spacer(),
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const EditInfoScreen(),
+                                  ),
+                                );
+                              },
                               child: Container(
                                 height: 25.h,
                                 width: 25.w,
@@ -277,26 +287,36 @@ class _AccountScreenState extends State<AccountScreen> {
           SizedBox(
             height: 10.h,
           ),
-          Container(
-            height: 45.h,
-            width: 350.w,
-            padding: EdgeInsets.symmetric(horizontal: 10.w),
-            decoration: BoxDecoration(
-              color: key2Color,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Image.asset('assets/images/fee.png'),
-                Text(
-                  'Học phí và thanh toán',
-                  style: defaultText14B.copyWith(
-                    color: Colors.white,
-                  ),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const PaymentHistoryScreen(),
                 ),
-                //SvgPicture.asset('assets/icons/history.svg'),
-              ],
+              );
+            },
+            child: Container(
+              height: 45.h,
+              width: 350.w,
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              decoration: BoxDecoration(
+                color: key2Color,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Image.asset('assets/images/fee.png'),
+                  Text(
+                    'Học phí và thanh toán',
+                    style: defaultText14B.copyWith(
+                      color: Colors.white,
+                    ),
+                  ),
+                  //SvgPicture.asset('assets/icons/history.svg'),
+                ],
+              ),
             ),
           ),
           SizedBox(

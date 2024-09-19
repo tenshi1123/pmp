@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:pmp_english/modules/feature_home/exercise/test_detail_screen.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 
@@ -304,19 +305,29 @@ class _InfoTest extends StatelessWidget {
                                   style: defaultText20B.copyWith(
                                       color: Colors.white))),
                         )
-                      : Container(
-                          width: 326.w,
-                          height: 51.h,
-                          decoration: BoxDecoration(
-                            color: main1Color,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.r)),
+                      : GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const TestDetailScreen(),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            width: 326.w,
+                            height: 51.h,
+                            decoration: BoxDecoration(
+                              color: main1Color,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10.r)),
+                            ),
+                            child: Center(
+                                child: Text(
+                              'Làm bài',
+                              style:
+                                  defaultText20B.copyWith(color: Colors.white),
+                            )),
                           ),
-                          child: Center(
-                              child: Text(
-                            'Làm bài',
-                            style: defaultText20B.copyWith(color: Colors.white),
-                          )),
                         ),
                 ],
               ),

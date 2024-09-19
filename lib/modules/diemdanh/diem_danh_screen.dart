@@ -239,15 +239,6 @@ class PieChart extends StatelessWidget {
             configRenderPie: ConfigRenderPie(
               arcLabelDecorator: ArcLabelDecorator(
                 labelPosition: ArcLabelPosition.auto,
-                insideLabelStyle: const LabelStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                ),
-                outsideLabelStyle: const LabelStyle(
-                  color: Colors.red,
-                  fontSize: 16,
-                ),
-                labelPadding: 10,
                 leaderLineStyle: const ArcLabelLeaderLineStyle(
                   color: Colors.transparent,
                   length: 30,
