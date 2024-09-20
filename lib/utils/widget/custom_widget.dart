@@ -365,3 +365,12 @@ Widget chartItem({
     ),
   );
 }
+
+class CustomDialog extends StatelessWidget {
+  const CustomDialog({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}

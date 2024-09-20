@@ -29,6 +29,7 @@ class _ExamScheduleScreenState extends State<ExamScheduleScreen> {
   final TextEditingController cosoController = TextEditingController();
   final TextEditingController cathiController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
+  final ValueNotifier<int> _format = ValueNotifier(1);
   IconLabel? selectedIcon;
   @override
   Widget build(BuildContext context) {
@@ -114,47 +115,64 @@ class _ExamScheduleScreenState extends State<ExamScheduleScreen> {
                   SizedBox(
                     height: 5.h,
                   ),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 20.w,
-                      ),
-                      Container(
-                        width: 60.w,
-                        height: 30.h,
-                        decoration: BoxDecoration(
-                          gradient: mainGradient,
-                          borderRadius: BorderRadius.all(Radius.circular(8.r)),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Offline',
-                            style: defaultText14B.copyWith(
-                              color: Colors.white,
+                  ValueListenableBuilder(
+                    valueListenable: _format,
+                    builder: (context, value, child) {
+                      return Row(
+                        children: [
+                          SizedBox(
+                            width: 20.w,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              value = 1;
+                            },
+                            child: Container(
+                              width: 60.w,
+                              height: 30.h,
+                              decoration: BoxDecoration(
+                                gradient: mainGradient,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8.r)),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'Offline',
+                                  style: defaultText14B.copyWith(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 10.w,
-                      ),
-                      Container(
-                        width: 60.w,
-                        height: 30.h,
-                        decoration: BoxDecoration(
-                          color: key1Color.withOpacity(0.2),
-                          borderRadius: BorderRadius.all(Radius.circular(8.r)),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Online',
-                            style: defaultText14B.copyWith(
-                              color: Colors.white,
+                          SizedBox(
+                            width: 10.w,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              value = 2;
+                            },
+                            child: Container(
+                              width: 60.w,
+                              height: 30.h,
+                              decoration: BoxDecoration(
+                                color: key1Color.withOpacity(0.2),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8.r)),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'Online',
+                                  style: defaultText14B.copyWith(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                    ],
+                        ],
+                      );
+                    },
                   ),
                   SizedBox(
                     height: 10.h,

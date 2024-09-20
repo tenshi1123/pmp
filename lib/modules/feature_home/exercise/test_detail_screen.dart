@@ -107,10 +107,7 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
                     ],
                   ),
                   SizedBox(
-                    height: 10.h,
-                  ),
-                  SizedBox(
-                    height: 10.h,
+                    height: 20.h,
                   ),
                   SizedBox(
                     width: 390.w,

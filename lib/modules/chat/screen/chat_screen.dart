@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -14,6 +15,14 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   TextEditingController messageController = TextEditingController();
+  Future<void> _makePhoneCall(String phoneNumber) async {
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: phoneNumber,
+    );
+    await launchUrl(launchUri);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +42,9 @@ class _ChatScreenState extends State<ChatScreen> {
           actions: [
             IconButton(
               icon: const Icon(Icons.phone),
-              onPressed: () {},
+              onPressed: () {
+                _makePhoneCall('19008978');
+              },
             ),
           ],
         ),

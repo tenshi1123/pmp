@@ -131,20 +131,58 @@ class _RedeemRewardScreenState extends State<RedeemRewardScreen> {
                   const SizedBox(
                     width: 15,
                   ),
-                  Container(
-                    width: 131.w,
-                    height: 43.h,
-                    decoration: BoxDecoration(
-                      gradient: mainGradient2,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(36.r),
+                  GestureDetector(
+                    onTap: () {
+                      showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          title: RichText(
+                            text: TextSpan(
+                              text: 'Bạn xác nhận đổi ',
+                              style: defaultText14Re,
+                              children: [
+                                TextSpan(
+                                  text: '24 điểm thưởng',
+                                  style: defaultText14M.copyWith(
+                                      color: main1Color),
+                                ),
+                                const TextSpan(text: ' lấy phần quà'),
+                                TextSpan(
+                                  text: ' Gấu bông, bình giữ nhiệt',
+                                  style: defaultText14M.copyWith(
+                                      color: main1Color),
+                                ),
+                              ],
+                            ),
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, 'Cancel'),
+                              child: const Text('Hủy'),
+                            ),
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, 'OK'),
+                              child: const Text('Xác nhận'),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    child: Container(
+                      width: 131.w,
+                      height: 43.h,
+                      decoration: BoxDecoration(
+                        gradient: mainGradient2,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(36.r),
+                        ),
                       ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Xác nhận đổi',
-                        style: defaultText14B.copyWith(
-                          color: Colors.white,
+                      child: Center(
+                        child: Text(
+                          'Xác nhận đổi',
+                          style: defaultText14B.copyWith(
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
