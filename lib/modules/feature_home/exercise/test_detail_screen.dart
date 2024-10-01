@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pmp_english/utils/constants/color.dart';
@@ -21,51 +24,61 @@ class TestDetailScreen extends StatefulWidget {
 }
 
 class _TestDetailScreenState extends State<TestDetailScreen> {
-  //int _currentPage = 1;
-  //@override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     appBar: AppBar(
-  //       title: const Text("Pagination Example"),
-  //     ),
-  //     body: Center(
-  //       child: Column(
-  //         mainAxisAlignment: MainAxisAlignment.center,
-  //         children: [
-  //           Container(
-  //             height: 200,
-  //             margin: const EdgeInsets.all(32),
-  //             color: Colors.blue,
-  //             child: Center(
-  //               child: Text(
-  //                 "PAGE: $_currentPage",
-  //                 style: const TextStyle(color: Colors.white, fontSize: 20),
-  //               ),
-  //             ),
-  //           ),
-  //           Pager(
-  //             currentPage: _currentPage,
-  //             totalPages: 5,
-  //             onPageChanged: (page) {
-  //               setState(() {
-  //                 _currentPage = page;
-  //               });
-  //             },
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
-
   int _currentPage = 0;
+  var countdownDuration = const Duration(minutes: 15);
+  Duration duration = const Duration();
+  Timer? timer;
+  Timer? timer1;
+  bool countDown = true;
+  bool countDown1 = true;
   bool? isChecked = false;
   final ValueNotifier<Map<int, int>> _counter =
       ValueNotifier<Map<int, int>>({});
-
   @override
   void initState() {
+    int hours1;
+    int mints1;
+    int secs1;
+    hours1 = int.parse("00");
+    mints1 = int.parse("15");
+    secs1 = int.parse("00");
+    countdownDuration =
+        Duration(hours: hours1, minutes: mints1, seconds: secs1);
+    startTimer();
+    reset();
     super.initState();
+  }
+
+  void startTimer() {
+    timer = Timer.periodic(const Duration(seconds: 1), (_) => addTime());
+  }
+
+  void reset() {
+    if (countDown) {
+      setState(() => duration = countdownDuration);
+    } else {
+      setState(() => duration = const Duration());
+    }
+  }
+
+  void stopTimer() {
+    setState(
+      () {
+        timer1?.cancel();
+      },
+    );
+  }
+
+  void addTime() {
+    const addSeconds = 1;
+    setState(() {
+      final seconds = duration.inSeconds - addSeconds;
+      if (seconds < 0) {
+        timer1?.cancel();
+      } else {
+        duration = Duration(seconds: seconds);
+      }
+    });
   }
 
   @override
@@ -173,14 +186,14 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        //automaticallyImplyLeading: false,
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: mainGradient,
           ),
         ),
         title: Text(
-          'Test 8: Lorem ipsume',
+          'Test 8: Reading',
           style: defaultText18B.copyWith(
             color: Colors.white,
           ),
@@ -202,18 +215,38 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
                   'Thời gian còn lại',
                   style: defaultText16B,
                 ),
-                Text(
-                  '12:34',
-                  style: defaultText16B.copyWith(
-                    color: sub1Color,
-                    fontSize: 20.sp,
-                  ),
-                )
+                buildTime1(),
               ],
             ),
             const Spacer(),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return CupertinoAlertDialog(
+                      title: const Text('Bạn có chắc chắn muốn nộp bài'),
+                      actions: <Widget>[
+                        CupertinoDialogAction(
+                          isDefaultAction: true,
+                          child: Text('Đồng ý', style: defaultText20B),
+                          onPressed: () {
+                            stopTimer();
+                            Navigator.pop(context);
+                          },
+                        ),
+                        CupertinoDialogAction(
+                          isDefaultAction: true,
+                          child: Text('Hủy', style: defaultText20B),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        )
+                      ],
+                    );
+                  },
+                );
+              },
               child: Container(
                 height: 35.h,
                 width: 74.w,
@@ -290,6 +323,48 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
       ),
     );
   }
+
+  Widget buildTime1() {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    final hours = twoDigits(duration.inHours);
+    final minutes = twoDigits(duration.inMinutes.remainder(60));
+    final seconds = twoDigits(duration.inSeconds.remainder(60));
+    return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+      buildTimeCard(
+        time: hours,
+      ),
+      Text(
+        ':',
+        style: defaultText20B.copyWith(
+          color: sub1Color,
+          fontSize: 20.sp,
+        ),
+      ),
+      buildTimeCard(
+        time: minutes,
+      ),
+      Text(
+        ':',
+        style: defaultText20B.copyWith(
+          color: sub1Color,
+          fontSize: 20.sp,
+        ),
+      ),
+      buildTimeCard(
+        time: seconds,
+      ),
+    ]);
+  }
+
+  Widget buildTimeCard({
+    required String time,
+  }) =>
+      Text(
+        time,
+        style: defaultText20B.copyWith(
+          color: sub1Color,
+        ),
+      );
 }
 
 class Answer extends StatefulWidget {

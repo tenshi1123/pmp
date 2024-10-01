@@ -10,6 +10,7 @@ class DetailEvaluateScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.keyboard_arrow_left, color: Colors.white),
@@ -126,6 +127,7 @@ class DetailEvaluateScreen extends StatelessWidget {
                     child: Padding(
                       padding: EdgeInsets.only(
                         left: 10.w,
+                        top: 6.h,
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -135,7 +137,7 @@ class DetailEvaluateScreen extends StatelessWidget {
                             style: defaultText16B.copyWith(color: main1Color),
                           ),
                           Text(
-                            'Lorem ipsum dolor sit ametConsectetur adipiscing elitHed do eiusmod tempor incididunt ut',
+                            'Một ngày mới khi ánh năng lên gió khẽ đưa trên bông lúa xanh, và tình yêu trong tim có em gần bên anh, dịu dành anh đưa em qua thắng năm',
                             style: defaultText14Re,
                           ),
                         ],
@@ -160,7 +162,7 @@ class DetailEvaluateScreen extends StatelessWidget {
                             style: defaultText16B.copyWith(color: sub2Color),
                           ),
                           Text(
-                            'Lorem ipsum dolor sit ametConsectetur adipiscing elitHed do eiusmod tempor incididunt ut',
+                            'Từng ngày dịu dàng trôi qua mau, nhẹ trôi êm đềm',
                             style: defaultText14Re,
                           ),
                         ],
@@ -202,7 +204,7 @@ class DetailEvaluateScreen extends StatelessWidget {
                       right: 5.w,
                     ),
                     child: Text(
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, hed do eiusmod tempor incididunt ut. Lorem ipsum dolor sit amet, consectetur adipiscing elit, hed do eiusmod tempor incididunt ut.',
+                      'Qua bao nhiêu năm qua bao nhiêu kiếp người bao nhiêu con người đã qua, bao nhiêu nụ cười trẻ thơ ',
                       style: defaultText14Re.copyWith(
                         color: key2Color,
                       ),

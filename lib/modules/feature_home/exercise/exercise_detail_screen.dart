@@ -238,7 +238,7 @@ class _InfoTest extends StatelessWidget {
                   SizedBox(
                     width: 253.w,
                     child: Text(
-                      'Test 8: Lorem ipsum',
+                      'Test 8: Reading',
                       style: defaultText18B,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
@@ -317,16 +317,17 @@ class _InfoTest extends StatelessWidget {
                             width: 326.w,
                             height: 51.h,
                             decoration: BoxDecoration(
-                              color: main1Color,
+                              gradient: mainGradient,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10.r)),
                             ),
                             child: Center(
-                                child: Text(
-                              'Làm bài',
-                              style:
-                                  defaultText20B.copyWith(color: Colors.white),
-                            )),
+                              child: Text(
+                                'Làm bài',
+                                style: defaultText20B.copyWith(
+                                    color: Colors.white),
+                              ),
+                            ),
                           ),
                         ),
                 ],

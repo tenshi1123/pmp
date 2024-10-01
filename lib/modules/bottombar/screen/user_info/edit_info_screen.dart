@@ -77,6 +77,9 @@ class EditInfoScreen extends StatelessWidget {
                 style: defaultText14B,
               ),
             ),
+            SizedBox(
+              height: 5.h,
+            ),
             TextField(
               decoration: InputDecoration(
                 border: InputBorder.none,
@@ -97,6 +100,9 @@ class EditInfoScreen extends StatelessWidget {
                 style: defaultText14B,
               ),
             ),
+            SizedBox(
+              height: 5.h,
+            ),
             TextField(
               decoration: InputDecoration(
                 border: InputBorder.none,
@@ -109,6 +115,9 @@ class EditInfoScreen extends StatelessWidget {
                 fillColor: state2,
                 filled: true,
               ),
+            ),
+            SizedBox(
+              height: 5.h,
             ),
             SizedBox(
               width: 350.w,

@@ -108,9 +108,17 @@ class Lesson extends StatelessWidget {
   }
 }
 
+class ExamDay extends StatelessWidget {
+  const ExamDay({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}
+
 class ExcerciseItem extends StatelessWidget {
   const ExcerciseItem({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -283,7 +291,7 @@ class ConversationItem extends StatelessWidget {
                     style: defaultText14B,
                   ),
                   Text(
-                    'Lorem ipsum dolor sit amet, consect...',
+                    'Đây là tin nhắn cuối cùng $index',
                     style: defaultText12M,
                   ),
                 ],
@@ -372,5 +380,71 @@ class CustomDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Placeholder();
+  }
+}
+
+class DocumentItem extends StatelessWidget {
+  const DocumentItem({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 66.h,
+      width: 350.w,
+      margin: EdgeInsets.only(bottom: 10.h, right: 10.w, left: 10.w),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.2),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: const Offset(0, 1), // changes position of shadow
+          ),
+        ],
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Row(
+        children: [
+          SizedBox(
+            width: 10.w,
+          ),
+          Container(
+            height: 45.h,
+            width: 45.w,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: key1Color.withOpacity(0.3),
+            ),
+            child: SvgPicture.asset(
+              'assets/icons/excercise.svg',
+              height: 18.h,
+              width: 18.w,
+              fit: BoxFit.scaleDown,
+            ),
+          ),
+          SizedBox(
+            width: 15.w,
+          ),
+          SizedBox(
+            height: 70.h,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                  'Tai lieu.PDF',
+                  style: defaultText16B,
+                ),
+                Text(
+                  'Đã xem',
+                  style: defaultText14Re,
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
   }
 }

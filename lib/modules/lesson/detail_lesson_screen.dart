@@ -266,13 +266,19 @@ class _DetailLessonTabbarState extends State<DetailLessonTabbar>
                   itemBuilder: (BuildContext context, int index) {
                     return const ExcerciseItem();
                   }),
-              Card(
-                margin: const EdgeInsets.all(16.0),
-                child: Center(
-                  child: Text('${widget.outerTab}: Specifications tab'),
+              ListView.builder(
+                  shrinkWrap: true,
+                  physics: const ClampingScrollPhysics(),
+                  itemCount: 1,
+                  itemBuilder: (BuildContext context, int index) {
+                    return const DocumentItem();
+                  }),
+              Column(children: [
+                SizedBox(
+                  height: 10.h,
                 ),
-              ),
-              const _FeedbackItem(),
+                const _FeedbackItem(),
+              ]),
             ],
           ),
         ),
@@ -320,7 +326,82 @@ class _FeedbackItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(),
+      width: 350.w,
+      height: 166.h,
+      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.2),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: const Offset(0, 2), // changes position of shadow
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: 42.h,
+            width: 310.w,
+            child: Row(
+              children: [
+                CircleAvatar(
+                  backgroundColor: const Color(0xffDBC6C6),
+                  radius: 21.r,
+                  child: const Text('NP'),
+                ),
+                SizedBox(
+                  width: 10.w,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      'Nguyễn Phú',
+                      style: defaultText14B,
+                    ),
+                    Text(
+                      'Giảng viên',
+                      style: defaultText12Re,
+                    )
+                  ],
+                ),
+                const Spacer(),
+                Icon(
+                  Icons.star,
+                  color: const Color(0xffFFCF68),
+                  size: 24.dg,
+                ),
+                Icon(
+                  Icons.star,
+                  color: const Color(0xffFFCF68),
+                  size: 24.dg,
+                ),
+                Icon(
+                  Icons.star_border_outlined,
+                  color: const Color(0xffFFCF68),
+                  size: 24.dg,
+                ),
+              ],
+            ),
+          ),
+          const Divider(
+            thickness: 2,
+          ),
+          Text(
+            'Nhận xét:',
+            style: defaultText12B,
+          ),
+          Text(
+            'Đây là nhận xét của giáo viên',
+            style: defaultText14Re,
+          )
+        ],
+      ),
     );
   }
 }

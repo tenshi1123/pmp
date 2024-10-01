@@ -394,44 +394,47 @@ class _HomeScreenState extends State<HomeScreen> {
                   Container(
                     height: 74.h,
                     width: 325.w,
+                    padding: EdgeInsets.symmetric(horizontal: 10.w),
                     decoration: BoxDecoration(
                       color: key1Color.withOpacity(0.1),
                       borderRadius: BorderRadius.all(
                         Radius.circular(8.r),
                       ),
                     ),
-                    child: Row(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(
-                          width: 10.w,
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        Row(
                           children: [
-                            Text(
-                              'Phòng học',
-                              style: defaultText14Re,
+                            SizedBox(
+                              width: 80.w,
+                              child: Text(
+                                'Phòng học',
+                                style: defaultText14Re,
+                              ),
                             ),
-                            Text(
-                              'Nội dung',
-                              style: defaultText14Re,
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          width: 40.w,
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
                             Text(
                               'P101 - Giáo viên 1',
                               style: defaultText14B,
                             ),
+                          ],
+                        ),
+                        const Divider(
+                          color: Colors.white,
+                          thickness: 2,
+                        ),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 80.w,
+                              child: Text(
+                                'Nội dung',
+                                style: defaultText14Re,
+                              ),
+                            ),
                             Text(
-                              'Lorem ipsum',
+                              'Bài học 1',
                               style: defaultText14B,
                             ),
                           ],

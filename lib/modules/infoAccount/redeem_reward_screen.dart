@@ -144,13 +144,15 @@ class _RedeemRewardScreenState extends State<RedeemRewardScreen> {
                                 TextSpan(
                                   text: '24 điểm thưởng',
                                   style: defaultText14M.copyWith(
-                                      color: main1Color),
+                                    color: main1Color,
+                                  ),
                                 ),
                                 const TextSpan(text: ' lấy phần quà'),
                                 TextSpan(
                                   text: ' Gấu bông, bình giữ nhiệt',
                                   style: defaultText14M.copyWith(
-                                      color: main1Color),
+                                    color: main1Color,
+                                  ),
                                 ),
                               ],
                             ),

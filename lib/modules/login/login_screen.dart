@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pmp_english/modules/bottombar/bottom_bar_screen.dart';
+import 'package:pmp_english/modules/login/forgot_password_screen.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -184,13 +185,23 @@ class _LoginScreenState extends State<LoginScreen> {
                 Row(
                   children: [
                     const Spacer(),
-                    Text(
-                      'Quên mật khẩu',
-                      style: TextStyle(
-                        color: main1Color,
-                        fontSize: 14.sp,
-                        decoration: TextDecoration.underline,
-                        fontWeight: FontWeight.w500,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: ((context) => const ForgotPassScreen()),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'Quên mật khẩu',
+                        style: TextStyle(
+                          color: main1Color,
+                          fontSize: 14.sp,
+                          decoration: TextDecoration.underline,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                   ],

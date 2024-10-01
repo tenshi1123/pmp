@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pmp_english/modules/course/lich_hoc.dart';
@@ -125,13 +126,15 @@ class _ExamScheduleScreenState extends State<ExamScheduleScreen> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              value = 1;
+                              _format.value = 1;
                             },
                             child: Container(
                               width: 60.w,
                               height: 30.h,
                               decoration: BoxDecoration(
-                                gradient: mainGradient,
+                                color: _format.value == 1
+                                    ? main1Color
+                                    : key1Color.withOpacity(0.2),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(8.r)),
                               ),
@@ -150,13 +153,15 @@ class _ExamScheduleScreenState extends State<ExamScheduleScreen> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              value = 2;
+                              _format.value = 2;
                             },
                             child: Container(
                               width: 60.w,
                               height: 30.h,
                               decoration: BoxDecoration(
-                                color: key1Color.withOpacity(0.2),
+                                color: _format.value == 2
+                                    ? main1Color
+                                    : key1Color.withOpacity(0.2),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(8.r)),
                               ),
@@ -314,11 +319,54 @@ class _ExamScheduleScreenState extends State<ExamScheduleScreen> {
                       gradient: mainGradient,
                       borderRadius: BorderRadius.all(Radius.circular(8.r)),
                     ),
-                    child: Center(
-                      child: Text(
-                        'Đăng kí tham gia',
-                        style: defaultText14B.copyWith(
-                          color: Colors.white,
+                    child: GestureDetector(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return CupertinoAlertDialog(
+                              title: const Text(
+                                  'Bạn có chắc chắn muốn đăng kí thăm gia buổi thi này'),
+                              actions: <Widget>[
+                                CupertinoDialogAction(
+                                  isDefaultAction: true,
+                                  child: Text(
+                                    'Chắc chắn',
+                                    style: TextStyle(
+                                        fontSize: 20, color: key1Color),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context, rootNavigator: true)
+                                        .pop(
+                                      (_) => false,
+                                    );
+                                  },
+                                ),
+                                CupertinoDialogAction(
+                                  isDefaultAction: true,
+                                  child: Text(
+                                    'Hủy',
+                                    style: TextStyle(
+                                        fontSize: 20, color: key1Color),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context, rootNavigator: true)
+                                        .pop(
+                                      (_) => false,
+                                    );
+                                  },
+                                )
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      child: Center(
+                        child: Text(
+                          'Đăng kí tham gia',
+                          style: defaultText14B.copyWith(
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),

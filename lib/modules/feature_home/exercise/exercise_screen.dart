@@ -146,6 +146,9 @@ class ExerciseScreen extends StatelessWidget {
               textAlign: TextAlign.left,
             ),
           ),
+          SizedBox(
+            height: 5.h,
+          ),
           GestureDetector(
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
@@ -155,7 +158,7 @@ class ExerciseScreen extends StatelessWidget {
               child: const ExcerciseItem()),
           const ExcerciseItem(),
           SizedBox(
-            height: 330.h,
+            height: 360.h,
             width: 390.w,
             child: const ExcerciseTabBar('Flights'),
           ),

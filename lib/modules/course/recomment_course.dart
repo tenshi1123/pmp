@@ -194,7 +194,7 @@ class _RecommentCourseState extends State<RecommentCourse>
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum a eleifend ex, non vehicula risus. Cras in risus nec ipsum scelerisque aliquet. Praesent egestas condimentum pellentesque. Nullam ac tincidunt purus. In hac habitasse',
+                              'Just gonna stand there anh watch me burn',
                               style: defaultText14Re,
                               maxLines: isExpanded ? 11 : 4,
                               softWrap: true,
@@ -204,7 +204,7 @@ class _RecommentCourseState extends State<RecommentCourse>
                           const SizedBox(
                             height: 4,
                           ),
-                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum a eleifend ex, non vehicula risus. Cras in risus nec ipsum scelerisque aliquet. Praesent egestas condimentum pellentesque. Nullam ac tincidunt purus. In hac habitasse  Xem thêm'
+                          'Một người như thế đấy yêu là yêu đến hết đời này, em không là thế giới ấy em thật là nhỏ bé thôi tại sao em mãi cứ ôm mãi không bao giờ nói ra có lẽ em yêu anh nhiều quá nên là em chẳng dám buông ra có lẽ anh thấy em mạnh mẽ nên là anh chẳng muốn vỗ về'
                                       .length <
                                   197
                               ? const SizedBox()

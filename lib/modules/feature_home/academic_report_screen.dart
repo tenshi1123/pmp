@@ -75,6 +75,7 @@ class AcademicReportScreen extends StatelessWidget {
                 Container(
                   width: 350.w,
                   height: 144.h,
+                  margin: EdgeInsets.only(top: 10.h, bottom: 6.h),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(8.r)),
                       color: Colors.white,
@@ -259,6 +260,11 @@ class AcademicReportScreen extends StatelessWidget {
                 ),
                 Container(
                   width: 350.w,
+                  margin: EdgeInsets.only(top: 10.h),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10.w,
+                    vertical: 6.h,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     boxShadow: [

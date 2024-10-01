@@ -131,11 +131,11 @@ class EvaluateItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Đánh giá định kỳ tháng 7',
+                ' Đánh giá định kỳ tháng 7',
                 style: defaultText14B,
               ),
               Text(
-                '28.07.2024',
+                '28.07.2024 ',
                 style: defaultText12Re,
               ),
             ],

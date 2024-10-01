@@ -108,44 +108,47 @@ class LichHocScreen extends StatelessWidget {
                 Container(
                   height: 74.h,
                   width: 325.w,
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
                   decoration: BoxDecoration(
                     color: key1Color.withOpacity(0.1),
                     borderRadius: BorderRadius.all(
                       Radius.circular(8.r),
                     ),
                   ),
-                  child: Row(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        width: 10.w,
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      Row(
                         children: [
-                          Text(
-                            'Phòng học',
-                            style: defaultText14Re,
+                          SizedBox(
+                            width: 80.w,
+                            child: Text(
+                              'Phòng học',
+                              style: defaultText14Re,
+                            ),
                           ),
-                          Text(
-                            'Nội dung',
-                            style: defaultText14Re,
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        width: 40.w,
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
                           Text(
                             'P101 - Giáo viên 1',
                             style: defaultText14B,
                           ),
+                        ],
+                      ),
+                      const Divider(
+                        color: Colors.white,
+                        thickness: 2,
+                      ),
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: 80.w,
+                            child: Text(
+                              'Nội dung',
+                              style: defaultText14Re,
+                            ),
+                          ),
                           Text(
-                            'Lorem ipsum',
+                            'Bài học 1',
                             style: defaultText14B,
                           ),
                         ],
@@ -270,24 +273,298 @@ class _LichhocTabBarState extends State<LichhocTabBar>
           controller: _tabController,
           tabs: <Widget>[
             homeTab(title: 'Sắp tới', isSeprator: false),
-            homeTab(title: 'Đã xong'),
+            homeTab(title: 'Đã tham gia'),
           ],
         ),
         Expanded(
           child: TabBarView(
             controller: _tabController,
             children: <Widget>[
-              ListView.builder(
-                  shrinkWrap: true,
-                  physics: const ClampingScrollPhysics(),
-                  itemCount: 5,
-                  itemBuilder: (BuildContext context, int index) {
-                    return const Lesson(title1: '', title2: '', title3: '');
-                  }),
-              Card(
-                margin: const EdgeInsets.all(16.0),
-                child: Center(
-                    child: Text('${widget.outerTab}: Specifications tab')),
+              Column(
+                children: [
+                  Container(
+                    margin:
+                        EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+                    height: 182.h,
+                    width: 349.w,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(8.r),
+                        ),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.2),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: const Offset(
+                                0, 2), // changes position of shadow
+                          ),
+                        ]),
+                    child: Column(
+                      //mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 10.w,
+                            ),
+                            Container(
+                              height: 70.h,
+                              width: 70.w,
+                              decoration: BoxDecoration(
+                                gradient: mainGradient2,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(12.r),
+                                ),
+                              ),
+                              child: (Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    '21\nTháng 5 ',
+                                    style: defaultText16B.copyWith(
+                                      color: Colors.white,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              )),
+                            ),
+                            SizedBox(
+                              width: 15.w,
+                            ),
+                            SizedBox(
+                              height: 70.h,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Text(
+                                    'Thi thử - tháng 9',
+                                    style: defaultText16B,
+                                  ),
+                                  Text(
+                                    '21/05/2024',
+                                    style: defaultText14Re,
+                                  ),
+                                  Text(
+                                    '08:00 - 11:00 ~ 3 tiếng',
+                                    style: defaultText14Re,
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Container(
+                          height: 74.h,
+                          width: 325.w,
+                          padding: EdgeInsets.symmetric(horizontal: 10.w),
+                          decoration: BoxDecoration(
+                            color: key1Color.withOpacity(0.1),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(8.r),
+                            ),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: 80.w,
+                                    child: Text(
+                                      'Cơ sở',
+                                      style: defaultText14Re,
+                                    ),
+                                  ),
+                                  Text(
+                                    'P101 - Giáo viên 1',
+                                    style: defaultText14B,
+                                  ),
+                                ],
+                              ),
+                              const Divider(
+                                color: Colors.white,
+                                thickness: 2,
+                              ),
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: 80.w,
+                                    child: Text(
+                                      'Hình thức',
+                                      style: defaultText14Re,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Offline',
+                                    style: defaultText14B,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                children: [
+                  Container(
+                    margin:
+                        EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+                    height: 182.h,
+                    width: 349.w,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(8.r),
+                        ),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.2),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: const Offset(
+                                0, 2), // changes position of shadow
+                          ),
+                        ]),
+                    child: Column(
+                      //mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 10.w,
+                            ),
+                            Container(
+                              height: 70.h,
+                              width: 70.w,
+                              decoration: BoxDecoration(
+                                color: key1Color.withOpacity(0.3),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(12.r),
+                                ),
+                              ),
+                              child: (Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    '21\nTháng 5 ',
+                                    style: defaultText16B.copyWith(
+                                      color: Colors.white,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              )),
+                            ),
+                            SizedBox(
+                              width: 15.w,
+                            ),
+                            SizedBox(
+                              height: 70.h,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Text(
+                                    'Thi thử - tháng 9',
+                                    style: defaultText16B,
+                                  ),
+                                  Text(
+                                    '21/05/2024',
+                                    style: defaultText14Re,
+                                  ),
+                                  Text(
+                                    '08:00 - 11:00 ~ 3 tiếng',
+                                    style: defaultText14Re,
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Container(
+                          height: 74.h,
+                          width: 325.w,
+                          padding: EdgeInsets.symmetric(horizontal: 10.w),
+                          decoration: BoxDecoration(
+                            color: key1Color.withOpacity(0.1),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(8.r),
+                            ),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: 80.w,
+                                    child: Text(
+                                      'Cơ sở',
+                                      style: defaultText14Re,
+                                    ),
+                                  ),
+                                  Text(
+                                    'P101 - Giáo viên 1',
+                                    style: defaultText14B,
+                                  ),
+                                ],
+                              ),
+                              const Divider(
+                                color: Colors.white,
+                                thickness: 2,
+                              ),
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: 80.w,
+                                    child: Text(
+                                      'Hình thức',
+                                      style: defaultText14Re,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Offline',
+                                    style: defaultText14B,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
