@@ -44,7 +44,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 Positioned(
                   bottom: 0,
                   child: Container(
-                    height: 242.h,
+                    //height: 242.h,
                     width: 349.w,
                     padding: EdgeInsets.symmetric(horizontal: 18.w),
                     decoration: BoxDecoration(
@@ -217,6 +217,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       'assets/images/bg_diemthuong.png',
                       height: 68.h,
                       width: 168.w,
+                      fit: BoxFit.fill,
                     ),
                     Positioned(
                       top: 10.h,
@@ -257,6 +258,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       'assets/images/bg_chungchi.png',
                       height: 68.h,
                       width: 168.w,
+                      fit: BoxFit.fill,
                     ),
                     Positioned(
                       top: 10.h,

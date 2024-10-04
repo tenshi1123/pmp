@@ -30,8 +30,12 @@ class _SplshscreenState extends State<Splshscreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body:
-          Image.asset("assets/images/splash.png", height: 844.h, width: 390.w),
+      body: Image.asset(
+        "assets/images/splash.png",
+        height: 844.h,
+        width: 390.w,
+        fit: BoxFit.fill,
+      ),
     );
   }
 }

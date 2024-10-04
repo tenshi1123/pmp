@@ -156,6 +156,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                       color: Colors.red,
                     ),
                   ),
+                  daysOfWeekHeight: 36.h,
                   calendarFormat: _calendarFormat,
                   rangeSelectionMode: _rangeSelectionMode,
                   eventLoader: _getEventsForDay,

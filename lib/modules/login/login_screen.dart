@@ -58,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Text(
                   'Đăng nhập để tiếp tục sử dụng ứng dụng',
-                  textAlign: TextAlign.right,
+                  textAlign: TextAlign.center,
                   overflow: TextOverflow.clip,
                   style: TextStyle(
                     fontSize: 18.sp,
@@ -103,7 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     color: const Color(0xffF4F1F3),
                   ),
                   child: TextField(
-                    keyboardType: const TextInputType.numberWithOptions(),
+                    //keyboardType: const TextInputType.numberWithOptions(),
                     controller: studenIdController,
                     focusNode: _focusNode1,
                     scrollPadding: EdgeInsets.symmetric(

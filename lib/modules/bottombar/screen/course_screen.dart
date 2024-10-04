@@ -139,7 +139,7 @@ class CourseItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 20.w),
-      height: 402.h,
+      //height: 402.h,
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.all(
