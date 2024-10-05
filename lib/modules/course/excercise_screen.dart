@@ -42,8 +42,12 @@ class ExcerciseScreen extends StatelessWidget {
                 SizedBox(
                   height: 10.h,
                 ),
-                const ExcerciseItem(),
-                const ExcerciseItem(),
+                const ExcerciseItem(
+                  isComplete: true,
+                ),
+                const ExcerciseItem(
+                  isComplete: true,
+                ),
               ],
             ),
           ),

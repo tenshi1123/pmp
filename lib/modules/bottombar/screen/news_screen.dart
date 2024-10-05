@@ -61,7 +61,7 @@ class _NewsScreenState extends State<NewsScreen> with TickerProviderStateMixin {
             child: ListView.builder(
                 shrinkWrap: true,
                 physics: const ClampingScrollPhysics(),
-                itemCount: 10,
+                itemCount: 1,
                 itemBuilder: (BuildContext context, int index) {
                   return CourseItem(
                     index: index,

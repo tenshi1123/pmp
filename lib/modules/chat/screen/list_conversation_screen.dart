@@ -67,7 +67,7 @@ class ListConversationScreen extends StatelessWidget {
                 shrinkWrap: true,
                 padding: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 20.w),
                 physics: const ClampingScrollPhysics(),
-                itemCount: 5,
+                itemCount: 4,
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
                     padding: EdgeInsets.only(bottom: 10.h),

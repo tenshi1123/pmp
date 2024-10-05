@@ -48,3 +48,11 @@ LinearGradient mainGradient3 = const LinearGradient(
     Color(0xffED1C24),
   ],
 );
+LinearGradient mainGradient4 = LinearGradient(
+  begin: Alignment.topLeft,
+  end: const Alignment(0.8, 1),
+  colors: [
+    key1Color.withOpacity(0.3),
+    key1Color.withOpacity(0.3),
+  ],
+);

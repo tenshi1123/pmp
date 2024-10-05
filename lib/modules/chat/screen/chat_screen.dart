@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,6 +7,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:camera_camera/camera_camera.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -15,6 +19,7 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   TextEditingController messageController = TextEditingController();
+  List<File> photos = <File>[];
   Future<void> _makePhoneCall(String phoneNumber) async {
     final Uri launchUri = Uri(
       scheme: 'tel',
@@ -23,12 +28,82 @@ class _ChatScreenState extends State<ChatScreen> {
     await launchUrl(launchUri);
   }
 
+  void openCamera() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => CameraCamera(
+          onFile: (file) {
+            photos.add(file);
+
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return CupertinoAlertDialog(
+                  title: const Text('Tin nhắn đã được gửi'),
+                  actions: <Widget>[
+                    CupertinoDialogAction(
+                      isDefaultAction: true,
+                      child: Text(
+                        'ok',
+                        style: defaultText20B,
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      },
+                    )
+                  ],
+                );
+              },
+            );
+            setState(() {});
+          },
+        ),
+      ),
+    );
+  }
+
+  Future _pickImageFromGallery() async {
+    final returnedImage = await ImagePicker().pickMultiImage();
+    photos = List<File>.from(
+      (returnedImage).map(
+        (e) => File(e.path),
+      ),
+    );
+    //File(returnedImage!.path);
+    if (photos.isNotEmpty) {}
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: const Text('Giáo viên 01'),
+          title: Row(
+            children: [
+              CircleAvatar(
+                radius: 21.r,
+                backgroundColor: Colors.blue.shade800,
+                child: const Text('AH'),
+              ),
+              SizedBox(
+                width: 10.w,
+              ),
+              Text(
+                'Giáo viên 01',
+                style: defaultText18B.copyWith(
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
           toolbarHeight: 60.h,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
@@ -41,7 +116,10 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
           actions: [
             IconButton(
-              icon: const Icon(Icons.phone),
+              icon: const Icon(
+                Icons.phone,
+                color: Colors.white,
+              ),
               onPressed: () {
                 _makePhoneCall('19008978');
               },
@@ -51,7 +129,7 @@ class _ChatScreenState extends State<ChatScreen> {
         body: Stack(
           children: [
             ListView.builder(
-              itemCount: 3,
+              itemCount: 1,
               shrinkWrap: true,
               padding: EdgeInsets.only(bottom: 50.h),
               reverse: true,
@@ -70,7 +148,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         ),
                         padding: const EdgeInsets.all(16),
                         child: Text(
-                          'test',
+                          'hello thay',
                           style: defaultText14Re,
                         )),
                   ),
@@ -88,14 +166,18 @@ class _ChatScreenState extends State<ChatScreen> {
                 child: Row(
                   children: <Widget>[
                     GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          openCamera();
+                        },
                         child:
                             SvgPicture.asset('assets/icons/camera_icon.svg')),
                     const SizedBox(
                       width: 15,
                     ),
                     GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          _pickImageFromGallery();
+                        },
                         child:
                             SvgPicture.asset('assets/icons/picture_icon.svg')),
                     const SizedBox(

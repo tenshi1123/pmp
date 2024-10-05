@@ -155,8 +155,12 @@ class ExerciseScreen extends StatelessWidget {
                   builder: (context) => const TestScreen(),
                 ));
               },
-              child: const ExcerciseItem()),
-          const ExcerciseItem(),
+              child: const ExcerciseItem(
+                isComplete: true,
+              )),
+          const ExcerciseItem(
+            isComplete: true,
+          ),
           SizedBox(
             height: 360.h,
             width: 390.w,

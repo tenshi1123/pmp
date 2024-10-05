@@ -27,17 +27,10 @@ class _AppState extends State<App> {
             primarySwatch: Colors.blue,
             textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
           ),
-          home: child,
+          home: const Splshscreen(),
+          routes: const <String, WidgetBuilder>{},
         );
       },
-      child: MaterialApp(
-        theme: ThemeData(
-          useMaterial3: false,
-        ),
-        home: const Splshscreen(),
-        debugShowCheckedModeBanner: false,
-        routes: const <String, WidgetBuilder>{},
-      ),
     );
   }
 }
