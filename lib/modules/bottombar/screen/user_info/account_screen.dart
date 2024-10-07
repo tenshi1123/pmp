@@ -44,7 +44,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 Positioned(
                   bottom: 0,
                   child: Container(
-                    //height: 242.h,
+                    height: 242.h,
                     width: 349.w,
                     padding: EdgeInsets.symmetric(horizontal: 18.w),
                     decoration: BoxDecoration(
@@ -100,7 +100,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           ],
                         ),
                         SizedBox(
-                          height: 30.h,
+                          height: 15.h,
                         ),
                         Divider(
                           thickness: 1,
@@ -157,6 +157,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           height: 10.h,
                         ),
                         Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(

@@ -26,6 +26,8 @@ dependencies:
   flutter_widget_from_html_core: ^0.15.2
   number_paginator: ^0.4.1
   otp_pin_field: ^1.2.9+1
+  camera_camera: ^3.0.0
+  image_picker: ^1.1.2
 dev_dependencies:
   flutter_test:
     sdk: flutter

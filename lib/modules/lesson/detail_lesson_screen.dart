@@ -268,7 +268,9 @@ class _DetailLessonTabbarState extends State<DetailLessonTabbar>
                   physics: const ClampingScrollPhysics(),
                   itemCount: 5,
                   itemBuilder: (BuildContext context, int index) {
-                    return const ExcerciseItem();
+                    return const ExcerciseItem(
+                      isComplete: true,
+                    );
                   }),
               ListView.builder(
                   shrinkWrap: true,

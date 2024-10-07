@@ -75,13 +75,25 @@ class _ExcerciseTabBarState extends State<ExcerciseTabBar>
                             builder: (context) => const TestScreen(),
                           ));
                         },
-                        child: const ExcerciseItem());
+                        child: const ExcerciseItem(
+                          isComplete: true,
+                        ));
                   }),
-              Card(
-                margin: const EdgeInsets.all(16.0),
-                child: Center(
-                    child: Text('${widget.outerTab}: Specifications tab')),
-              ),
+              ListView.builder(
+                  shrinkWrap: true,
+                  physics: const ClampingScrollPhysics(),
+                  itemCount: 3,
+                  itemBuilder: (BuildContext context, int index) {
+                    return GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const TestScreen(),
+                          ));
+                        },
+                        child: const ExcerciseItem(
+                          isComplete: false,
+                        ));
+                  }),
               Card(
                 margin: const EdgeInsets.all(16.0),
                 child: Center(

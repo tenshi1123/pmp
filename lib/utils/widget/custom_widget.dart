@@ -118,7 +118,8 @@ class ExamDay extends StatelessWidget {
 }
 
 class ExcerciseItem extends StatelessWidget {
-  const ExcerciseItem({super.key});
+  const ExcerciseItem({super.key, required this.isComplete});
+  final bool isComplete;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -147,7 +148,7 @@ class ExcerciseItem extends StatelessWidget {
             width: 45.w,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              gradient: mainGradient2,
+              gradient: isComplete ? mainGradient2 : mainGradient4,
             ),
             child: SvgPicture.asset(
               'assets/icons/excercise.svg',
@@ -166,7 +167,7 @@ class ExcerciseItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
-                  'Bai tap 1',
+                  isComplete ? 'Bai tap tuan 2' : 'Bai tap tuan 1',
                   style: defaultText16B,
                 ),
                 Text(
