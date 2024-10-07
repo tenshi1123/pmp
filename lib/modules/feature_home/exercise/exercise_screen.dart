@@ -78,8 +78,8 @@ class ExerciseScreen extends StatelessWidget {
             Row(
               children: [
                 SizedBox(
-                  height: 68.dg,
-                  width: 68.dg,
+                  height: 100.h,
+                  width: 100.h,
                   child: const PieChart(),
                 ),
                 SizedBox(
@@ -156,10 +156,11 @@ class ExerciseScreen extends StatelessWidget {
                     builder: (context) => const TestScreen(),
                   ));
                 },
-                child: const ExcerciseItem()),
-            const ExcerciseItem(),
+                child: const ExcerciseItem(
+                  isComplete: false,
+                )),
             SizedBox(
-              height: 360.h,
+              height: 400.h,
               width: 390.w,
               child: const ExcerciseTabBar('Flights'),
             ),

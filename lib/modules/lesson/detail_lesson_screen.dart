@@ -36,7 +36,7 @@ class DetailLessonScreen extends StatelessWidget {
                   RichText(
                     text: TextSpan(
                       text: '  Chi tiết buổi học ',
-                      style: defaultText14B,
+                      style: defaultText16M,
                       recognizer: TapGestureRecognizer()
                         ..onTap = () => Navigator.of(context).pop(),
                     ),
@@ -176,7 +176,9 @@ class DetailLessonScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 10.h,),
+              SizedBox(
+                height: 10.h,
+              ),
               SizedBox(
                 height: 500.h,
                 width: 390.w,

@@ -72,7 +72,7 @@ class EvaluateScreen extends StatelessWidget {
             child: ListView.builder(
                 shrinkWrap: true,
                 physics: const ClampingScrollPhysics(),
-                itemCount: 5,
+                itemCount: 3,
                 padding: EdgeInsets.symmetric(
                   horizontal: 10.w,
                   vertical: 10.h,

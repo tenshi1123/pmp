@@ -111,13 +111,13 @@ class ReportageScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             SizedBox(
                               height: 100.h,
                               width: 100.h,
                               child: const PieChart(),
                             ),
-                            const Spacer(),
                             Text(
                               'Đã học',
                               style: defaultText14M,
@@ -126,7 +126,6 @@ class ReportageScreen extends StatelessWidget {
                               '24',
                               style: defaultText16B,
                             ),
-                            
                           ],
                         ),
                         SizedBox(

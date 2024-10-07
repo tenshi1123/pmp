@@ -16,7 +16,12 @@ class DetailEvaluateScreen extends StatelessWidget {
           icon: const Icon(Icons.keyboard_arrow_left, color: Colors.white),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: const Text('Chi tiết đánh giá'),
+        title: Text(
+          'Chi tiết đánh giá',
+          style: defaultText18B.copyWith(
+            color: Colors.white,
+          ),
+        ),
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: mainGradient,

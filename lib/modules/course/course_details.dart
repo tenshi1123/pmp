@@ -77,6 +77,8 @@ class _CourseDetailsState extends State<CourseDetails>
                         ]),
                     child: TabBar(
                       controller: _tabController,
+                      dividerColor: Colors.transparent,
+                      indicatorSize: TabBarIndicatorSize.tab,
                       indicator: BoxDecoration(
                           borderRadius: BorderRadius.circular(8.0),
                           gradient: mainGradient2),

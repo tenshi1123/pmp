@@ -215,7 +215,10 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                             child: Row(children: [
                               SizedBox(
                                 width: 40.w,
-                                child: Text('${8 + index}:00'),
+                                child: Text(
+                                  '${8 + index}:00',
+                                  style: defaultText14M,
+                                ),
                               ),
                               Container(
                                 height: 1,

@@ -58,8 +58,11 @@ class _CourseScreenState extends State<CourseScreen>
                     child: TabBar(
                       controller: _tabController,
                       indicator: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.0),
-                          gradient: mainGradient2),
+                        borderRadius: BorderRadius.circular(8.0),
+                        gradient: mainGradient2,
+                      ),
+                      dividerColor: Colors.transparent,
+                      indicatorSize: TabBarIndicatorSize.tab,
                       labelStyle: const TextStyle(
                           fontSize: 14, fontWeight: FontWeight.w500),
                       labelColor: Colors.white,

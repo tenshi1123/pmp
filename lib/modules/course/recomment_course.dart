@@ -116,122 +116,25 @@ class _RecommentCourseState extends State<RecommentCourse>
                                   SizedBox(
                                     width: 10.w,
                                   ),
-                                ]),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 10.w,
-                                ),
-                                SvgPicture.asset(
-                                    'assets/icons/learning_path.svg'),
-                                SizedBox(
-                                  width: 10.w,
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'Lộ trình học',
-                                      style: defaultText14B,
-                                    ),
-                                    Text(
-                                      '60 buổi',
-                                      style: defaultText14Re.copyWith(
-                                        color: key1Color.withOpacity(0.5),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                          const Spacer(),
-                          Container(
-                            width: 166.w,
-                            height: 86.h,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12.r),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.2),
-                                    spreadRadius: 5,
-                                    blurRadius: 7,
-                                    offset: const Offset(
-                                        0, 2), // changes position of shadow
+                                  SvgPicture.asset(
+                                      'assets/icons/learning_path.svg'),
+                                  SizedBox(
+                                    width: 10.w,
                                   ),
-                                ]),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 10.w,
-                                ),
-                                SvgPicture.asset('assets/icons/subcriber.svg'),
-                                SizedBox(
-                                  width: 10.w,
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'Đã đăng ký',
-                                      style: defaultText14B,
-                                    ),
-                                    Text(
-                                      '312 người',
-                                      style: defaultText14Re.copyWith(
-                                        color: key1Color.withOpacity(0.5),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Lộ trình học',
+                                        style: defaultText14B,
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      Text(
-                        'Mô tả',
-                        style: defaultText18B,
-                      ),
-                      Column(
-                        children: [
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              'Just gonna stand there anh watch me burn',
-                              style: defaultText14Re,
-                              maxLines: isExpanded ? 11 : 4,
-                              softWrap: true,
-                              // overflow: TextOverflow.fade,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 4,
-                          ),
-                          'Một người như thế đấy yêu là yêu đến hết đời này, em không là thế giới ấy em thật là nhỏ bé thôi tại sao em mãi cứ ôm mãi không bao giờ nói ra có lẽ em yêu anh nhiều quá nên là em chẳng dám buông ra có lẽ anh thấy em mạnh mẽ nên là anh chẳng muốn vỗ về'
-                                      .length <
-                                  197
-                              ? const SizedBox()
-                              : InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      isExpanded = !isExpanded;
-                                    });
-                                  },
-                                  child: Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Text(
-                                      isExpanded == false
-                                          ? 'Xem thêm'
-                                          : 'Rút gọn',
-                                      style: defaultText16B.copyWith(
-                                          color: main1Color),
-                                      maxLines: 1,
-                                    ),
+                                      Text(
+                                        '60 buổi',
+                                        style: defaultText14Re.copyWith(
+                                          color: key1Color.withOpacity(0.5),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
@@ -262,22 +165,20 @@ class _RecommentCourseState extends State<RecommentCourse>
                                   SizedBox(
                                     width: 10.w,
                                   ),
-                                  SizedBox(
-                                    height: 42.h,
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          'Đã đăng ký',
-                                          style: defaultText14B,
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Đã đăng ký',
+                                        style: defaultText14B,
+                                      ),
+                                      Text(
+                                        '312 người',
+                                        style: defaultText14Re.copyWith(
+                                          color: key1Color.withOpacity(0.5),
                                         ),
-                                        Text(
-                                          '312 người',
-                                          style: defaultText14Re.copyWith(
-                                            color: key1Color.withOpacity(0.5),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
@@ -287,6 +188,7 @@ class _RecommentCourseState extends State<RecommentCourse>
                         SizedBox(
                           height: 10.h,
                         ),
+
                         Text(
                           'Mô tả',
                           style: defaultText18B,
@@ -348,7 +250,7 @@ class _RecommentCourseState extends State<RecommentCourse>
                               scrollDirection: Axis.horizontal,
                               itemCount: 3,
                               physics: const ClampingScrollPhysics(),
-                              //itemExtent: 145.h,
+                              // itemExtent: 160.h,
                               itemBuilder: (BuildContext context, int index) {
                                 return Container(
                                   margin: EdgeInsets.only(
@@ -509,38 +411,54 @@ class _RecommentCourseState extends State<RecommentCourse>
                     ),
                   ],
                 ),
-              ],
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomLeft,
-            child: Container(
-              height: 84.h,
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.2),
-                    spreadRadius: 5,
-                    blurRadius: 7,
-                    offset: const Offset(0, 2), // changes position of shadow
-                  ),
-                ],
               ),
-              child: Row(
-                children: [
-                  Column(
-                    children: [
-
-                      Text(
-                        'Học phí',
-                        style: defaultText14M,
+            ),
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: Container(
+                height: 84.h,
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.2),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: const Offset(0, 2), // changes position of shadow
+                    ),
+                  ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Học phí',
+                            style: defaultText14M,
+                          ),
+                          Text(
+                            '4.500.000 VND',
+                            style: defaultText20B.copyWith(
+                              color: main1Color,
+                            ),
+                          ),
+                        ]),
+                    Container(
+                      height: 43.h,
+                      width: 122.w,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(36.r),
+                        gradient: mainGradient,
                       ),
-                      Text(
-                        '4.500.000 VND',
-                        style: defaultText20B.copyWith(
-                          color: main1Color,
+                      child: Center(
+                        child: Text(
+                          'Đăng ký ngay',
+                          style: defaultText14B.copyWith(
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     )
