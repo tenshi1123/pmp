@@ -45,8 +45,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       CircleAvatar(
                         backgroundColor: Colors.brown.shade800,
-                        radius: 24,
-                        child: const Text('HA'),
+                        radius: 24.r,
+                        child: Text('HA',style: defaultText14M.copyWith(color: main1Color)),
                       ),
                       SizedBox(
                         width: 15.w,
@@ -300,6 +300,7 @@ class _HomeScreenState extends State<HomeScreen> {
           //     ],
           //   ),
           // ),
+          SizedBox(height: 10.h,),
           Text(
             '    Lịch học gần nhất',
             style: defaultText16B,
@@ -341,7 +342,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         width: 10.w,
                       ),
                       Container(
-                        height: 70.h,
+                        //height: 70.h,
                         width: 70.w,
                         decoration: BoxDecoration(
                           gradient: mainGradient2,
@@ -349,24 +350,20 @@ class _HomeScreenState extends State<HomeScreen> {
                             Radius.circular(12.r),
                           ),
                         ),
-                        child: (Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              '21\nTháng 5 ',
-                              style: defaultText16B.copyWith(
-                                color: Colors.white,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
+                        padding: EdgeInsets.symmetric(vertical: 5.h),
+                        child: (Text(
+                          '21\nTháng 5 ',
+                          style: defaultText16B.copyWith(
+                            color: Colors.white,
+                          ),
+                          textAlign: TextAlign.center,
                         )),
                       ),
                       SizedBox(
                         width: 15.w,
                       ),
                       SizedBox(
-                        height: 70.h,
+                        //height: 70.h,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -592,7 +589,7 @@ Widget _stackDiemDanh({bool diemdanh = true}) {
 
 Widget _homeIcon({required String title, required String image}) {
   return SizedBox(
-    height: 96.h,
+    //height: 96.h,
     width: 80.w,
     child: Column(
       children: [

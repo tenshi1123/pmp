@@ -105,7 +105,7 @@ class Noti extends StatelessWidget {
       },
       child: Container(
         margin: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 10.w),
-        height: 112.h,
+        //height: 112.h,
         decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: state2),

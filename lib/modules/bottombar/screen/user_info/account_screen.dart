@@ -164,7 +164,7 @@ class _AccountScreenState extends State<AccountScreen> {
                               style: defaultText14Re,
                             ),
                             SizedBox(
-                              height: 38.h,
+                              //height: 38.h,
                               width: 202.w,
                               child: Text(
                                 'Bắc Xuân An, Phường Xuân An, Tp. Phan thiết, Tỉnh Bình Thuận.',
@@ -175,6 +175,7 @@ class _AccountScreenState extends State<AccountScreen> {
                             ),
                           ],
                         ),
+                        SizedBox(height: 10.h,)
                       ],
                     ),
                   ),

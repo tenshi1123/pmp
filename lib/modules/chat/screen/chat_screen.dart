@@ -51,7 +51,7 @@ class _ChatScreenState extends State<ChatScreen> {
         body: Stack(
           children: [
             ListView.builder(
-              itemCount: 3,
+              itemCount: 1,
               shrinkWrap: true,
               padding: EdgeInsets.only(bottom: 50.h),
               reverse: true,

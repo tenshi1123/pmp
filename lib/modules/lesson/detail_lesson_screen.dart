@@ -51,7 +51,7 @@ class DetailLessonScreen extends StatelessWidget {
                 height: 20.h,
               ),
               Container(
-                height: 278.h,
+                height: 300.h,
                 width: 350.w,
                 decoration: BoxDecoration(
                   boxShadow: [
@@ -101,7 +101,7 @@ class DetailLessonScreen extends StatelessWidget {
                       height: 10.h,
                     ),
                     Container(
-                      height: 111.h,
+                      height: 120.h,
                       width: 326.w,
                       padding: EdgeInsets.symmetric(
                         horizontal: 10.w,
@@ -163,8 +163,10 @@ class DetailLessonScreen extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                '08:00 - 11:00, 21/05/2024 ',
+                                '08:00 - 11:00',
                                 style: defaultText14B,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ],
                           ),
@@ -174,6 +176,7 @@ class DetailLessonScreen extends StatelessWidget {
                   ],
                 ),
               ),
+              SizedBox(height: 10.h,),
               SizedBox(
                 height: 500.h,
                 width: 390.w,
@@ -233,6 +236,7 @@ class _DetailLessonTabbarState extends State<DetailLessonTabbar>
           ),
           unselectedLabelColor: keyBlack.withOpacity(0.3),
           labelColor: keyBlack,
+          labelStyle: defaultText12M,
           controller: _tabController,
           tabs: <Widget>[
             homeTab(
@@ -344,7 +348,7 @@ class _FeedbackItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: 42.h,
+            height: 50.h,
             width: 310.w,
             child: Row(
               children: [

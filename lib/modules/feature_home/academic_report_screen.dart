@@ -289,61 +289,58 @@ class AcademicReportScreen extends StatelessWidget {
                         indent: 15.w,
                         endIndent: 15.w,
                       ),
-                      SizedBox(
-                        height: 60.h,
-                        child: Row(
-                          children: [
-                            Container(
-                              height: 56.h,
-                              width: 56.w,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.2),
-                                    spreadRadius: 5,
-                                    blurRadius: 7,
-                                    offset: const Offset(
-                                        0, 2), // changes position of shadow
-                                  ),
-                                ],
-                              ),
-                              child: Center(
-                                child: Text(
-                                  '680',
-                                  style: defaultText20B.copyWith(
-                                    color: main2Color,
-                                  ),
+                      Row(
+                        children: [
+                          Container(
+                            height: 56.h,
+                            width: 56.w,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.2),
+                                  spreadRadius: 5,
+                                  blurRadius: 7,
+                                  offset: const Offset(
+                                      0, 2), // changes position of shadow
                                 ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10.w,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Thi thử tháng 12',
-                                  style: defaultText14B,
-                                ),
-                                Text(
-                                  '21/12/2024',
-                                  style: defaultText14Re,
-                                ),
-                                Text(
-                                  'Báo cáo kết quả',
-                                  style: defaultText12Re.copyWith(
-                                    color: main1Color,
-                                    decoration: TextDecoration.underline,
-                                  ),
-                                )
                               ],
                             ),
-                          ],
-                        ),
+                            child: Center(
+                              child: Text(
+                                '680',
+                                style: defaultText20B.copyWith(
+                                  color: main2Color,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10.w,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Thi thử tháng 12',
+                                style: defaultText14B,
+                              ),
+                              Text(
+                                '21/12/2024',
+                                style: defaultText14Re,
+                              ),
+                              Text(
+                                'Báo cáo kết quả',
+                                style: defaultText12Re.copyWith(
+                                  color: main1Color,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              )
+                            ],
+                          ),
+                        ],
                       ),
                       SizedBox(
                         height: 10.h,

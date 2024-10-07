@@ -60,7 +60,7 @@ class AttendanceDetails extends StatelessWidget {
                 children: [
                   SizedBox(
                     height: 120.h,
-                    width: 120.w,
+                    width: 120.h,
                     child: const PieChart(),
                   ),
                   SizedBox(
@@ -128,7 +128,7 @@ class AttendanceDetails extends StatelessWidget {
                               style: defaultText14Re,
                             ),
                             Container(
-                              height: 17.h,
+                              //height: 17.h,
                               width: 24.w,
                               decoration: BoxDecoration(
                                 gradient: mainGradient,
@@ -152,7 +152,7 @@ class AttendanceDetails extends StatelessWidget {
                               style: defaultText14Re,
                             ),
                             Container(
-                              height: 17.h,
+                              //height: 17.h,
                               width: 24.w,
                               decoration: BoxDecoration(
                                 color: sub2Color,
@@ -175,7 +175,7 @@ class AttendanceDetails extends StatelessWidget {
                               style: defaultText14Re,
                             ),
                             Container(
-                              height: 17.h,
+                              //height: 17.h,
                               width: 24.w,
                               decoration: BoxDecoration(
                                 color: key1Color.withOpacity(0.3),

@@ -53,6 +53,7 @@ class _ExcerciseTabBarState extends State<ExcerciseTabBar>
           labelStyle: defaultText14M,
           labelColor: keyBlack,
           controller: _tabController,
+          
           tabs: <Widget>[
             homeTab(title: 'Toàn bộ', isSeprator: false),
             homeTab(title: 'Chưa làm'),

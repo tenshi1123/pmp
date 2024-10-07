@@ -115,22 +115,20 @@ class _RecommentCourseState extends State<RecommentCourse>
                                 SizedBox(
                                   width: 10.w,
                                 ),
-                                SizedBox(
-                                  height: 42.h,
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        'Lộ trình học',
-                                        style: defaultText14B,
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Lộ trình học',
+                                      style: defaultText14B,
+                                    ),
+                                    Text(
+                                      '60 buổi',
+                                      style: defaultText14Re.copyWith(
+                                        color: key1Color.withOpacity(0.5),
                                       ),
-                                      Text(
-                                        '60 buổi',
-                                        style: defaultText14Re.copyWith(
-                                          color: key1Color.withOpacity(0.5),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
@@ -160,22 +158,20 @@ class _RecommentCourseState extends State<RecommentCourse>
                                 SizedBox(
                                   width: 10.w,
                                 ),
-                                SizedBox(
-                                  height: 42.h,
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        'Đã đăng ký',
-                                        style: defaultText14B,
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Đã đăng ký',
+                                      style: defaultText14B,
+                                    ),
+                                    Text(
+                                      '312 người',
+                                      style: defaultText14Re.copyWith(
+                                        color: key1Color.withOpacity(0.5),
                                       ),
-                                      Text(
-                                        '312 người',
-                                        style: defaultText14Re.copyWith(
-                                          color: key1Color.withOpacity(0.5),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
@@ -293,9 +289,7 @@ class _RecommentCourseState extends State<RecommentCourse>
                 children: [
                   Column(
                     children: [
-                      SizedBox(
-                        height: 20.w,
-                      ),
+                      
                       Text(
                         'Học phí',
                         style: defaultText14M,

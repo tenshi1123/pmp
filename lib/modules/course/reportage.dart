@@ -60,7 +60,7 @@ class ReportageScreen extends StatelessWidget {
             },
             child: Container(
               width: 350.w,
-              height: 208.h,
+              //height: 208.h,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8.r),
                 color: Colors.white,
@@ -106,7 +106,7 @@ class ReportageScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: 162.h,
+                    height: 168.h,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -114,7 +114,7 @@ class ReportageScreen extends StatelessWidget {
                           children: [
                             SizedBox(
                               height: 100.h,
-                              width: 100.w,
+                              width: 100.h,
                               child: const PieChart(),
                             ),
                             const Spacer(),
@@ -126,9 +126,7 @@ class ReportageScreen extends StatelessWidget {
                               '24',
                               style: defaultText16B,
                             ),
-                            SizedBox(
-                              height: 20.h,
-                            ),
+                            
                           ],
                         ),
                         SizedBox(
