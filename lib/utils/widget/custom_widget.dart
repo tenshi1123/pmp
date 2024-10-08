@@ -125,7 +125,7 @@ class ExcerciseItem extends StatelessWidget {
     return Container(
       height: 66.h,
       width: 350.w,
-      margin: EdgeInsets.only(bottom: 10.h, right: 10.w, left: 10.w,top: 10.h),
+      margin: EdgeInsets.only(bottom: 10.h, right: 10.w, left: 10.w, top: 10.h),
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -191,7 +191,7 @@ Widget homeTab(
   return Tab(
     child: Container(
       //width: 70.w,
-      height: 30.h,
+      height: 50.h,
       decoration: isSeprator
           ? const BoxDecoration(
               border: Border(
@@ -223,7 +223,7 @@ Widget homeTab(
                     color: keyBlack,
                     borderRadius: BorderRadius.all(Radius.circular(10.r)),
                   ),
-                  height: 15.h,
+                  height: 20.h,
                   padding: EdgeInsets.symmetric(horizontal: 4.h),
                   child: Center(
                     child: Text(

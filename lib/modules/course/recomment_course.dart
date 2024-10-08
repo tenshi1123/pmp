@@ -194,7 +194,7 @@ class _RecommentCourseState extends State<RecommentCourse>
                           style: defaultText18B,
                         ),
                         SizedBox(
-                          height: 10.h,
+                          height: 6.h,
                         ),
                         Column(
                           children: [
@@ -224,7 +224,7 @@ class _RecommentCourseState extends State<RecommentCourse>
                                         isExpanded == false
                                             ? 'Xem thêm'
                                             : 'Rút gọn',
-                                        style: defaultText16B.copyWith(
+                                        style: defaultText14B.copyWith(
                                             color: main1Color),
                                         maxLines: 1,
                                       ),
@@ -446,18 +446,49 @@ class _RecommentCourseState extends State<RecommentCourse>
                             ),
                           ),
                         ]),
-                    Container(
-                      height: 43.h,
-                      width: 122.w,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(36.r),
-                        gradient: mainGradient,
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Đăng ký ngay',
-                          style: defaultText14B.copyWith(
-                            color: Colors.white,
+                    GestureDetector(
+                      onTap: () {
+                        showDialog<void>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text(
+                                'Đăng ký thành công',
+                                style: defaultText14M,
+                              ),
+                              content: Text(
+                                'Nhân viên tư vấn sẽ liên hệ với bạn trong thời gian sớm nhất',
+                                style: defaultText14M,
+                              ),
+                              actions: <Widget>[
+                                TextButton(
+                                  style: TextButton.styleFrom(
+                                    textStyle:
+                                        Theme.of(context).textTheme.labelLarge,
+                                  ),
+                                  child: const Text('ok'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      child: Container(
+                        height: 43.h,
+                        width: 122.w,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(36.r),
+                          gradient: mainGradient,
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Đăng ký ngay',
+                            style: defaultText14B.copyWith(
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),

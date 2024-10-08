@@ -53,7 +53,6 @@ class _ExcerciseTabBarState extends State<ExcerciseTabBar>
           labelStyle: defaultText14M,
           labelColor: keyBlack,
           controller: _tabController,
-          
           tabs: <Widget>[
             homeTab(title: 'Toàn bộ', isSeprator: false),
             homeTab(title: 'Chưa làm'),
@@ -97,7 +96,11 @@ class _ExcerciseTabBarState extends State<ExcerciseTabBar>
               Card(
                 margin: const EdgeInsets.all(16.0),
                 child: Center(
-                    child: Text('${widget.outerTab}: Specifications tab')),
+                  child: Text(
+                    'Không có bài tập nào',
+                    style: defaultText14M,
+                  ),
+                ),
               ),
             ],
           ),

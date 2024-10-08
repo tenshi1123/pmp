@@ -151,14 +151,20 @@ class ExerciseScreen extends StatelessWidget {
               height: 5.h,
             ),
             GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
                     builder: (context) => const TestScreen(),
-                  ));
-                },
-                child: const ExcerciseItem(
-                  isComplete: false,
-                )),
+                  ),
+                );
+              },
+              child: const ExcerciseItem(
+                isComplete: false,
+              ),
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
             SizedBox(
               height: 400.h,
               width: 390.w,

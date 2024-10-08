@@ -106,6 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     //keyboardType: const TextInputType.numberWithOptions(),
                     controller: studenIdController,
                     focusNode: _focusNode1,
+                    style: defaultText14M,
                     scrollPadding: EdgeInsets.symmetric(
                         vertical: MediaQuery.of(context).viewInsets.bottom),
                     decoration: InputDecoration(
@@ -149,6 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     obscuringCharacter: "*",
                     controller: passController,
                     focusNode: _focusNode,
+                    style: defaultText14M,
                     scrollPadding: EdgeInsets.symmetric(
                         vertical: MediaQuery.of(context).viewInsets.bottom),
                     decoration: InputDecoration(
@@ -211,12 +213,42 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: ((context) => const Bottombar(0)),
-                      ),
-                    );
+                    if (studenIdController?.text == 'anhtanh283') {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: ((context) => const Bottombar(0)),
+                        ),
+                      );
+                    } else {
+                      showDialog<void>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text(
+                              'Đã có lỗi xảy ra',
+                              style: defaultText14M,
+                            ),
+                            content: Text(
+                              'Vui lòng kiểm tra lại tên đăng nhập hoặc mật khẩu của bạn',
+                              style: defaultText14M,
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                style: TextButton.styleFrom(
+                                  textStyle:
+                                      Theme.of(context).textTheme.labelLarge,
+                                ),
+                                child: const Text('ok'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
                   },
                   child: Container(
                     height: 48.h,

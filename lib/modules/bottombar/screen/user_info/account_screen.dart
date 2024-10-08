@@ -9,6 +9,8 @@ import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../login/login_screen.dart';
+
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
 
@@ -75,28 +77,28 @@ class _AccountScreenState extends State<AccountScreen> {
                               ],
                             ),
                             const Spacer(),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const EditInfoScreen(),
-                                  ),
-                                );
-                              },
-                              child: Container(
-                                height: 25.h,
-                                width: 25.w,
-                                padding: const EdgeInsets.all(3),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  gradient: mainGradient2,
-                                ),
-                                child:
-                                    SvgPicture.asset('assets/icons/pencil.svg'),
-                              ),
-                            ),
+                            // GestureDetector(
+                            //   onTap: () {
+                            //     Navigator.push(
+                            //       context,
+                            //       MaterialPageRoute(
+                            //         builder: (context) =>
+                            //             const EditInfoScreen(),
+                            //       ),
+                            //     );
+                            //   },
+                            //   child: Container(
+                            //     height: 25.h,
+                            //     width: 25.w,
+                            //     padding: const EdgeInsets.all(3),
+                            //     decoration: BoxDecoration(
+                            //       shape: BoxShape.circle,
+                            //       gradient: mainGradient2,
+                            //     ),
+                            //     child:
+                            //         SvgPicture.asset('assets/icons/pencil.svg'),
+                            //   ),
+                            // ),
                           ],
                         ),
                         SizedBox(
@@ -329,7 +331,7 @@ class _AccountScreenState extends State<AccountScreen> {
             height: 10.h,
           ),
           Container(
-            height: 233.h,
+            height: 133.h,
             width: 350.w,
             padding: EdgeInsets.symmetric(horizontal: 10.w),
             decoration: BoxDecoration(
@@ -343,34 +345,34 @@ class _AccountScreenState extends State<AccountScreen> {
                   'Quản lý tài khoản',
                   style: defaultText14M,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Mật khẩu',
-                      style: defaultText14M,
-                    ),
-                    Icon(
-                      Icons.keyboard_arrow_right,
-                      size: 30.h,
-                      color: key1Color,
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Thông báo',
-                      style: defaultText14M,
-                    ),
-                    Icon(
-                      Icons.keyboard_arrow_right,
-                      size: 30.h,
-                      color: key1Color,
-                    ),
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     Text(
+                //       'Mật khẩu',
+                //       style: defaultText14M,
+                //     ),
+                //     Icon(
+                //       Icons.keyboard_arrow_right,
+                //       size: 30.h,
+                //       color: key1Color,
+                //     ),
+                //   ],
+                // ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     Text(
+                //       'Thông báo',
+                //       style: defaultText14M,
+                //     ),
+                //     Icon(
+                //       Icons.keyboard_arrow_right,
+                //       size: 30.h,
+                //       color: key1Color,
+                //     ),
+                //   ],
+                // ),
                 GestureDetector(
                   onTap: () {
                     _makePhoneCall('19008978');
@@ -446,7 +448,12 @@ Future<void> _dialogBuilder(BuildContext context) {
             ),
             child: const Text('Xác nhận'),
             onPressed: () {
-              Navigator.of(context).pop();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: ((context) => const LoginScreen()),
+                ),
+              );
             },
           ),
         ],
