@@ -44,7 +44,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 Positioned(
                   bottom: 0,
                   child: Container(
-                    height: 242.h,
+                    //height: 242.h,
                     width: 349.w,
                     padding: EdgeInsets.symmetric(horizontal: 18.w),
                     decoration: BoxDecoration(
@@ -176,7 +176,9 @@ class _AccountScreenState extends State<AccountScreen> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 10.h,)
+                        SizedBox(
+                          height: 10.h,
+                        )
                       ],
                     ),
                   ),
@@ -420,9 +422,13 @@ Future<void> _dialogBuilder(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: const Text('Tài khoản'),
-        content: const Text(
+        title: Text(
+          'Đăng xuất',
+          style: defaultText14M,
+        ),
+        content: Text(
           'Bạn có chắc muốn đăng xuất ?',
+          style: defaultText14M,
         ),
         actions: <Widget>[
           TextButton(

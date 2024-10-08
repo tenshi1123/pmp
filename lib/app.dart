@@ -27,6 +27,10 @@ class _AppState extends State<App> {
             primarySwatch: Colors.blue,
             textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
           ),
+          builder: (context, child) => MediaQuery(
+            data: MediaQuery.of(context).copyWith(boldText: false),
+            child: child!,
+          ),
           home: const Splshscreen(),
           routes: const <String, WidgetBuilder>{},
         );

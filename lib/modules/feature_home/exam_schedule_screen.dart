@@ -325,8 +325,10 @@ class _ExamScheduleScreenState extends State<ExamScheduleScreen> {
                           context: context,
                           builder: (BuildContext context) {
                             return CupertinoAlertDialog(
-                              title: const Text(
-                                  'Bạn có chắc chắn muốn đăng kí thăm gia buổi thi này'),
+                              title: Text(
+                                'Bạn có chắc chắn muốn đăng kí tham gia buổi thi này',
+                                style: defaultText14M,
+                              ),
                               actions: <Widget>[
                                 CupertinoDialogAction(
                                   isDefaultAction: true,

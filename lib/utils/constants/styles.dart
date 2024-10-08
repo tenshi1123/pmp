@@ -5,7 +5,7 @@ import 'package:pmp_english/utils/constants/color.dart';
 TextStyle defaultText12Re = TextStyle(
   fontSize: 12.sp,
   color: key1Color,
-  fontWeight: FontWeight.normal,
+  fontWeight: FontWeight.w300,
 );
 TextStyle defaultText12M = TextStyle(
   fontSize: 12.sp,
@@ -20,7 +20,7 @@ TextStyle defaultText12B = TextStyle(
 TextStyle defaultText14Re = TextStyle(
   fontSize: 14.sp,
   color: key1Color,
-  fontWeight: FontWeight.normal,
+  fontWeight: FontWeight.w300,
 );
 TextStyle defaultText14M = TextStyle(
   fontSize: 14.sp,
@@ -35,7 +35,7 @@ TextStyle defaultText14B = TextStyle(
 TextStyle defaultText16Re = TextStyle(
   fontSize: 16.sp,
   color: key1Color,
-  fontWeight: FontWeight.normal,
+  fontWeight: FontWeight.w300,
 );
 TextStyle defaultText16M = TextStyle(
   fontSize: 16.sp,
@@ -50,7 +50,7 @@ TextStyle defaultText16B = TextStyle(
 TextStyle defaultText18Re = TextStyle(
   fontSize: 18.sp,
   color: key1Color,
-  fontWeight: FontWeight.normal,
+  fontWeight: FontWeight.w300,
 );
 TextStyle defaultText18M = TextStyle(
   fontSize: 18.sp,
@@ -65,7 +65,7 @@ TextStyle defaultText18B = TextStyle(
 TextStyle defaultText20Re = TextStyle(
   fontSize: 20.sp,
   color: key1Color,
-  fontWeight: FontWeight.normal,
+  fontWeight: FontWeight.w300,
 );
 TextStyle defaultText20M = TextStyle(
   fontSize: 20.sp,
