@@ -112,133 +112,230 @@ class DetailEvaluateScreen extends StatelessWidget {
             SizedBox(
               height: 10.h,
             ),
+            // Text(
+            //   'Nhận xét chung',
+            //   style: defaultText18B,
+            // ),
+            // SizedBox(
+            //   height: 10.h,
+            // ),
+            // Container(
+            //   width: 350.w,
+            //   height: 170.h,
+            //   decoration: BoxDecoration(
+            //     color: baseColor,
+            //   ),
+            //   child: Row(
+            //     children: [
+            //       SizedBox(
+            //         width: 167.w,
+            //         child: Padding(
+            //           padding: EdgeInsets.only(
+            //             left: 10.w,
+            //             top: 6.h,
+            //           ),
+            //           child: Column(
+            //             crossAxisAlignment: CrossAxisAlignment.start,
+            //             children: [
+            //               Text(
+            //                 'Điểm mạnh',
+            //                 style: defaultText16B.copyWith(color: main1Color),
+            //               ),
+            //               Text(
+            //                 'Một ngày mới khi ánh năng lên gió khẽ đưa trên bông lúa xanh, và tình yêu trong tim có em gần bên anh, dịu dành anh đưa em qua thắng năm',
+            //                 style: defaultText14Re.copyWith(
+            //                   fontWeight: FontWeight.w400,
+            //                 ),
+            //               ),
+            //             ],
+            //           ),
+            //         ),
+            //       ),
+            //       VerticalDivider(
+            //         color: Colors.white,
+            //         thickness: 2,
+            //         indent: 10.h,
+            //         endIndent: 10.h,
+            //       ),
+            //       SizedBox(
+            //         width: 167.w,
+            //         child: Padding(
+            //           padding: EdgeInsets.only(
+            //             left: 10.w,
+            //             top: 6.h,
+            //           ),
+            //           child: Column(
+            //             crossAxisAlignment: CrossAxisAlignment.start,
+            //             children: [
+            //               Text(
+            //                 'Cần cải thiện',
+            //                 style: defaultText16B.copyWith(color: sub2Color),
+            //               ),
+            //               Text(
+            //                 'Từng ngày dịu dàng trôi qua mau, nhẹ trôi êm đềm',
+            //                 style: defaultText14Re,
+            //               ),
+            //             ],
+            //           ),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // SizedBox(
+            //   height: 10.h,
+            // ),
+            // Container(
+            //   decoration: BoxDecoration(
+            //     boxShadow: [
+            //       BoxShadow(
+            //         color: Colors.grey.withOpacity(0.2),
+            //         spreadRadius: 5,
+            //         blurRadius: 7,
+            //         offset: const Offset(0, 2), // changes position of shadow
+            //       ),
+            //     ],
+            //     color: Colors.white,
+            //   ),
+            //   child: Column(
+            //     children: [
+            //       SizedBox(
+            //         height: 6.h,
+            //       ),
+            //       Text(
+            //         'Đề xuất',
+            //         style: defaultText18B.copyWith(
+            //           color: key2Color,
+            //         ),
+            //       ),
+            //       Padding(
+            //         padding: EdgeInsets.only(
+            //           left: 10.w,
+            //           right: 5.w,
+            //         ),
+            //         child: Text(
+            //           'Qua bao nhiêu năm qua bao nhiêu kiếp người bao nhiêu con người đã qua, bao nhiêu nụ cười trẻ thơ ',
+            //           style: defaultText14Re.copyWith(
+            //             color: key2Color,
+            //           ),
+            //         ),
+            //       ),
+            //       SizedBox(
+            //         height: 10.h,
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // SizedBox(
+            //   height: 10.h,
+            // ),
+            // Text(
+            //   'Đánh giá chi tiết',
+            //   style: defaultText16M.copyWith(
+            //     color: key2Color,
+            //   ),
+            // ),
+            // SizedBox(
+            //   height: 10.h,
+            // ),
+            // chartItem(width: 350, percents: 92, title: 'Chuyên cần'),
+            // chartItem(width: 350, percents: 75, title: 'Bài tập'),
+            // chartItem(width: 350, percents: 100, title: 'Thái độ'),
             Text(
-              'Nhận xét chung',
+              'Đạt được',
+              style: defaultText18B.copyWith(color: main1Color),
+            ),
+            SizedBox(
+              height: 5.h,
+            ),
+            const UnorderedList(
+              [
+                "What conclusions can we draw from the implementation?",
+                "Are there any changes that need to be introduced permanently?"
+              ],
+              icon: 1,
+            ),
+            const Divider(),
+            Text(
+              'Cải thiện',
+              style: defaultText18B.copyWith(color: sub2Color),
+            ),
+            SizedBox(
+              height: 5.h,
+            ),
+            const UnorderedList(
+              ["Kỹ năng nói và viết còn kém", "Vốn từ còn ít"],
+              icon: 0,
+            ),
+            const Divider(),
+            Text(
+              'Dặn dò',
               style: defaultText18B,
             ),
             SizedBox(
-              height: 10.h,
+              height: 5.h,
             ),
-            Container(
-              width: 350.w,
-              height: 170.h,
-              decoration: BoxDecoration(
-                color: baseColor,
-              ),
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 167.w,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        left: 10.w,
-                        top: 6.h,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Điểm mạnh',
-                            style: defaultText16B.copyWith(color: main1Color),
-                          ),
-                          Text(
-                            'Một ngày mới khi ánh năng lên gió khẽ đưa trên bông lúa xanh, và tình yêu trong tim có em gần bên anh, dịu dành anh đưa em qua thắng năm',
-                            style: defaultText14Re,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  VerticalDivider(
-                    color: Colors.white,
-                    thickness: 2,
-                    indent: 10.h,
-                    endIndent: 10.h,
-                  ),
-                  SizedBox(
-                    width: 167.w,
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 10.w),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Cần cải thiện',
-                            style: defaultText16B.copyWith(color: sub2Color),
-                          ),
-                          Text(
-                            'Từng ngày dịu dàng trôi qua mau, nhẹ trôi êm đềm',
-                            style: defaultText14Re,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+            const UnorderedList(
+              [
+                "Em cần tự ti tin hơn trong giao tiếp",
+                "Em cần chăm chỉ học từ vực hơn"
+              ],
+              icon: 0,
             ),
-            SizedBox(
-              height: 10.h,
-            ),
-            Container(
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.2),
-                    spreadRadius: 5,
-                    blurRadius: 7,
-                    offset: const Offset(0, 2), // changes position of shadow
-                  ),
-                ],
-                color: Colors.white,
-              ),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 6.h,
-                  ),
-                  Text(
-                    'Đề xuất',
-                    style: defaultText18B.copyWith(
-                      color: key2Color,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: 10.w,
-                      right: 5.w,
-                    ),
-                    child: Text(
-                      'Qua bao nhiêu năm qua bao nhiêu kiếp người bao nhiêu con người đã qua, bao nhiêu nụ cười trẻ thơ ',
-                      style: defaultText14Re.copyWith(
-                        color: key2Color,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 10.h,
-            ),
-            Text(
-              'Đánh giá chi tiết',
-              style: defaultText16M.copyWith(
-                color: key2Color,
-              ),
-            ),
-            SizedBox(
-              height: 10.h,
-            ),
-            chartItem(width: 350, percents: 92, title: 'Chuyên cần'),
-            chartItem(width: 350, percents: 75, title: 'Bài tập'),
-            chartItem(width: 350, percents: 100, title: 'Thái độ'),
           ],
         ),
       ),
+    );
+  }
+}
+
+class UnorderedList extends StatelessWidget {
+  const UnorderedList(this.texts, {super.key, required this.icon});
+  final List<String> texts;
+  final int icon;
+  @override
+  Widget build(BuildContext context) {
+    var widgetList = <Widget>[];
+    for (var text in texts) {
+      // Add list item
+      widgetList.add(UnorderedListItem(
+        text,
+        icon: icon,
+      ));
+      // Add space between items
+      widgetList.add(const SizedBox(height: 5.0));
+    }
+
+    return Column(children: widgetList);
+  }
+}
+
+class UnorderedListItem extends StatelessWidget {
+  const UnorderedListItem(this.text, {super.key, required this.icon});
+  final String text;
+  final int icon;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          "• ",
+          style: defaultText14M,
+        ),
+        Expanded(
+          child: Text(
+            text,
+            style: defaultText14M,
+          ),
+        ),
+        (icon == 1)
+            ? const Icon(
+                Icons.done,
+                color: Colors.green,
+              )
+            : const SizedBox()
+      ],
     );
   }
 }
