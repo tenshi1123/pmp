@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:pmp_english/modules/bottombar/screen/user_info/edit_info_screen.dart';
 import 'package:pmp_english/modules/infoAccount/my_certificate_screen.dart';
 import 'package:pmp_english/modules/infoAccount/payment_history.dart';
 import 'package:pmp_english/modules/infoAccount/redeem_reward_screen.dart';

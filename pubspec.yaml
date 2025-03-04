@@ -28,6 +28,9 @@ dependencies:
   otp_pin_field: ^1.2.9+1
   camera_camera: ^3.0.0
   image_picker: ^1.1.2
+  persistent_bottom_nav_bar_v2: ^5.3.1
+  upgrader: ^11.3.1
+  smooth_page_indicator: ^1.2.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

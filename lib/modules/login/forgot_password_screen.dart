@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pmp_english/modules/login/otp_screen.dart';
 import 'package:pmp_english/utils/constants/color.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class ForgotPassScreen extends StatefulWidget {
   const ForgotPassScreen({super.key});
@@ -11,18 +10,10 @@ class ForgotPassScreen extends StatefulWidget {
 }
 
 class _ForgotPassScreenState extends State<ForgotPassScreen> {
-  final bool _isObscure = true;
   final _focusNode = FocusNode();
   final _focusNode1 = FocusNode();
   TextEditingController? passController = TextEditingController();
   TextEditingController? studenIdController = TextEditingController();
-  Future<void> _makePhoneCall(String phoneNumber) async {
-    final Uri launchUri = Uri(
-      scheme: 'tel',
-      path: phoneNumber,
-    );
-    await launchUrl(launchUri);
-  }
 
   @override
   Widget build(BuildContext context) {

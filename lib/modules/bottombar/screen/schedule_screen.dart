@@ -130,7 +130,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                 ),
               ),
               Container(
-                height: 384.h,
+                height: 403.h,
                 width: 350.w,
                 decoration: BoxDecoration(
                   color: main2Color.withOpacity(0.24),

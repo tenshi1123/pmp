@@ -3,11 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pmp_english/modules/login/login_screen.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import '../../../utils/constants/mediaqury.dart';
 import '../../../utils/constants/vn_languegua.dart';
+import 'wellcom_screen.dart';
 
 class Onbonding extends StatefulWidget {
   const Onbonding({super.key});
@@ -316,7 +316,8 @@ class _OnbondingState extends State<Onbonding> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: ((context) => const LoginScreen()),
+                                  builder: ((context) =>
+                                      const WellcomeScreen()),
                                 ),
                               );
                             },

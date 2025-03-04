@@ -155,10 +155,6 @@ class _OtpScreenState extends State<OtpScreen> {
 
   //Method for generate otp from firebase
   Future<void> generateOtp(String contact) async {
-    smsOTPSent(verId, forceResendingToken) {
-      verificationId = verId;
-    }
-
     try {
       // await _auth.verifyPhoneNumber(
       //   phoneNumber: contact.replaceAll(" ", ""),

@@ -1,7 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 import 'package:pmp_english/modules/feature_home/exercise/test_detail_screen.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
@@ -128,7 +127,6 @@ class TestScreen extends StatelessWidget {
 
 class _InfoTest extends StatelessWidget {
   const _InfoTest({
-    super.key,
     required this.isComplete,
   });
   final bool isComplete;
@@ -338,72 +336,4 @@ class _InfoTest extends StatelessWidget {
       ),
     );
   }
-}
-
-Widget _resultTest() {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceAround,
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      CircularPercentIndicator(
-          radius: 80.r,
-          lineWidth: 13.0,
-          animation: true,
-          percent: 35 / 40,
-          center: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 60.h,
-              ),
-              // Text(
-              //   "35      ",
-              //   style: defaultBoldText.copyWith(fontSize: 30.sp),
-              // ),
-              // Divider(
-              //   thickness: 2,
-              //   color: keyBlack,
-              //   indent: 30.w,
-              //   endIndent: 30.w,
-              // ),
-              // Text(
-              //   "      40",
-              //   style: defaultBoldText.copyWith(fontSize: 20.sp),
-              // ),
-              Text('85%', style: defaultText20B),
-            ],
-          ),
-          circularStrokeCap: CircularStrokeCap.round,
-          progressColor: key1Color,
-          backgroundColor: key1Color.withOpacity(0.3)),
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _resultText(tittle1: 'Thời gian hoàn thành', title2: '00:13:41'),
-          _resultText(tittle1: 'Trả lời đúng', title2: '35 câu'),
-          _resultText(tittle1: 'Trả lời sai', title2: '5 câu'),
-          _resultText(tittle1: 'Chưa làm', title2: '0 câu'),
-        ],
-      )
-    ],
-  );
-}
-
-Widget _resultText({required String tittle1, required String title2}) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(
-        tittle1,
-        style: defaultText14M,
-      ),
-      Text(
-        title2,
-        style: defaultText14M,
-      ),
-      SizedBox(
-        height: 8.h,
-      )
-    ],
-  );
 }
