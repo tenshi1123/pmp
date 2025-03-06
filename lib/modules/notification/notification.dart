@@ -75,7 +75,7 @@ class NotificationScreen extends StatelessWidget {
             child: ListView.builder(
                 shrinkWrap: true,
                 physics: const ClampingScrollPhysics(),
-                itemCount: 6,
+                itemCount: 2,
                 itemBuilder: (BuildContext context, int index) {
                   return Noti(
                     index: index,
@@ -105,6 +105,7 @@ class Noti extends StatelessWidget {
       },
       child: Container(
         margin: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 10.w),
+        padding: EdgeInsets.symmetric(vertical: 4.h),
         //height: 112.h,
         decoration: BoxDecoration(
           color: Colors.white,
@@ -118,7 +119,7 @@ class Noti extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              padding: EdgeInsets.symmetric(horizontal: 12.w),
               child: SizedBox(
                 width: 330.w,
                 child: Row(
@@ -137,14 +138,14 @@ class Noti extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              padding: EdgeInsets.symmetric(horizontal: 12.w),
               child: Text(
-                'Cras interdum dolor nisi, eu imperdiet lacus faucibus in. Sed at arcu condimentum, blandit ipsum nec, feugiat dui. Fusce eu consequat nunc. Fusce faucibus ligula velit,',
+                'Cras interdum dolor nisi, eu ,',
                 style: defaultText12Re,
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              padding: EdgeInsets.symmetric(horizontal: 12.w),
               child: Text(
                 '09:03',
                 style: defaultText12Re,

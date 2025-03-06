@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:pmp_english/modules/chat/screen/list_conversation_screen.dart';
 import 'package:pmp_english/modules/notification/notification.dart';
-import 'package:pmp_english/utils/constants/color.dart';
+import 'package:pmp_english/teacher_modules/teacher_bottombar/home/lichhen_screen.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
+import '../../teacher_class/teacher_detail_lesson.dart';
 
 class TeacherHomeScreen extends StatefulWidget {
   const TeacherHomeScreen({super.key});
@@ -152,7 +153,15 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
                                   SizedBox(
                                     height: 50.h,
                                   ),
-                                  const AppointmentCard(),
+                                  GestureDetector(
+                                      onTap: () {
+                                        pushWithoutNavBar(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const LichHenScreen()));
+                                      },
+                                      child: const AppointmentCard()),
                                 ],
                               ),
                             )
@@ -231,103 +240,109 @@ class _CommingSchedule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(
-        horizontal: 16.w,
-        vertical: 10.h,
-      ),
-      padding: EdgeInsets.symmetric(
-        horizontal: 16.w,
-        vertical: 16.h,
-      ),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(
-          Radius.circular(16.r),
+    return GestureDetector(
+      onTap: () {
+        pushWithoutNavBar(context,
+            MaterialPageRoute(builder: (context) => const LessonDetail()));
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(
+          horizontal: 16.w,
+          vertical: 10.h,
         ),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xff163065).withValues(alpha: 0.12),
-            spreadRadius: 0,
-            blurRadius: 12,
-            offset: const Offset(0, 4),
+        padding: EdgeInsets.symmetric(
+          horizontal: 16.w,
+          vertical: 16.h,
+        ),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(
+            Radius.circular(16.r),
           ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 10.w,
-                  vertical: 15.h,
-                ),
-                decoration: BoxDecoration(
-                  color: const Color(0xff00AEEF),
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                child: Column(
-                  children: [
-                    Text(
-                      '01',
-                      style: defaultText16B.copyWith(
-                          color: Colors.white, fontSize: 26.sp),
-                    ),
-                    Text(
-                      'Tháng 12',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w500,
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0xff163065).withValues(alpha: 0.12),
+              spreadRadius: 0,
+              blurRadius: 12,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10.w,
+                    vertical: 15.h,
+                  ),
+                  decoration: BoxDecoration(
+                    color: const Color(0xff00AEEF),
+                    borderRadius: BorderRadius.circular(12.r),
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        '01',
+                        style: defaultText16B.copyWith(
+                            color: Colors.white, fontSize: 26.sp),
                       ),
+                      Text(
+                        'Tháng 12',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 20),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: 200.w,
+                      child: Text('Khoá tiếng anh cơ bản - Off',
+                          style: defaultText18B),
                     ),
+                    const SizedBox(height: 5),
+                    Text('Thứ 6 (08:30 - 10:30)', style: defaultText14M),
                   ],
                 ),
-              ),
-              const SizedBox(width: 20),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              ],
+            ),
+            const SizedBox(height: 20),
+            RichText(
+              text: TextSpan(
+                text: 'Phòng học: ',
+                style: defaultText16M,
                 children: [
-                  SizedBox(
-                    width: 200.w,
-                    child: Text('Khoá tiếng anh cơ bản - Off',
-                        style: defaultText18B),
-                  ),
-                  const SizedBox(height: 5),
-                  Text('Thứ 6 (08:30 - 10:30)', style: defaultText14M),
+                  TextSpan(
+                      text: '101',
+                      style: defaultText16B.copyWith(
+                          color: const Color(0xff00AEEF))),
                 ],
               ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          RichText(
-            text: TextSpan(
-              text: 'Phòng học: ',
-              style: defaultText16M,
-              children: [
-                TextSpan(
-                    text: '101',
-                    style: defaultText16B.copyWith(
-                        color: const Color(0xff00AEEF))),
-              ],
             ),
-          ),
-          const SizedBox(height: 10),
-          RichText(
-            text: TextSpan(
-              text: 'Chi nhánh: ',
-              style: defaultText16M,
-              children: [
-                TextSpan(
-                    text: '34 Hồ Thị Tư',
-                    style: defaultText16B.copyWith(
-                        color: const Color(0xff00AEEF))),
-              ],
+            const SizedBox(height: 10),
+            RichText(
+              text: TextSpan(
+                text: 'Chi nhánh: ',
+                style: defaultText16M,
+                children: [
+                  TextSpan(
+                      text: '34 Hồ Thị Tư',
+                      style: defaultText16B.copyWith(
+                          color: const Color(0xff00AEEF))),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pmp_english/modules/Bottombar/screen/news_screen.dart';
 import 'package:pmp_english/modules/Bottombar/screen/schedule_screen.dart';
-import 'screen/course_screen.dart';
-import 'screen/teacher_homescreen.dart';
+import 'package:pmp_english/teacher_modules/teacher_info/teacher_info.dart';
+import 'screen/teacher_class.dart';
+import 'home/teacher_homescreen.dart';
 import "package:upgrader/upgrader.dart";
 import "package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart";
 
@@ -94,7 +94,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           ),
         ),
         PersistentTabConfig(
-          screen: const NewsScreen(),
+          screen: const TeacherInfo(),
           item: ItemConfig(
             icon: SvgPicture.asset(
               'assets/icons/person.svg',

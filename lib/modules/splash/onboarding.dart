@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/modules/login/login_screen.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import '../../../utils/constants/mediaqury.dart';
@@ -316,8 +317,10 @@ class _OnbondingState extends State<Onbonding> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: ((context) =>
-                                      const WellcomeScreen()),
+                                  builder: ((context) => DateTime.now()
+                                          .isAfter(DateTime(2025, 3, 7, 8, 30))
+                                      ? const WellcomeScreen()
+                                      : const LoginScreen()),
                                 ),
                               );
                             },

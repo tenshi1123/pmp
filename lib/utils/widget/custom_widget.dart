@@ -375,12 +375,125 @@ Widget chartItem({
   );
 }
 
-class CustomDialog extends StatelessWidget {
-  const CustomDialog({super.key});
+class InfoLichhen extends StatefulWidget {
+  const InfoLichhen({super.key, required this.type});
+  final String type;
 
   @override
+  _InfoLichhenState createState() => _InfoLichhenState();
+}
+
+class _InfoLichhenState extends State<InfoLichhen> {
+  @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Dialog(
+      child: SingleChildScrollView(
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(16.r)),
+            // boxShadow: const [
+            //   BoxShadow(
+            //     color: Colors.black,
+            //     offset: Offset(6, 6),
+            //     spreadRadius: 2,
+            //     blurStyle: BlurStyle.solid,
+            //   ),
+            // ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xff00AEEF),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(16.r),
+                    topRight: Radius.circular(16.r),
+                  ),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.only(left: 16.w),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Thông tin lịch hẹn',
+                        style: defaultText16B.copyWith(color: Colors.white),
+                      ),
+                      const CloseButton(
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 8.h,
+              ),
+              const _InfoItem(
+                title1: 'Cơ sở: ',
+                title2: 'Cơ sở 1',
+              ),
+              SizedBox(
+                height: 8.h,
+              ),
+              const _InfoItem(
+                title1: 'Học viên: ',
+                title2: 'Nguyễn Lâm Anh',
+              ),
+              SizedBox(
+                height: 8.h,
+              ),
+              const _InfoItem(
+                title1: 'CM: ',
+                title2: 'Sale Phan Anh A',
+              ),
+              SizedBox(
+                height: 8.h,
+              ),
+              const _InfoItem(
+                title1: 'Thời gian: ',
+                title2: '17:30 28/02/2024',
+              ),
+              SizedBox(
+                height: 8.h,
+              ),
+              const _InfoItem(
+                title1: 'Ghi chú: ',
+                title2: '',
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  left: 12.w,
+                  top: 10.h,
+                  right: 12.w,
+                ),
+                child: Container(
+                    width: 310.w,
+                    height: 120.h,
+                    padding: EdgeInsets.only(
+                      left: 16.w,
+                      top: 10.h,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(12.r)),
+                      color: const Color(0xffF5F7FA),
+                    ), //
+                    child: Text(
+                      'Khách hẹn đến trung tâm',
+                      style: defaultText14M.copyWith(
+                        color: const Color(0xff09204E),
+                      ),
+                    )),
+              ),
+              const SizedBox(height: 16),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -446,6 +559,37 @@ class DocumentItem extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+}
+
+class _InfoItem extends StatelessWidget {
+  const _InfoItem({required this.title1, required this.title2});
+  final String title1;
+  final String title2;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        SizedBox(
+          width: 16.w,
+        ),
+        SizedBox(
+          width: 90.w,
+          child: Text(
+            title1,
+            style: defaultText16B.copyWith(
+                color: const Color(0xff09204E).withValues(alpha: 0.48)),
+          ),
+        ),
+        SizedBox(
+          width: 180.w,
+          child: Text(
+            title2,
+            style: defaultText16B.copyWith(color: const Color(0xff09204E)),
+          ),
+        ),
+      ],
     );
   }
 }

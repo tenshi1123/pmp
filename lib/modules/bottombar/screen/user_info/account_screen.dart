@@ -8,6 +8,7 @@ import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../login/login_screen.dart';
+import '../../../splash/wellcom_screen.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -449,7 +450,7 @@ Future<void> _dialogBuilder(BuildContext context) {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: ((context) => const LoginScreen()),
+                  builder: ((context) => const WellcomeScreen()),
                 ),
               );
             },
