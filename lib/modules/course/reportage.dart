@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pmp_english/modules/diemdanh/attendance_details.dart';
 import 'package:pmp_english/modules/diemdanh/diem_danh_screen.dart';
+import 'package:pmp_english/repo/diemdanh_repo.dart';
+import 'package:pmp_english/student_models/diem_danh_model.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:pmp_english/utils/widget/custom_widget.dart';
@@ -50,11 +52,15 @@ class ReportageScreen extends StatelessWidget {
             height: 10.h,
           ),
           GestureDetector(
-            onTap: () {
+            onTap: () async {
+              InfoDiemDanh infoModel =
+                  await DiemdanhRepo().getDetailDiemDanh('1');
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const AttendanceDetails(),
+                  builder: (context) => AttendanceDetails(
+                    infoModel: infoModel,
+                  ),
                 ),
               );
             },
@@ -116,7 +122,12 @@ class ReportageScreen extends StatelessWidget {
                             SizedBox(
                               height: 100.h,
                               width: 100.h,
-                              child: const PieChart(),
+                              child: const PieChart(
+                                percent: 70,
+                                attended: '30',
+                                abstract: '5',
+                                total: '50',
+                              ),
                             ),
                             Text(
                               'Đã học',

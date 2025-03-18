@@ -7,7 +7,6 @@ import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../login/login_screen.dart';
 import '../../../splash/wellcom_screen.dart';
 
 class AccountScreen extends StatefulWidget {

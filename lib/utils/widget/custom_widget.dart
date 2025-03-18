@@ -187,6 +187,7 @@ Widget homeTab(
     {required String title,
     bool isSeprator = true,
     bool hasNumber = true,
+    int number = 10,
     int count = 0}) {
   return Tab(
     child: Container(
@@ -227,7 +228,7 @@ Widget homeTab(
                   padding: EdgeInsets.symmetric(horizontal: 4.h),
                   child: Center(
                     child: Text(
-                      '10',
+                      number.toString(),
                       style: defaultText12B.copyWith(color: Colors.white),
                     ),
                   ),

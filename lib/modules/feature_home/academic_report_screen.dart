@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/student_models/home_model.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 
 class AcademicReportScreen extends StatelessWidget {
-  const AcademicReportScreen({super.key});
-
+  const AcademicReportScreen({super.key, required this.model});
+  final BaoCaoHocTapModel model;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,7 +105,7 @@ class AcademicReportScreen extends StatelessWidget {
                                 left: 0,
                                 child: Container(
                                   height: 34.h,
-                                  width: 318.w * 92 / 100,
+                                  width: 318.w * model.chuyenCan / 100,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(4.r),
                                     gradient: mainGradient,
@@ -121,11 +122,10 @@ class AcademicReportScreen extends StatelessWidget {
                                   children: [
                                     Text(
                                       'Chuyên cần',
-                                      style: defaultText14B.copyWith(
-                                          color: Colors.white),
+                                      style: defaultText14B,
                                     ),
                                     Text(
-                                      '92%',
+                                      '${model.chuyenCan}%',
                                       style: defaultText14B,
                                     ),
                                   ],
@@ -148,7 +148,7 @@ class AcademicReportScreen extends StatelessWidget {
                                 left: 0,
                                 child: Container(
                                   height: 34.h,
-                                  width: 318.w * 75 / 100,
+                                  width: 318.w * model.baitap / 100,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(4.r),
                                     gradient: mainGradient,
@@ -165,11 +165,10 @@ class AcademicReportScreen extends StatelessWidget {
                                   children: [
                                     Text(
                                       'Điểm bài tập',
-                                      style: defaultText14B.copyWith(
-                                          color: Colors.white),
+                                      style: defaultText14B,
                                     ),
                                     Text(
-                                      '75%',
+                                      '${model.baitap}%',
                                       style: defaultText14B,
                                     ),
                                   ],
@@ -192,7 +191,7 @@ class AcademicReportScreen extends StatelessWidget {
                                 left: 0,
                                 child: Container(
                                   height: 34.h,
-                                  width: 318.w * 95 / 100,
+                                  width: 318.w * model.tichCuc / 100,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(4.r),
                                     gradient: mainGradient,
@@ -208,12 +207,11 @@ class AcademicReportScreen extends StatelessWidget {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'Thái độ',
-                                      style: defaultText14B.copyWith(
-                                          color: Colors.white),
+                                      'Tích cực',
+                                      style: defaultText14B,
                                     ),
                                     Text(
-                                      '95%',
+                                      '${model.tichCuc}%',
                                       style: defaultText14B,
                                     ),
                                   ],

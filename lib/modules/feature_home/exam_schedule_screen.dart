@@ -1,37 +1,40 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pmp_english/modules/course/lich_hoc.dart';
+import 'package:pmp_english/repo/lichthi_repo.dart';
+import 'package:pmp_english/student_models/lichthi_models.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 
 class ExamScheduleScreen extends StatefulWidget {
-  const ExamScheduleScreen({super.key});
-
+  const ExamScheduleScreen({super.key, required this.lichthiModel});
+  final LichthiModel lichthiModel;
   @override
   State<ExamScheduleScreen> createState() => _ExamScheduleScreenState();
 }
 
-enum IconLabel {
-  smile('Smile', Icons.sentiment_satisfied_outlined),
-  cloud(
-    'Cloud',
-    Icons.cloud_outlined,
-  ),
-  brush('Brush', Icons.brush_outlined),
-  heart('Heart', Icons.favorite);
+// enum IconLabel {
+//   smile('Smile', Icons.sentiment_satisfied_outlined),
+//   cloud(
+//     'Cloud',
+//     Icons.cloud_outlined,
+//   ),
+//   brush('Brush', Icons.brush_outlined),
+//   heart('Heart', Icons.favorite);
 
-  const IconLabel(this.label, this.icon);
-  final String label;
-  final IconData icon;
-}
+//   const IconLabel(this.label, this.icon);
+//   final String label;
+//   final IconData icon;
+// }
 
 class _ExamScheduleScreenState extends State<ExamScheduleScreen> {
   final TextEditingController cosoController = TextEditingController();
+  final TextEditingController ngaythiController = TextEditingController();
   final TextEditingController cathiController = TextEditingController();
-  final TextEditingController _dateController = TextEditingController();
   final ValueNotifier<int> _format = ValueNotifier(1);
-  IconLabel? selectedIcon;
+  CoSoModel? selectedCoso;
+  String? selectedNgay;
+  ValueModel? selectedValue;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -140,7 +143,7 @@ class _ExamScheduleScreenState extends State<ExamScheduleScreen> {
                               ),
                               child: Center(
                                 child: Text(
-                                  'Offline',
+                                  'Toeic',
                                   style: defaultText14B.copyWith(
                                     color: Colors.white,
                                   ),
@@ -167,7 +170,7 @@ class _ExamScheduleScreenState extends State<ExamScheduleScreen> {
                               ),
                               child: Center(
                                 child: Text(
-                                  'Online',
+                                  'Ielts',
                                   style: defaultText14B.copyWith(
                                     color: Colors.white,
                                   ),
@@ -182,45 +185,15 @@ class _ExamScheduleScreenState extends State<ExamScheduleScreen> {
                   SizedBox(
                     height: 10.h,
                   ),
-                  // DropdownMenu<IconLabel>(
-                  //   controller: iconController,
-                  //   enableFilter: true,
-                  //   requestFocusOnTap: true,
-                  //   label: const Text('Cơ sở'),
-                  //   width: 310.w,
-                  //   inputDecorationTheme: InputDecorationTheme(
-                  //     filled: true,
-                  //     constraints: BoxConstraints.tight(
-                  //       Size.fromHeight(50.h),
-                  //     ),
-                  //     border: OutlineInputBorder(
-                  //       borderRadius: BorderRadius.circular(8),
-                  //     ),
-                  //   ),
-                  //   onSelected: (IconLabel? icon) {
-                  //     setState(() {
-                  //       selectedIcon = icon;
-                  //     });
-                  //   },
-                  //   dropdownMenuEntries:
-                  //       IconLabel.values.map<DropdownMenuEntry<IconLabel>>(
-                  //     (IconLabel icon) {
-                  //       return DropdownMenuEntry<IconLabel>(
-                  //         value: icon,
-                  //         label: icon.label,
-                  //         leadingIcon: Icon(icon.icon),
-                  //       );
-                  //     },
-                  //   ).toList(),
-                  // ),
-                  DropdownMenu<IconLabel>(
+                  DropdownMenu<CoSoModel>(
                     controller: cosoController,
                     enableFilter: true,
                     requestFocusOnTap: true,
                     label: Text(
-                      'Cơ sở',
+                      'Chọn cơ sở',
                       style: defaultText14Re,
                     ),
+                    textStyle: defaultText14M,
                     width: 310.w,
                     inputDecorationTheme: InputDecorationTheme(
                       //filled: true,
@@ -232,18 +205,17 @@ class _ExamScheduleScreenState extends State<ExamScheduleScreen> {
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
-                    onSelected: (IconLabel? icon) {
+                    onSelected: (CoSoModel? coso) {
                       setState(() {
-                        selectedIcon = icon;
+                        selectedCoso = coso;
                       });
                     },
-                    dropdownMenuEntries:
-                        IconLabel.values.map<DropdownMenuEntry<IconLabel>>(
-                      (IconLabel icon) {
-                        return DropdownMenuEntry<IconLabel>(
-                          value: icon,
-                          label: icon.label,
-                          leadingIcon: Icon(icon.icon),
+                    dropdownMenuEntries: widget.lichthiModel.cosos
+                        .map<DropdownMenuEntry<CoSoModel>>(
+                      (CoSoModel coso) {
+                        return DropdownMenuEntry<CoSoModel>(
+                          value: coso,
+                          label: coso.name,
                         );
                       },
                     ).toList(),
@@ -251,64 +223,122 @@ class _ExamScheduleScreenState extends State<ExamScheduleScreen> {
                   SizedBox(
                     height: 10.h,
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.w),
-                    child: TextField(
-                      controller: _dateController,
-                      decoration: const InputDecoration(
-                          labelText: 'Chọn ngày thi',
-                          //filled: true,
-                          prefixIcon: Icon(Icons.calendar_today),
-                          enabledBorder:
-                              OutlineInputBorder(borderSide: BorderSide.none),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.blue),
-                          )),
-                      readOnly: true,
-                      onTap: () {
-                        _selectDate();
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  DropdownMenu<IconLabel>(
-                    controller: cathiController,
-                    enableFilter: true,
-                    requestFocusOnTap: true,
-                    label: Text(
-                      'Ca thi',
-                      style: defaultText14Re,
-                    ),
-                    width: 310.w,
-                    inputDecorationTheme: InputDecorationTheme(
-                      isDense: true,
-                      contentPadding:
-                          const EdgeInsets.symmetric(horizontal: 16),
-                      constraints: BoxConstraints.tight(
-                        Size.fromHeight(40.h),
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    onSelected: (IconLabel? icon) {
-                      setState(() {
-                        selectedIcon = icon;
-                      });
-                    },
-                    dropdownMenuEntries:
-                        IconLabel.values.map<DropdownMenuEntry<IconLabel>>(
-                      (IconLabel icon) {
-                        return DropdownMenuEntry<IconLabel>(
-                          value: icon,
-                          label: icon.label,
-                          leadingIcon: Icon(icon.icon),
-                        );
-                      },
-                    ).toList(),
-                  ),
+                  selectedCoso == null
+                      ? const SizedBox()
+                      : Padding(
+                          padding: EdgeInsets.only(
+                            left: 12.w,
+                            top: 18.h,
+                            right: 12.w,
+                          ),
+                          child: FutureBuilder<List<String>>(
+                            future: ExamScheduleRepo().changeCoso(
+                                cosoId: selectedCoso?.id ?? '1',
+                                type: _format.value),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                return DropdownMenu<String>(
+                                  controller: ngaythiController,
+                                  enableFilter: true,
+                                  requestFocusOnTap: true,
+                                  label: Text(
+                                    'Chọn ngày thi',
+                                    style: defaultText14Re,
+                                  ),
+                                  textStyle: defaultText14M,
+                                  width: 310.w,
+                                  inputDecorationTheme: InputDecorationTheme(
+                                    //filled: true,
+                                    contentPadding:
+                                        EdgeInsets.symmetric(horizontal: 16.w),
+                                    constraints: BoxConstraints.tight(
+                                      Size.fromHeight(40.h),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                  onSelected: (String? day) {
+                                    setState(() {
+                                      selectedNgay = day;
+                                    });
+                                  },
+                                  dropdownMenuEntries: snapshot.data!
+                                      .map<DropdownMenuEntry<String>>(
+                                    (String day) {
+                                      return DropdownMenuEntry<String>(
+                                        value: day,
+                                        label: day,
+                                      );
+                                    },
+                                  ).toList(),
+                                );
+                              } else {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              }
+                            },
+                          ),
+                        ),
+                  selectedNgay == null
+                      ? const SizedBox()
+                      : Padding(
+                          padding: EdgeInsets.only(
+                            left: 12.w,
+                            top: 18.h,
+                            right: 12.w,
+                          ),
+                          child: FutureBuilder<List<ValueModel>>(
+                            future: ExamScheduleRepo().changeDay(
+                              cosoId: selectedCoso?.id ?? '1',
+                              type: _format.value,
+                              day: selectedNgay ?? '',
+                            ),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                return DropdownMenu<ValueModel>(
+                                  controller: cathiController,
+                                  enableFilter: true,
+                                  requestFocusOnTap: true,
+                                  label: Text(
+                                    'Chọn ca thi',
+                                    style: defaultText14Re,
+                                  ),
+                                  textStyle: defaultText14M,
+                                  width: 310.w,
+                                  inputDecorationTheme: InputDecorationTheme(
+                                    //filled: true,
+                                    contentPadding:
+                                        EdgeInsets.symmetric(horizontal: 16.w),
+                                    constraints: BoxConstraints.tight(
+                                      Size.fromHeight(40.h),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                  onSelected: (ValueModel? value) {
+                                    setState(() {
+                                      selectedValue = value;
+                                    });
+                                  },
+                                  dropdownMenuEntries: snapshot.data!
+                                      .map<DropdownMenuEntry<ValueModel>>(
+                                    (ValueModel value) {
+                                      return DropdownMenuEntry<ValueModel>(
+                                        value: value,
+                                        label: value.name,
+                                      );
+                                    },
+                                  ).toList(),
+                                );
+                              } else {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              }
+                            },
+                          ),
+                        ),
                   SizedBox(
                     height: 10.h,
                   ),
@@ -338,6 +368,11 @@ class _ExamScheduleScreenState extends State<ExamScheduleScreen> {
                                         fontSize: 20, color: key1Color),
                                   ),
                                   onPressed: () {
+                                    if (selectedValue != null) {
+                                      ExamScheduleRepo()
+                                          .dkiThi(id: selectedValue!.id);
+                                    }
+
                                     Navigator.of(context, rootNavigator: true)
                                         .pop(
                                       (_) => false,
@@ -386,24 +421,187 @@ class _ExamScheduleScreenState extends State<ExamScheduleScreen> {
             SizedBox(
               height: 330.h,
               width: 390.w,
-              child: const LichhocTabBar('Flights'),
+              child: _LichThi(
+                listLichthi: widget.lichthiModel.lichCuaToi,
+              ),
             ),
           ],
         ),
       ),
     );
   }
+}
 
-  Future<void> _selectDate() async {
-    DateTime? picked = await showDatePicker(
-      context: context,
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
+class _LichThi extends StatefulWidget {
+  const _LichThi({required this.listLichthi});
+
+  final List<LichCuaToiModels> listLichthi;
+  @override
+  State<_LichThi> createState() => _LichThiState();
+}
+
+class _LichThiState extends State<_LichThi> with TickerProviderStateMixin {
+  late final TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // bỏ comment cái dưới và cmt cái này nhé
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          ListView.builder(
+              shrinkWrap: true,
+              physics: const ClampingScrollPhysics(),
+              itemCount: widget.listLichthi.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Container(
+                  margin:
+                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+                  // height: 182.h,
+                  width: 349.w,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(8.r),
+                      ),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.2),
+                          spreadRadius: 5,
+                          blurRadius: 7,
+                          offset:
+                              const Offset(0, 2), // changes position of shadow
+                        ),
+                      ]),
+                  child: Column(
+                    //mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: 10.w,
+                          ),
+                          Container(
+                            //height: 70.h,
+                            width: 70.w,
+                            decoration: BoxDecoration(
+                              gradient: mainGradient2,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(12.r),
+                              ),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(vertical: 10.h),
+                              child: (Text(
+                                widget.listLichthi[index].typeName,
+                                style: defaultText16B.copyWith(
+                                  color: Colors.white,
+                                ),
+                                textAlign: TextAlign.center,
+                              )),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 15.w,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text(
+                                widget.listLichthi[index].name,
+                                style: defaultText16B,
+                              ),
+                              Text(
+                                widget.listLichthi[index].day,
+                                style: defaultText14Re,
+                              ),
+                              Text(
+                                widget.listLichthi[index].description,
+                                style: defaultText14Re,
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      Container(
+                        height: 74.h,
+                        width: 325.w,
+                        padding: EdgeInsets.symmetric(horizontal: 10.w),
+                        decoration: BoxDecoration(
+                          color: key1Color.withOpacity(0.1),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(8.r),
+                          ),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: 80.w,
+                                  child: Text(
+                                    'Cơ sở',
+                                    style: defaultText14Re,
+                                  ),
+                                ),
+                                Text(
+                                  'P101 - Giáo viên 1',
+                                  style: defaultText14B,
+                                ),
+                              ],
+                            ),
+                            const Divider(
+                              color: Colors.white,
+                              thickness: 2,
+                            ),
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: 80.w,
+                                  child: Text(
+                                    'Hình thức',
+                                    style: defaultText14Re,
+                                  ),
+                                ),
+                                Text(
+                                  'Offline',
+                                  style: defaultText14B,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                    ],
+                  ),
+                );
+              }),
+        ],
+      ),
     );
-    if (picked != null) {
-      setState(() {
-        _dateController.text = picked.toString().split(" ")[0];
-      });
-    }
   }
 }

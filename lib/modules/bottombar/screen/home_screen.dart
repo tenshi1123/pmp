@@ -9,19 +9,36 @@ import 'package:pmp_english/modules/feature_home/evaluate/evaluate_screen.dart';
 import 'package:pmp_english/modules/feature_home/exam_schedule_screen.dart';
 import 'package:pmp_english/modules/lesson/detail_lesson_screen.dart';
 import 'package:pmp_english/modules/notification/notification.dart';
+import 'package:pmp_english/repo/diemdanh_repo.dart';
+import 'package:pmp_english/repo/home_repo.dart';
+import 'package:pmp_english/repo/lichthi_repo.dart';
+import 'package:pmp_english/student_models/customer_models.dart';
+import 'package:pmp_english/student_models/diem_danh_model.dart';
+import 'package:pmp_english/student_models/home_model.dart';
+import 'package:pmp_english/student_models/lichthi_models.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 
 import '../../feature_home/exercise/exercise_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
-
+  const HomeScreen({
+    super.key,
+    required this.infomodel,
+  });
+  final StudentHomeModel infomodel;
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late StudentHomeModel infomodel;
+  @override
+  void initState() {
+    infomodel = widget.infomodel;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -44,9 +61,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         width: 20.w,
                       ),
                       CircleAvatar(
-                        backgroundColor: Colors.brown.shade800,
                         radius: 24.r,
-                        child: Text('HA',style: defaultText14M.copyWith(color: main1Color)),
+                        backgroundImage:
+                            NetworkImage(infomodel.customerInfoModel.img),
+                        backgroundColor: Colors.transparent,
                       ),
                       SizedBox(
                         width: 15.w,
@@ -60,14 +78,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                 defaultText14Re.copyWith(color: Colors.white),
                           ),
                           Text(
-                            'Nguyễn Hồng Anh',
+                            infomodel.customerInfoModel.fullName,
                             style: defaultText18B.copyWith(color: Colors.white),
                           ),
                         ],
                       ),
-                      SizedBox(
-                        width: 60.w,
-                      ),
+                      const Spacer(),
                       GestureDetector(
                         onTap: () {
                           Navigator.push(
@@ -93,6 +109,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           );
                         },
                         child: _chatNoti(icon: 'assets/icons/ring.svg'),
+                      ),
+                      SizedBox(
+                        width: 10.w,
                       ),
                     ],
                   ),
@@ -128,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     style: defaultText14M,
                                   ),
                                   Text(
-                                    '03',
+                                    infomodel.totalCourse,
                                     style: defaultText16B.copyWith(
                                       color: main1Color,
                                     ),
@@ -160,7 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             color: key1Color.withOpacity(0.8)),
                                       ),
                                       Text(
-                                        '85%',
+                                        infomodel.chuyenCan,
                                         style: defaultText16B.copyWith(
                                           color: main1Color,
                                         ),
@@ -172,19 +191,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Đánh giá cá nhân',
+                                        'Mục tiêu',
                                         style: defaultText14Re.copyWith(
                                             color: key1Color.withOpacity(0.8)),
                                       ),
                                       RichText(
                                         text: TextSpan(
-                                          text: '650 ',
+                                          text: infomodel
+                                              .customerInfoModel.targetIelts,
                                           style: defaultText16B.copyWith(
                                             color: main1Color,
                                           ),
                                           children: [
                                             TextSpan(
-                                              text: '/990',
+                                              text: '',
                                               style: defaultText14B.copyWith(
                                                 color: main2Color,
                                               ),
@@ -204,11 +224,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         width: 15.w,
                       ),
                       GestureDetector(
-                          onTap: () {
+                          onTap: () async {
+                            List<DiemDanhModel> infoModel =
+                                await DiemdanhRepo().getListDiemDanh();
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const DiemDanhScreen(),
+                                builder: (context) => DiemDanhScreen(
+                                  listDiemdanh: infoModel,
+                                ),
                               ),
                             );
                           },
@@ -226,33 +250,43 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               GestureDetector(
-                  onTap: () {
+                  onTap: () async {
+                    LichthiModel lichthiModel =
+                        await ExamScheduleRepo().getLichThi();
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const ExamScheduleScreen(),
+                        builder: (context) => ExamScheduleScreen(
+                          lichthiModel: lichthiModel,
+                        ),
                       ),
                     );
                   },
                   child: _homeIcon(
                       title: 'Lịch thi', image: 'assets/images/lich_thi.png')),
               GestureDetector(
-                  onTap: () {
+                  onTap: () async {
+                    ListExcerciseModel model = await HomeRepo().getListBaiTap();
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const ExerciseScreen(),
+                        builder: (context) => ExerciseScreen(
+                          model: model,
+                        ),
                       ),
                     );
                   },
                   child: _homeIcon(
                       title: 'Bài tập', image: 'assets/images/bai_tap.png')),
               GestureDetector(
-                onTap: () {
+                onTap: () async {
+                  BaoCaoHocTapModel model = await HomeRepo().getBaoCaoDiem();
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const AcademicReportScreen(),
+                      builder: (context) => AcademicReportScreen(
+                        model: model,
+                      ),
                     ),
                   );
                 },
@@ -300,7 +334,9 @@ class _HomeScreenState extends State<HomeScreen> {
           //     ],
           //   ),
           // ),
-          SizedBox(height: 10.h,),
+          SizedBox(
+            height: 10.h,
+          ),
           Text(
             '    Lịch học gần nhất',
             style: defaultText16B,

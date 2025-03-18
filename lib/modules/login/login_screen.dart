@@ -1,8 +1,17 @@
+import 'dart:convert';
+
+import 'package:crypto/crypto.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pmp_english/modules/bottombar/bottom_bar_screen.dart';
 import 'package:pmp_english/modules/login/forgot_password_screen.dart';
+import 'package:pmp_english/repo/customer_repo.dart';
+import 'package:pmp_english/repo/login_repo.dart';
+import 'package:pmp_english/router/app_pages.dart';
+import 'package:pmp_english/router/app_router.dart';
+import 'package:pmp_english/student_models/customer_models.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -212,38 +221,44 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 30.h,
                 ),
                 GestureDetector(
-                  onTap: () {
-                    if (studenIdController?.text == 'anhtanh283') {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: ((context) => const Bottombar(0)),
-                        ),
-                      );
+                  onTap: () async {
+                    // "code": "2302682572",
+                    // "password": "123456"
+                    bool loged = await LoginRepo().login(
+                        studenIdController?.text ?? '',
+                        md5
+                            .convert(utf8.encode(passController?.text ?? ''))
+                            .toString());
+                    if (loged == true) {
+                      StudentHomeModel infoModel =
+                          await CustomerRepo().getHomeInfo();
+                      AppRouter.toPage(context, AppPages.BottomNavBarPage,
+                          arguments: {
+                            'infoModel': infoModel,
+                          });
                     } else {
-                      showDialog<void>(
+                      showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text(
-                              'Đã có lỗi xảy ra',
-                              style: defaultText14M,
-                            ),
-                            content: Text(
-                              'Vui lòng kiểm tra lại tên đăng nhập hoặc mật khẩu của bạn',
-                              style: defaultText14M,
-                            ),
+                          return CupertinoAlertDialog(
+                            title: const Text('Vui lòng thử lại'),
+                            content: const Text(
+                                'Vui lòng kiểm tra lại mã học sinh và mật khẩu của bạn'),
                             actions: <Widget>[
-                              TextButton(
-                                style: TextButton.styleFrom(
-                                  textStyle:
-                                      Theme.of(context).textTheme.labelLarge,
+                              CupertinoDialogAction(
+                                isDefaultAction: true,
+                                child: Text(
+                                  'Đồng ý',
+                                  style:
+                                      TextStyle(fontSize: 20, color: key1Color),
                                 ),
-                                child: const Text('ok'),
                                 onPressed: () {
-                                  Navigator.of(context).pop();
+                                  Navigator.of(context, rootNavigator: true)
+                                      .pop(
+                                    (_) => false,
+                                  );
                                 },
-                              ),
+                              )
                             ],
                           );
                         },

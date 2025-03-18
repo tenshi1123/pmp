@@ -140,27 +140,3 @@ class ListFbDinhKy extends StatelessWidget {
     );
   }
 }
-
-Widget _detailItem({required String title1, required String title2}) {
-  return Row(
-    children: [
-      SizedBox(
-        width: 18.w,
-      ),
-      SizedBox(
-        width: 120.w,
-        child: Text(
-          title1,
-          style: defaultText16M,
-        ),
-      ),
-      SizedBox(
-        width: 240.w,
-        child: Text(
-          title2,
-          style: defaultText16B,
-        ),
-      )
-    ],
-  );
-}

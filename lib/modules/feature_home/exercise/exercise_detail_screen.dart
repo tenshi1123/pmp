@@ -42,25 +42,6 @@ class TestScreen extends StatelessWidget {
                 SizedBox(
                   width: 10.w,
                 ),
-
-                // RichText(
-                //   text: TextSpan(
-                //       text: '<  Chi tiết buổi học ',
-                //       style: defaultBoldText.copyWith(
-                //         fontSize: 14.sp,
-                //         color: keyBlack.withOpacity(0.5),
-                //       ),
-                //       recognizer: TapGestureRecognizer()
-                //         ..onTap = () => Navigator.of(context).pop(),
-                //       children: [
-                //         TextSpan(
-                //           text: ' <  Kiểm tra',
-                //           style: defaultBoldText.copyWith(fontSize: 14.sp),
-                //         )
-                //       ]),
-                // ),
-
-                //  SvgPicture.asset('assets/icons/three_dots_icon.svg'),
               ],
             ),
             SizedBox(
@@ -88,36 +69,6 @@ class TestScreen extends StatelessWidget {
                 color: key1Color.withOpacity(0.5),
               ),
             ),
-
-            // Container(
-            //   width: 350.w,
-            //   height: 51.h,
-            //   decoration: BoxDecoration(
-            //     color: const Color(0xffDEE4ED),
-            //     borderRadius: BorderRadius.all(Radius.circular(10.r)),
-            //   ),
-            //   child: Row(
-            //     children: [
-            //       SizedBox(
-            //         width: 20.w,
-            //       ),
-            //       Text(
-            //         'Xem chi tiết bài làm',
-            //         style: defaultText16B,
-            //       ),
-            //       const Spacer(),
-            //       Icon(
-            //         Icons.keyboard_arrow_right,
-            //         color: key1Color,
-            //         size: 30.dm,
-            //         semanticLabel: 'Text to announce in accessibility modes',
-            //       ),
-            //       SizedBox(
-            //         width: 20.w,
-            //       ),
-            //     ],
-            //   ),
-            // ),
           ],
         ),
       ),
@@ -187,49 +138,6 @@ class _InfoTest extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Row(
-                  //   children: [
-                  //     Container(
-                  //       width: 90.w,
-                  //       height: 23.h,
-                  //       decoration: BoxDecoration(
-                  //         borderRadius: BorderRadius.all(Radius.circular(16.r)),
-                  //         color: kPrimaryColor,
-                  //       ),
-                  //       child: Center(
-                  //         child: Text(
-                  //           'Trắc nghiệm',
-                  //           style: defaultBoldText.copyWith(
-                  //             color: Colors.white,
-                  //             fontSize: 12.w,
-                  //           ),
-                  //           textAlign: TextAlign.center,
-                  //         ),
-                  //       ),
-                  //     ),
-                  //     SizedBox(
-                  //       width: 6.w,
-                  //     ),
-                  //     Container(
-                  //       width: 81.w,
-                  //       height: 21.h,
-                  //       decoration: BoxDecoration(
-                  //         borderRadius: BorderRadius.all(Radius.circular(16.r)),
-                  //         color: kPrimaryColor,
-                  //       ),
-                  //       child: Center(
-                  //         child: Text(
-                  //           '15 phút',
-                  //           style: defaultBoldText.copyWith(
-                  //             color: Colors.white,
-                  //             fontSize: 12.w,
-                  //           ),
-                  //           textAlign: TextAlign.center,
-                  //         ),
-                  //       ),
-                  //     )
-                  //   ],
-                  // ),
                   SizedBox(
                     height: 10.h,
                   ),
@@ -269,15 +177,6 @@ class _InfoTest extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                   ),
-                  // SizedBox(
-                  //   width: 320.w,
-                  //   child: Text(
-                  //     'dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
-                  //     style: defaultText14,
-                  //     overflow: TextOverflow.ellipsis,
-                  //     maxLines: 3,
-                  //   ),
-                  // ),
                   Container(
                     margin: EdgeInsets.symmetric(vertical: 6.h),
                     height: 1.h,

@@ -1,0 +1,66 @@
+import 'dart:convert';
+import 'package:dio/dio.dart';
+import 'package:pmp_english/utils/constants/api_path.dart';
+import 'package:pmp_english/utils/constants/const_string.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sp_util/sp_util.dart';
+
+class LoginRepo {
+  Dio dio = Dio();
+  // Future<bool> login(String phone, String password) async {
+  //   Response response;
+  //   var formData = FormData.fromMap({
+  //     'phone': phone,
+  //     'password': password,
+  //   });
+  //   try {
+  //     response = await dio.post(
+  //       ApiPath.login,
+  //       data: formData,
+  //     );
+  //   } on DioException {
+  //     return false;
+  //   }
+  //   if (response.data['status'] == false) {
+  //     return false;
+  //   }
+  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   await prefs.setString('token', response.data['data']["refresh_token"]);
+  //   return response.data['data']["refresh_token"] != null;
+  // }
+
+  Future<bool> login(String code, String password) async {
+    dio.options.headers['Token'] = 'PMP123456789';
+    Response response;
+    try {
+      response = await dio.post(ApiPath.login,
+          data: jsonEncode({
+            'phone': code,
+            'password': password,
+          }));
+    } on DioException {
+      return false;
+    }
+    if (response.data['status'] == false) {
+      return false;
+    }
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('token', response.data["refresh_token"]);
+    return response.data["refresh_token"] != null;
+  }
+
+  static String? get idUser => SpUtil.getString('id_user', defValue: null);
+  Future<String> refreshToken() async {
+    Dio dio = Dio();
+    dio.options.headers['Token'] = 'BT123456789';
+    Response response;
+    response = await dio.post(ApiPath.login,
+        data: jsonEncode({
+          'code': SpUtil.getString(ConstString.idStudent),
+          'password': SpUtil.getString(ConstString.md5Pass),
+        }));
+    SpUtil.putString(ConstString.token, response.data["token"]);
+    // sendUserTag(int.parse(response.data["school_id"].toString()));
+    return response.data["token"];
+  }
+}
