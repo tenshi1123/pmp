@@ -5,11 +5,10 @@ import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import '../utils.dart';
+import '../../utils.dart';
 
 class ScheduleScreen extends StatefulWidget {
   const ScheduleScreen({super.key});
-
   @override
   State<ScheduleScreen> createState() => _ScheduleScreenState();
 }

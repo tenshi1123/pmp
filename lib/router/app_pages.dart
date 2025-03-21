@@ -2,6 +2,7 @@
 
 import 'package:pmp_english/modules/bottombar/bottom_bar_screen.dart';
 import 'package:pmp_english/student_models/customer_models.dart';
+import 'package:pmp_english/student_models/profile_model.dart';
 
 import '../modules/login/forgot_password_screen.dart';
 import '../modules/login/login_screen.dart';
@@ -43,10 +44,12 @@ extension AppPagesExtension on AppPages {
         return PageConfig()..pageBuilder = () => const ForgotPassScreen();
       case AppPages.BottomNavBarPage:
         final StudentHomeModel infoModel = arguments!['infoModel'];
+        final ProfileModel profileModel = arguments['profileModel'];
         return PageConfig()
           ..pageBuilder = () => Bottombar(
                 index: 0,
                 infomodel: infoModel,
+                profileModel: profileModel,
               );
       // default:
       //   throw StateError(

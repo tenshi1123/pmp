@@ -6,6 +6,7 @@ import 'package:pmp_english/repo/customer_repo.dart';
 import 'package:pmp_english/router/app_pages.dart';
 import 'package:pmp_english/router/app_router.dart';
 import 'package:pmp_english/student_models/customer_models.dart';
+import 'package:pmp_english/student_models/profile_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Splshscreen extends StatefulWidget {
@@ -26,8 +27,10 @@ class _SplshscreenState extends State<Splshscreen> {
       checked = (token != null && token != '');
       if (checked) {
         StudentHomeModel infoModel = await CustomerRepo().getHomeInfo();
+        ProfileModel profileModel = await CustomerRepo().getCustomerProfile();
         AppRouter.toPage(context, AppPages.BottomNavBarPage, arguments: {
           'infoModel': infoModel,
+          'profileModel': profileModel,
         });
       } else {
         Navigator.pushReplacement(

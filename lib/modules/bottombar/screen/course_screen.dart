@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pmp_english/modules/course/course_details.dart';
+import 'package:pmp_english/repo/mycourse_repo.dart';
+import 'package:pmp_english/student_models/my_course_model.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
@@ -94,39 +96,52 @@ class _CourseScreenState extends State<CourseScreen>
               ],
             ),
           ),
-          Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: [
-                ListView.builder(
-                    shrinkWrap: true,
-                    physics: const ClampingScrollPhysics(),
-                    itemCount: 5,
-                    itemBuilder: (BuildContext context, int index) {
-                      return CourseItem(
-                        index: index,
-                      );
-                    }),
-                ListView.builder(
-                    shrinkWrap: true,
-                    physics: const ClampingScrollPhysics(),
-                    itemCount: 5,
-                    itemBuilder: (BuildContext context, int index) {
-                      return CourseItem(
-                        index: index,
-                      );
-                    }),
-                ListView.builder(
-                    shrinkWrap: true,
-                    physics: const ClampingScrollPhysics(),
-                    itemCount: 5,
-                    itemBuilder: (BuildContext context, int index) {
-                      return CourseItem(
-                        index: index,
-                      );
-                    }),
-              ],
-            ),
+          FutureBuilder<List<MyCourseModel>>(
+            future: MycourseRepo().getListMyCourse(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                final listMyCourse = snapshot.data as List<MyCourseModel>;
+                return Expanded(
+                  child: TabBarView(
+                    controller: _tabController,
+                    children: [
+                      ListView.builder(
+                          shrinkWrap: true,
+                          physics: const ClampingScrollPhysics(),
+                          itemCount: listMyCourse.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return CourseItem(
+                              index: index,
+                              model: listMyCourse[index],
+                            );
+                          }),
+                      ListView.builder(
+                          shrinkWrap: true,
+                          physics: const ClampingScrollPhysics(),
+                          itemCount: listMyCourse.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return CourseItem(
+                              index: index,
+                              model: listMyCourse[index],
+                            );
+                          }),
+                      ListView.builder(
+                          shrinkWrap: true,
+                          physics: const ClampingScrollPhysics(),
+                          itemCount: listMyCourse.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return CourseItem(
+                              index: index,
+                              model: listMyCourse[index],
+                            );
+                          }),
+                    ],
+                  ),
+                );
+              } else {
+                return const Center(child: CircularProgressIndicator());
+              }
+            },
           ),
         ],
       ),
@@ -135,9 +150,9 @@ class _CourseScreenState extends State<CourseScreen>
 }
 
 class CourseItem extends StatelessWidget {
-  const CourseItem({super.key, required this.index});
+  const CourseItem({super.key, required this.index, required this.model});
   final int index;
-
+  final MyCourseModel model;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -157,7 +172,8 @@ class CourseItem extends StatelessWidget {
               topLeft: Radius.circular(16),
               topRight: Radius.circular(16),
             ),
-            child: Image.asset('assets/images/course_image.png'),
+            child: Image.network(
+                'https://lms.pmpenglish.edu.vn/images/${model.img}'),
           ),
           SizedBox(
             height: 10.h,
@@ -170,7 +186,7 @@ class CourseItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'TOEIC 4 kỹ năng',
+                    model.name,
                     style: TextStyle(
                       color: key1Color,
                       fontWeight: FontWeight.w500,
@@ -187,7 +203,7 @@ class CourseItem extends StatelessWidget {
                       ),
                     ),
                     child: Text(
-                      'Đang học',
+                      model.statusName,
                       style: defaultText12B.copyWith(color: Colors.white),
                     ),
                   ),
@@ -201,9 +217,9 @@ class CourseItem extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.w),
             child: Text(
-              'Giảng viên: Nguyễn Phú',
+              'Giảng viên: ${model.teacherName}',
               style: defaultText14M.copyWith(
-                color: key1Color.withOpacity(0.5),
+                color: key1Color.withValues(alpha: 0.5),
               ),
             ),
           ),
@@ -213,9 +229,9 @@ class CourseItem extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.w),
             child: Text(
-              'Lớp: THH 499 - Cơ sở: Lê Văn Việt',
+              'Lớp: ${model.alias} ${model.cosoName}',
               style: defaultText14M.copyWith(
-                color: key1Color.withOpacity(0.5),
+                color: key1Color.withValues(alpha: 0.5),
               ),
             ),
           ),
@@ -228,16 +244,16 @@ class CourseItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '66%',
+                  '%',
                   style: defaultText14M.copyWith(color: main1Color),
                 ),
                 RichText(
                   text: TextSpan(
-                    text: '26',
+                    text: model.totalAttended,
                     style: defaultText14M,
                     children: <TextSpan>[
                       TextSpan(
-                        text: '/40 buổi',
+                        text: '/${model.totalBuoiHoc} buổi',
                         style: defaultText14M.copyWith(
                           color: key1Color.withOpacity(0.5),
                         ),
@@ -265,11 +281,15 @@ class CourseItem extends StatelessWidget {
             height: 10.h,
           ),
           GestureDetector(
-            onTap: () {
+            onTap: () async {
+              DetailMyCourse courseDetail =
+                  await MycourseRepo().getDetailMyCourse(id: model.id);
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const CourseDetails(),
+                  builder: (context) => CourseDetails(
+                    model: courseDetail,
+                  ),
                 ),
               );
             },

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pmp_english/modules/bottombar/screen/extension.dart/schedule_screen.dart';
 import 'package:pmp_english/modules/bottombar/screen/user_info/account_screen.dart';
 import 'package:pmp_english/modules/bottombar/screen/news_screen.dart';
-import 'package:pmp_english/modules/bottombar/screen/schedule_screen.dart';
 import 'package:pmp_english/student_models/customer_models.dart';
+import 'package:pmp_english/student_models/profile_model.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'screen/course_screen.dart';
@@ -13,10 +14,12 @@ import 'screen/home_screen.dart';
 class Bottombar extends StatefulWidget {
   final int index;
   final StudentHomeModel infomodel;
+  final ProfileModel profileModel;
   const Bottombar({
     super.key,
     required this.infomodel,
     required this.index,
+    required this.profileModel,
   });
 
   @override
@@ -113,9 +116,11 @@ class _BottombarState extends State<Bottombar> {
             infomodel: widget.infomodel,
           ),
           const CourseScreen(),
-          const ScheduleScreen(),
+          const CalenderScreen(),
           const NewsScreen(),
-          const AccountScreen(),
+          AccountScreen(
+            profileModel: widget.profileModel,
+          ),
         ][_selectedIndex],
       ),
     );

@@ -12,6 +12,7 @@ import 'package:pmp_english/repo/login_repo.dart';
 import 'package:pmp_english/router/app_pages.dart';
 import 'package:pmp_english/router/app_router.dart';
 import 'package:pmp_english/student_models/customer_models.dart';
+import 'package:pmp_english/student_models/profile_model.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -232,9 +233,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     if (loged == true) {
                       StudentHomeModel infoModel =
                           await CustomerRepo().getHomeInfo();
+                      ProfileModel profileModel =
+                          await CustomerRepo().getCustomerProfile();
                       AppRouter.toPage(context, AppPages.BottomNavBarPage,
                           arguments: {
                             'infoModel': infoModel,
+                            'profileModel': profileModel,
                           });
                     } else {
                       showDialog(

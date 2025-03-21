@@ -58,3 +58,46 @@ class CustomerInfoModel {
     );
   }
 }
+
+class CalendarModel {
+  final String id;
+  final String courseScheduleAlias;
+  final String day;
+  final String name;
+  final String timeStart;
+  final String timeEnd;
+  final String cosoAddress;
+  final String phongHocName;
+  final String teacherName;
+  final String teacherAvatar;
+  final String type;
+
+  CalendarModel({
+    required this.id,
+    required this.courseScheduleAlias,
+    required this.day,
+    required this.name,
+    required this.timeStart,
+    required this.timeEnd,
+    required this.cosoAddress,
+    required this.phongHocName,
+    required this.teacherName,
+    required this.teacherAvatar,
+    required this.type,
+  });
+  factory CalendarModel.fromJson(Map<String, dynamic> json) {
+    return CalendarModel(
+      id: json["id"] ?? '',
+      courseScheduleAlias: json["course_schedule_alias"] ?? '',
+      day: json["day"] ?? '',
+      name: json["name"] ?? '',
+      timeStart: json["time_start"] ?? '',
+      timeEnd: json["time_end"] ?? '',
+      cosoAddress: json["coso_address"] ?? '',
+      phongHocName: json['phonghoc_name'] ?? '',
+      teacherName: json['teachers_full_name'] ?? '',
+      teacherAvatar: json['teachers_avatar'] ?? '',
+      type: json['type'] ?? '',
+    );
+  }
+}

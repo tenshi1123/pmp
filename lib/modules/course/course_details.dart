@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pmp_english/modules/course/lich_hoc.dart';
 import 'package:pmp_english/modules/course/reportage.dart';
+import 'package:pmp_english/student_models/my_course_model.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 
 import 'excercise_screen.dart';
 
 class CourseDetails extends StatefulWidget {
-  const CourseDetails({super.key});
-
+  const CourseDetails({super.key, required this.model});
+  final DetailMyCourse model;
   @override
   State<CourseDetails> createState() => _CourseDetailsState();
 }
@@ -17,6 +18,7 @@ class CourseDetails extends StatefulWidget {
 class _CourseDetailsState extends State<CourseDetails>
     with TickerProviderStateMixin {
   late TabController _tabController;
+  late final DetailMyCourse model;
   final _tabs = [
     const Tab(text: 'Lịch học'),
     const Tab(text: 'Bài tập'),
@@ -25,6 +27,7 @@ class _CourseDetailsState extends State<CourseDetails>
   @override
   void initState() {
     _tabController = TabController(length: 3, vsync: this);
+    model = widget.model;
     super.initState();
   }
 
@@ -45,11 +48,12 @@ class _CourseDetailsState extends State<CourseDetails>
                     height: 140.h,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image:
-                            const AssetImage("assets/images/course_image.png"),
+                        image: NetworkImage(
+                          'https://lms.pmpenglish.edu.vn/images/${model.img}',
+                        ),
                         fit: BoxFit.cover,
                         colorFilter: ColorFilter.mode(
-                          Colors.black.withOpacity(0.5),
+                          Colors.black.withValues(alpha: 0.5),
                           BlendMode.darken,
                         ),
                       ),
@@ -106,7 +110,7 @@ class _CourseDetailsState extends State<CourseDetails>
                         width: 50.w,
                       ),
                       Text(
-                        'TOEIC 4 kỹ năng',
+                        model.name,
                         style: defaultText20B.copyWith(
                           color: Colors.white,
                         ),
@@ -120,10 +124,12 @@ class _CourseDetailsState extends State<CourseDetails>
           Expanded(
             child: TabBarView(
               controller: _tabController,
-              children: const [
-                LichHocScreen(),
-                ExcerciseScreen(),
-                ReportageScreen(),
+              children: [
+                LichHocScreen(
+                  model: model,
+                ),
+                const ExcerciseScreen(),
+                const ReportageScreen(),
               ],
             ),
           )
