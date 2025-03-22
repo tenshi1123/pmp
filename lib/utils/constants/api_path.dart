@@ -43,9 +43,11 @@ class ApiPath {
   static const String calendar = '$hocvienUrl/calendar';
   static const String listFeeback = '$hocvienUrl/danh_gia';
   static const String detailsFeedback = '$hocvienUrl/detail_danh_gia';
-  //Khóa học của tôi
+  //Khóa học của tôi khoa hoc
   static const String myCourse = '$hocvienUrl/mycourse';
   static const String detailMyCourse = '$myCourse/detail';
+  static const String detailBaoCao = '$myCourse/detail/bao_cao';
+  static const String myCoursedetailBaiTap = '$myCourse/detail/bai_tap';
   //Chi tiet khoa hoc
   static const String coureDetail = '$hocvienUrl/course/detail';
   //Xin nghi

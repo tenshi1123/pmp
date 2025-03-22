@@ -33,4 +33,32 @@ class MycourseRepo {
     );
     return DetailMyCourse.fromJson(response.data['data']);
   }
+
+  Future<DetailBaoCaoModel> getMycourseBaocao({required String id}) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    Response response;
+    response = await dio.post(
+      ApiPath.detailBaoCao,
+      data: {
+        'id': id,
+      },
+    );
+    return DetailBaoCaoModel.fromJson(response.data['data']);
+  }
+
+  Future<MycourseBaiTapModel> getMycourseBaitap({required String id}) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    Response response;
+    response = await dio.post(
+      ApiPath.myCoursedetailBaiTap,
+      data: {
+        'id': id,
+      },
+    );
+    return MycourseBaiTapModel.fromJson(response.data);
+  }
 }

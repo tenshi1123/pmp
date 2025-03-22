@@ -170,7 +170,7 @@ class _ClassItem extends StatelessWidget {
                 height: 70.h,
                 width: 70.w,
                 decoration: BoxDecoration(
-                  gradient: mainGradient2,
+                  gradient: type == 1 ? mainGradient2 : mainGradientgray,
                   borderRadius: BorderRadius.all(
                     Radius.circular(12.r),
                   ),

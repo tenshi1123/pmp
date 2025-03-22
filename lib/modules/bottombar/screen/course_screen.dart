@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pmp_english/modules/course/course_details.dart';
+import 'package:pmp_english/modules/course/course_details_screen.dart';
 import 'package:pmp_english/repo/mycourse_repo.dart';
 import 'package:pmp_english/student_models/my_course_model.dart';
 import 'package:pmp_english/utils/constants/color.dart';
@@ -284,11 +284,17 @@ class CourseItem extends StatelessWidget {
             onTap: () async {
               DetailMyCourse courseDetail =
                   await MycourseRepo().getDetailMyCourse(id: model.id);
+              MycourseBaiTapModel baiTap =
+                  await MycourseRepo().getMycourseBaitap(id: model.id);
+              DetailBaoCaoModel detailBaoCao =
+                  await MycourseRepo().getMycourseBaocao(id: model.id);
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => CourseDetails(
-                    model: courseDetail,
+                    detailMyCourse: courseDetail,
+                    detailBaoCao: detailBaoCao,
+                    baiTapModel: baiTap,
                   ),
                 ),
               );

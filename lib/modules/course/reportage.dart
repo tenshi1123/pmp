@@ -4,13 +4,14 @@ import 'package:pmp_english/modules/diemdanh/attendance_details.dart';
 import 'package:pmp_english/modules/diemdanh/diem_danh_screen.dart';
 import 'package:pmp_english/repo/diemdanh_repo.dart';
 import 'package:pmp_english/student_models/diem_danh_model.dart';
+import 'package:pmp_english/student_models/my_course_model.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:pmp_english/utils/widget/custom_widget.dart';
 
 class ReportageScreen extends StatelessWidget {
-  const ReportageScreen({super.key});
-
+  const ReportageScreen({super.key, required this.detailBaoCao});
+  final DetailBaoCaoModel detailBaoCao;
   @override
   Widget build(BuildContext context) {
     return Padding(

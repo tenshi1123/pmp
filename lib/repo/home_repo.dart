@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:pmp_english/student_models/diem_danh_model.dart';
 import 'package:pmp_english/student_models/home_model.dart';
+import 'package:pmp_english/student_models/profile_model.dart';
 import 'package:pmp_english/utils/constants/api_path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,7 +22,7 @@ class HomeRepo {
     return ListExcerciseModel.fromJson((response.data)['data']);
   }
 
-  //Lấy chi tiết bài tập
+  //Lấy chi tiết bài tập chi tiet bai tap
   Future<DetailExcerciseModel> getDetailExsercise(
       {required String id, required String customerCourseScheduleId}) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -60,5 +61,19 @@ class HomeRepo {
     response =
         await dio.post(ApiPath.detailDiemdanh, data: jsonEncode({"id": id}));
     return InfoDiemDanh.fromJson((response.data)['data']);
+  }
+
+  Future<List<PostModel>> getlistPost(String id) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    Response response;
+    response =
+        await dio.post(ApiPath.detailDiemdanh, data: jsonEncode({"id": id}));
+    List<PostModel> list = [];
+    for (var item in response.data['data']['value']) {
+      list.add(PostModel.fromJson(item));
+    }
+    return list;
   }
 }

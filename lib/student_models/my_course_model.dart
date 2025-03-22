@@ -114,3 +114,116 @@ class DetailCourse {
     );
   }
 }
+
+class DetailBaoCaoModel {
+  final int chuyenCan;
+  final int baiTap;
+  final int thaiDo;
+  final String teacherId;
+  final String fullName;
+  final String content;
+  final List<MonthlyReviewModel> monthlyReview;
+  DetailBaoCaoModel({
+    required this.chuyenCan,
+    required this.baiTap,
+    required this.thaiDo,
+    required this.teacherId,
+    required this.fullName,
+    required this.content,
+    required this.monthlyReview,
+  });
+  factory DetailBaoCaoModel.fromJson(Map<String, dynamic> json) {
+    return DetailBaoCaoModel(
+      chuyenCan: json['cc'],
+      baiTap: json['bt'],
+      thaiDo: json['tc'],
+      teacherId: json['chat']['teachers_id'],
+      fullName: json['chat']['full_name'],
+      content: json['chat']['content'],
+      monthlyReview: (json['value'] as List)
+          .map((e) => MonthlyReviewModel.fromJson(e))
+          .toList(),
+    );
+  }
+}
+
+class MonthlyReviewModel {
+  final String monthName;
+  final String teacherName;
+  final String id;
+  final String customerCourseScheduleId;
+  final String evaluationMonthId;
+  final List<String> nhanXet;
+  final List<String> caiThien;
+  MonthlyReviewModel({
+    required this.monthName,
+    required this.teacherName,
+    required this.id,
+    required this.customerCourseScheduleId,
+    required this.evaluationMonthId,
+    required this.nhanXet,
+    required this.caiThien,
+  });
+  factory MonthlyReviewModel.fromJson(Map<String, dynamic> json) {
+    return MonthlyReviewModel(
+      monthName: json['evaluation_month_name'],
+      teacherName: json['teachers_full_name'],
+      id: json['id'],
+      customerCourseScheduleId: json['customer_course_schedule_id'],
+      evaluationMonthId: json['evaluation_month_id'],
+      nhanXet:
+          (json['nhan_xet'] as List).map((e) => e['name'].toString()).toList(),
+      caiThien: (json['can_cai_thien'] as List)
+          .map((e) => e['name'].toString())
+          .toList(),
+    );
+  }
+}
+
+class MycourseBaiTapModel {
+  final int scheduleId;
+  final List<BaiTapValueModel> value;
+  MycourseBaiTapModel({
+    required this.scheduleId,
+    required this.value,
+  });
+  factory MycourseBaiTapModel.fromJson(Map<String, dynamic> json) {
+    return MycourseBaiTapModel(
+      scheduleId: int.parse(json['customer_course_schedule_id']),
+      value: (json['value'] as List)
+          .map((e) => BaiTapValueModel.fromJson(e))
+          .toList(),
+    );
+  }
+}
+
+class BaiTapValueModel {
+  final String id;
+  final String name;
+  final DateTime timeDeadline;
+  final String type;
+  final String typeName;
+  final int status;
+  final String note;
+  BaiTapValueModel({
+    required this.id,
+    required this.name,
+    required this.timeDeadline,
+    required this.type,
+    required this.typeName,
+    required this.status,
+    required this.note,
+  });
+  factory BaiTapValueModel.fromJson(Map<String, dynamic> json) {
+    return BaiTapValueModel(
+      id: json['id'] ?? '',
+      name: json['name'] ?? '',
+      timeDeadline:
+          DateFormat("yyyy-MM-dd hh:mm:ss").parse(json['time_deadline'] ?? ''),
+      type: json['type'] ?? '',
+      typeName: json['type_name'] ?? '',
+      status: json['status'] ?? '',
+      note: json['note'] ?? '',
+    );
+  }
+}

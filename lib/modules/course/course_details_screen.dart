@@ -9,8 +9,14 @@ import 'package:pmp_english/utils/constants/styles.dart';
 import 'excercise_screen.dart';
 
 class CourseDetails extends StatefulWidget {
-  const CourseDetails({super.key, required this.model});
-  final DetailMyCourse model;
+  const CourseDetails(
+      {super.key,
+      required this.detailMyCourse,
+      required this.detailBaoCao,
+      required this.baiTapModel});
+  final DetailMyCourse detailMyCourse;
+  final MycourseBaiTapModel baiTapModel;
+  final DetailBaoCaoModel detailBaoCao;
   @override
   State<CourseDetails> createState() => _CourseDetailsState();
 }
@@ -27,7 +33,7 @@ class _CourseDetailsState extends State<CourseDetails>
   @override
   void initState() {
     _tabController = TabController(length: 3, vsync: this);
-    model = widget.model;
+    model = widget.detailMyCourse;
     super.initState();
   }
 
@@ -128,8 +134,12 @@ class _CourseDetailsState extends State<CourseDetails>
                 LichHocScreen(
                   model: model,
                 ),
-                const ExcerciseScreen(),
-                const ReportageScreen(),
+                ExcerciseScreen(
+                  baiTapModel: widget.baiTapModel,
+                ),
+                ReportageScreen(
+                  detailBaoCao: widget.detailBaoCao,
+                ),
               ],
             ),
           )

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:pmp_english/modules/chat/screen/chat_screen.dart';
 import 'package:pmp_english/modules/lesson/detail_lesson_screen.dart';
+import 'package:pmp_english/student_models/my_course_model.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 
@@ -118,8 +120,9 @@ class ExamDay extends StatelessWidget {
 }
 
 class ExcerciseItem extends StatelessWidget {
-  const ExcerciseItem({super.key, required this.isComplete});
+  const ExcerciseItem({super.key, required this.isComplete, this.model});
   final bool isComplete;
+  final BaiTapValueModel? model;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -167,11 +170,11 @@ class ExcerciseItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
-                  isComplete ? 'Bai tap tuan 2' : 'Bai tap tuan 1',
+                  model?.name ?? 'Bai tap',
                   style: defaultText16B,
                 ),
                 Text(
-                  'Hạn nộp: 27 tháng 5, 2024',
+                  'Hạn nộp: ${DateFormat("dd-MM-yyyy").format(model?.timeDeadline ?? DateTime.now())}',
                   style: defaultText14Re,
                 ),
               ],

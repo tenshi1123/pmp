@@ -36,3 +36,31 @@ class ProfileModel {
     );
   }
 }
+
+class PostModel {
+  final String id;
+  final String name;
+  final String slug;
+  final String categories;
+  final String img;
+  final DateTime postDate;
+
+  PostModel({
+    required this.id,
+    required this.name,
+    required this.slug,
+    required this.categories,
+    required this.img,
+    required this.postDate,
+  });
+  factory PostModel.fromJson(Map<String, dynamic> json) {
+    return PostModel(
+      id: json['id'] ?? '',
+      name: json['name'] ?? '',
+      slug: json['slug'] ?? '',
+      categories: json['categories'] ?? '',
+      img: json['img'] ?? '',
+      postDate: DateTime.parse(json['post_date'] ?? ''),
+    );
+  }
+}
