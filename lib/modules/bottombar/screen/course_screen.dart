@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pmp_english/modules/course/course_details_screen.dart';
-import 'package:pmp_english/repo/mycourse_repo.dart';
+import 'package:pmp_english/student_repo/mycourse_repo.dart';
 import 'package:pmp_english/student_models/my_course_model.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:percent_indicator/percent_indicator.dart';

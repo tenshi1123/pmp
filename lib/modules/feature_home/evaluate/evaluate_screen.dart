@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/student_models/review_models.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 
 import 'detail_evaluate_screen.dart';
 
 class EvaluateScreen extends StatelessWidget {
-  const EvaluateScreen({super.key});
-
+  const EvaluateScreen({super.key, required this.listReview});
+  final List<ReviewModels> listReview;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +73,7 @@ class EvaluateScreen extends StatelessWidget {
             child: ListView.builder(
                 shrinkWrap: true,
                 physics: const ClampingScrollPhysics(),
-                itemCount: 3,
+                itemCount: listReview.length,
                 padding: EdgeInsets.symmetric(
                   horizontal: 10.w,
                   vertical: 10.h,
@@ -87,9 +88,9 @@ class EvaluateScreen extends StatelessWidget {
                         ),
                       );
                     },
-                    child: const EvaluateItem(
-                        //index: index,
-                        ),
+                    child: _ReviewItem(
+                      model: listReview[index],
+                    ),
                   );
                 }),
           ),
@@ -99,9 +100,9 @@ class EvaluateScreen extends StatelessWidget {
   }
 }
 
-class EvaluateItem extends StatelessWidget {
-  const EvaluateItem({super.key});
-
+class _ReviewItem extends StatelessWidget {
+  const _ReviewItem({required this.model});
+  final ReviewModels model;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -131,11 +132,11 @@ class EvaluateItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                ' Đánh giá định kỳ tháng 7',
+                model.monthName,
                 style: defaultText14B,
               ),
               Text(
-                '28.07.2024 ',
+                model.months,
                 style: defaultText12Re,
               ),
             ],
@@ -168,7 +169,7 @@ class EvaluateItem extends StatelessWidget {
                     SizedBox(
                       width: 180.w,
                       child: Text(
-                        'Nguyễn Phú',
+                        model.teacherName,
                         style: defaultText14B,
                       ),
                     ),
@@ -193,7 +194,7 @@ class EvaluateItem extends StatelessWidget {
                     SizedBox(
                       width: 180.w,
                       child: Text(
-                        'TOEIC 4 kỹ năng',
+                        model.courseName,
                         style: defaultText14B,
                       ),
                     ),
@@ -218,7 +219,7 @@ class EvaluateItem extends StatelessWidget {
                     SizedBox(
                       width: 180.w,
                       child: Text(
-                        'TTH001',
+                        model.alias,
                         style: defaultText14B,
                       ),
                     ),

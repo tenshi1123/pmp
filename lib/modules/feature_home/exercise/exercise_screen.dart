@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pmp_english/modules/diemdanh/diem_danh_screen.dart';
 import 'package:pmp_english/modules/feature_home/exercise/exercise_detail_screen.dart';
-import 'package:pmp_english/repo/home_repo.dart';
+import 'package:pmp_english/student_repo/home_repo.dart';
 import 'package:pmp_english/student_models/home_model.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
@@ -256,9 +256,10 @@ class _ExcerciseTabBarState extends State<_ExcerciseTabBar>
           labelColor: keyBlack,
           controller: _tabController,
           tabs: <Widget>[
-            homeTab(title: 'Toàn bộ', isSeprator: false),
-            homeTab(title: 'Chưa làm'),
-            homeTab(title: 'Hoàn thành'),
+            homeTab(
+                title: 'Toàn bộ', number: listTotal.length, isSeprator: false),
+            homeTab(title: 'Chưa làm', number: listChuaLam.length),
+            homeTab(title: 'Hoàn thành', number: listHoanThanh.length),
           ],
         ),
         Expanded(
@@ -268,18 +269,20 @@ class _ExcerciseTabBarState extends State<_ExcerciseTabBar>
               ListView.builder(
                   shrinkWrap: true,
                   physics: const ClampingScrollPhysics(),
-                  itemCount: widget.listModel.length,
+                  itemCount: listTotal.length,
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
                         onTap: () async {
                           DetailExcerciseModel model =
                               await HomeRepo().getDetailExsercise(
-                            id: widget.listModel[index].id,
-                            customerCourseScheduleId: widget
-                                .listModel[index].customerCourseScheduleId,
+                            id: listTotal[index].id,
+                            customerCourseScheduleId:
+                                listTotal[index].customerCourseScheduleId,
                           );
                           Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const TestScreen(),
+                            builder: (context) => TestScreen(
+                              excerciseModel: model,
+                            ),
                           ));
                         },
                         child: _ExcerciseItem(
@@ -293,9 +296,17 @@ class _ExcerciseTabBarState extends State<_ExcerciseTabBar>
                   itemCount: listChuaLam.length,
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
-                        onTap: () {
+                        onTap: () async {
+                          DetailExcerciseModel model =
+                              await HomeRepo().getDetailExsercise(
+                            id: listChuaLam[index].id,
+                            customerCourseScheduleId:
+                                listChuaLam[index].customerCourseScheduleId,
+                          );
                           Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const TestScreen(),
+                            builder: (context) => TestScreen(
+                              excerciseModel: model,
+                            ),
                           ));
                         },
                         child: _ExcerciseItem(
@@ -309,9 +320,17 @@ class _ExcerciseTabBarState extends State<_ExcerciseTabBar>
                   itemCount: listHoanThanh.length,
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
-                        onTap: () {
+                        onTap: () async {
+                          DetailExcerciseModel model =
+                              await HomeRepo().getDetailExsercise(
+                            id: listHoanThanh[index].id,
+                            customerCourseScheduleId:
+                                listHoanThanh[index].customerCourseScheduleId,
+                          );
                           Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const TestScreen(),
+                            builder: (context) => TestScreen(
+                              excerciseModel: model,
+                            ),
                           ));
                         },
                         child: _ExcerciseItem(

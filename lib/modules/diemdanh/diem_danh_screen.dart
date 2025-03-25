@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pmp_english/modules/diemdanh/attendance_details.dart';
-import 'package:pmp_english/repo/diemdanh_repo.dart';
+import 'package:pmp_english/student_repo/diemdanh_repo.dart';
 import 'package:pmp_english/student_models/diem_danh_model.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
@@ -243,11 +243,10 @@ class PieChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<OrdinalData> ordinalDataList = [
+      OrdinalData(domain: '1', measure: int.parse(attended), color: main1Color),
+      OrdinalData(domain: '2', measure: int.parse(abstract), color: sub2Color),
       OrdinalData(
-          domain: 'tg', measure: int.parse(attended), color: main1Color),
-      OrdinalData(domain: 'v', measure: int.parse(abstract), color: sub2Color),
-      OrdinalData(
-          domain: 'c',
+          domain: '3',
           measure: int.parse(total) - int.parse(attended) - int.parse(abstract),
           color: state2),
     ];

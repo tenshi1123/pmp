@@ -2,16 +2,53 @@ class StudentHomeModel {
   final CustomerInfoModel customerInfoModel;
   final String totalCourse;
   final String chuyenCan;
+  final List<CalendarModel> lichHocSapToi;
+  final List<CourseModels> listCourse;
   StudentHomeModel({
     required this.customerInfoModel,
     required this.totalCourse,
     required this.chuyenCan,
+    required this.lichHocSapToi,
+    required this.listCourse,
   });
   factory StudentHomeModel.fromJson(Map<String, dynamic> json) {
     return StudentHomeModel(
       customerInfoModel: CustomerInfoModel.fromJson(json['customer']),
       totalCourse: json['total_course'],
       chuyenCan: json['chuyen_can'],
+      lichHocSapToi: [
+        for (var item in json['lich_hoc_sap_toi']) CalendarModel.fromJson(item)
+      ],
+      listCourse: [
+        for (var item in json['course']) CourseModels.fromJson(item)
+      ],
+    );
+  }
+}
+
+class CourseModels {
+  final String categoryName;
+  final String id;
+  final String name;
+  final String slug;
+  final String img;
+  final String soBuoiHoc;
+  CourseModels({
+    required this.categoryName,
+    required this.id,
+    required this.name,
+    required this.slug,
+    required this.img,
+    required this.soBuoiHoc,
+  });
+  factory CourseModels.fromJson(Map<String, dynamic> json) {
+    return CourseModels(
+      categoryName: json['category_name'] ?? '',
+      id: json['id'] ?? '',
+      name: json['name'] ?? '',
+      slug: json['slug'] ?? '',
+      img: json['img'] ?? '',
+      soBuoiHoc: json['so_buoi_hoc'] ?? '',
     );
   }
 }
@@ -62,7 +99,7 @@ class CustomerInfoModel {
 class CalendarModel {
   final String id;
   final String courseScheduleAlias;
-  final String day;
+  final DateTime day;
   final String name;
   final String timeStart;
   final String timeEnd;
@@ -71,7 +108,7 @@ class CalendarModel {
   final String teacherName;
   final String teacherAvatar;
   final String type;
-
+  final String status;
   CalendarModel({
     required this.id,
     required this.courseScheduleAlias,
@@ -84,12 +121,13 @@ class CalendarModel {
     required this.teacherName,
     required this.teacherAvatar,
     required this.type,
+    required this.status,
   });
   factory CalendarModel.fromJson(Map<String, dynamic> json) {
     return CalendarModel(
       id: json["id"] ?? '',
       courseScheduleAlias: json["course_schedule_alias"] ?? '',
-      day: json["day"] ?? '',
+      day: DateTime.parse(json["day"]),
       name: json["name"] ?? '',
       timeStart: json["time_start"] ?? '',
       timeEnd: json["time_end"] ?? '',
@@ -98,6 +136,7 @@ class CalendarModel {
       teacherName: json['teachers_full_name'] ?? '',
       teacherAvatar: json['teachers_avatar'] ?? '',
       type: json['type'] ?? '',
+      status: json['status'] ?? '',
     );
   }
 }

@@ -246,9 +246,15 @@ Widget homeTab(
 }
 
 class ConversationItem extends StatelessWidget {
-  const ConversationItem({super.key, required this.index});
+  const ConversationItem({
+    super.key,
+    required this.index,
+    this.title1,
+    this.title2,
+  });
   final int index;
-
+  final String? title1;
+  final String? title2;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -292,36 +298,16 @@ class ConversationItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'PMP English - hỗ trợ $index',
+                    title1 ?? 'PMP English - hỗ trợ $index',
                     style: defaultText14B,
                   ),
                   Text(
-                    'Đây là tin nhắn cuối cùng $index',
+                    title2 ?? 'Đây là tin nhắn cuối cùng $index',
                     style: defaultText12M,
                   ),
                 ],
               ),
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  '09:03',
-                  style: defaultText12Re,
-                ),
-                SizedBox(
-                  height: 8.h,
-                ),
-                Container(
-                  height: 9.h,
-                  width: 9.w,
-                  decoration: BoxDecoration(
-                    color: sub2Color,
-                    shape: BoxShape.circle,
-                  ),
-                ),
-              ],
-            )
           ],
         ),
       ),
@@ -364,7 +350,7 @@ Widget chartItem({
               children: [
                 Text(
                   title,
-                  style: defaultText14B.copyWith(color: Colors.white),
+                  style: defaultText14B,
                 ),
                 Text(
                   '$percents%',

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
+import 'package:pmp_english/student_repo/home_repo.dart';
+import 'package:pmp_english/student_models/profile_model.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
+import 'dart:async';
 
 class NewsScreen extends StatefulWidget {
   const NewsScreen({super.key});
@@ -10,16 +14,48 @@ class NewsScreen extends StatefulWidget {
   State<NewsScreen> createState() => _NewsScreenState();
 }
 
-class _NewsScreenState extends State<NewsScreen> with TickerProviderStateMixin {
+class _NewsScreenState extends State<NewsScreen> {
+  List<PostModel> items = []; // Danh sách dữ liệu
+  bool isLoading = false; // Trạng thái loading
+  int page = 1; // Trang dữ liệu
+
+  final ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
+    _fetchData(); // Load dữ liệu lần đầu
+    _scrollController.addListener(_scrollListener); // Lắng nghe sự kiện cuộn
+  }
+
+  // Hàm gọi API (giả lập)
+  Future<void> _fetchData() async {
+    if (isLoading) return;
+
+    setState(() => isLoading = true);
+
+    // Giả lập gọi API (delay 2 giây)
+    await Future.delayed(const Duration(seconds: 2));
+    List<PostModel> newItems = await HomeRepo().getlistPost(page);
+    setState(() {
+      items.addAll(newItems);
+      isLoading = false;
+      page++;
+    });
+  }
+
+  // Lắng nghe sự kiện cuộn để tải thêm dữ liệu
+  void _scrollListener() {
+    if (_scrollController.position.pixels >=
+            _scrollController.position.maxScrollExtent - 100 &&
+        !isLoading) {
+      _fetchData();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Column(
         children: [
           SizedBox(
@@ -59,25 +95,39 @@ class _NewsScreenState extends State<NewsScreen> with TickerProviderStateMixin {
           ),
           Expanded(
             child: ListView.builder(
-                shrinkWrap: true,
-                physics: const ClampingScrollPhysics(),
-                itemCount: 1,
-                itemBuilder: (BuildContext context, int index) {
-                  return CourseItem(
-                    index: index,
-                  );
-                }),
-          )
+              controller: _scrollController,
+              itemCount: items.length + 1, // +1 để hiển thị loading
+              itemBuilder: (context, index) {
+                if (index == items.length) {
+                  return isLoading
+                      ? const Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Center(child: CircularProgressIndicator()),
+                        )
+                      : const SizedBox(); // Không hiển thị gì nếu không loading
+                }
+                return CourseItem(
+                  model: items[index],
+                );
+              },
+            ),
+          ),
         ],
       ),
     );
   }
+
+  @override
+  void dispose() {
+    _scrollController.dispose(); // Giải phóng bộ nhớ
+    super.dispose();
+  }
 }
 
 class CourseItem extends StatelessWidget {
-  const CourseItem({super.key, required this.index});
-  final int index;
+  const CourseItem({super.key, required this.model});
 
+  final PostModel model;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -118,8 +168,10 @@ class CourseItem extends StatelessWidget {
                 ),
                 color: main2Color),
             child: Center(
-              child: Image.asset('assets/images/logo.png'),
-            ),
+                child: Image.network(
+              model.img,
+              fit: BoxFit.fill,
+            )),
           ),
           SizedBox(
             width: 10.w,
@@ -135,7 +187,7 @@ class CourseItem extends StatelessWidget {
                 SizedBox(
                   height: 60.h,
                   child: Text(
-                    '[Quan trọng] Thông báo nghỉ lễ từ  30/8 đến 1/9',
+                    model.name,
                     style: defaultText14B,
                     overflow: TextOverflow.fade,
                     maxLines: 2,
@@ -145,11 +197,11 @@ class CourseItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Thông báo chung',
+                      model.categories,
                       style: defaultText12Re,
                     ),
                     Text(
-                      '21.07.2024',
+                      DateFormat("dd.MM.yyyy").format(model.postDate),
                       style: defaultText12Re,
                     )
                   ],

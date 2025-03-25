@@ -1,9 +1,8 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:pmp_english/modules/bottombar/utils.dart';
-import 'package:pmp_english/repo/customer_repo.dart';
+import 'package:pmp_english/student_repo/customer_repo.dart';
 import 'package:pmp_english/student_models/customer_models.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
@@ -32,8 +31,9 @@ class _CalenderScreenState extends State<CalenderScreen> {
     super.initState();
     _selectedDay = _focusedDay;
     _listLichHoc = [];
-
-    _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
+    _selectedEvents = ValueNotifier(_getEventsForRange(
+        DateTime(_focusedDay.year, _focusedDay.month, 1),
+        DateTime(_focusedDay.year, _focusedDay.month + 1, 0)));
   }
 
   @override
@@ -52,9 +52,8 @@ class _CalenderScreenState extends State<CalenderScreen> {
   List<CalendarModel> _getEventsForDay(DateTime day) {
     // Implementation example
     getSchedule(
-        dayStart: DateFormat('dd-MM-yyyy').format(day),
-        dayEnd:
-            DateFormat('dd-MM-yyyy').format(day.add(const Duration(days: 1))));
+        dayStart: DateFormat('yyyy-MM-dd').format(day),
+        dayEnd: DateFormat('yyyy-MM-dd').format(day));
     return _listLichHoc;
   }
 
@@ -67,8 +66,8 @@ class _CalenderScreenState extends State<CalenderScreen> {
 
   List<CalendarModel> _getEventsForRange(DateTime start, DateTime end) {
     getSchedule(
-      dayStart: DateFormat('dd-MM-yyyy').format(start),
-      dayEnd: DateFormat('dd-MM-yyyy').format(end),
+      dayStart: DateFormat('yyyy-MM-dd').format(start),
+      dayEnd: DateFormat('yyyy-MM-dd').format(end),
     );
     return _listLichHoc;
   }
@@ -112,10 +111,13 @@ class _CalenderScreenState extends State<CalenderScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: const Color(0xff273D8C),
-        title: Text(
-          '        Lịch học',
-          style: defaultText18B.copyWith(
-            color: Colors.white,
+        automaticallyImplyLeading: false,
+        title: Center(
+          child: Text(
+            'Lịch học',
+            style: defaultText18B.copyWith(
+              color: Colors.white,
+            ),
           ),
         ),
       ),
@@ -335,7 +337,7 @@ class _ItemTableCalenderState extends State<ItemTableCalender> {
                 vertical: 16.h,
               ),
               width: 343.w,
-              height: 136.h,
+              //height: 136.h,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.all(Radius.circular(12.r)),
@@ -354,7 +356,7 @@ class _ItemTableCalenderState extends State<ItemTableCalender> {
                   Row(
                     children: [
                       Container(
-                        width: 90.w,
+                        //width: 90.w,
                         height: 80.h,
                         decoration: BoxDecoration(
                           color: const Color(0xff273D8C),
@@ -366,14 +368,14 @@ class _ItemTableCalenderState extends State<ItemTableCalender> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Text(
-                              'asds',
+                              widget.model.day.day.toString(),
                               style: defaultText16B.copyWith(
                                   color: Colors.white, fontSize: 24.sp),
                             ),
                             Text(
-                              'Tháng ',
-                              style:
-                                  defaultText16M.copyWith(color: Colors.white),
+                              '  Tháng ${widget.model.day.month}  ',
+                              style: defaultText16B.copyWith(
+                                  color: Colors.white, fontSize: 24.sp),
                             ),
                           ],
                         ),
@@ -386,40 +388,62 @@ class _ItemTableCalenderState extends State<ItemTableCalender> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'name',
+                            widget.model.courseScheduleAlias,
                             style: defaultText18B,
                           ),
                           SizedBox(
                             height: 8.h,
                           ),
                           Text(
-                            widget.model.timeStart,
+                            widget.model.name,
+                            style: defaultText18B,
+                          ),
+                          SizedBox(
+                            height: 8.h,
+                          ),
+                          Text(
+                            '${widget.model.timeStart.substring(0, 5)}-${widget.model.timeEnd.substring(0, 5)}',
                             style: defaultText14M,
                           ),
                         ],
                       )
                     ],
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          text: 'Giáo viên: ',
+                          style: defaultText16M,
+                          children: [
+                            TextSpan(
+                                text: widget.model.teacherName,
+                                style: defaultText16B.copyWith(
+                                    color: const Color(0xff273D8C))),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 6.h,
+                      ),
                       RichText(
                         text: TextSpan(
                           text: 'Phòng học: ',
                           style: defaultText16M,
                           children: [
                             TextSpan(
-                                text: widget.model.phongHocName ??
-                                    'Không xác định',
+                                text: widget.model.phongHocName,
                                 style: defaultText16B.copyWith(
                                     color: const Color(0xff273D8C))),
                           ],
                         ),
                       ),
-                      Container(
-                        width: 1.w,
-                        height: 20.h,
-                        color: const Color(0xff273D8C),
+                      SizedBox(
+                        height: 6.h,
                       ),
                       RichText(
                         text: TextSpan(

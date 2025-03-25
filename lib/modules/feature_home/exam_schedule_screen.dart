@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pmp_english/repo/lichthi_repo.dart';
+import 'package:pmp_english/student_repo/lichthi_repo.dart';
 import 'package:pmp_english/student_models/lichthi_models.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';

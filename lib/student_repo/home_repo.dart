@@ -63,13 +63,16 @@ class HomeRepo {
     return InfoDiemDanh.fromJson((response.data)['data']);
   }
 
-  Future<List<PostModel>> getlistPost(String id) async {
+  Future<List<PostModel>> getlistPost(int page) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? token = prefs.getString('token');
     dio.options.headers['Authorization'] = 'Bearer $token';
     Response response;
-    response =
-        await dio.post(ApiPath.detailDiemdanh, data: jsonEncode({"id": id}));
+    response = await dio.post(ApiPath.post,
+        data: jsonEncode({
+          'page': page,
+          'limit': 10,
+        }));
     List<PostModel> list = [];
     for (var item in response.data['data']['value']) {
       list.add(PostModel.fromJson(item));

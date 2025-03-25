@@ -2,14 +2,16 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pmp_english/modules/feature_home/exercise/test_detail_screen.dart';
+import 'package:pmp_english/student_models/home_model.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 
 class TestScreen extends StatelessWidget {
   const TestScreen({
     super.key,
+    required this.excerciseModel,
   });
-
+  final DetailExcerciseModel excerciseModel;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,8 +49,9 @@ class TestScreen extends StatelessWidget {
             SizedBox(
               height: 16.h,
             ),
-            const _InfoTest(
+            _InfoTest(
               isComplete: false,
+              model: excerciseModel,
             ),
             SizedBox(
               height: 16.h,
@@ -79,9 +82,10 @@ class TestScreen extends StatelessWidget {
 class _InfoTest extends StatelessWidget {
   const _InfoTest({
     required this.isComplete,
+    required this.model,
   });
   final bool isComplete;
-
+  final DetailExcerciseModel model;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -94,7 +98,7 @@ class _InfoTest extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: key1Color.withOpacity(0.1),
+            color: key1Color.withValues(alpha: 0.1),
             spreadRadius: 5,
             blurRadius: 7,
             offset: const Offset(4, 5), // changes position of shadow
@@ -107,31 +111,31 @@ class _InfoTest extends StatelessWidget {
         },
         child: Stack(
           children: [
-            Positioned(
-              right: 12.w,
-              top: 12.h,
-              child: Container(
-                height: 63.h,
-                width: 63.w,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.shade100,
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                        offset: const Offset(4, 5),
-                      )
-                    ]),
-                child: Center(
-                  child: Text(
-                    '--.--',
-                    style: defaultText18B.copyWith(color: main1Color),
-                  ),
-                ),
-              ),
-            ),
+            // Positioned(
+            //   right: 12.w,
+            //   top: 12.h,
+            //   child: Container(
+            //     height: 63.h,
+            //     width: 63.w,
+            //     decoration: BoxDecoration(
+            //         color: Colors.white,
+            //         shape: BoxShape.circle,
+            //         boxShadow: [
+            //           BoxShadow(
+            //             color: Colors.grey.shade100,
+            //             spreadRadius: 5,
+            //             blurRadius: 7,
+            //             offset: const Offset(4, 5),
+            //           )
+            //         ]),
+            //     child: Center(
+            //       child: Text(
+            //         '--.--',
+            //         style: defaultText18B.copyWith(color: main1Color),
+            //       ),
+            //     ),
+            //   ),
+            // ),
             Positioned(
               top: 10.h,
               left: 10.w,
@@ -144,7 +148,7 @@ class _InfoTest extends StatelessWidget {
                   SizedBox(
                     width: 253.w,
                     child: Text(
-                      'Test 8: Reading',
+                      model.valueModel.name,
                       style: defaultText18B,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
@@ -171,12 +175,20 @@ class _InfoTest extends StatelessWidget {
                   SizedBox(
                     height: 8.h,
                   ),
-                  Text(
-                    'Hạn hoàn thành: 27 tháng 5, 2024',
-                    style: defaultText12B,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                  ),
+                  if (model.valueModel.timeDeadline.contains('0000'))
+                    Text(
+                      'Hạn hoàn thành: Không giới hạn',
+                      style: defaultText12B,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                    )
+                  else
+                    Text(
+                      'Hạn hoàn thành: ${model.valueModel.timeDeadline}',
+                      style: defaultText12B,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                    ),
                   Container(
                     margin: EdgeInsets.symmetric(vertical: 6.h),
                     height: 1.h,

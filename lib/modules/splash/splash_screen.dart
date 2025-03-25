@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pmp_english/modules/splash/onboarding.dart';
-import 'package:pmp_english/repo/customer_repo.dart';
+import 'package:pmp_english/student_repo/customer_repo.dart';
 import 'package:pmp_english/router/app_pages.dart';
 import 'package:pmp_english/router/app_router.dart';
 import 'package:pmp_english/student_models/customer_models.dart';

@@ -181,7 +181,7 @@ class MonthlyReviewModel {
 }
 
 class MycourseBaiTapModel {
-  final int scheduleId;
+  final String scheduleId;
   final List<BaiTapValueModel> value;
   MycourseBaiTapModel({
     required this.scheduleId,
@@ -189,7 +189,7 @@ class MycourseBaiTapModel {
   });
   factory MycourseBaiTapModel.fromJson(Map<String, dynamic> json) {
     return MycourseBaiTapModel(
-      scheduleId: int.parse(json['customer_course_schedule_id']),
+      scheduleId: json['customer_course_schedule_id'].toString(),
       value: (json['value'] as List)
           .map((e) => BaiTapValueModel.fromJson(e))
           .toList(),

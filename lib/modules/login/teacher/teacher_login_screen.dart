@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pmp_english/student_repo/login_repo.dart';
 import 'package:pmp_english/teacher_modules/teacher_bottombar/teacher_bottombar.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
@@ -14,7 +16,8 @@ class TeacherLogin extends StatefulWidget {
 
 class _TeacherLoginState extends State<TeacherLogin> {
   bool _obscurePassword = true;
-
+  final TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,33 +83,41 @@ class _TeacherLoginState extends State<TeacherLogin> {
               height: 32.h,
             ),
             _buildTextField(
-              label: "Số điện thoại",
+              label: "Email",
               icon: Icons.person,
               isPassword: false,
+              controller: emailController,
             ),
             const SizedBox(height: 12),
             _buildTextField(
               label: "Mật khẩu",
               icon: Icons.lock,
               isPassword: true,
+              controller: passwordController,
             ),
             const SizedBox(height: 12),
-            _buildRememberPassword(),
+            //_buildRememberPassword(),
             const SizedBox(height: 16),
-            _buildLoginButton(),
+            _buildLoginButton(
+              emailController.text,
+              passwordController.text,
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildTextField(
-      {required String label,
-      required IconData icon,
-      required bool isPassword}) {
+  Widget _buildTextField({
+    required String label,
+    required IconData icon,
+    required bool isPassword,
+    required TextEditingController controller,
+  }) {
     return TextField(
       obscureText: isPassword ? _obscurePassword : false,
       style: defaultText14M,
+      controller: controller,
       decoration: InputDecoration(
         filled: true,
         fillColor: Colors.white,
@@ -169,18 +180,47 @@ class _TeacherLoginState extends State<TeacherLogin> {
     );
   }
 
-  Widget _buildLoginButton() {
+  Widget _buildLoginButton(String email, String password) {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: () {
+        onPressed: () async {
           // Xử lý đăng nhập
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const BottomNavBar(),
-            ),
-          );
+          bool loged = await LoginRepo().loginTeacher(email, password);
+
+          if (loged == true) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const BottomNavBar(),
+              ),
+            );
+          } else {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return CupertinoAlertDialog(
+                  title: const Text('Vui lòng thử lại'),
+                  content: const Text(
+                      'Vui lòng kiểm tra lại mã học sinh và mật khẩu của bạn'),
+                  actions: <Widget>[
+                    CupertinoDialogAction(
+                      isDefaultAction: true,
+                      child: Text(
+                        'Đồng ý',
+                        style: TextStyle(fontSize: 20, color: key1Color),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context, rootNavigator: true).pop(
+                          (_) => false,
+                        );
+                      },
+                    )
+                  ],
+                );
+              },
+            );
+          }
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xff28B4E9),

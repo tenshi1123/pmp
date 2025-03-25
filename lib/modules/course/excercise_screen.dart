@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pmp_english/modules/feature_home/exercise/exercise_detail_screen.dart';
+import 'package:pmp_english/student_repo/home_repo.dart';
+import 'package:pmp_english/student_models/home_model.dart';
 import 'package:pmp_english/student_models/my_course_model.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
@@ -17,44 +19,44 @@ class ExcerciseScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Sắp đến hạn',
-            style: defaultText16B,
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 20.h),
-            height: 200.h,
-            width: 349.w,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(
-                Radius.circular(8.r),
-              ),
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.2),
-                  spreadRadius: 5,
-                  blurRadius: 7,
-                  offset: const Offset(0, 2), // changes position of shadow
-                ),
-              ],
-            ),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 10.h,
-                ),
-                const ExcerciseItem(
-                  isComplete: true,
-                ),
-                const ExcerciseItem(
-                  isComplete: true,
-                ),
-              ],
-            ),
-          ),
+          // Text(
+          //   'Sắp đến hạn',
+          //   style: defaultText16B,
+          // ),
+          // Container(
+          //   margin: EdgeInsets.symmetric(vertical: 20.h),
+          //   height: 200.h,
+          //   width: 349.w,
+          //   decoration: BoxDecoration(
+          //     borderRadius: BorderRadius.all(
+          //       Radius.circular(8.r),
+          //     ),
+          //     color: Colors.white,
+          //     boxShadow: [
+          //       BoxShadow(
+          //         color: Colors.grey.withOpacity(0.2),
+          //         spreadRadius: 5,
+          //         blurRadius: 7,
+          //         offset: const Offset(0, 2), // changes position of shadow
+          //       ),
+          //     ],
+          //   ),
+          //   child: Column(
+          //     children: [
+          //       SizedBox(
+          //         height: 10.h,
+          //       ),
+          //       const ExcerciseItem(
+          //         isComplete: true,
+          //       ),
+          //       const ExcerciseItem(
+          //         isComplete: true,
+          //       ),
+          //     ],
+          //   ),
+          // ),
           SizedBox(
-              height: 330.h,
+              height: 630.h,
               width: 390.w,
               child: _ExcerciseTabBar(
                 baiTapModel: baiTapModel,
@@ -141,9 +143,17 @@ class _ExcerciseTabBarState extends State<_ExcerciseTabBar>
                   itemCount: widget.baiTapModel.value.length,
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
-                        onTap: () {
+                        onTap: () async {
+                          DetailExcerciseModel model =
+                              await HomeRepo().getDetailExsercise(
+                            id: widget.baiTapModel.value[index].id,
+                            customerCourseScheduleId:
+                                widget.baiTapModel.scheduleId,
+                          );
                           Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const TestScreen(),
+                            builder: (context) => TestScreen(
+                              excerciseModel: model,
+                            ),
                           ));
                         },
                         child: ExcerciseItem(
@@ -156,9 +166,17 @@ class _ExcerciseTabBarState extends State<_ExcerciseTabBar>
                   itemCount: baitapChuaLam.length,
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
-                        onTap: () {
+                        onTap: () async {
+                          DetailExcerciseModel model =
+                              await HomeRepo().getDetailExsercise(
+                            id: baitapChuaLam[index].id,
+                            customerCourseScheduleId:
+                                widget.baiTapModel.scheduleId,
+                          );
                           Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const TestScreen(),
+                            builder: (context) => TestScreen(
+                              excerciseModel: model,
+                            ),
                           ));
                         },
                         child: ExcerciseItem(
@@ -172,9 +190,17 @@ class _ExcerciseTabBarState extends State<_ExcerciseTabBar>
                   itemCount: baitapDaLam.length,
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
-                        onTap: () {
+                        onTap: () async {
+                          DetailExcerciseModel model =
+                              await HomeRepo().getDetailExsercise(
+                            id: baitapDaLam[index].id,
+                            customerCourseScheduleId:
+                                widget.baiTapModel.scheduleId,
+                          );
                           Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const TestScreen(),
+                            builder: (context) => TestScreen(
+                              excerciseModel: model,
+                            ),
                           ));
                         },
                         child: ExcerciseItem(
