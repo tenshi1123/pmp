@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:pmp_english/modules/chat/screen/list_conversation_screen.dart';
 import 'package:pmp_english/modules/notification/notification.dart';
+import 'package:pmp_english/teacher/teacher_model/home_teacher_model.dart';
 import 'package:pmp_english/teacher_modules/teacher_bottombar/home/lichhen_screen.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -10,8 +12,10 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../teacher_class/teacher_detail_lesson.dart';
 
 class TeacherHomeScreen extends StatefulWidget {
-  const TeacherHomeScreen({super.key});
-
+  const TeacherHomeScreen(
+      {super.key, required this.infoModel, required this.teacherProfileModel});
+  final TeacherHomeModel infoModel;
+  final TeacherProfileModel teacherProfileModel;
   @override
   State<TeacherHomeScreen> createState() => _TeacherHomeScreenState();
 }
@@ -40,7 +44,7 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
               Padding(
                 padding: EdgeInsets.only(left: 16.w, top: 16.h),
                 child: Text(
-                  'Hi, Trâm Anh',
+                  widget.teacherProfileModel.fullName,
                   style: defaultText16B.copyWith(
                       fontSize: 24.sp, color: Colors.white),
                 ),
@@ -48,7 +52,7 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
               Padding(
                 padding: EdgeInsets.only(left: 16.w, top: 2.h),
                 child: Text(
-                  'Today, 24 Nov 2025',
+                  'Today, ${DateFormat("dd-MM-yyyy").format(DateTime.now())}',
                   style: defaultText16Re.copyWith(
                     fontSize: 16.sp,
                     color: Colors.white.withValues(alpha: 0.72),
@@ -90,14 +94,19 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
                                 Radius.circular(16.r),
                               ),
                               child: SizedBox(
-                                height: 208.h,
-                                width: 390.w,
+                                height: 218.h,
+                                width: 370.w,
                                 child: PageView.builder(
                                   padEnds: false,
                                   controller: controller,
-                                  itemCount: 3,
+                                  itemCount: widget.infoModel.lichhoc.length > 3
+                                      ? 3
+                                      : widget.infoModel.lichhoc.length,
                                   itemBuilder: (_, index) {
-                                    return const _CommingSchedule();
+                                    return _CommingSchedule(
+                                      lichHocModel:
+                                          widget.infoModel.lichhoc[index],
+                                    );
                                   },
                                 ),
                               ),
@@ -107,7 +116,11 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
                             ),
                             SmoothPageIndicator(
                               controller: controller,
-                              count: 3,
+                              count: widget.infoModel.lichhoc.length > 3
+                                  ? 3
+                                  : widget.infoModel.lichhoc.isEmpty
+                                      ? 1
+                                      : widget.infoModel.lichhoc.length,
                               effect: CustomizableEffect(
                                 activeDotDecoration: DotDecoration(
                                   width: 20.w,
@@ -159,7 +172,10 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    const LichHenScreen()));
+                                                    LichHenScreen(
+                                                      listLichHen: widget
+                                                          .infoModel.lichhen,
+                                                    )));
                                       },
                                       child: const AppointmentCard()),
                                 ],
@@ -238,8 +254,8 @@ class _AvatarRow extends StatelessWidget {
 }
 
 class _CommingSchedule extends StatelessWidget {
-  const _CommingSchedule();
-
+  const _CommingSchedule({required this.lichHocModel});
+  final LichHocModel lichHocModel;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -249,7 +265,7 @@ class _CommingSchedule extends StatelessWidget {
       },
       child: Container(
         margin: EdgeInsets.symmetric(
-          horizontal: 16.w,
+          horizontal: 5.w,
           vertical: 10.h,
         ),
         padding: EdgeInsets.symmetric(
@@ -287,12 +303,12 @@ class _CommingSchedule extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        '01',
+                        lichHocModel.day.day.toString(),
                         style: defaultText16B.copyWith(
                             color: Colors.white, fontSize: 26.sp),
                       ),
                       Text(
-                        'Tháng 12',
+                        'Tháng ${lichHocModel.day.month}',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16.sp,
@@ -308,40 +324,41 @@ class _CommingSchedule extends StatelessWidget {
                   children: [
                     SizedBox(
                       width: 200.w,
-                      child: Text('Khoá tiếng anh cơ bản - Off',
-                          style: defaultText18B),
+                      child: Text(lichHocModel.name, style: defaultText18B),
                     ),
                     const SizedBox(height: 5),
-                    Text('Thứ 6 (08:30 - 10:30)', style: defaultText14M),
+                    Text(lichHocModel.dayOfWeek, style: defaultText14M),
                   ],
                 ),
               ],
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 12.h),
             RichText(
               text: TextSpan(
-                text: 'Phòng học: ',
+                text: 'Phòng học : ',
                 style: defaultText16M,
                 children: [
                   TextSpan(
-                      text: '101',
+                      text: lichHocModel.phongHoc,
                       style: defaultText16B.copyWith(
                           color: const Color(0xff00AEEF))),
                 ],
               ),
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: 10.h),
             RichText(
               text: TextSpan(
-                text: 'Chi nhánh: ',
+                text: 'Chi nhánh : ',
                 style: defaultText16M,
                 children: [
                   TextSpan(
-                      text: '34 Hồ Thị Tư',
+                      text: lichHocModel.coSo,
                       style: defaultText16B.copyWith(
                           color: const Color(0xff00AEEF))),
                 ],
               ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
             ),
           ],
         ),

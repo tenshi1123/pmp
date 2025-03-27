@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:pmp_english/modules/chat/screen/chat_screen.dart';
 import 'package:pmp_english/modules/lesson/detail_lesson_screen.dart';
 import 'package:pmp_english/student_models/my_course_model.dart';
+import 'package:pmp_english/teacher/teacher_model/home_teacher_model.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 
@@ -366,14 +367,21 @@ Widget chartItem({
 }
 
 class InfoLichhen extends StatefulWidget {
-  const InfoLichhen({super.key, required this.type});
-  final String type;
+  const InfoLichhen({super.key, required this.model});
+  final LichHenModel model;
 
   @override
-  _InfoLichhenState createState() => _InfoLichhenState();
+  State<InfoLichhen> createState() => _InfoLichhenState();
 }
 
 class _InfoLichhenState extends State<InfoLichhen> {
+  late final LichHenModel _model;
+  @override
+  void initState() {
+    super.initState();
+    _model = widget.model;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -422,62 +430,68 @@ class _InfoLichhenState extends State<InfoLichhen> {
               SizedBox(
                 height: 8.h,
               ),
-              const _InfoItem(
-                title1: 'Cơ sở: ',
-                title2: 'Cơ sở 1',
+              _InfoItem(title1: 'Cơ sở', title2: ': ${_model.cosoName}'),
+              SizedBox(
+                height: 8.h,
+              ),
+              _InfoItem(
+                title1: 'Học viên',
+                title2: ': ${_model.fullName}',
               ),
               SizedBox(
                 height: 8.h,
               ),
-              const _InfoItem(
-                title1: 'Học viên: ',
-                title2: 'Nguyễn Lâm Anh',
+              _InfoItem(
+                title1: 'SĐT : ',
+                title2: ': ${_model.phone}',
               ),
               SizedBox(
                 height: 8.h,
               ),
-              const _InfoItem(
+              _InfoItem(
+                title1: 'email : ',
+                title2: ': ${_model.email}',
+              ),
+              SizedBox(
+                height: 8.h,
+              ),
+              _InfoItem(
                 title1: 'CM: ',
-                title2: 'Sale Phan Anh A',
+                title2: ': ${_model.teacherName}',
               ),
               SizedBox(
                 height: 8.h,
               ),
-              const _InfoItem(
+              _InfoItem(
                 title1: 'Thời gian: ',
-                title2: '17:30 28/02/2024',
+                title2:
+                    ': ${DateFormat('HH:mm dd-MM-yyyy').format(_model.appointmentDate)}',
               ),
-              SizedBox(
-                height: 8.h,
-              ),
-              const _InfoItem(
-                title1: 'Ghi chú: ',
-                title2: '',
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: 12.w,
-                  top: 10.h,
-                  right: 12.w,
-                ),
-                child: Container(
-                    width: 310.w,
-                    height: 120.h,
-                    padding: EdgeInsets.only(
-                      left: 16.w,
-                      top: 10.h,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(12.r)),
-                      color: const Color(0xffF5F7FA),
-                    ), //
-                    child: Text(
-                      'Khách hẹn đến trung tâm',
-                      style: defaultText14M.copyWith(
-                        color: const Color(0xff09204E),
-                      ),
-                    )),
-              ),
+
+              // Padding(
+              //   padding: EdgeInsets.only(
+              //     left: 12.w,
+              //     top: 10.h,
+              //     right: 12.w,
+              //   ),
+              //   child: Container(
+              //       width: 310.w,
+              //       height: 120.h,
+              //       padding: EdgeInsets.only(
+              //         left: 16.w,
+              //         top: 10.h,
+              //       ),
+              //       decoration: BoxDecoration(
+              //         borderRadius: BorderRadius.all(Radius.circular(12.r)),
+              //         color: const Color(0xffF5F7FA),
+              //       ), //
+              //       child: Text(
+              //         'Khách hẹn đến trung tâm',
+              //         style: defaultText14M.copyWith(
+              //           color: const Color(0xff09204E),
+              //         ),
+              //       )),
+              // ),
               const SizedBox(height: 16),
             ],
           ),

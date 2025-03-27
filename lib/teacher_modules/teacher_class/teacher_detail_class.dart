@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
+import 'package:pmp_english/teacher/teacher_model/teacher_class_model.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 
 import 'teacher_detail_lesson.dart';
 
 class TeacherDetail extends StatefulWidget {
-  const TeacherDetail({super.key});
+  const TeacherDetail({super.key, required this.detailClass});
+  final DetailClass detailClass;
   @override
   State<TeacherDetail> createState() => _TeacherDetailState();
 }
@@ -66,10 +69,13 @@ class _TeacherDetailState extends State<TeacherDetail>
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  _detailItem(title1: 'Tên lớp:', title2: 'A001'),
                   _detailItem(
-                      title1: 'Hình thức:', title2: 'Trực tiếp tại trung tâm'),
-                  _detailItem(title1: 'Phòng học:', title2: '101'),
+                      title1: 'Tên lớp:', title2: widget.detailClass.name),
+                  _detailItem(
+                      title1: 'Hình thức:',
+                      title2: widget.detailClass.hinhThucHoc),
+                  _detailItem(
+                      title1: 'Khóa học:', title2: widget.detailClass.alias),
                 ],
               ),
             ),
@@ -144,7 +150,7 @@ class _TeacherDetailState extends State<TeacherDetail>
                   width: 375.w,
                   margin: EdgeInsets.fromLTRB(16.w, 0, 16.w, 6.h),
                   padding: EdgeInsets.symmetric(
-                    horizontal: 16.w,
+                    horizontal: 12.w,
                   ),
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.only(
@@ -163,10 +169,15 @@ class _TeacherDetailState extends State<TeacherDetail>
                   child: ListView.builder(
                       shrinkWrap: true,
                       physics: const ClampingScrollPhysics(),
-                      itemCount: 8,
+                      itemCount: widget.detailClass.dsBuoiHoc
+                          .where((e) => e.day.isAfter(DateTime.now()))
+                          .toList()
+                          .length,
                       itemBuilder: (BuildContext context, int index) {
                         return ListFbDaily(
-                          index: 10 + index,
+                          model: widget.detailClass.dsBuoiHoc
+                              .where((e) => e.day.isAfter(DateTime.now()))
+                              .toList()[index],
                         );
                       }),
                 ),
@@ -193,10 +204,15 @@ class _TeacherDetailState extends State<TeacherDetail>
                   child: ListView.builder(
                       shrinkWrap: true,
                       physics: const ClampingScrollPhysics(),
-                      itemCount: 5,
+                      itemCount: widget.detailClass.dsBuoiHoc
+                          .where((e) => e.day.isBefore(DateTime.now()))
+                          .toList()
+                          .length,
                       itemBuilder: (BuildContext context, int index) {
                         return ListFbDaily(
-                          index: 9 - index,
+                          model: widget.detailClass.dsBuoiHoc
+                              .where((e) => e.day.isBefore(DateTime.now()))
+                              .toList()[index],
                         );
                       }),
                 ),
@@ -215,9 +231,10 @@ class _TeacherDetailState extends State<TeacherDetail>
 class ListFbDaily extends StatelessWidget {
   const ListFbDaily({
     super.key,
-    required this.index,
+    required this.model,
   });
-  final int index;
+
+  final DetailBuoiHoc model;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -231,8 +248,9 @@ class ListFbDaily extends StatelessWidget {
           SizedBox(
             height: 8.h,
           ),
+          // print day (datetime to string)
           Text(
-            'Dự kiến 26/12/2024',
+            DateFormat('dd/MM/yyyy').format(model.day),
             style: defaultText14M.copyWith(
                 color: const Color(0xff09204E).withValues(
               alpha: 0.48,
@@ -247,7 +265,7 @@ class ListFbDaily extends StatelessWidget {
               SizedBox(
                 width: 263.w,
                 child: Text(
-                  'Buổi $index : làm quen với từ vựng giao tiếp căn bản ',
+                  model.name,
                   style:
                       defaultText16B.copyWith(color: const Color(0xff09204E)),
                 ),

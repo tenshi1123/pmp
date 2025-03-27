@@ -7,6 +7,10 @@ import 'package:pmp_english/router/app_pages.dart';
 import 'package:pmp_english/router/app_router.dart';
 import 'package:pmp_english/student_models/customer_models.dart';
 import 'package:pmp_english/student_models/profile_model.dart';
+import 'package:pmp_english/teacher/teacher_model/home_teacher_model.dart';
+import 'package:pmp_english/teacher/teacher_repo/teacher_repo.dart';
+import 'package:pmp_english/teacher_modules/teacher_bottombar/teacher_bottombar.dart';
+import 'package:pmp_english/utils/constants/const_string.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Splshscreen extends StatefulWidget {
@@ -24,14 +28,40 @@ class _SplshscreenState extends State<Splshscreen> {
     Timer(const Duration(seconds: 0), () async {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       final String? token = prefs.getString('token');
+      final String? type = prefs.getString(ConstString.type);
       checked = (token != null && token != '');
       if (checked) {
-        StudentHomeModel infoModel = await CustomerRepo().getHomeInfo();
-        ProfileModel profileModel = await CustomerRepo().getCustomerProfile();
-        AppRouter.toPage(context, AppPages.BottomNavBarPage, arguments: {
-          'infoModel': infoModel,
-          'profileModel': profileModel,
-        });
+        if (type != null) {
+          if (type == 'student') {
+            StudentHomeModel infoModel = await CustomerRepo().getHomeInfo();
+            ProfileModel profileModel =
+                await CustomerRepo().getCustomerProfile();
+            AppRouter.toPage(context, AppPages.BottomNavBarPage, arguments: {
+              'infoModel': infoModel,
+              'profileModel': profileModel,
+            });
+          } else {
+            TeacherHomeModel infoModel = await TeacherRepo().getHomeInfo();
+            TeacherProfileModel teacherProfileModel =
+                await TeacherRepo().getCustomerProfile();
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => TeacherBottomBar(
+                  infoModel: infoModel,
+                  teacherProfileModel: teacherProfileModel,
+                ),
+              ),
+            );
+          }
+        } else {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const Onbonding(),
+            ),
+          );
+        }
       } else {
         Navigator.pushReplacement(
           context,

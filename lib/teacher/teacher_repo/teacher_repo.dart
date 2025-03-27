@@ -17,6 +17,17 @@ class TeacherRepo {
     return TeacherHomeModel.fromJson(response.data['data']);
   }
 
+  Future<TeacherProfileModel> getCustomerProfile() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    Response response;
+    response = await dio.post(
+      ApiPathTeacher.profile,
+    );
+    return TeacherProfileModel.fromJson(response.data['data']['value']);
+  }
+
   Future<List<NotiModel>> getListNoti() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? token = prefs.getString('token');

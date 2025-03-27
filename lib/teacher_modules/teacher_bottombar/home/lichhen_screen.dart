@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
+import 'package:pmp_english/teacher/teacher_model/home_teacher_model.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 
 import '../../../utils/widget/custom_widget.dart';
 
 class LichHenScreen extends StatefulWidget {
-  const LichHenScreen({super.key});
+  const LichHenScreen({super.key, required this.listLichHen});
+  final List<LichHenModel> listLichHen;
   @override
   State<LichHenScreen> createState() => _LichHenScreenState();
 }
@@ -77,117 +80,71 @@ class _LichHenScreenState extends State<LichHenScreen>
                     SizedBox(
                       height: 16.h,
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        showDialog<String>(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                const InfoLichhen(
-                                  type: '1',
-                                ));
-                      },
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 16.w,
-                          vertical: 12.h,
-                        ),
-                        margin: EdgeInsets.symmetric(horizontal: 16.w),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(12.r),
-                          ),
-                          color: const Color(0xffF5F7FA),
-                        ),
-                        child: Row(
-                          children: [
-                            Image.asset(
-                              'assets/images/little_avatar.png',
-                              width: 40.w,
-                              height: 40.h,
-                            ),
-                            SizedBox(
-                              width: 8.w,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Nguyễn Lâm Anh',
-                                  style: defaultText16M.copyWith(
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                Text(
-                                  '17:30 - 28/10/2024',
-                                  style: defaultText14Re.copyWith(
-                                    color: const Color(
-                                      0xff09204E,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    ListView.builder(
+                        shrinkWrap: true,
+                        physics: const ClampingScrollPhysics(),
+                        itemCount: widget.listLichHen.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return _ItemLichHen(model: widget.listLichHen[0]);
+                        }),
+
                     SizedBox(
                       height: 16.h,
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        showDialog<String>(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                const InfoLichhen(
-                                  type: '1',
-                                ));
-                      },
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 16.w,
-                          vertical: 12.h,
-                        ),
-                        margin: EdgeInsets.symmetric(horizontal: 16.w),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(12.r),
-                          ),
-                          color: const Color(0xffF5F7FA),
-                        ),
-                        child: Row(
-                          children: [
-                            Image.asset(
-                              'assets/images/little_avatar.png',
-                              width: 40.w,
-                              height: 40.h,
-                            ),
-                            SizedBox(
-                              width: 8.w,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Nguyễn Lâm Anh',
-                                  style: defaultText16M.copyWith(
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                Text(
-                                  '17:30 - 28/10/2024',
-                                  style: defaultText14Re.copyWith(
-                                    color: const Color(
-                                      0xff09204E,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     showDialog<String>(
+                    //         context: context,
+                    //         builder: (BuildContext context) =>
+                    //             const InfoLichhen(
+                    //               type: '1',
+                    //             ));
+                    //   },
+                    //   child: Container(
+                    //     padding: EdgeInsets.symmetric(
+                    //       horizontal: 16.w,
+                    //       vertical: 12.h,
+                    //     ),
+                    //     margin: EdgeInsets.symmetric(horizontal: 16.w),
+                    //     decoration: BoxDecoration(
+                    //       borderRadius: BorderRadius.all(
+                    //         Radius.circular(12.r),
+                    //       ),
+                    //       color: const Color(0xffF5F7FA),
+                    //     ),
+                    //     child: Row(
+                    //       children: [
+                    //         Image.asset(
+                    //           'assets/images/little_avatar.png',
+                    //           width: 40.w,
+                    //           height: 40.h,
+                    //         ),
+                    //         SizedBox(
+                    //           width: 8.w,
+                    //         ),
+                    //         Column(
+                    //           crossAxisAlignment: CrossAxisAlignment.start,
+                    //           children: [
+                    //             Text(
+                    //               'Nguyễn Lâm Anh',
+                    //               style: defaultText16M.copyWith(
+                    //                 color: Colors.black,
+                    //               ),
+                    //             ),
+                    //             Text(
+                    //               '17:30 - 28/10/2024',
+                    //               style: defaultText14Re.copyWith(
+                    //                 color: const Color(
+                    //                   0xff09204E,
+                    //                 ),
+                    //               ),
+                    //             )
+                    //           ],
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
                     // Padding(
                     //   padding: EdgeInsets.only(left: 16.w, top: 16.h),
                     //   child: Text(
@@ -203,6 +160,67 @@ class _LichHenScreenState extends State<LichHenScreen>
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _ItemLichHen extends StatelessWidget {
+  const _ItemLichHen({required this.model});
+  final LichHenModel model;
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => InfoLichhen(
+                  model: model,
+                ));
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: 16.w,
+          vertical: 12.h,
+        ),
+        margin: EdgeInsets.symmetric(horizontal: 16.w),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(
+            Radius.circular(12.r),
+          ),
+          color: const Color(0xffF5F7FA),
+        ),
+        child: Row(
+          children: [
+            Image.asset(
+              'assets/images/little_avatar.png',
+              width: 40.w,
+              height: 40.h,
+            ),
+            SizedBox(
+              width: 8.w,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  model.fullName,
+                  style: defaultText16M.copyWith(
+                    color: Colors.black,
+                  ),
+                ),
+                Text(
+                  DateFormat("HH:mm - dd/MMyyyy").format(model.appointmentDate),
+                  style: defaultText14Re.copyWith(
+                    color: const Color(
+                      0xff09204E,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

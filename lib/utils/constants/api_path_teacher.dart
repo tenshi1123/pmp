@@ -8,7 +8,9 @@ class ApiPathTeacher {
   static const String refreshToken = '$teachersUrl/refresh_token/';
   static const String login = '$teachersUrl/login';
 
-  //Thông tin và đổi thông tin học viênviên
+  static const String getClass = '$teachersUrl/lop-hoc';
+  static const String detailsClass = '$teachersUrl/lop-hoc/detail';
+  //Thông tin và đổi thông tin học viên
   static const String profile = '$teachersUrl/profile';
   static const String changePassword = '$teachersUrl/change_password';
   static const String changeAvatar = '$teachersUrl/change_avatar';

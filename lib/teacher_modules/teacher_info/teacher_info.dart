@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/teacher/teacher_model/home_teacher_model.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 
 import '../../modules/splash/wellcom_screen.dart';
 
 class TeacherInfo extends StatelessWidget {
-  const TeacherInfo({super.key});
-
+  const TeacherInfo({super.key, required this.teacherProfileModel});
+  final TeacherProfileModel teacherProfileModel;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -55,17 +56,17 @@ class TeacherInfo extends StatelessWidget {
         const SizedBox(height: 10),
 
         // Tên và số điện thoại
-        const Text(
-          "Nguyễn Trâm Anh",
-          style: TextStyle(
+        Text(
+          teacherProfileModel.fullName,
+          style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
             color: Colors.black87,
           ),
         ),
-        const Text(
-          "097 111 6262",
-          style: TextStyle(
+        Text(
+          teacherProfileModel.phone,
+          style: const TextStyle(
             fontSize: 16,
             color: Colors.black54,
           ),

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pmp_english/student_repo/login_repo.dart';
+import 'package:pmp_english/teacher/teacher_model/home_teacher_model.dart';
+import 'package:pmp_english/teacher/teacher_repo/teacher_repo.dart';
 import 'package:pmp_english/teacher_modules/teacher_bottombar/teacher_bottombar.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
@@ -98,9 +100,67 @@ class _TeacherLoginState extends State<TeacherLogin> {
             const SizedBox(height: 12),
             //_buildRememberPassword(),
             const SizedBox(height: 16),
-            _buildLoginButton(
-              emailController.text,
-              passwordController.text,
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () async {
+                  // Xử lý đăng nhập
+                  bool loged = await LoginRepo().loginTeacher(
+                      emailController.text, passwordController.text);
+
+                  if (loged == true) {
+                    TeacherHomeModel infoModel =
+                        await TeacherRepo().getHomeInfo();
+                    TeacherProfileModel teacherProfileModel =
+                        await TeacherRepo().getCustomerProfile();
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TeacherBottomBar(
+                          infoModel: infoModel,
+                          teacherProfileModel: teacherProfileModel,
+                        ),
+                      ),
+                    );
+                  } else {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return CupertinoAlertDialog(
+                          title: const Text('Vui lòng thử lại'),
+                          content: const Text(
+                              'Vui lòng kiểm tra lại mã học sinh và mật khẩu của bạn'),
+                          actions: <Widget>[
+                            CupertinoDialogAction(
+                              isDefaultAction: true,
+                              child: Text(
+                                'Đồng ý',
+                                style:
+                                    TextStyle(fontSize: 20, color: key1Color),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context, rootNavigator: true).pop(
+                                  (_) => false,
+                                );
+                              },
+                            )
+                          ],
+                        );
+                      },
+                    );
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xff28B4E9),
+                  padding: EdgeInsets.symmetric(vertical: 16.h),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30)),
+                ),
+                child: const Text(
+                  "Đăng nhập",
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
+              ),
             ),
           ],
         ),
@@ -177,62 +237,6 @@ class _TeacherLoginState extends State<TeacherLogin> {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildLoginButton(String email, String password) {
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: () async {
-          // Xử lý đăng nhập
-          bool loged = await LoginRepo().loginTeacher(email, password);
-
-          if (loged == true) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const BottomNavBar(),
-              ),
-            );
-          } else {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return CupertinoAlertDialog(
-                  title: const Text('Vui lòng thử lại'),
-                  content: const Text(
-                      'Vui lòng kiểm tra lại mã học sinh và mật khẩu của bạn'),
-                  actions: <Widget>[
-                    CupertinoDialogAction(
-                      isDefaultAction: true,
-                      child: Text(
-                        'Đồng ý',
-                        style: TextStyle(fontSize: 20, color: key1Color),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context, rootNavigator: true).pop(
-                          (_) => false,
-                        );
-                      },
-                    )
-                  ],
-                );
-              },
-            );
-          }
-        },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xff28B4E9),
-          padding: EdgeInsets.symmetric(vertical: 16.h),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-        ),
-        child: const Text(
-          "Đăng nhập",
-          style: TextStyle(fontSize: 16, color: Colors.white),
-        ),
-      ),
     );
   }
 }

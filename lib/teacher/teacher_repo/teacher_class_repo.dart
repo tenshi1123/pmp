@@ -1,0 +1,51 @@
+import 'package:dio/dio.dart';
+import 'package:pmp_english/teacher/teacher_model/teacher_class_model.dart';
+import 'package:pmp_english/utils/constants/api_path_teacher.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class TeacherClassRepo {
+  Dio dio = Dio();
+  Future<TeacherClassModel> getTeacherClass() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    Response response;
+    response = await dio.post(
+      ApiPathTeacher.getClass,
+    );
+    return TeacherClassModel.fromJson(response.data['data']);
+  }
+
+  Future<DetailClass> getDetailLopHoc(String id) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    Response response;
+    response = await dio.post(
+      ApiPathTeacher.detailsClass,
+      data: {'id': id},
+    );
+    return DetailClass.fromJson(response.data['data']);
+  }
+
+  Future<List<DiemDanhHSModel>> getListDiemDanh(
+      {required String courseScheduleId, required String id}) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    Response response;
+    response = await dio.post(
+      ApiPathTeacher.detailsClass,
+      data: {
+        'course_schedule_id': courseScheduleId,
+        'id': id,
+        'type': 'diem_danh',
+      },
+    );
+    List<DiemDanhHSModel> result = [];
+    result = response.data['data']['value'].map((e) {
+      return DiemDanhHSModel.fromJson(e);
+    }).toList();
+    return result;
+  }
+}

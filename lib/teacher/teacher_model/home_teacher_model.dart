@@ -7,10 +7,10 @@ class TeacherHomeModel {
   });
   factory TeacherHomeModel.fromJson(Map<String, dynamic> json) {
     return TeacherHomeModel(
-      lichhoc: (json['lichhoc'] as List)
+      lichhoc: (json['data_lich_hoc'] as List)
           .map((data) => LichHocModel.fromJson(data))
           .toList(),
-      lichhen: (json['lichhen'] as List)
+      lichhen: (json['lich_hen'] as List)
           .map((data) => LichHenModel.fromJson(data))
           .toList(),
     );
@@ -85,6 +85,34 @@ class LichHenModel {
       teacherName: json['teachers_full_name'] ?? '',
       id: json['id'] ?? '',
       appointmentDate: DateTime.parse(json['appointment_date'] ?? ''),
+    );
+  }
+}
+
+class TeacherProfileModel {
+  final String id;
+  final String fullName;
+  final String phone;
+  final String email;
+  final String dob;
+  final String avatar;
+
+  TeacherProfileModel({
+    required this.id,
+    required this.fullName,
+    required this.phone,
+    required this.email,
+    required this.dob,
+    required this.avatar,
+  });
+  factory TeacherProfileModel.fromJson(Map<String, dynamic> json) {
+    return TeacherProfileModel(
+      id: json['id'] ?? '',
+      fullName: json['full_name'] ?? '',
+      phone: json['phone'] ?? '',
+      email: json['email'] ?? '',
+      dob: json['dob'] ?? '',
+      avatar: json['avatar'] ?? '',
     );
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
+import 'package:pmp_english/teacher/teacher_model/teacher_class_model.dart';
+import 'package:pmp_english/teacher/teacher_repo/teacher_class_repo.dart';
 import 'package:pmp_english/teacher_modules/teacher_class/teacher_detail_class.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 
@@ -14,11 +16,17 @@ class ClassManagementScreen extends StatefulWidget {
 class _ClassManagementScreenState extends State<ClassManagementScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-
+  TeacherClassModel _teacherClassModel = TeacherClassModel(zoom: [], offl: []);
   @override
   void initState() {
     super.initState();
+    _fetchData();
     _tabController = TabController(length: 2, vsync: this);
+  }
+
+  Future<void> _fetchData() async {
+    _teacherClassModel = await TeacherClassRepo().getTeacherClass();
+    setState(() {});
   }
 
   @override
@@ -106,30 +114,26 @@ class _ClassManagementScreenState extends State<ClassManagementScreen>
               controller: _tabController,
               children: [
                 // Danh sách lớp học trung tâm
-                ListView(
-                  padding: const EdgeInsets.all(16),
-                  children: const [
-                    ClassCard(
-                        className: "Lớp A001",
-                        description: "Khóa tiếng Anh cơ bản"),
-                    SizedBox(height: 12),
-                    ClassCard(
-                        className: "Lớp A002",
-                        description: "Khóa tiếng Anh nâng cao"),
-                  ],
-                ),
+                ListView.builder(
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    itemCount: _teacherClassModel.offl.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ClassCard(
+                        model: _teacherClassModel.offl[index],
+                      );
+                    }),
 
                 // Danh sách lớp học Zoom (tạm thời trống)
-                ListView(
-                  padding: const EdgeInsets.all(16),
-                  children: const [
-                    ClassCard(
-                        className: "Lớp A001", description: "Lớp B002 - Zoom"),
-                    SizedBox(height: 12),
-                    ClassCard(
-                        className: "Lớp A002", description: "Lớp B002 - Zoom"),
-                  ],
-                ),
+                ListView.builder(
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    itemCount: _teacherClassModel.zoom.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ClassCard(
+                        model: _teacherClassModel.zoom[index],
+                      );
+                    }),
               ],
             ),
           ),
@@ -141,18 +145,24 @@ class _ClassManagementScreenState extends State<ClassManagementScreen>
 
 // Widget hiển thị thông tin lớp học
 class ClassCard extends StatelessWidget {
-  final String className;
-  final String description;
-
-  const ClassCard(
-      {super.key, required this.className, required this.description});
+  final ItemClassModel model;
+  const ClassCard({
+    super.key,
+    required this.model,
+  });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        pushWithoutNavBar(context,
-            MaterialPageRoute(builder: (context) => const TeacherDetail()));
+      onTap: () async {
+        DetailClass detailClass =
+            await TeacherClassRepo().getDetailLopHoc(model.id);
+        pushWithoutNavBar(
+            context,
+            MaterialPageRoute(
+                builder: (context) => TeacherDetail(
+                      detailClass: detailClass,
+                    )));
       },
       child: Container(
         padding: const EdgeInsets.all(12),
@@ -180,12 +190,12 @@ class ClassCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  className,
+                  model.name,
                   style: defaultText16M.copyWith(color: Colors.black),
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  description,
+                  model.alias,
                   style: defaultText14Re.copyWith(
                     color: const Color(0xff09204E).withValues(alpha: 0.48),
                   ),
