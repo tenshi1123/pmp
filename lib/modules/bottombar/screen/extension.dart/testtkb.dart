@@ -1,34 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
+import 'package:pmp_english/modules/bottombar/utils.dart';
+import 'package:pmp_english/teacher/teacher_model/home_teacher_model.dart';
+import 'package:pmp_english/teacher/teacher_model/teacher_class_model.dart';
+import 'package:pmp_english/teacher/teacher_repo/teacher_class_repo.dart';
+import 'package:pmp_english/teacher/teacher_repo/teacher_repo.dart';
+import 'package:pmp_english/teacher_modules/teacher_class/teacher_detail_lesson.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import '../../utils.dart';
-
 class ScheduleScreen extends StatefulWidget {
   const ScheduleScreen({super.key});
+
   @override
   State<ScheduleScreen> createState() => _ScheduleScreenState();
 }
 
 class _ScheduleScreenState extends State<ScheduleScreen> {
-  late final ValueNotifier<List<Event>> _selectedEvents;
+  late final ValueNotifier<List<LichHocModel>> _selectedEvents;
   CalendarFormat _calendarFormat = CalendarFormat.month;
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode
-      .toggledOff; // Can be toggled on/off by longpressing a date
+      .toggledOn; // Can be toggled on/off by longpressing a date
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
   DateTime? _rangeStart;
   DateTime? _rangeEnd;
+  late List<LichHocModel> _listLichHoc;
 
   @override
   void initState() {
     super.initState();
-
     _selectedDay = _focusedDay;
-    _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
+    _listLichHoc = [];
+    _selectedEvents = ValueNotifier(_getEventsForRange(
+        DateTime(_focusedDay.year, _focusedDay.month, 1),
+        DateTime(_focusedDay.year, _focusedDay.month + 1, 0)));
   }
 
   @override
@@ -37,18 +46,33 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     super.dispose();
   }
 
-  List<Event> _getEventsForDay(DateTime day) {
-    // Implementation example
-    return kEvents[day] ?? [];
+  Future<void> getSchedule(
+      {required String dayStart, required String dayEnd}) async {
+    _listLichHoc = await TeacherRepo().getLichDay(day1: dayStart, day2: dayEnd);
+    _selectedEvents.value = _listLichHoc;
   }
 
-  List<Event> _getEventsForRange(DateTime start, DateTime end) {
+  List<LichHocModel> _getEventsForDay(DateTime day) {
     // Implementation example
-    final days = daysInRange(start, end);
+    getSchedule(
+        dayStart: DateFormat('yyyy-MM-dd').format(day),
+        dayEnd: DateFormat('yyyy-MM-dd').format(day));
+    return _listLichHoc;
+  }
 
-    return [
-      for (final d in days) ..._getEventsForDay(d),
-    ];
+  // List<ScheduleModel> _getEventLoad(DateTime day) {
+  //   List<ScheduleModel> test = [
+  //     ..._listFullLich.where((e) => e.createdDate.day == day.day)
+  //   ];
+  //   return test;
+  // }
+
+  List<LichHocModel> _getEventsForRange(DateTime start, DateTime end) {
+    getSchedule(
+      dayStart: DateFormat('yyyy-MM-dd').format(start),
+      dayEnd: DateFormat('yyyy-MM-dd').format(end),
+    );
+    return _listLichHoc;
   }
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
@@ -88,221 +112,118 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: const Color(0xff273D8C),
+        automaticallyImplyLeading: false,
+        title: Center(
+          child: Text(
+            'Lịch học',
+            style: defaultText18B.copyWith(
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
       body: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints viewportConstraints) {
         return SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(
-                height: 180.h,
-                child: Stack(
-                  children: [
-                    Positioned(
-                      top: 0,
-                      child: Container(
-                        width: 390.w,
-                        height: 140.h,
-                        decoration: BoxDecoration(gradient: mainGradient),
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 70.h,
-                      left: 22.w,
-                      child: Text(
-                        'Thời khóa biểu',
-                        style: defaultText20B.copyWith(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 30.h,
-                      left: 250.w,
-                      child: Image.asset(
-                        'assets/images/schedule_icon.png',
-                        width: 115.w,
-                        height: 92.h,
-                        fit: BoxFit.fill,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              Container(
-                height: 403.h,
-                width: 350.w,
-                decoration: BoxDecoration(
-                  color: main2Color.withOpacity(0.24),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(8.r),
-                  ),
-                ),
-                child: TableCalendar<Event>(
-                  locale: 'vi_VI',
-                  firstDay: kFirstDay,
-                  lastDay: kLastDay,
-                  focusedDay: _focusedDay,
-                  selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-                  rangeStartDay: _rangeStart,
-                  rangeEndDay: _rangeEnd,
-                  availableCalendarFormats: const {
-                    CalendarFormat.month: 'Month',
-                  },
-                  headerStyle: HeaderStyle(titleTextStyle: defaultText16M),
-                  daysOfWeekStyle: DaysOfWeekStyle(
-                    weekdayStyle: defaultText14M,
-                    weekendStyle: defaultText14M.copyWith(
-                      color: Colors.red,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  height: 403.h,
+                  width: 350.w,
+                  decoration: BoxDecoration(
+                    color: main2Color.withOpacity(0.24),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(8.r),
                     ),
                   ),
-                  daysOfWeekHeight: 36.h,
-                  calendarFormat: _calendarFormat,
-                  rangeSelectionMode: _rangeSelectionMode,
-                  eventLoader: _getEventsForDay,
-                  startingDayOfWeek: StartingDayOfWeek.monday,
-                  calendarBuilders: CalendarBuilders(
-                    markerBuilder: (context, date, events) {
-                      return events.isNotEmpty
-                          ? _buildEventsMarkerNum(events)
-                          : const SizedBox();
+                  child: TableCalendar<LichHocModel>(
+                    locale: 'vi_VI',
+                    firstDay: kFirstDay,
+                    lastDay: kLastDay,
+                    focusedDay: _focusedDay,
+                    selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+                    rangeStartDay: _rangeStart,
+                    rangeEndDay: _rangeEnd,
+                    availableCalendarFormats: const {
+                      CalendarFormat.month: 'Month',
+                    },
+                    headerStyle: HeaderStyle(titleTextStyle: defaultText16M),
+                    daysOfWeekStyle: DaysOfWeekStyle(
+                      weekdayStyle: defaultText14M,
+                      weekendStyle: defaultText14M.copyWith(
+                        color: Colors.red,
+                      ),
+                    ),
+                    daysOfWeekHeight: 36.h,
+                    calendarFormat: _calendarFormat,
+                    rangeSelectionMode: _rangeSelectionMode,
+                    // eventLoader: _getEventLoad,
+                    startingDayOfWeek: StartingDayOfWeek.monday,
+                    calendarBuilders: CalendarBuilders(
+                      markerBuilder: (context, date, events) {
+                        return events.isNotEmpty
+                            ? _buildEventsMarkerNum(events)
+                            : const SizedBox();
+                      },
+                    ),
+                    calendarStyle: CalendarStyle(
+                      // Use `CalendarStyle` to customize the UI
+                      outsideDaysVisible: true,
+                      defaultTextStyle: defaultText14M,
+                      weekendTextStyle:
+                          defaultText14M.copyWith(color: Colors.red),
+                      todayTextStyle:
+                          defaultText14M.copyWith(color: Colors.white),
+                    ),
+                    onDaySelected: _onDaySelected,
+                    onRangeSelected: _onRangeSelected,
+                    onFormatChanged: (format) {
+                      if (_calendarFormat != format) {
+                        setState(() {
+                          _calendarFormat = format;
+                        });
+                      }
+                    },
+                    onPageChanged: (focusedDay) {
+                      _focusedDay = focusedDay;
                     },
                   ),
-                  calendarStyle: CalendarStyle(
-                    // Use `CalendarStyle` to customize the UI
-                    outsideDaysVisible: true,
-                    defaultTextStyle: defaultText14M,
-                    weekendTextStyle:
-                        defaultText14M.copyWith(color: Colors.red),
-                    todayTextStyle:
-                        defaultText14M.copyWith(color: Colors.white),
-                  ),
-                  onDaySelected: _onDaySelected,
-                  onRangeSelected: _onRangeSelected,
-                  onFormatChanged: (format) {
-                    if (_calendarFormat != format) {
-                      setState(() {
-                        _calendarFormat = format;
-                      });
-                    }
-                  },
-                  onPageChanged: (focusedDay) {
-                    _focusedDay = focusedDay;
-                  },
                 ),
-              ),
-              const SizedBox(height: 8.0),
-              Text(
-                DateFormat("yyyy-MM-dd").format(
-                  _selectedDay ?? DateTime.now(),
+                SizedBox(height: 24.h),
+                Text(
+                  'Lịch học của bạn',
+                  style: defaultText16B,
                 ),
-                style: defaultText16B,
-              ),
-              ValueListenableBuilder<List<Event>>(
-                valueListenable: _selectedEvents,
-                builder: (context, value, _) {
-                  return Stack(
-                    children: [
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: const ScrollPhysics(),
-                        itemCount: 12,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            margin: EdgeInsets.fromLTRB(20.w, 8.h, 20.w, 40.h),
-                            width: 350.w,
-                            height: 30.h,
-                            child: Row(children: [
-                              SizedBox(
-                                width: 40.w,
-                                child: Text(
-                                  '${8 + index}:00',
-                                  style: defaultText14M,
-                                ),
-                              ),
-                              Container(
-                                height: 1,
-                                width: 310.w,
-                                color: key1Color,
-                              ),
-                            ]),
-                          );
-                        },
-                      ),
-                      ValueListenableBuilder<List<Event>>(
-                        valueListenable: _selectedEvents,
-                        builder: (context, value, _) {
-                          return ListView.builder(
+                ValueListenableBuilder<List<LichHocModel>>(
+                  valueListenable: _selectedEvents,
+                  builder: (context, value, _) {
+                    return value.isEmpty
+                        ? Center(
+                            child: Text(
+                              'Không có lịch học',
+                              style: defaultText16B,
+                            ),
+                          )
+                        : ListView.builder(
                             shrinkWrap: true,
                             physics: const ScrollPhysics(),
                             itemCount: value.length,
                             itemBuilder: (context, index) {
-                              return Container(
-                                margin: EdgeInsets.fromLTRB(
-                                    120.w, 14.h, 20.w, 30.h),
-                                padding: EdgeInsets.only(left: 15.w),
-                                width: 250.w,
-                                height: 184.h,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12.0),
-                                  color:
-                                      const Color.fromARGB(255, 250, 224, 220),
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      height: 10.h,
-                                    ),
-                                    Text(
-                                      '${value[index]}',
-                                      style: defaultText18B,
-                                    ),
-                                    SizedBox(
-                                      height: 10.h,
-                                    ),
-                                    Container(
-                                      width: 217.w,
-                                      height: 38.h,
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(4.0),
-                                        color: const Color.fromARGB(
-                                            255, 255, 204, 197),
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          const CircleAvatar(
-                                            backgroundColor: Color.fromARGB(
-                                                255, 248, 248, 248),
-                                            radius: 12,
-                                            child: Text('NP'),
-                                          ),
-                                          Text(
-                                            'Nguyễn Phú',
-                                            style: defaultText14Re,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 10.h,
-                                    ),
-                                    Text(
-                                      '${value[index]}',
-                                      style: defaultText12Re,
-                                    ),
-                                  ],
-                                ),
+                              return ItemTableCalender(
+                                model: value[index],
                               );
                             },
                           );
-                        },
-                      ),
-                    ],
-                  );
-                },
-              ),
-            ],
+                  },
+                ),
+                SizedBox(height: 24.h),
+              ],
+            ),
           ),
         );
       }),
@@ -328,4 +249,140 @@ AnimatedContainer buildCalendarDayMarker({
     width: 5.w,
     height: 5.h,
   );
+}
+
+class ItemTableCalender extends StatefulWidget {
+  final LichHocModel model;
+  const ItemTableCalender({super.key, required this.model});
+
+  @override
+  State<ItemTableCalender> createState() => _ItemTableCalenderState();
+}
+
+class _ItemTableCalenderState extends State<ItemTableCalender> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () async {
+        List<DiemDanhHSModel> listDiemDanh = await TeacherClassRepo()
+            .getListDiemDanh(
+                courseScheduleId: widget.model.courseScheduleId,
+                id: widget.model.id);
+        pushWithoutNavBar(
+            context,
+            MaterialPageRoute(
+                builder: (context) => LessonDetail(
+                      listDiemDanh: listDiemDanh,
+                      title:
+                          "${widget.model.name} ${widget.model.dayOfWeek} ${DateFormat('dd/MM/yyyy').format(widget.model.day)}",
+                    )));
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(
+          horizontal: 5.w,
+          vertical: 10.h,
+        ),
+        padding: EdgeInsets.symmetric(
+          horizontal: 16.w,
+          vertical: 16.h,
+        ),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(
+            Radius.circular(16.r),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0xff163065).withValues(alpha: 0.12),
+              spreadRadius: 0,
+              blurRadius: 12,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10.w,
+                    vertical: 15.h,
+                  ),
+                  decoration: BoxDecoration(
+                    color: const Color(0xff00AEEF),
+                    borderRadius: BorderRadius.circular(12.r),
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        widget.model.day.day.toString(),
+                        style: defaultText16B.copyWith(
+                            color: Colors.white, fontSize: 26.sp),
+                      ),
+                      Text(
+                        'Tháng ${widget.model.day.month}',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 20),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: 200.w,
+                      child: Text(widget.model.name, style: defaultText18B),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(widget.model.dayOfWeek, style: defaultText14M),
+                  ],
+                ),
+              ],
+            ),
+            SizedBox(height: 12.h),
+            RichText(
+              text: TextSpan(
+                text: 'Phòng học : ',
+                style: defaultText16M,
+                children: [
+                  TextSpan(
+                      text: widget.model.phongHoc,
+                      style: defaultText16B.copyWith(
+                          color: const Color(0xff00AEEF))),
+                ],
+              ),
+            ),
+            SizedBox(height: 10.h),
+            RichText(
+              text: TextSpan(
+                text: 'Chi nhánh : ',
+                style: defaultText16M,
+                children: [
+                  TextSpan(
+                      text: widget.model.coSo,
+                      style: defaultText16B.copyWith(
+                          color: const Color(0xff00AEEF))),
+                ],
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }

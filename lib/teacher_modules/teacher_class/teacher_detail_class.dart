@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:pmp_english/teacher/teacher_model/teacher_class_model.dart';
+import 'package:pmp_english/teacher/teacher_repo/teacher_class_repo.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 
 import 'teacher_detail_lesson.dart';
@@ -178,6 +179,7 @@ class _TeacherDetailState extends State<TeacherDetail>
                           model: widget.detailClass.dsBuoiHoc
                               .where((e) => e.day.isAfter(DateTime.now()))
                               .toList()[index],
+                          courseScheduleId: widget.detailClass.id,
                         );
                       }),
                 ),
@@ -213,6 +215,7 @@ class _TeacherDetailState extends State<TeacherDetail>
                           model: widget.detailClass.dsBuoiHoc
                               .where((e) => e.day.isBefore(DateTime.now()))
                               .toList()[index],
+                          courseScheduleId: widget.detailClass.id,
                         );
                       }),
                 ),
@@ -232,15 +235,23 @@ class ListFbDaily extends StatelessWidget {
   const ListFbDaily({
     super.key,
     required this.model,
+    required this.courseScheduleId,
   });
 
   final DetailBuoiHoc model;
+  final String courseScheduleId;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const LessonDetail()));
+      onTap: () async {
+        List<DiemDanhHSModel> listDiemDanh = await TeacherClassRepo()
+            .getListDiemDanh(courseScheduleId: courseScheduleId, id: model.id);
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => LessonDetail(
+                  listDiemDanh: listDiemDanh,
+                  title:
+                      "${model.name} ${DateFormat('dd/MM/yyyy').format(model.day)}",
+                )));
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

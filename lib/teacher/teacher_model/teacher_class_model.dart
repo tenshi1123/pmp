@@ -114,7 +114,7 @@ class DiemDanhHSModel {
   factory DiemDanhHSModel.fromJson(Map<String, dynamic> json) {
     return DiemDanhHSModel(
       name: json['full_name'] ?? '',
-      status: json['ccs_status'] ?? '',
+      status: json['gv_status'] ?? '0',
     );
   }
 }

@@ -314,6 +314,7 @@ class _OnbondingState extends State<Onbonding> {
                           ),
                           GestureDetector(
                             onTap: () {
+                              //tips and trick
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(

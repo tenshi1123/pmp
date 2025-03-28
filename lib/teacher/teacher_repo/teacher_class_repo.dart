@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:pmp_english/teacher/teacher_model/teacher_class_model.dart';
 import 'package:pmp_english/utils/constants/api_path_teacher.dart';
@@ -21,10 +23,8 @@ class TeacherClassRepo {
     final String? token = prefs.getString('token');
     dio.options.headers['Authorization'] = 'Bearer $token';
     Response response;
-    response = await dio.post(
-      ApiPathTeacher.detailsClass,
-      data: {'id': id},
-    );
+    response = await dio.post(ApiPathTeacher.detailsClass,
+        data: jsonEncode({'id': id}));
     return DetailClass.fromJson(response.data['data']);
   }
 
@@ -35,7 +35,7 @@ class TeacherClassRepo {
     dio.options.headers['Authorization'] = 'Bearer $token';
     Response response;
     response = await dio.post(
-      ApiPathTeacher.detailsClass,
+      ApiPathTeacher.detailBuoihoc,
       data: {
         'course_schedule_id': courseScheduleId,
         'id': id,
@@ -43,9 +43,9 @@ class TeacherClassRepo {
       },
     );
     List<DiemDanhHSModel> result = [];
-    result = response.data['data']['value'].map((e) {
-      return DiemDanhHSModel.fromJson(e);
-    }).toList();
+    result = (response.data['data']['value'] as List)
+        .map((data) => DiemDanhHSModel.fromJson(data))
+        .toList();
     return result;
   }
 }

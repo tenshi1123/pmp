@@ -20,6 +20,7 @@ class TeacherHomeModel {
 class LichHocModel {
   final String id;
   final String name;
+  final String courseScheduleId;
   final String courseScheduleName;
   final DateTime day;
   final String dayOfWeek;
@@ -30,6 +31,7 @@ class LichHocModel {
   LichHocModel({
     required this.id,
     required this.name,
+    required this.courseScheduleId,
     required this.courseScheduleName,
     required this.day,
     required this.dayOfWeek,
@@ -42,6 +44,7 @@ class LichHocModel {
     return LichHocModel(
       id: json['id'] ?? '',
       name: json['name'] ?? '',
+      courseScheduleId: json['course_schedule_id'] ?? '',
       courseScheduleName: json['course_schedule_name'] ?? '',
       day: DateTime.parse(json['day'] ?? ''),
       dayOfWeek: json['day_of_week'] ?? '',

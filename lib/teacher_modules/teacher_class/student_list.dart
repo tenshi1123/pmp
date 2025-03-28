@@ -56,67 +56,8 @@ class _StudentListState extends State<StudentList>
   }
 }
 
-class ListFbDaily extends StatelessWidget {
-  const ListFbDaily({
-    super.key,
-    required this.index,
-  });
-  final int index;
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const LessonDetail()));
-      },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 8.h,
-          ),
-          Text(
-            'Dự kiến 26/12/2024',
-            style: defaultText14M.copyWith(
-                color: const Color(0xff09204E).withValues(
-              alpha: 0.48,
-            )),
-          ),
-          SizedBox(
-            height: 8.h,
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: 263.w,
-                child: Text(
-                  'Buổi $index : làm quen với từ vựng giao tiếp căn bản ',
-                  style:
-                      defaultText16B.copyWith(color: const Color(0xff09204E)),
-                ),
-              ),
-              const Spacer(),
-              Image.asset(
-                'assets/images/next.png',
-                height: 20.h,
-                width: 20.w,
-              )
-            ],
-          ),
-          SizedBox(
-            height: 8.h,
-          ),
-          const Divider(),
-        ],
-      ),
-    );
-  }
-}
-
 class ListFbDinhKy extends StatelessWidget {
   const ListFbDinhKy({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Column(

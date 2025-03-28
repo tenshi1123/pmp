@@ -17,6 +17,26 @@ class TeacherRepo {
     return TeacherHomeModel.fromJson(response.data['data']);
   }
 
+  Future<List<LichHocModel>> getLichDay(
+      {required String day1, required String day2}) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    Response response;
+    response = await dio.post(
+      ApiPathTeacher.lichDay,
+      data: {
+        'start_day': day1,
+        'end_day': day2,
+      },
+    );
+    List<LichHocModel> reults = [];
+    for (var item in response.data['data']['value']) {
+      reults.add(LichHocModel.fromJson(item));
+    }
+    return reults;
+  }
+
   Future<TeacherProfileModel> getCustomerProfile() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? token = prefs.getString('token');

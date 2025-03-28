@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/teacher/teacher_model/teacher_class_model.dart';
 
 import '../../utils/constants/styles.dart';
 import 'student_list.dart';
 
 class LessonDetail extends StatefulWidget {
-  const LessonDetail({super.key});
-
+  const LessonDetail(
+      {super.key, required this.listDiemDanh, required this.title});
+  final List<DiemDanhHSModel> listDiemDanh;
+  final String title;
   @override
   State<LessonDetail> createState() => _LessonDetailState();
 }
@@ -37,6 +40,22 @@ class _LessonDetailState extends State<LessonDetail> {
         builder: (BuildContext context, int value, Widget? child) {
           return Column(
             children: [
+              //title
+              Container(
+                width: 390.w,
+                height: 60.h,
+                decoration: const BoxDecoration(
+                  color: Color(0xff00AEEF),
+                ),
+                padding: EdgeInsets.only(left: 16.w, top: 20.h),
+                child: Text(
+                  widget.title,
+                  style: defaultText18B.copyWith(
+                    color: const Color(0xffffffff),
+                  ),
+                ),
+              ),
+
               Container(
                 width: MediaQuery.of(context).size.width,
                 height: 50.h,
@@ -141,10 +160,10 @@ class _LessonDetailState extends State<LessonDetail> {
                   ? ListView.builder(
                       shrinkWrap: true,
                       physics: const ClampingScrollPhysics(),
-                      itemCount: 8,
+                      itemCount: widget.listDiemDanh.length,
                       itemBuilder: (BuildContext context, int index) {
                         return _RollCallItem(
-                          index: index,
+                          model: widget.listDiemDanh[index],
                         );
                       })
                   : value == 1
@@ -173,8 +192,9 @@ class _LessonDetailState extends State<LessonDetail> {
 }
 
 class _RollCallItem extends StatelessWidget {
-  const _RollCallItem({required this.index});
-  final int index;
+  const _RollCallItem({required this.model});
+
+  final DiemDanhHSModel model;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -196,7 +216,7 @@ class _RollCallItem extends StatelessWidget {
             width: 8.w,
           ),
           Text(
-            'Nguyễn Lâm Anh',
+            model.name,
             style: defaultText16M,
           ),
           const Spacer(),
@@ -206,20 +226,20 @@ class _RollCallItem extends StatelessWidget {
               borderRadius: BorderRadius.all(
                 Radius.circular(6.r),
               ),
-              color: index == 0
+              color: model.status == '0'
                   ? const Color(0xffFF6B6B)
-                  : index == 1
+                  : model.status == '1'
                       ? const Color(0xffFFA94D)
-                      : index == 2
+                      : model.status == '2'
                           ? const Color(0xffF9D30A)
                           : const Color(0xff51CF66),
             ),
             child: Text(
-              index == 0
+              model.status == '0'
                   ? 'Vắng mặt'
-                  : index == 1
+                  : model.status == '1'
                       ? 'Xin nghỉ'
-                      : index == 2
+                      : model.status == '2'
                           ? 'Đi muộn'
                           : 'Đúng giờ',
               style: defaultText12M.copyWith(

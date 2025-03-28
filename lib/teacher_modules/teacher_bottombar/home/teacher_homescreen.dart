@@ -5,6 +5,8 @@ import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:pmp_english/modules/chat/screen/list_conversation_screen.dart';
 import 'package:pmp_english/modules/notification/notification.dart';
 import 'package:pmp_english/teacher/teacher_model/home_teacher_model.dart';
+import 'package:pmp_english/teacher/teacher_model/teacher_class_model.dart';
+import 'package:pmp_english/teacher/teacher_repo/teacher_class_repo.dart';
 import 'package:pmp_english/teacher_modules/teacher_bottombar/home/lichhen_screen.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -259,9 +261,19 @@ class _CommingSchedule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        pushWithoutNavBar(context,
-            MaterialPageRoute(builder: (context) => const LessonDetail()));
+      onTap: () async {
+        List<DiemDanhHSModel> listDiemDanh = await TeacherClassRepo()
+            .getListDiemDanh(
+                courseScheduleId: lichHocModel.courseScheduleId,
+                id: lichHocModel.id);
+        pushWithoutNavBar(
+            context,
+            MaterialPageRoute(
+                builder: (context) => LessonDetail(
+                      listDiemDanh: listDiemDanh,
+                      title:
+                          "${lichHocModel.name} ${lichHocModel.dayOfWeek} ${DateFormat('dd/MM/yyyy').format(lichHocModel.day)}",
+                    )));
       },
       child: Container(
         margin: EdgeInsets.symmetric(
