@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/teacher/teacher_model/teacher_class_model.dart';
+import 'package:pmp_english/teacher_modules/teacher_class/document/detail_exam_screen.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 
-import 'teacher_detail_lesson.dart';
-
 class StudentList extends StatefulWidget {
-  const StudentList({super.key});
+  const StudentList({super.key, required this.model});
+  final DetailedExamModel model;
   @override
   State<StudentList> createState() => _StudentListState();
 }
@@ -14,9 +15,11 @@ class _StudentListState extends State<StudentList>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   int activeTabIndex = 0;
+  int _type = 1;
   @override
   void initState() {
     super.initState();
+    _type = widget.model.documentModel.isNotEmpty ? 1 : 2;
     _tabController = TabController(
       length: 2,
       vsync: this,
@@ -48,36 +51,76 @@ class _StudentListState extends State<StudentList>
           ),
         ),
       ),
-      body: const Column(
+      body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [],
+        children: [
+          ListView.builder(
+              shrinkWrap: true,
+              physics: const ClampingScrollPhysics(),
+              itemCount: _type == 1
+                  ? widget.model.documentModel.length
+                  : widget.model.examModel.length,
+              itemBuilder: (BuildContext context, int index) {
+                return _type == 1
+                    ? _StudentItem(
+                        documentModel: widget.model.documentModel[index],
+                        type: _type,
+                      )
+                    : _StudentItem(
+                        examModel: widget.model.examModel[index],
+                        type: _type,
+                      );
+              })
+        ],
       ),
     );
   }
 }
 
-class ListFbDinhKy extends StatelessWidget {
-  const ListFbDinhKy({super.key});
+class _StudentItem extends StatelessWidget {
+  const _StudentItem({required this.type, this.examModel, this.documentModel});
+  final int type;
+  final StudentExamModel? examModel;
+  final DocumentModel? documentModel;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: EdgeInsets.only(
-            top: 16.h,
-            bottom: 12.h,
-          ),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'Lớp',
-              style: defaultText20B.copyWith(
-                color: const Color(0xff273D8C),
-              ),
+    return GestureDetector(
+      onTap: () {
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => DetailExamScreen(),
+        //   ),
+        // );
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(
+              Radius.circular(12.r),
             ),
-          ),
+            color: const Color(0xffF5F7FA)),
+        child: Row(
+          children: [
+            Image.asset(
+              'assets/images/little_avatar.png',
+              width: 28.w,
+              height: 28.h,
+            ),
+            SizedBox(
+              width: 8.w,
+            ),
+            Text(
+              type == 1
+                  ? documentModel?.fullName ?? ''
+                  : examModel?.fullName ?? '',
+              style: defaultText16M,
+            ),
+            const Spacer(),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

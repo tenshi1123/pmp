@@ -48,4 +48,60 @@ class TeacherClassRepo {
         .toList();
     return result;
   }
+
+  Future<List<ExamModel>> getlistExam({
+    required String courseScheduleId,
+    required String id,
+    required int type,
+  }) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    Response response;
+    response = await dio.post(
+      ApiPathTeacher.detailBuoihoc,
+      data: {
+        'course_schedule_id': courseScheduleId,
+        'id': id,
+        'type': type == 1 ? 'bai_tap' : 'de_thi',
+      },
+    );
+    List<ExamModel> result = [];
+    result = (response.data['data']['value'] as List)
+        .map((data) => ExamModel.fromJson(data))
+        .toList();
+    return result;
+  }
+
+  Future<DetailedExamModel> getDetailedExam({
+    required String id,
+  }) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    Response response;
+    response = await dio.post(
+      ApiPathTeacher.detailsExam,
+      data: {
+        'id': id,
+      },
+    );
+    return DetailedExamModel.fromJson(response.data['data']);
+  }
+
+  Future<DetailedExamModel> getStudentHomework({
+    required String id,
+  }) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    Response response;
+    response = await dio.post(
+      ApiPathTeacher.examStudent,
+      data: {
+        'id': id,
+      },
+    );
+    return DetailedExamModel.fromJson(response.data['data']);
+  }
 }

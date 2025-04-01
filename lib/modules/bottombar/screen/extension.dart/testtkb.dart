@@ -234,7 +234,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
 Widget _buildEventsMarkerNum(List events) {
   return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: [buildCalendarDayMarker(backColor: main1Color)]);
+      children: [buildCalendarDayMarker(backColor: Colors.black)]);
 }
 
 AnimatedContainer buildCalendarDayMarker({
@@ -274,6 +274,14 @@ class _ItemTableCalenderState extends State<ItemTableCalender> {
             .getListDiemDanh(
                 courseScheduleId: widget.model.courseScheduleId,
                 id: widget.model.id);
+        List<ExamModel> listBaiTap = await TeacherClassRepo().getlistExam(
+            courseScheduleId: widget.model.courseScheduleId,
+            id: widget.model.id,
+            type: 1);
+        List<ExamModel> listDeThi = await TeacherClassRepo().getlistExam(
+            courseScheduleId: widget.model.courseScheduleId,
+            id: widget.model.id,
+            type: 2);
         pushWithoutNavBar(
             context,
             MaterialPageRoute(
@@ -281,6 +289,8 @@ class _ItemTableCalenderState extends State<ItemTableCalender> {
                       listDiemDanh: listDiemDanh,
                       title:
                           "${widget.model.name} ${widget.model.dayOfWeek} ${DateFormat('dd/MM/yyyy').format(widget.model.day)}",
+                      listBaiTap: listBaiTap,
+                      listDeThi: listDeThi,
                     )));
       },
       child: Container(

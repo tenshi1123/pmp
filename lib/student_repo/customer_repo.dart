@@ -48,6 +48,45 @@ class CustomerRepo {
     return ProfileModel.fromJson(response.data['data']['value']);
   }
 
+  Future<String> changePassword(
+      String oldPass, String password, String newPass) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    Response response;
+    response = await dio.post(ApiPath.changePassword, data: {
+      'password_old': oldPass,
+      'pass_new': password,
+      're_pass_new': newPass,
+    });
+    return response.data['message'];
+  }
+
+  // change teacher password
+  // Future<String> changePassword(
+  //     String oldPass, String password, String newPass) async {
+  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   final String? token = prefs.getString('token');
+  //   dio.options.headers['Authorization'] = 'Bearer $token';
+  //   Response response;
+  //   Response response2;
+  //   response = await dio.get(
+  //     ApiPath.checkPassword,
+  //     queryParameters: {
+  //       'password': oldPass,
+  //     },
+  //   );
+  //   if (response.data['message'] == "Mật khẩu đúng") {
+  //     response2 = await dio.post(ApiPath.changePassword, data: {
+  //       'password': password,
+  //       're_password': newPass,
+  //     });
+  //     return response2.data['message'];
+  //   } else {
+  //     return response.data['message'];
+  //   }
+  // }
+
   Future<List<NotiModel>> getListNoti() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? token = prefs.getString('token');

@@ -68,25 +68,23 @@ class _LichHenScreenState extends State<LichHenScreen>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: 16.w, top: 32.h),
-                      child: Text(
-                        'Hôm nay',
-                        style: defaultText16B.copyWith(
-                          color: const Color(0xff09204E),
-                        ),
-                      ),
-                    ),
                     SizedBox(
                       height: 16.h,
                     ),
-                    ListView.builder(
-                        shrinkWrap: true,
-                        physics: const ClampingScrollPhysics(),
-                        itemCount: widget.listLichHen.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return _ItemLichHen(model: widget.listLichHen[0]);
-                        }),
+                    widget.listLichHen.isNotEmpty
+                        ? ListView.builder(
+                            shrinkWrap: true,
+                            physics: const ClampingScrollPhysics(),
+                            itemCount: widget.listLichHen.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return _ItemLichHen(model: widget.listLichHen[0]);
+                            })
+                        : Center(
+                            child: Image.asset(
+                              'assets/images/empty2.png',
+                              scale: 2,
+                            ),
+                          ),
 
                     SizedBox(
                       height: 16.h,

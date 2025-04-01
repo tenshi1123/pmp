@@ -55,6 +55,9 @@ class TeacherRepo {
     Response response;
     response = await dio.post(
       ApiPathTeacher.notification,
+      data: {
+        'page': 1,
+      },
     );
     List<NotiModel> reults = [];
     for (var item in response.data['data']['value']) {

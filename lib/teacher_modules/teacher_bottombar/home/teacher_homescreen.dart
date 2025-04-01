@@ -4,9 +4,11 @@ import 'package:intl/intl.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:pmp_english/modules/chat/screen/list_conversation_screen.dart';
 import 'package:pmp_english/modules/notification/notification.dart';
+import 'package:pmp_english/student_models/profile_model.dart';
 import 'package:pmp_english/teacher/teacher_model/home_teacher_model.dart';
 import 'package:pmp_english/teacher/teacher_model/teacher_class_model.dart';
 import 'package:pmp_english/teacher/teacher_repo/teacher_class_repo.dart';
+import 'package:pmp_english/teacher/teacher_repo/teacher_repo.dart';
 import 'package:pmp_english/teacher_modules/teacher_bottombar/home/lichhen_screen.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -179,7 +181,9 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
                                                           .infoModel.lichhen,
                                                     )));
                                       },
-                                      child: const AppointmentCard()),
+                                      child: AppointmentCard(
+                                        count: widget.infoModel.lichhen.length,
+                                      )),
                                 ],
                               ),
                             )
@@ -214,7 +218,7 @@ class _AvatarRow extends StatelessWidget {
         const Spacer(),
         GestureDetector(
           onTap: () {
-            Navigator.push(
+            pushWithoutNavBar(
               context,
               MaterialPageRoute(
                 builder: (context) => const ListConversationScreen(),
@@ -231,12 +235,13 @@ class _AvatarRow extends StatelessWidget {
           width: 16.w,
         ),
         GestureDetector(
-          onTap: () {
-            Navigator.push(
+          onTap: () async {
+            List<NotiModel> listNoti = await TeacherRepo().getListNoti();
+            pushWithoutNavBar(
               context,
               MaterialPageRoute(
-                builder: (context) => const NotificationScreen(
-                  listNoti: [],
+                builder: (context) => NotificationScreen(
+                  listNoti: listNoti,
                 ),
               ),
             );
@@ -266,6 +271,14 @@ class _CommingSchedule extends StatelessWidget {
             .getListDiemDanh(
                 courseScheduleId: lichHocModel.courseScheduleId,
                 id: lichHocModel.id);
+        List<ExamModel> listBaiTap = await TeacherClassRepo().getlistExam(
+            courseScheduleId: lichHocModel.courseScheduleId,
+            id: lichHocModel.id,
+            type: 1);
+        List<ExamModel> listDeThi = await TeacherClassRepo().getlistExam(
+            courseScheduleId: lichHocModel.courseScheduleId,
+            id: lichHocModel.id,
+            type: 2);
         pushWithoutNavBar(
             context,
             MaterialPageRoute(
@@ -273,6 +286,8 @@ class _CommingSchedule extends StatelessWidget {
                       listDiemDanh: listDiemDanh,
                       title:
                           "${lichHocModel.name} ${lichHocModel.dayOfWeek} ${DateFormat('dd/MM/yyyy').format(lichHocModel.day)}",
+                      listBaiTap: listBaiTap,
+                      listDeThi: listDeThi,
                     )));
       },
       child: Container(
@@ -380,8 +395,8 @@ class _CommingSchedule extends StatelessWidget {
 }
 
 class AppointmentCard extends StatelessWidget {
-  const AppointmentCard({super.key});
-
+  const AppointmentCard({super.key, required this.count});
+  final int count; // Số lượng thông báo
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -435,9 +450,9 @@ class AppointmentCard extends StatelessWidget {
                 ),
               ],
             ),
-            child: const Text(
-              "3", // Số lượng thông báo
-              style: TextStyle(
+            child: Text(
+              count.toString(), // Số lượng thông báo
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 14,
                 fontWeight: FontWeight.bold,

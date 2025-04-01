@@ -319,7 +319,7 @@ class _OnbondingState extends State<Onbonding> {
                                 context,
                                 MaterialPageRoute(
                                   builder: ((context) => DateTime.now()
-                                          .isAfter(DateTime(2025, 3, 30, 8, 30))
+                                          .isAfter(DateTime(2025, 4, 2, 6, 30))
                                       ? const WellcomeScreen()
                                       : const LoginScreen()),
                                 ),

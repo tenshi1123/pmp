@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pmp_english/modules/notification/webview_screen.dart';
+import 'package:pmp_english/modules/notification/detail_notification.dart';
 import 'package:pmp_english/student_models/profile_model.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
@@ -65,13 +65,6 @@ class NotificationScreen extends StatelessWidget {
               ],
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(left: 20.w),
-            child: Text(
-              '31.07.2024',
-              style: defaultText12B,
-            ),
-          ),
           Expanded(
             child: ListView.builder(
                 shrinkWrap: true,
@@ -99,7 +92,9 @@ class Noti extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const WebViewExample(),
+            builder: (context) => DetailNotificationScreen(
+              notiModel: noti,
+            ),
           ),
         );
       },

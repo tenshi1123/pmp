@@ -11,7 +11,7 @@ class ApiPath {
 
   //Thông tin và đổi thông tin học viên
   static const String profile = '$hocvienUrl/profile';
-  static const String changePassword = '$hocvienUrl/change_password';
+  static const String changePassword = '$hocvienUrl/profile/change_password';
   static const String changeAvatar = '$hocvienUrl/change_avatar';
   static const String changeInfo = '$hocvienUrl/profile/edit';
 

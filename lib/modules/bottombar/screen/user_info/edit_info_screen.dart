@@ -1,180 +1,129 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pmp_english/utils/constants/color.dart';
+import 'package:pmp_english/teacher/teacher_model/home_teacher_model.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 
-class EditInfoScreen extends StatelessWidget {
-  const EditInfoScreen({super.key});
-
+class InfoUser extends StatelessWidget {
+  const InfoUser({
+    super.key,
+    required this.teacherProfileModel,
+  });
+  final TeacherProfileModel teacherProfileModel;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text(
-          'Thông tin cá nhân',
-          style: defaultText18B,
-        ),
-        toolbarHeight: 60.h,
+        backgroundColor: Colors.white,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new, color: key1Color),
+          icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        backgroundColor: Colors.white,
+        title: const Text('Thông tin tài khoản'),
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.w),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              CircleAvatar(
-                radius: 56.r,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(
-                    56.r,
-                  ),
-                  child: Image.asset('assets/images/placeholder_avatar.png'),
-                ),
-              ),
-              SizedBox(
-                width: 350.w,
-                child: Text(
-                  'Họ và tên',
-                  style: defaultText14B,
-                ),
-              ),
-              const TextField(
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  errorBorder: InputBorder.none,
-                  focusedErrorBorder: InputBorder.none,
-                  disabledBorder: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  hintText: 'Nguyễn Hồng Anh',
-                ),
-              ),
-              SizedBox(
-                width: 350.w,
-                child: Text(
-                  'Số điện thoại',
-                  style: defaultText14B,
-                ),
-              ),
-              const TextField(
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  errorBorder: InputBorder.none,
-                  focusedErrorBorder: InputBorder.none,
-                  disabledBorder: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  hintText: '0913 339 029',
-                ),
-              ),
-              SizedBox(
-                width: 350.w,
-                child: Text(
-                  'Email',
-                  style: defaultText14B,
-                ),
-              ),
-              SizedBox(
-                height: 5.h,
-              ),
-              TextField(
-                style: defaultText14Re,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  errorBorder: InputBorder.none,
-                  focusedErrorBorder: InputBorder.none,
-                  disabledBorder: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  hintText: 'anhhong762@gmail.com',
-                  fillColor: state2,
-                  filled: true,
-                  labelStyle: defaultText14Re,
-                ),
-              ),
-              SizedBox(
-                width: 350.w,
-                child: Text(
-                  'Sinh nhật',
-                  style: defaultText14B,
-                ),
-              ),
-              SizedBox(
-                height: 5.h,
-              ),
-              TextField(
-                style: defaultText14Re,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  errorBorder: InputBorder.none,
-                  focusedErrorBorder: InputBorder.none,
-                  disabledBorder: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  hintText: '27/5/2007',
-                  fillColor: state2,
-                  filled: true,
-                ),
-              ),
-              SizedBox(
-                height: 5.h,
-              ),
-              SizedBox(
-                width: 350.w,
-                child: Text(
-                  'Địa chỉ',
-                  style: defaultText14B,
-                ),
-              ),
-              TextField(
-                style: defaultText14Re,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  errorBorder: InputBorder.none,
-                  focusedErrorBorder: InputBorder.none,
-                  disabledBorder: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  hintText:
-                      'Bắc Xuân An, Phường Xuân An, Tp. Phan thiết, Tỉnh Bình Thuận.',
-                  fillColor: state2,
-                  filled: true,
-                  hintMaxLines: 2,
-                ),
-                maxLines: 5,
-                minLines: 1,
-              ),
-              SizedBox(
-                height: 120.h,
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pop();
-                },
-                child: Container(
-                  height: 45.h,
-                  width: 350.w,
-                  decoration: BoxDecoration(
-                    color: main1Color,
-                    borderRadius: BorderRadius.circular(4.r),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Lưu thay đổi',
-                      style: defaultText20B.copyWith(
-                        color: Colors.white,
+      body: Center(
+        child: Column(
+          children: [
+            CircleAvatar(
+              radius: 32.r,
+              backgroundColor: Colors.grey,
+              backgroundImage: NetworkImage(teacherProfileModel.avatar),
+              //child: const Text('AH'),
+            ),
+            SizedBox(
+              height: 320.h,
+              width: 343.w,
+              child: ListView(
+                padding: const EdgeInsets.all(8),
+                children: <Widget>[
+                  Container(
+                    height: 56.h,
+                    width: 343.w,
+                    decoration: BoxDecoration(
+                      color: const Color(0xffF7F7F7),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(
+                          18.r,
+                        ),
                       ),
                     ),
+                    margin: EdgeInsets.only(
+                      top: 18.h,
+                    ),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 16.w,
+                        ),
+                        Text(
+                          teacherProfileModel.fullName,
+                          style: defaultText16M.copyWith(
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              )
-            ],
-          ),
+                  Container(
+                    height: 56.h,
+                    width: 343.w,
+                    margin: EdgeInsets.only(
+                      top: 18.h,
+                    ),
+                    decoration: BoxDecoration(
+                      color: const Color(0xffF7F7F7),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(
+                          18.r,
+                        ),
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 16.w,
+                        ),
+                        Text(
+                          teacherProfileModel.dob,
+                          style: defaultText16M.copyWith(
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: 56.h,
+                    width: 343.w,
+                    margin: EdgeInsets.only(
+                      top: 18.h,
+                    ),
+                    decoration: BoxDecoration(
+                      color: const Color(0xffF7F7F7),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(
+                          18.r,
+                        ),
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 16.w,
+                        ),
+                        Text(
+                          teacherProfileModel.phone,
+                          style: defaultText16M.copyWith(
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
         ),
       ),
     );

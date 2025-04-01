@@ -8,9 +8,16 @@ class ApiPathTeacher {
   static const String getClass = '$teachersUrl/lop-hoc';
   static const String detailsClass = '$teachersUrl/lop-hoc/detail';
   static const String detailBuoihoc = '$teachersUrl/lop-hoc/detail/buoi_hoc';
+  //api chi tiet bai tap, de thi
+  static const String detailsExam =
+      '$teachersUrl/lop-hoc/detail/buoi_hoc/detail_bai_tap_de_thi';
+  //chi tiet bai tap tu luan hoc vien lam
+  static const String examStudent =
+      '$teachersUrl/lop-hoc/detail/buoi_hoc/view_bai_hoc_vien_lam';
+
   //Thông tin và đổi thông tin học viên
   static const String profile = '$teachersUrl/profile';
-  //Diem danh
+  //api thông báo
   static const String notification = '$teachersUrl/notification';
   //lich-day
   static const String lichDay = '$teachersUrl/lich-day';

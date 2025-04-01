@@ -246,11 +246,17 @@ class ListFbDaily extends StatelessWidget {
       onTap: () async {
         List<DiemDanhHSModel> listDiemDanh = await TeacherClassRepo()
             .getListDiemDanh(courseScheduleId: courseScheduleId, id: model.id);
+        List<ExamModel> listBaiTap = await TeacherClassRepo().getlistExam(
+            courseScheduleId: courseScheduleId, id: model.id, type: 1);
+        List<ExamModel> listDeThi = await TeacherClassRepo().getlistExam(
+            courseScheduleId: courseScheduleId, id: model.id, type: 2);
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => LessonDetail(
                   listDiemDanh: listDiemDanh,
                   title:
                       "${model.name} ${DateFormat('dd/MM/yyyy').format(model.day)}",
+                  listBaiTap: listBaiTap,
+                  listDeThi: listDeThi,
                 )));
       },
       child: Column(

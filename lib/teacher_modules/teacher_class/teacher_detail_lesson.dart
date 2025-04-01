@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pmp_english/teacher/teacher_model/teacher_class_model.dart';
+import 'package:pmp_english/teacher/teacher_repo/teacher_class_repo.dart';
 
 import '../../utils/constants/styles.dart';
 import 'student_list.dart';
 
 class LessonDetail extends StatefulWidget {
   const LessonDetail(
-      {super.key, required this.listDiemDanh, required this.title});
+      {super.key,
+      required this.listDiemDanh,
+      required this.title,
+      required this.listBaiTap,
+      required this.listDeThi});
   final List<DiemDanhHSModel> listDiemDanh;
+  final List<ExamModel> listBaiTap;
+  final List<ExamModel> listDeThi;
   final String title;
   @override
   State<LessonDetail> createState() => _LessonDetailState();
@@ -167,21 +174,12 @@ class _LessonDetailState extends State<LessonDetail> {
                         );
                       })
                   : value == 1
-                      ? ListView.builder(
-                          shrinkWrap: true,
-                          physics: const ClampingScrollPhysics(),
-                          itemCount: 3,
-                          itemBuilder: (BuildContext context, int index) {
-                            return _ExcerciseItem(
-                                'Bài tập tự luận ${index + 1}');
-                          })
-                      : ListView.builder(
-                          shrinkWrap: true,
-                          physics: const ClampingScrollPhysics(),
-                          itemCount: 2,
-                          itemBuilder: (BuildContext context, int index) {
-                            return _ExcerciseItem('Đề thi số ${index + 1}');
-                          }),
+                      ? _ListExam(
+                          listExam: widget.listBaiTap,
+                        )
+                      : _ListExam(
+                          listExam: widget.listDeThi,
+                        ),
             ],
           );
         },
@@ -199,7 +197,7 @@ class _RollCallItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.all(
             Radius.circular(12.r),
@@ -253,21 +251,47 @@ class _RollCallItem extends StatelessWidget {
   }
 }
 
+class _ListExam extends StatelessWidget {
+  const _ListExam({required this.listExam});
+  final List<ExamModel> listExam;
+  @override
+  Widget build(BuildContext context) {
+    return listExam.isEmpty
+        ? Center(
+            child: Image.asset(
+              'assets/images/empty2.png',
+              scale: 2,
+            ),
+          )
+        : ListView.builder(
+            shrinkWrap: true,
+            physics: const ClampingScrollPhysics(),
+            itemCount: listExam.length,
+            itemBuilder: (BuildContext context, int index) {
+              return _ExcerciseItem(listExam[index]);
+            });
+  }
+}
+
 class _ExcerciseItem extends StatelessWidget {
-  const _ExcerciseItem(this.title);
-  final String title;
+  const _ExcerciseItem(this.model);
+  final ExamModel model;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
+        DetailedExamModel detailedExamModel =
+            await TeacherClassRepo().getDetailedExam(id: model.id);
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => const StudentList(),
+            builder: (context) => StudentList(
+              model: detailedExamModel,
+            ),
           ),
         );
       },
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+        margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 7.h),
         padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(
@@ -286,7 +310,7 @@ class _ExcerciseItem extends StatelessWidget {
               width: 8.w,
             ),
             Text(
-              title,
+              model.name,
               style: defaultText16M.copyWith(color: Colors.black),
             ),
             const Spacer(),
