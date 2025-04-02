@@ -50,7 +50,7 @@ class TestScreen extends StatelessWidget {
               height: 16.h,
             ),
             _InfoTest(
-              isComplete: false,
+              isComplete: true,
               model: excerciseModel,
             ),
             SizedBox(
@@ -158,7 +158,7 @@ class _InfoTest extends StatelessWidget {
                     height: 8.h,
                   ),
                   Text(
-                    'Thời lượng: 15 phút',
+                    'Thời lượng: ${model.detail[0].totalQuestions} Câu',
                     style: defaultText12Re,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
@@ -167,7 +167,7 @@ class _InfoTest extends StatelessWidget {
                     height: 2.h,
                   ),
                   Text(
-                    'Ngày giao: 26 tháng , 2024',
+                    'Ngày giao: ${model.detail[0].createAt}',
                     style: defaultText12Re,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
@@ -189,6 +189,12 @@ class _InfoTest extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                     ),
+                  Text(
+                    'Điểm : ${model.detail[0].finalMark}',
+                    style: defaultText12B,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                  ),
                   Container(
                     margin: EdgeInsets.symmetric(vertical: 6.h),
                     height: 1.h,

@@ -4,7 +4,7 @@ class ApiPathTeacher {
   static const String teachersUrl = '${baseUrl}api/teachers';
   //api về đăng nhập, các thông tin của học sinh
   static const String refreshToken = '$teachersUrl/refresh_token/';
-  static const String login = '$teachersUrl/login';
+  static const String login = '${baseUrl}api/teachers/login';
   static const String getClass = '$teachersUrl/lop-hoc';
   static const String detailsClass = '$teachersUrl/lop-hoc/detail';
   static const String detailBuoihoc = '$teachersUrl/lop-hoc/detail/buoi_hoc';
@@ -14,7 +14,9 @@ class ApiPathTeacher {
   //chi tiet bai tap tu luan hoc vien lam
   static const String examStudent =
       '$teachersUrl/lop-hoc/detail/buoi_hoc/view_bai_hoc_vien_lam';
-
+  //cham bai
+  static const String chamBai =
+      '$teachersUrl/lop-hoc/detail/buoi_hoc/cham_bai_hoc_vien_lam';
   //Thông tin và đổi thông tin học viên
   static const String profile = '$teachersUrl/profile';
   //api thông báo

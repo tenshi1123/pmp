@@ -109,19 +109,21 @@ class _TeacherLoginState extends State<TeacherLogin> {
                       emailController.text, passwordController.text);
 
                   if (loged == true) {
-                    TeacherHomeModel infoModel =
+                    TeacherHomeModel? infoModel =
                         await TeacherRepo().getHomeInfo();
                     TeacherProfileModel teacherProfileModel =
                         await TeacherRepo().getCustomerProfile();
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => TeacherBottomBar(
-                          infoModel: infoModel,
-                          teacherProfileModel: teacherProfileModel,
+                    if (infoModel != null) {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TeacherBottomBar(
+                            infoModel: infoModel,
+                            teacherProfileModel: teacherProfileModel,
+                          ),
                         ),
-                      ),
-                    );
+                      );
+                    }
                   } else {
                     showDialog(
                       context: context,
@@ -180,7 +182,7 @@ class _TeacherLoginState extends State<TeacherLogin> {
       controller: controller,
       decoration: InputDecoration(
         filled: true,
-        fillColor: Colors.white,
+        fillColor: const Color(0xffF5F7FA),
         hintText: label,
         prefixIcon: Icon(icon, color: Colors.blue),
         suffixIcon: isPassword

@@ -33,26 +33,30 @@ class _SplshscreenState extends State<Splshscreen> {
       if (checked) {
         if (type != null) {
           if (type == 'student') {
-            StudentHomeModel infoModel = await CustomerRepo().getHomeInfo();
+            StudentHomeModel? infoModel = await CustomerRepo().getHomeInfo();
             ProfileModel profileModel =
                 await CustomerRepo().getCustomerProfile();
-            AppRouter.toPage(context, AppPages.BottomNavBarPage, arguments: {
-              'infoModel': infoModel,
-              'profileModel': profileModel,
-            });
+            if (infoModel != null) {
+              AppRouter.toPage(context, AppPages.BottomNavBarPage, arguments: {
+                'infoModel': infoModel,
+                'profileModel': profileModel,
+              });
+            }
           } else {
-            TeacherHomeModel infoModel = await TeacherRepo().getHomeInfo();
+            TeacherHomeModel? infoModel = await TeacherRepo().getHomeInfo();
             TeacherProfileModel teacherProfileModel =
                 await TeacherRepo().getCustomerProfile();
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => TeacherBottomBar(
-                  infoModel: infoModel,
-                  teacherProfileModel: teacherProfileModel,
+            if (infoModel != null) {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => TeacherBottomBar(
+                    infoModel: infoModel,
+                    teacherProfileModel: teacherProfileModel,
+                  ),
                 ),
-              ),
-            );
+              );
+            }
           }
         } else {
           Navigator.pushReplacement(

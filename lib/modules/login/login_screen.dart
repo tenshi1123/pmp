@@ -230,7 +230,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             .convert(utf8.encode(passController?.text ?? ''))
                             .toString());
                     if (loged == true) {
-                      StudentHomeModel infoModel =
+                      StudentHomeModel? infoModel =
                           await CustomerRepo().getHomeInfo();
                       ProfileModel profileModel =
                           await CustomerRepo().getCustomerProfile();

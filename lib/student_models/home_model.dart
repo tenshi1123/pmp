@@ -1,4 +1,6 @@
 //Danh sách bài tậptập
+import 'package:pmp_english/teacher/teacher_model/teacher_class_model.dart';
+
 class ListExcerciseModel {
   final int dungHan;
   final int quaHan;
@@ -73,18 +75,20 @@ class ExcerciseValueModel {
 class DetailExcerciseModel {
   final DeValueModel valueModel;
   final List<DeDetailModel> detail;
-  DetailExcerciseModel({
-    required this.valueModel,
-    required this.detail,
-  });
+  final DocumentModel? document;
+  DetailExcerciseModel(
+      {required this.valueModel, required this.detail, this.document});
   factory DetailExcerciseModel.fromJson(Map<String, dynamic> json) {
     return DetailExcerciseModel(
       valueModel: DeValueModel.fromJson(json['value']),
-      detail: (json['detail'] != null)
+      detail: (json['value']['type'] == '1')
           ? ((json['detail'] as List)
               .map((e) => DeDetailModel.fromJson(e))
               .toList())
           : [],
+      document: (json['value']['type'] == '2')
+          ? DocumentModel.fromJson(json['detail'])
+          : null,
     );
   }
 }

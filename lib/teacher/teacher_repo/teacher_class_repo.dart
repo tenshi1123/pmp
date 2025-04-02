@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:pmp_english/teacher/teacher_model/teacher_class_model.dart';
@@ -103,5 +104,44 @@ class TeacherClassRepo {
       },
     );
     return DetailedExamModel.fromJson(response.data['data']);
+  }
+
+  Future uploadExcercise(
+      {required String id,
+      required String finalMark,
+      required String note,
+      File? photo}) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+
+    FormData formData;
+    if (photo == null) {
+      formData = FormData.fromMap({
+        'id': id,
+        'final_mark': finalMark,
+        'note_teachers': note,
+        'file': null,
+      });
+    } else {
+      formData = FormData.fromMap({
+        'id': id,
+        'final_mark': finalMark,
+        'note_teachers': note,
+        'file': [
+          await MultipartFile.fromFile(photo.path,
+              filename: photo.path.split('/').last),
+        ]
+      });
+    }
+    // for (var file in photo) {
+    //   formData.files.addAll([
+    //     MapEntry(
+    //         "file[]",
+    //         await MultipartFile.fromFile(file.path,
+    //             filename: file.path.split('/').last)),
+    //   ]);
+    // }
+    await dio.post(ApiPathTeacher.chamBai, data: formData);
   }
 }

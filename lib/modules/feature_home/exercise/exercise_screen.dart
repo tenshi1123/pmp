@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pmp_english/modules/diemdanh/diem_danh_screen.dart';
+import 'package:pmp_english/modules/feature_home/exercise/detail_exam_screen.dart';
 import 'package:pmp_english/modules/feature_home/exercise/exercise_detail_screen.dart';
 import 'package:pmp_english/student_repo/home_repo.dart';
 import 'package:pmp_english/student_models/home_model.dart';
@@ -271,72 +272,30 @@ class _ExcerciseTabBarState extends State<_ExcerciseTabBar>
                   physics: const ClampingScrollPhysics(),
                   itemCount: listTotal.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
-                        onTap: () async {
-                          DetailExcerciseModel model =
-                              await HomeRepo().getDetailExsercise(
-                            id: listTotal[index].id,
-                            customerCourseScheduleId:
-                                listTotal[index].customerCourseScheduleId,
-                          );
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => TestScreen(
-                              excerciseModel: model,
-                            ),
-                          ));
-                        },
-                        child: _ExcerciseItem(
-                          isComplete: true,
-                          model: listTotal[index],
-                        ));
+                    return _ExcerciseItem(
+                      isComplete: true,
+                      model: listTotal[index],
+                    );
                   }),
               ListView.builder(
                   shrinkWrap: true,
                   physics: const ClampingScrollPhysics(),
                   itemCount: listChuaLam.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
-                        onTap: () async {
-                          DetailExcerciseModel model =
-                              await HomeRepo().getDetailExsercise(
-                            id: listChuaLam[index].id,
-                            customerCourseScheduleId:
-                                listChuaLam[index].customerCourseScheduleId,
-                          );
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => TestScreen(
-                              excerciseModel: model,
-                            ),
-                          ));
-                        },
-                        child: _ExcerciseItem(
-                          isComplete: false,
-                          model: listChuaLam[index],
-                        ));
+                    return _ExcerciseItem(
+                      isComplete: false,
+                      model: listChuaLam[index],
+                    );
                   }),
               ListView.builder(
                   shrinkWrap: true,
                   physics: const ClampingScrollPhysics(),
                   itemCount: listHoanThanh.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
-                        onTap: () async {
-                          DetailExcerciseModel model =
-                              await HomeRepo().getDetailExsercise(
-                            id: listHoanThanh[index].id,
-                            customerCourseScheduleId:
-                                listHoanThanh[index].customerCourseScheduleId,
-                          );
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => TestScreen(
-                              excerciseModel: model,
-                            ),
-                          ));
-                        },
-                        child: _ExcerciseItem(
-                          isComplete: false,
-                          model: listHoanThanh[index],
-                        ));
+                    return _ExcerciseItem(
+                      isComplete: false,
+                      model: listHoanThanh[index],
+                    );
                   }),
             ],
           ),
@@ -352,62 +311,102 @@ class _ExcerciseItem extends StatelessWidget {
   final bool isComplete;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 66.h,
-      width: 350.w,
-      margin: EdgeInsets.only(bottom: 10.h, right: 10.w, left: 10.w, top: 10.h),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: const Offset(0, 1), // changes position of shadow
-          ),
-        ],
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Row(
-        children: [
-          SizedBox(
-            width: 10.w,
-          ),
-          Container(
-            height: 45.h,
-            width: 45.w,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: isComplete ? mainGradient2 : mainGradient4,
+    return GestureDetector(
+      onTap: () async {
+        DetailExcerciseModel detailExcerciseModel =
+            await HomeRepo().getDetailExsercise(
+          id: model.id,
+          customerCourseScheduleId: model.customerCourseScheduleId,
+        );
+        if (model.type == '1') {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => TestScreen(
+              excerciseModel: detailExcerciseModel,
             ),
-            child: SvgPicture.asset(
-              'assets/icons/excercise.svg',
-              height: 18.h,
-              width: 18.w,
-              fit: BoxFit.scaleDown,
+          ));
+        } else {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => DetailTuLuanScreen(
+              documentModel: detailExcerciseModel.document,
+              valueModel: detailExcerciseModel.valueModel,
             ),
-          ),
-          SizedBox(
-            width: 15.w,
-          ),
-          SizedBox(
-            height: 70.h,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text(
-                  model.name,
-                  style: defaultText16B,
-                ),
-                Text(
-                  'Hạn nộp: ${model.timeDeadline}',
-                  style: defaultText14Re,
-                ),
-              ],
+          ));
+        }
+      },
+      child: Container(
+        height: 66.h,
+        width: 350.w,
+        margin:
+            EdgeInsets.only(bottom: 10.h, right: 10.w, left: 10.w, top: 10.h),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: const Offset(0, 1), // changes position of shadow
             ),
-          )
-        ],
+          ],
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Row(
+          children: [
+            SizedBox(
+              width: 10.w,
+            ),
+            Container(
+              height: 45.h,
+              width: 45.w,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: isComplete ? mainGradient2 : mainGradient4,
+              ),
+              child: SvgPicture.asset(
+                'assets/icons/excercise.svg',
+                height: 18.h,
+                width: 18.w,
+                fit: BoxFit.scaleDown,
+              ),
+            ),
+            SizedBox(
+              width: 15.w,
+            ),
+            SizedBox(
+              height: 70.h,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    model.name,
+                    style: defaultText16B,
+                  ),
+                  Text(
+                    model.typeName,
+                    style: defaultText14Re,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                  ),
+                  if (model.timeDeadline.contains('0000'))
+                    Text(
+                      'Hạn hoàn thành: Không giới hạn',
+                      style: defaultText14Re,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                    )
+                  else
+                    Text(
+                      'Hạn hoàn thành: ${model.timeDeadline}',
+                      style: defaultText14Re,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                    ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

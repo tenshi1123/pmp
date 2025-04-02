@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pmp_english/teacher/teacher_model/teacher_class_model.dart';
+import 'package:pmp_english/teacher_modules/teacher_class/document/chambaithi.dart';
 import 'package:pmp_english/teacher_modules/teacher_class/document/detail_exam_screen.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 
@@ -11,25 +12,12 @@ class StudentList extends StatefulWidget {
   State<StudentList> createState() => _StudentListState();
 }
 
-class _StudentListState extends State<StudentList>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
-  int activeTabIndex = 0;
+class _StudentListState extends State<StudentList> {
   int _type = 1;
   @override
   void initState() {
     super.initState();
     _type = widget.model.documentModel.isNotEmpty ? 1 : 2;
-    _tabController = TabController(
-      length: 2,
-      vsync: this,
-      initialIndex: 0,
-    );
-    _tabController.addListener(() {
-      setState(() {
-        activeTabIndex = _tabController.index;
-      });
-    });
   }
 
   @override
@@ -54,6 +42,19 @@ class _StudentListState extends State<StudentList>
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Container(
+            width: double.infinity,
+            height: 20.h,
+            color: const Color(0xff00AEEF),
+            child: Container(
+              width: double.infinity,
+              height: 20.h,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
+                color: Colors.white,
+              ),
+            ),
+          ),
           ListView.builder(
               shrinkWrap: true,
               physics: const ClampingScrollPhysics(),
@@ -86,12 +87,26 @@ class _StudentItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) => DetailExamScreen(),
-        //   ),
-        // );
+        if (type == 1) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => DetailExamScreen(
+                documentModel: documentModel,
+              ),
+            ),
+          );
+        } else {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => BaiThiScreen(
+                examModel: examModel,
+                slug: examModel?.slug,
+              ),
+            ),
+          );
+        }
       },
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),

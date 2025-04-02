@@ -118,21 +118,31 @@ class _CourseScreenState extends State<CourseScreen>
                       ListView.builder(
                           shrinkWrap: true,
                           physics: const ClampingScrollPhysics(),
-                          itemCount: listMyCourse.length,
+                          itemCount: listMyCourse
+                              .where((e) => e.ccsStatus == '1')
+                              .toList()
+                              .length,
                           itemBuilder: (BuildContext context, int index) {
                             return CourseItem(
                               index: index,
-                              model: listMyCourse[index],
+                              model: listMyCourse
+                                  .where((e) => e.ccsStatus == '1')
+                                  .toList()[index],
                             );
                           }),
                       ListView.builder(
                           shrinkWrap: true,
                           physics: const ClampingScrollPhysics(),
-                          itemCount: listMyCourse.length,
+                          itemCount: listMyCourse
+                              .where((e) => e.ccsStatus == '2')
+                              .toList()
+                              .length,
                           itemBuilder: (BuildContext context, int index) {
                             return CourseItem(
                               index: index,
-                              model: listMyCourse[index],
+                              model: listMyCourse
+                                  .where((e) => e.ccsStatus == '2')
+                                  .toList()[index],
                             );
                           }),
                     ],
@@ -244,12 +254,12 @@ class CourseItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '%',
+                  '${model.totalAttended / model.totalBuoiHoc * 100}%',
                   style: defaultText14M.copyWith(color: main1Color),
                 ),
                 RichText(
                   text: TextSpan(
-                    text: model.totalAttended,
+                    text: model.totalAttended.toString(),
                     style: defaultText14M,
                     children: <TextSpan>[
                       TextSpan(
@@ -272,7 +282,7 @@ class CourseItem extends StatelessWidget {
             animation: true,
             lineHeight: 20.0,
             animationDuration: 2000,
-            percent: 0.66,
+            percent: model.totalAttended / model.totalBuoiHoc,
             barRadius: const Radius.circular(16),
             linearGradient: mainGradient,
             backgroundColor: state2,

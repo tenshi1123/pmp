@@ -306,8 +306,8 @@ class DocumentModel {
       urlFileCustomer: json['url_file_customer'] ?? '',
       urlFileTeacher: json['url_file_teachers'] ?? '',
       finalMark: json['final_mark'] ?? '',
-      noteCustomers: json['note_customer'] ?? '',
-      noteTeacher: json['note_teachers'] ?? '',
+      noteCustomers: json['note_customer'] ?? 'Không có ghi chú',
+      noteTeacher: json['note_teachers'] ?? 'Không có ghi chú',
       createdAt: json['created_at'] ?? '',
     );
   }

@@ -143,22 +143,12 @@ class _ExcerciseTabBarState extends State<_ExcerciseTabBar>
                   itemCount: widget.baiTapModel.value.length,
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
-                        onTap: () async {
-                          DetailExcerciseModel model =
-                              await HomeRepo().getDetailExsercise(
-                            id: widget.baiTapModel.value[index].id,
-                            customerCourseScheduleId:
-                                widget.baiTapModel.scheduleId,
-                          );
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => TestScreen(
-                              excerciseModel: model,
-                            ),
-                          ));
-                        },
-                        child: ExcerciseItem(
-                            isComplete: true,
-                            model: widget.baiTapModel.value[index]));
+                      child: ExcerciseItem(
+                        isComplete: true,
+                        model: widget.baiTapModel.value[index],
+                        courseID: widget.baiTapModel.scheduleId,
+                      ),
+                    );
                   }),
               ListView.builder(
                   shrinkWrap: true,
@@ -166,23 +156,11 @@ class _ExcerciseTabBarState extends State<_ExcerciseTabBar>
                   itemCount: baitapChuaLam.length,
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
-                        onTap: () async {
-                          DetailExcerciseModel model =
-                              await HomeRepo().getDetailExsercise(
-                            id: baitapChuaLam[index].id,
-                            customerCourseScheduleId:
-                                widget.baiTapModel.scheduleId,
-                          );
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => TestScreen(
-                              excerciseModel: model,
-                            ),
-                          ));
-                        },
                         child: ExcerciseItem(
-                          isComplete: false,
-                          model: baitapChuaLam[index],
-                        ));
+                      isComplete: false,
+                      model: baitapChuaLam[index],
+                      courseID: widget.baiTapModel.scheduleId,
+                    ));
                   }),
               ListView.builder(
                   shrinkWrap: true,
@@ -190,23 +168,11 @@ class _ExcerciseTabBarState extends State<_ExcerciseTabBar>
                   itemCount: baitapDaLam.length,
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
-                        onTap: () async {
-                          DetailExcerciseModel model =
-                              await HomeRepo().getDetailExsercise(
-                            id: baitapDaLam[index].id,
-                            customerCourseScheduleId:
-                                widget.baiTapModel.scheduleId,
-                          );
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => TestScreen(
-                              excerciseModel: model,
-                            ),
-                          ));
-                        },
                         child: ExcerciseItem(
-                          isComplete: true,
-                          model: baitapDaLam[index],
-                        ));
+                      isComplete: true,
+                      model: baitapDaLam[index],
+                      courseID: widget.baiTapModel.scheduleId,
+                    ));
                   }),
             ],
           ),

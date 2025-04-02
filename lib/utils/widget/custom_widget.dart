@@ -3,8 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:pmp_english/modules/chat/screen/chat_screen.dart';
+import 'package:pmp_english/modules/feature_home/exercise/detail_exam_screen.dart';
+import 'package:pmp_english/modules/feature_home/exercise/exercise_detail_screen.dart';
 import 'package:pmp_english/modules/lesson/detail_lesson_screen.dart';
+import 'package:pmp_english/student_models/home_model.dart';
 import 'package:pmp_english/student_models/my_course_model.dart';
+import 'package:pmp_english/student_repo/home_repo.dart';
 import 'package:pmp_english/teacher/teacher_model/home_teacher_model.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
@@ -121,67 +125,93 @@ class ExamDay extends StatelessWidget {
 }
 
 class ExcerciseItem extends StatelessWidget {
-  const ExcerciseItem({super.key, required this.isComplete, this.model});
+  const ExcerciseItem(
+      {super.key, required this.isComplete, this.model, this.courseID});
   final bool isComplete;
   final BaiTapValueModel? model;
+  final String? courseID;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 66.h,
-      width: 350.w,
-      margin: EdgeInsets.only(bottom: 10.h, right: 10.w, left: 10.w, top: 10.h),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: const Offset(0, 1), // changes position of shadow
-          ),
-        ],
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Row(
-        children: [
-          SizedBox(
-            width: 10.w,
-          ),
-          Container(
-            height: 45.h,
-            width: 45.w,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: isComplete ? mainGradient2 : mainGradient4,
+    return GestureDetector(
+      onTap: () async {
+        DetailExcerciseModel detailExcerciseModel =
+            await HomeRepo().getDetailExsercise(
+          id: model?.id ?? '',
+          customerCourseScheduleId: courseID ?? '',
+        );
+        if (model?.type == '1') {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => TestScreen(
+              excerciseModel: detailExcerciseModel,
             ),
-            child: SvgPicture.asset(
-              'assets/icons/excercise.svg',
-              height: 18.h,
-              width: 18.w,
-              fit: BoxFit.scaleDown,
+          ));
+        } else {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => DetailTuLuanScreen(
+              documentModel: detailExcerciseModel.document,
+              valueModel: detailExcerciseModel.valueModel,
             ),
-          ),
-          SizedBox(
-            width: 15.w,
-          ),
-          SizedBox(
-            height: 70.h,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text(
-                  model?.name ?? 'Bai tap',
-                  style: defaultText16B,
-                ),
-                Text(
-                  'Hạn nộp: ${DateFormat("dd-MM-yyyy").format(model?.timeDeadline ?? DateTime.now())}',
-                  style: defaultText14Re,
-                ),
-              ],
+          ));
+        }
+      },
+      child: Container(
+        height: 66.h,
+        width: 350.w,
+        margin:
+            EdgeInsets.only(bottom: 10.h, right: 10.w, left: 10.w, top: 10.h),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: const Offset(0, 1), // changes position of shadow
             ),
-          )
-        ],
+          ],
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Row(
+          children: [
+            SizedBox(
+              width: 10.w,
+            ),
+            Container(
+              height: 45.h,
+              width: 45.w,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: isComplete ? mainGradient2 : mainGradient4,
+              ),
+              child: SvgPicture.asset(
+                'assets/icons/excercise.svg',
+                height: 18.h,
+                width: 18.w,
+                fit: BoxFit.scaleDown,
+              ),
+            ),
+            SizedBox(
+              width: 15.w,
+            ),
+            SizedBox(
+              height: 70.h,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    model?.name ?? 'Bai tap',
+                    style: defaultText16B,
+                  ),
+                  Text(
+                    'Hạn nộp: ${DateFormat("dd-MM-yyyy").format(model?.timeDeadline ?? DateTime.now())}',
+                    style: defaultText14Re,
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

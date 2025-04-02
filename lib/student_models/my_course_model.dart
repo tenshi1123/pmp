@@ -9,8 +9,8 @@ class MyCourseModel {
   final String img;
   final String alias;
   final String totalDathemvaoCuocHop;
-  final String totalBuoiHoc;
-  final String totalAttended;
+  final int totalBuoiHoc;
+  final int totalAttended;
   final String statusName;
   MyCourseModel({
     required this.id,
@@ -35,8 +35,8 @@ class MyCourseModel {
       img: json['img'],
       alias: json['alias'],
       totalDathemvaoCuocHop: json['total_da_them_vao_cuoc_hop'],
-      totalBuoiHoc: json['total_buoi_hoc'],
-      totalAttended: json['total_attended'],
+      totalBuoiHoc: int.tryParse(json['total_buoi_hoc']) ?? 0,
+      totalAttended: int.tryParse(json['total_attended']) ?? 0,
       statusName: json['status_name'],
     );
   }

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:pmp_english/student_models/diem_danh_model.dart';
@@ -38,6 +39,36 @@ class HomeRepo {
         }));
     //return DiemDanhModel.fromJson(response.data['data']);
     return DetailExcerciseModel.fromJson((response.data)['data']);
+  }
+
+  Future uploadExcercise(
+      {required String id,
+      required String courseScheduleId,
+      required String note,
+      File? photo}) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    FormData formData;
+    if (photo == null) {
+      formData = FormData.fromMap({
+        'id': id,
+        'customer_course_schedule_id': courseScheduleId,
+        'note': note,
+      });
+    } else {
+      formData = FormData.fromMap({
+        'id': id,
+        'customer_course_schedule_id': courseScheduleId,
+        'note': note,
+        'file': [
+          await MultipartFile.fromFile(photo.path,
+              filename: photo.path.split('/').last),
+        ]
+      });
+    }
+
+    await dio.post(ApiPath.submitExeTL, data: formData);
   }
 
   //Báo cáo điểm
