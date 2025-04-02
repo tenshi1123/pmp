@@ -536,8 +536,7 @@ Widget _reComment({required CourseModels model}) {
               height: 141.h,
             )),
         Container(
-          width: 52.w,
-          height: 25.h,
+          padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 6.w),
           decoration: BoxDecoration(
             color: sub2Color.withValues(alpha: 0.5),
           ),

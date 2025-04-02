@@ -5,6 +5,7 @@ import 'package:pmp_english/modules/infoAccount/my_certificate_screen.dart';
 import 'package:pmp_english/modules/infoAccount/payment_history.dart';
 import 'package:pmp_english/modules/infoAccount/redeem_reward_screen.dart';
 import 'package:pmp_english/student_models/profile_model.dart';
+import 'package:pmp_english/student_repo/customer_repo.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -308,11 +309,15 @@ class _AccountScreenState extends State<AccountScreen> {
             height: 10.h,
           ),
           GestureDetector(
-            onTap: () {
+            onTap: () async {
+              List<PaymentModel> listPayments =
+                  await CustomerRepo().getPayment();
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const PaymentHistoryScreen(),
+                  builder: (context) => PaymentHistoryScreen(
+                    listPayments: listPayments,
+                  ),
                 ),
               );
             },

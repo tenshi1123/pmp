@@ -3,7 +3,6 @@ class ApiPath {
   static const String baseUrl = 'https://lms.pmpenglish.edu.vn/';
 
   static const String hocvienUrl = '${baseUrl}api/customer';
-  static const String teachersUrl = '${baseUrl}api/teachers';
 
   //api về đăng nhập, các thông tin của học sinh
   static const String refreshToken = '$hocvienUrl/refresh_token/';
@@ -56,6 +55,9 @@ class ApiPath {
   static const String baiTapKhoahoc = '$myCourse/detail/bai_tap';
   static const String detailBaitap = '$myCourse/detail_exercise';
   static const String submitExeTL = '$myCourse/submit_exercise_tu_luan';
+
+  //payment
+  static const String payment = '$hocvienUrl/payment';
 
   //api do oneSignal cung cấp
   // static const String oneSignal =

@@ -127,8 +127,8 @@ class _StudentItem extends StatelessWidget {
 }
 
 Map<String, String> skills = {
-  '1': "Nghe",
-  '2': "Nói",
-  '3': "Đọc",
-  '4': "Viết",
+  '1': "Listening ",
+  '2': "Reading",
+  '3': "Writing",
+  '4': "Speaking",
 };

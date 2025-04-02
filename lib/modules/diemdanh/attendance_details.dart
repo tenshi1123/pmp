@@ -162,7 +162,8 @@ class AttendanceDetails extends StatelessWidget {
                             ),
                             Container(
                               //height: 17.h,
-                              width: 24.w,
+                              //width: 24.w,
+                              padding: const EdgeInsets.all(6),
                               decoration: BoxDecoration(
                                 color: sub2Color,
                               ),

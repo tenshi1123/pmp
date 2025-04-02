@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
+import 'package:pmp_english/modules/bottombar/screen/details_new_screen.dart';
 import 'package:pmp_english/student_repo/home_repo.dart';
 import 'package:pmp_english/student_models/profile_model.dart';
 import 'package:pmp_english/utils/constants/color.dart';
@@ -126,93 +128,104 @@ class _NewsScreenState extends State<NewsScreen> {
 
 class CourseItem extends StatelessWidget {
   const CourseItem({super.key, required this.model});
-
   final PostModel model;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 20.w),
-      height: 93.h,
-      width: 350.w,
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: const BorderRadius.all(
-            Radius.circular(16),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.2),
-              spreadRadius: 5,
-              blurRadius: 7,
-              offset: const Offset(0, 2), // changes position of shadow
+    return InkWell(
+      onTap: () async {
+        DetailPostModel detailPostModel =
+            await HomeRepo().getDetailPost(id: model.id);
+        pushWithoutNavBar(
+            context,
+            MaterialPageRoute(
+                builder: (context) => DetailNewsScreen(
+                      model: detailPostModel,
+                    )));
+      },
+      child: Container(
+        margin: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 20.w),
+        height: 93.h,
+        width: 350.w,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: const BorderRadius.all(
+              Radius.circular(16),
             ),
-          ]),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // ClipRRect(
-          //   borderRadius: const BorderRadius.only(
-          //     topLeft: Radius.circular(16),
-          //     topRight: Radius.circular(16),
-          //   ),
-          //   child: Image.asset('assets/images/course_image.png'),
-          // ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.2),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: const Offset(0, 2), // changes position of shadow
+              ),
+            ]),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // ClipRRect(
+            //   borderRadius: const BorderRadius.only(
+            //     topLeft: Radius.circular(16),
+            //     topRight: Radius.circular(16),
+            //   ),
+            //   child: Image.asset('assets/images/course_image.png'),
+            // ),
 
-          Container(
-            height: 93.h,
-            width: 103.w,
-            decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(16),
-                  bottomLeft: Radius.circular(16),
-                ),
-                color: main2Color),
-            child: Center(
-                child: Image.network(
-              model.img,
-              fit: BoxFit.fill,
-            )),
-          ),
-          SizedBox(
-            width: 10.w,
-          ),
-          SizedBox(
-            height: 93.h,
-            width: 227.w,
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 8.h,
-                ),
-                SizedBox(
-                  height: 60.h,
-                  child: Text(
-                    model.name,
-                    style: defaultText14B,
-                    overflow: TextOverflow.fade,
-                    maxLines: 2,
+            Container(
+              height: 93.h,
+              width: 103.w,
+              decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    bottomLeft: Radius.circular(16),
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      model.categories,
-                      style: defaultText12Re,
-                    ),
-                    Text(
-                      DateFormat("dd.MM.yyyy").format(model.postDate),
-                      style: defaultText12Re,
-                    )
-                  ],
-                ),
-              ],
+                  color: main2Color),
+              child: Center(
+                  child: Image.network(
+                model.img,
+                fit: BoxFit.fill,
+              )),
             ),
-          ),
-          SizedBox(
-            width: 10.w,
-          ),
-        ],
+            SizedBox(
+              width: 10.w,
+            ),
+            SizedBox(
+              height: 93.h,
+              width: 227.w,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 8.h,
+                  ),
+                  SizedBox(
+                    height: 60.h,
+                    child: Text(
+                      model.name,
+                      style: defaultText14B,
+                      overflow: TextOverflow.fade,
+                      maxLines: 2,
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        model.categories,
+                        style: defaultText12Re,
+                      ),
+                      Text(
+                        DateFormat("dd.MM.yyyy").format(model.postDate),
+                        style: defaultText12Re,
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              width: 10.w,
+            ),
+          ],
+        ),
       ),
     );
   }

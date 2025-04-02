@@ -235,8 +235,8 @@ class AcademicReportScreen extends StatelessWidget {
                       style: defaultText16B,
                     ),
                     Container(
-                      width: 156.w,
-                      height: 25.h,
+                      padding:
+                          EdgeInsets.symmetric(vertical: 6.h, horizontal: 8.w),
                       decoration: BoxDecoration(
                         color: sub2Color,
                         borderRadius: BorderRadius.circular(4.r),

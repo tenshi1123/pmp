@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
+import 'package:pmp_english/student_models/profile_model.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 
 class PaymentHistoryScreen extends StatefulWidget {
-  const PaymentHistoryScreen({super.key});
-
+  const PaymentHistoryScreen({super.key, required this.listPayments});
+  final List<PaymentModel> listPayments;
   @override
   State<PaymentHistoryScreen> createState() => _PaymentHistoryScreenState();
 }
@@ -40,7 +42,7 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
             ListView.builder(
                 shrinkWrap: true,
                 physics: const ClampingScrollPhysics(),
-                itemCount: 5,
+                itemCount: widget.listPayments.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Container(
                     margin:
@@ -66,83 +68,111 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
                         SizedBox(
                           height: 150.h,
                           width: 350.w,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          child: Column(
                             children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    'Khóa học',
-                                    style: defaultText12Re,
-                                  ),
-                                  Text(
-                                    'TOEIC 4 Kỹ năng',
-                                    style: defaultText14B,
+                                  SizedBox(
+                                    width: 150.w,
+                                    child: Text(
+                                      'Khóa học',
+                                      style: defaultText12Re,
+                                    ),
                                   ),
                                   SizedBox(
-                                    height: 10.h,
-                                  ),
-                                  Text(
-                                    'Chi phí',
-                                    style: defaultText12Re,
-                                  ),
-                                  SizedBox(
-                                    height: 5.h,
-                                  ),
-                                  Text(
-                                    'Đã thanh toán',
-                                    style: defaultText12Re,
-                                  ),
-                                  const Spacer(),
-                                  Text(
-                                    'Còn thiếu',
-                                    style: defaultText12Re,
+                                    width: 150.w,
+                                    child: Text(
+                                      'Tình trạng thanh toán',
+                                      style: defaultText12M,
+                                    ),
                                   ),
                                 ],
                               ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    'Tình trạng thanh toán',
-                                    style: defaultText12M,
-                                  ),
-                                  Text(
-                                    '100%',
-                                    style: defaultText14B.copyWith(
-                                        color: main1Color),
+                                  SizedBox(
+                                    width: 150.w,
+                                    child: Text(
+                                      widget.listPayments[index].courseName,
+                                      style: defaultText14B,
+                                    ),
                                   ),
                                   SizedBox(
-                                    height: 10.h,
+                                    width: 150.w,
+                                    child: Text(
+                                      '${widget.listPayments[index].tinhTrang}%',
+                                      style: defaultText14B.copyWith(
+                                          color: main1Color),
+                                    ),
                                   ),
-                                  Text(
-                                    '37.000.000 VND',
-                                    style: defaultText14B,
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SizedBox(
+                                    width: 150.w,
+                                    child: Text(
+                                      'Chi phí',
+                                      style: defaultText12Re,
+                                    ),
                                   ),
                                   SizedBox(
-                                    height: 5.h,
+                                    width: 150.w,
+                                    child: Text(
+                                      NumberFormat("#,###", "vi_VN").format(
+                                          int.tryParse(widget
+                                              .listPayments[index].totalPrice)),
+                                      style: defaultText14B,
+                                    ),
                                   ),
-                                  Text(
-                                    '- 7.000.000 VND',
-                                    style: defaultText14B.copyWith(
-                                        color: main1Color),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SizedBox(
+                                    width: 150.w,
+                                    child: Text(
+                                      'Đã thanh toán',
+                                      style: defaultText12Re,
+                                    ),
                                   ),
-                                  Text(
-                                    '- 7.000.000 VND',
-                                    style: defaultText14B.copyWith(
-                                        color: main1Color),
+                                  SizedBox(
+                                    width: 150.w,
+                                    child: Text(
+                                      NumberFormat("#,###", "vi_VN").format(
+                                          int.tryParse(widget
+                                              .listPayments[index].totalPaid)),
+                                      style: defaultText14B.copyWith(
+                                          color: main1Color),
+                                    ),
                                   ),
-                                  Text(
-                                    '- 7.000.000 VND',
-                                    style: defaultText14B.copyWith(
-                                        color: main1Color),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SizedBox(
+                                    width: 150.w,
+                                    child: Text(
+                                      'Còn thiếu',
+                                      style: defaultText12Re,
+                                    ),
                                   ),
-                                  const Spacer(),
-                                  Text(
-                                    '0 VND',
-                                    style: defaultText14B.copyWith(
-                                        color: sub1Color),
+                                  SizedBox(
+                                    width: 150.w,
+                                    child: Text(
+                                      '${widget.listPayments[index].conthieu}%',
+                                      style: defaultText12M,
+                                    ),
                                   ),
                                 ],
                               ),

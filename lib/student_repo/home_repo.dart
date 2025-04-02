@@ -110,4 +110,13 @@ class HomeRepo {
     }
     return list;
   }
+
+  Future<DetailPostModel> getDetailPost({required String id}) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    Response response;
+    response = await dio.post(ApiPath.postDetail, data: jsonEncode({"id": id}));
+    return DetailPostModel.fromJson((response.data)['data']);
+  }
 }

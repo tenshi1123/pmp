@@ -75,6 +75,20 @@ class CustomerRepo {
     return response.data['message'];
   }
 
+  Future<List<PaymentModel>> getPayment() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    Response response;
+    response = await dio.post(
+      ApiPath.payment,
+    );
+    List<PaymentModel> list = [];
+    for (var item in response.data['data']['value']) {
+      list.add(PaymentModel.fromJson(item));
+    }
+    return list;
+  }
   // change teacher password
   // Future<String> changePassword(
   //     String oldPass, String password, String newPass) async {

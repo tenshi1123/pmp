@@ -65,6 +65,39 @@ class PostModel {
   }
 }
 
+class DetailPostModel {
+  final String id;
+  final String postTitle;
+  final String postName;
+  final String guid;
+  final String postContent;
+  final DateTime postDate;
+  final String thumbnail;
+  final String categories;
+
+  DetailPostModel(
+      {required this.id,
+      required this.postTitle,
+      required this.postName,
+      required this.guid,
+      required this.postContent,
+      required this.postDate,
+      required this.thumbnail,
+      required this.categories});
+  factory DetailPostModel.fromJson(Map<String, dynamic> json) {
+    return DetailPostModel(
+      id: json['ID'] ?? '',
+      postTitle: json['post_title'] ?? '',
+      postName: json['post_name'] ?? '',
+      guid: json['guid'] ?? '',
+      postContent: json['post_content'] ?? '',
+      postDate: DateTime.parse(json['post_date'] ?? ''),
+      thumbnail: json['thumbnail'] ?? '',
+      categories: json['categories'] ?? '',
+    );
+  }
+}
+
 class NotiModel {
   final String id;
   final String title;
@@ -89,6 +122,33 @@ class NotiModel {
       link: json['link'] ?? '',
       customerId: json['customer_id'] ?? '',
       createdAt: json['created_at'] ?? '',
+    );
+  }
+}
+
+class PaymentModel {
+  final String courseName;
+  final String productName;
+  final String totalPrice;
+  final String totalPaid;
+  final int tinhTrang;
+  final int conthieu;
+  PaymentModel({
+    required this.courseName,
+    required this.productName,
+    required this.totalPrice,
+    required this.totalPaid,
+    required this.tinhTrang,
+    required this.conthieu,
+  });
+  factory PaymentModel.fromJson(Map<String, dynamic> json) {
+    return PaymentModel(
+      courseName: json['course_name'] ?? '',
+      productName: json['product_name'] ?? '',
+      totalPrice: json['total_amount'] ?? '',
+      totalPaid: json['total_paid_amount'] ?? '',
+      tinhTrang: json['tinh_trang_thanh_toan'] ?? '',
+      conthieu: json['con_thieu'] ?? '',
     );
   }
 }
