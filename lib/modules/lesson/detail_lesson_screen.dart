@@ -1,13 +1,17 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
+import 'package:pmp_english/student_models/home_model.dart';
+import 'package:pmp_english/student_models/my_course_model.dart';
+import 'package:pmp_english/student_repo/mycourse_repo.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:pmp_english/utils/widget/custom_widget.dart';
 
 class DetailLessonScreen extends StatelessWidget {
-  const DetailLessonScreen({super.key});
-
+  const DetailLessonScreen({super.key, required this.videoLessonModel});
+  final VideoLessonModel videoLessonModel;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +76,7 @@ class DetailLessonScreen extends StatelessWidget {
                       height: 10.h,
                     ),
                     Text(
-                      'Buổi 25: Đường thẳng Ơ Le',
+                      "${videoLessonModel.name} ${videoLessonModel.teachingContent}",
                       style: defaultText18B,
                     ),
                     Divider(
@@ -86,22 +90,10 @@ class DetailLessonScreen extends StatelessWidget {
                       style: defaultText14B,
                     ),
                     SizedBox(
-                      height: 6.h,
-                    ),
-                    SizedBox(
-                      width: 320.w,
-                      child: Text(
-                        'Bất đẳng thức Cosi là một trong những kiến thức toán học phổ biến, được sử dụng để giải nhiều dạng toán về phương trình và bất phương trình khác nhau cũng như tìm giá trị lớn nhất và giá trị nhỏ nhất của biểu thức. Trong bài viết này,',
-                        style: defaultText14Re,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 3,
-                      ),
-                    ),
-                    SizedBox(
                       height: 10.h,
                     ),
                     Container(
-                      height: 120.h,
+                      //height: 120.h,
                       width: 326.w,
                       padding: EdgeInsets.symmetric(
                         horizontal: 10.w,
@@ -124,9 +116,12 @@ class DetailLessonScreen extends StatelessWidget {
                                   style: defaultText14Re,
                                 ),
                               ),
-                              Text(
-                                'P101',
-                                style: defaultText14B,
+                              SizedBox(
+                                width: 180.w,
+                                child: Text(
+                                  videoLessonModel.phongHoc,
+                                  style: defaultText14B,
+                                ),
                               ),
                             ],
                           ),
@@ -144,7 +139,7 @@ class DetailLessonScreen extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                'Giáo viên 1',
+                                videoLessonModel.teacherFullName,
                                 style: defaultText14B,
                               ),
                             ],
@@ -163,7 +158,7 @@ class DetailLessonScreen extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                '08:00 - 11:00',
+                                '${DateFormat("hh:mm a").format(videoLessonModel.timeStart)} - ${DateFormat("hh:mm a").format(videoLessonModel.timeEnd)}',
                                 style: defaultText14B,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
@@ -182,7 +177,9 @@ class DetailLessonScreen extends StatelessWidget {
               SizedBox(
                 height: 500.h,
                 width: 390.w,
-                child: const DetailLessonTabbar('Flights'),
+                child: DetailLessonTabbar(
+                  videoLessonModel: videoLessonModel,
+                ),
               ),
             ],
           ),
@@ -193,9 +190,8 @@ class DetailLessonScreen extends StatelessWidget {
 }
 
 class DetailLessonTabbar extends StatefulWidget {
-  const DetailLessonTabbar(this.outerTab, {super.key});
-
-  final String outerTab;
+  const DetailLessonTabbar({super.key, required this.videoLessonModel});
+  final VideoLessonModel videoLessonModel;
 
   @override
   State<DetailLessonTabbar> createState() => _DetailLessonTabbarState();
@@ -204,11 +200,24 @@ class DetailLessonTabbar extends StatefulWidget {
 class _DetailLessonTabbarState extends State<DetailLessonTabbar>
     with TickerProviderStateMixin {
   late final TabController _tabController;
-
+  late List<DeValueModel> listdoc = [];
+  late EvaluationModel? evaModel;
   @override
   void initState() {
     super.initState();
+    _fetchData();
+    // Khởi tạo TabController với số lượng tab
+    // và vsync là this (đối tượng hiện tại của State)
     _tabController = TabController(length: 4, vsync: this);
+  }
+
+  Future<void> _fetchData() async {
+    listdoc = await MycourseRepo().getDocument(id: widget.videoLessonModel.id);
+    evaModel =
+        await MycourseRepo().getEvaluation(id: widget.videoLessonModel.id);
+    setState(() {
+      // Cập nhật trạng thái để hiển thị dữ liệu mới
+    });
   }
 
   @override
@@ -226,7 +235,7 @@ class _DetailLessonTabbarState extends State<DetailLessonTabbar>
           tabAlignment: TabAlignment.start,
           padding: EdgeInsets.zero,
           indicatorPadding: EdgeInsets.zero,
-          labelPadding: EdgeInsets.symmetric(horizontal: 10.w),
+          labelPadding: const EdgeInsets.symmetric(horizontal: 0),
           isScrollable: true,
           indicatorColor: keyBlack,
           indicatorSize: TabBarIndicatorSize.label,
@@ -264,28 +273,21 @@ class _DetailLessonTabbarState extends State<DetailLessonTabbar>
           child: TabBarView(
             controller: _tabController,
             children: <Widget>[
-              const _VideoWidget(),
-              ListView.builder(
-                  shrinkWrap: true,
-                  physics: const ClampingScrollPhysics(),
-                  itemCount: 5,
-                  itemBuilder: (BuildContext context, int index) {
-                    return const ExcerciseItem(
-                      isComplete: true,
-                    );
-                  }),
-              ListView.builder(
-                  shrinkWrap: true,
-                  physics: const ClampingScrollPhysics(),
-                  itemCount: 1,
-                  itemBuilder: (BuildContext context, int index) {
-                    return const DocumentItem();
-                  }),
+              _VideoWidget(
+                videoLessonModel: widget.videoLessonModel,
+              ),
+              ExerciseItem(
+                id: widget.videoLessonModel.id,
+                courseID: widget.videoLessonModel.customerCourseScheduleId,
+              ),
+              _DocumentItem(
+                listdoc: listdoc,
+              ),
               Column(children: [
                 SizedBox(
                   height: 10.h,
                 ),
-                const _FeedbackItem(),
+                _FeedbackItem(evaModel),
               ]),
             ],
           ),
@@ -297,8 +299,8 @@ class _DetailLessonTabbarState extends State<DetailLessonTabbar>
 
 //hai người đàn bà và một con vịt thành cái chợ
 class _VideoWidget extends StatelessWidget {
-  const _VideoWidget();
-
+  const _VideoWidget({required this.videoLessonModel});
+  final VideoLessonModel videoLessonModel;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -316,7 +318,7 @@ class _VideoWidget extends StatelessWidget {
               semanticLabel: 'Text to announce in accessibility modes',
             ),
             Text(
-              'Video sẽ mở khóa sau: 07h30p. ',
+              videoLessonModel.noteVideo,
               style: defaultText14M.copyWith(
                 color: main1Color,
               ),
@@ -329,13 +331,13 @@ class _VideoWidget extends StatelessWidget {
 }
 
 class _FeedbackItem extends StatelessWidget {
-  const _FeedbackItem();
-
+  const _FeedbackItem(this.evaModel);
+  final EvaluationModel? evaModel;
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 350.w,
-      height: 166.h,
+      //height: 166.h,
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -356,10 +358,15 @@ class _FeedbackItem extends StatelessWidget {
             width: 310.w,
             child: Row(
               children: [
-                CircleAvatar(
-                  backgroundColor: const Color(0xffDBC6C6),
-                  radius: 21.r,
-                  child: const Text('NP'),
+                Image.network(
+                  evaModel?.avatar ?? '',
+                  width: 40.w,
+                  height: 40.h,
+                  fit: BoxFit.fill,
+                  errorBuilder: (BuildContext context, Object exception,
+                      StackTrace? stackTrace) {
+                    return const Text('N/A');
+                  },
                 ),
                 SizedBox(
                   width: 10.w,
@@ -369,7 +376,7 @@ class _FeedbackItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      'Nguyễn Phú',
+                      evaModel?.fullName ?? 'Nguyễn Văn A',
                       style: defaultText14B,
                     ),
                     Text(
@@ -404,12 +411,87 @@ class _FeedbackItem extends StatelessWidget {
             'Nhận xét:',
             style: defaultText12B,
           ),
-          Text(
-            'Đây là nhận xét của giáo viên',
-            style: defaultText14Re,
-          )
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: evaModel!.value
+                .map(
+                  (e) => Text(
+                    '- $e\n',
+                    style: defaultText12B,
+                  ),
+                )
+                .toList(),
+          ),
         ],
       ),
     );
+  }
+}
+
+class ExerciseItem extends StatefulWidget {
+  const ExerciseItem({
+    super.key,
+    required this.id,
+    required this.courseID,
+  });
+  final String id;
+  final String courseID;
+  @override
+  State<ExerciseItem> createState() => _ExerciseItemState();
+}
+
+class _ExerciseItemState extends State<ExerciseItem> {
+  late List<BaiTapValueModel> baiTapValueModel = [];
+
+  @override
+  void initState() {
+    _fetchData();
+    super.initState();
+  }
+
+  Future<void> _fetchData() async {
+    baiTapValueModel = await MycourseRepo().getExerciseLesson(id: widget.id);
+    setState(() {
+      // Cập nhật trạng thái để hiển thị dữ liệu mới
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return baiTapValueModel.isEmpty
+        ? Center(
+            child: Image.asset(
+              'assets/images/empty2.png',
+              scale: 2,
+            ),
+          )
+        : ListView.builder(
+            shrinkWrap: true,
+            physics: const ClampingScrollPhysics(),
+            itemCount: baiTapValueModel.length,
+            itemBuilder: (BuildContext context, int index) {
+              return ExcerciseItem(
+                isComplete: true,
+                model: baiTapValueModel[index],
+                courseID: widget.courseID,
+              );
+            });
+  }
+}
+
+class _DocumentItem extends StatelessWidget {
+  const _DocumentItem({required this.listdoc});
+  final List<DeValueModel> listdoc;
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+        shrinkWrap: true,
+        physics: const ClampingScrollPhysics(),
+        itemCount: listdoc.length,
+        itemBuilder: (BuildContext context, int index) {
+          return DocumentItem(
+            model: listdoc[index],
+          );
+        });
   }
 }

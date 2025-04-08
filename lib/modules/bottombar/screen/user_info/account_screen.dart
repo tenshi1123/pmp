@@ -219,8 +219,11 @@ class _AccountScreenState extends State<AccountScreen> {
             height: 10.h,
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              SizedBox(
+                width: 20.w,
+              ),
               GestureDetector(
                 onTap: () {
                   Navigator.push(
@@ -262,47 +265,48 @@ class _AccountScreenState extends State<AccountScreen> {
                   ],
                 ),
               ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const MyCertificateScreen(),
-                    ),
-                  );
-                },
-                child: Stack(
-                  children: [
-                    Image.asset(
-                      'assets/images/bg_chungchi.png',
-                      height: 68.h,
-                      width: 168.w,
-                      fit: BoxFit.fill,
-                    ),
-                    Positioned(
-                      top: 10.h,
-                      right: 20.w,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            'Xem chi tiết',
-                            style: defaultText12Re.copyWith(
-                              color: Colors.white,
-                            ),
-                          ),
-                          Text(
-                            'Chứng chỉ',
-                            style: defaultText16B.copyWith(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              const Spacer(),
+              // GestureDetector(
+              //   onTap: () {
+              //     Navigator.push(
+              //       context,
+              //       MaterialPageRoute(
+              //         builder: (context) => const MyCertificateScreen(),
+              //       ),
+              //     );
+              //   },
+              //   child: Stack(
+              //     children: [
+              //       Image.asset(
+              //         'assets/images/bg_chungchi.png',
+              //         height: 68.h,
+              //         width: 168.w,
+              //         fit: BoxFit.fill,
+              //       ),
+              //       Positioned(
+              //         top: 10.h,
+              //         right: 20.w,
+              //         child: Column(
+              //           crossAxisAlignment: CrossAxisAlignment.end,
+              //           children: [
+              //             Text(
+              //               'Xem chi tiết',
+              //               style: defaultText12Re.copyWith(
+              //                 color: Colors.white,
+              //               ),
+              //             ),
+              //             Text(
+              //               'Chứng chỉ',
+              //               style: defaultText16B.copyWith(
+              //                 color: Colors.white,
+              //               ),
+              //             ),
+              //           ],
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
             ],
           ),
           SizedBox(

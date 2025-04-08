@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:pmp_english/student_models/home_model.dart';
 import 'package:pmp_english/student_models/my_course_model.dart';
 import 'package:pmp_english/utils/constants/api_path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -60,5 +61,69 @@ class MycourseRepo {
       },
     );
     return MycourseBaiTapModel.fromJson(response.data);
+  }
+
+  Future<VideoLessonModel> getVideoLesson({
+    required String id,
+  }) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    Response response;
+    response = await dio.post(
+      ApiPath.detailBuoihoc,
+      data: {'id': id, 'type': "video"},
+    );
+    return VideoLessonModel.fromJson(response.data['data']['value']);
+  }
+
+  Future<List<BaiTapValueModel>> getExerciseLesson({
+    required String id,
+  }) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    Response response;
+    response = await dio.post(
+      ApiPath.detailBuoihoc,
+      data: {'id': id, 'type': "exercise"},
+    );
+    List<BaiTapValueModel> list = [];
+    for (var item in response.data['data']['exercise']) {
+      list.add(BaiTapValueModel.fromJson(item));
+    }
+    return list;
+  }
+
+  Future<List<DeValueModel>> getDocument({
+    required String id,
+  }) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    Response response;
+    response = await dio.post(
+      ApiPath.detailBuoihoc,
+      data: {'id': id, 'type': "document"},
+    );
+    List<DeValueModel> list = [];
+    for (var item in response.data['data']['document']) {
+      list.add(DeValueModel.fromJson(item));
+    }
+    return list;
+  }
+
+  Future<EvaluationModel> getEvaluation({
+    required String id,
+  }) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    Response response;
+    response = await dio.post(
+      ApiPath.detailBuoihoc,
+      data: {'id': id, 'type': "evaluation"},
+    );
+    return EvaluationModel.fromJson(response.data['data']['evaluation']);
   }
 }

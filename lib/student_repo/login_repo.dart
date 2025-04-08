@@ -9,7 +9,6 @@ import 'package:sp_util/sp_util.dart';
 
 class LoginRepo {
   Dio dio = Dio();
-  static String? get idUser => SpUtil.getString('id_user', defValue: null);
   Future<bool> login(String code, String password) async {
     dio.options.headers['Token'] = 'PMP123456789';
     Response response;
@@ -28,6 +27,7 @@ class LoginRepo {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('token', response.data["refresh_token"]);
     await prefs.setString(ConstString.type, 'student');
+    await prefs.setString('id_user', response.data["customer_id"]);
     return response.data["refresh_token"] != null;
   }
 
@@ -63,6 +63,7 @@ class LoginRepo {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('token', response.data["refresh_token"]);
     await prefs.setString(ConstString.type, 'teacher');
+    await prefs.setString('id_user', response.data["teachers_id"]);
     return response.data["refresh_token"] != null;
   }
 }

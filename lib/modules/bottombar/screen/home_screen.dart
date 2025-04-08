@@ -10,6 +10,9 @@ import 'package:pmp_english/modules/feature_home/evaluate/evaluate_screen.dart';
 import 'package:pmp_english/modules/feature_home/exam_schedule_screen.dart';
 import 'package:pmp_english/modules/lesson/detail_lesson_screen.dart';
 import 'package:pmp_english/modules/notification/notification.dart';
+import 'package:pmp_english/student_models/chat_models.dart';
+import 'package:pmp_english/student_models/my_course_model.dart';
+import 'package:pmp_english/student_repo/chat_repo.dart';
 import 'package:pmp_english/student_repo/customer_repo.dart';
 import 'package:pmp_english/student_repo/diemdanh_repo.dart';
 import 'package:pmp_english/student_repo/extension_repo.dart';
@@ -21,6 +24,7 @@ import 'package:pmp_english/student_models/home_model.dart';
 import 'package:pmp_english/student_models/lichthi_models.dart';
 import 'package:pmp_english/student_models/profile_model.dart';
 import 'package:pmp_english/student_models/review_models.dart';
+import 'package:pmp_english/student_repo/mycourse_repo.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 
@@ -90,12 +94,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       const Spacer(),
                       GestureDetector(
-                        onTap: () {
+                        onTap: () async {
+                          List<ChatModel> listConversation =
+                              await ChatRepo().getListConversation();
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  const ListConversationScreen(),
+                              builder: (context) => ListConversationScreen(
+                                listConversation: listConversation,
+                              ),
                             ),
                           );
                         },
@@ -607,10 +614,14 @@ class _Upcoming extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
+        VideoLessonModel videoLesson =
+            await MycourseRepo().getVideoLesson(id: model.id);
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => const DetailLessonScreen(),
+            builder: (context) => DetailLessonScreen(
+              videoLessonModel: videoLesson,
+            ),
           ),
         );
       },

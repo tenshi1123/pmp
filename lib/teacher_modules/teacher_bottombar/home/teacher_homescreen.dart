@@ -4,7 +4,9 @@ import 'package:intl/intl.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:pmp_english/modules/chat/screen/list_conversation_screen.dart';
 import 'package:pmp_english/modules/notification/notification.dart';
+import 'package:pmp_english/student_models/chat_models.dart';
 import 'package:pmp_english/student_models/profile_model.dart';
+import 'package:pmp_english/student_repo/chat_repo.dart';
 import 'package:pmp_english/teacher/teacher_model/home_teacher_model.dart';
 import 'package:pmp_english/teacher/teacher_model/teacher_class_model.dart';
 import 'package:pmp_english/teacher/teacher_repo/teacher_class_repo.dart';
@@ -217,11 +219,15 @@ class _AvatarRow extends StatelessWidget {
         ),
         const Spacer(),
         GestureDetector(
-          onTap: () {
+          onTap: () async {
+            List<ChatModel> listConversation =
+                await ChatRepo().getTeacherListConversation();
             pushWithoutNavBar(
               context,
               MaterialPageRoute(
-                builder: (context) => const ListConversationScreen(),
+                builder: (context) => ListConversationScreen(
+                  listConversation: listConversation,
+                ),
               ),
             );
           },

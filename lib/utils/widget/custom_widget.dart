@@ -5,13 +5,15 @@ import 'package:intl/intl.dart';
 import 'package:pmp_english/modules/chat/screen/chat_screen.dart';
 import 'package:pmp_english/modules/feature_home/exercise/detail_exam_screen.dart';
 import 'package:pmp_english/modules/feature_home/exercise/exercise_detail_screen.dart';
-import 'package:pmp_english/modules/lesson/detail_lesson_screen.dart';
+import 'package:pmp_english/student_models/chat_models.dart';
 import 'package:pmp_english/student_models/home_model.dart';
 import 'package:pmp_english/student_models/my_course_model.dart';
+import 'package:pmp_english/student_repo/chat_repo.dart';
 import 'package:pmp_english/student_repo/home_repo.dart';
 import 'package:pmp_english/teacher/teacher_model/home_teacher_model.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Lesson extends StatelessWidget {
   const Lesson(
@@ -27,11 +29,11 @@ class Lesson extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => const DetailLessonScreen(),
-          ),
-        );
+        // Navigator.of(context).push(
+        //   MaterialPageRoute(
+        //     builder: (context) => const DetailLessonScreen(),
+        //   ),
+        // );
       },
       child: Container(
         height: 100.h,
@@ -279,21 +281,21 @@ Widget homeTab(
 class ConversationItem extends StatelessWidget {
   const ConversationItem({
     super.key,
-    required this.index,
-    this.title1,
-    this.title2,
+    required this.model,
   });
-  final int index;
-  final String? title1;
-  final String? title2;
+  final ChatModel model;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
+        ConverastionModel conversationModel =
+            await ChatRepo().getConversationDetail(model.chatId);
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const ChatScreen(),
+            builder: (context) => ChatScreen(
+              model: conversationModel,
+            ),
           ),
         );
       },
@@ -319,8 +321,8 @@ class ConversationItem extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 21.r,
-              backgroundColor: Colors.blue.shade800,
-              child: const Text('AH'),
+              backgroundImage: NetworkImage(model.teacherAvatar),
+              backgroundColor: Colors.transparent,
             ),
             SizedBox(
               width: 220.w,
@@ -329,11 +331,11 @@ class ConversationItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    title1 ?? 'PMP English - hỗ trợ $index',
+                    model.teacherName,
                     style: defaultText14B,
                   ),
                   Text(
-                    title2 ?? 'Đây là tin nhắn cuối cùng $index',
+                    model.content,
                     style: defaultText12M,
                   ),
                 ],
@@ -532,66 +534,73 @@ class _InfoLichhenState extends State<InfoLichhen> {
 }
 
 class DocumentItem extends StatelessWidget {
-  const DocumentItem({super.key});
-
+  const DocumentItem({super.key, required this.model});
+  final DeValueModel model;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 66.h,
-      width: 350.w,
-      margin: EdgeInsets.only(bottom: 10.h, right: 10.w, left: 10.w),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: const Offset(0, 1), // changes position of shadow
-          ),
-        ],
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Row(
-        children: [
-          SizedBox(
-            width: 10.w,
-          ),
-          Container(
-            height: 45.h,
-            width: 45.w,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: key1Color.withOpacity(0.3),
+    return InkWell(
+      onTap: () async {
+        if (!await launchUrl(Uri.parse(model.urlFile))) {
+          throw Exception('Could not launch ');
+        }
+      },
+      child: Container(
+        height: 66.h,
+        width: 350.w,
+        margin: EdgeInsets.only(bottom: 10.h, right: 10.w, left: 10.w),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: const Offset(0, 1), // changes position of shadow
             ),
-            child: SvgPicture.asset(
-              'assets/icons/excercise.svg',
-              height: 18.h,
-              width: 18.w,
-              fit: BoxFit.scaleDown,
+          ],
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Row(
+          children: [
+            SizedBox(
+              width: 10.w,
             ),
-          ),
-          SizedBox(
-            width: 15.w,
-          ),
-          SizedBox(
-            height: 70.h,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text(
-                  'Tai lieu.PDF',
-                  style: defaultText16B,
-                ),
-                Text(
-                  'Đã xem',
-                  style: defaultText14Re,
-                ),
-              ],
+            Container(
+              height: 45.h,
+              width: 45.w,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: key1Color.withOpacity(0.3),
+              ),
+              child: SvgPicture.asset(
+                'assets/icons/excercise.svg',
+                height: 18.h,
+                width: 18.w,
+                fit: BoxFit.scaleDown,
+              ),
             ),
-          )
-        ],
+            SizedBox(
+              width: 15.w,
+            ),
+            SizedBox(
+              height: 70.h,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    model.name,
+                    style: defaultText16B,
+                  ),
+                  Text(
+                    'Xem',
+                    style: defaultText14Re,
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:pmp_english/modules/bottombar/utils.dart';
+import 'package:pmp_english/modules/lesson/detail_lesson_screen.dart';
+import 'package:pmp_english/student_models/my_course_model.dart';
 import 'package:pmp_english/student_repo/customer_repo.dart';
 import 'package:pmp_english/student_models/customer_models.dart';
+import 'package:pmp_english/student_repo/mycourse_repo.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -337,18 +340,19 @@ class _ItemTableCalenderState extends State<ItemTableCalender> {
         //   typeLearn: widget.model.typeLearn,
         //   meetingId: widget.model.meetingId,
         // );
-
+        VideoLessonModel videoLesson =
+            await MycourseRepo().getVideoLesson(id: widget.model.id);
         setState(() {
           _isLoading = false;
         });
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: ((context) => DetailScreen(
-        //           detailLesson: detailLesson,
-        //         )),
-        //   ),
-        // );
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: ((context) => DetailLessonScreen(
+                  videoLessonModel: videoLesson,
+                )),
+          ),
+        );
       },
       child: _isLoading
           ? SizedBox(

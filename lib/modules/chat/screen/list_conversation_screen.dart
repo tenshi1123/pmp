@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/student_models/chat_models.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:pmp_english/utils/widget/custom_widget.dart';
 
 class ListConversationScreen extends StatelessWidget {
-  const ListConversationScreen({super.key});
-
+  const ListConversationScreen({super.key, required this.listConversation});
+  final List<ChatModel> listConversation;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,12 +68,12 @@ class ListConversationScreen extends StatelessWidget {
                 shrinkWrap: true,
                 padding: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 20.w),
                 physics: const ClampingScrollPhysics(),
-                itemCount: 4,
+                itemCount: listConversation.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
                     padding: EdgeInsets.only(bottom: 10.h),
                     child: ConversationItem(
-                      index: index,
+                      model: listConversation[index],
                     ),
                   );
                 }),

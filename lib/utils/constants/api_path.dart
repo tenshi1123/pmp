@@ -23,9 +23,11 @@ class ApiPath {
   static const String detailDiemdanh = '$hocvienUrl/detail_diem_danh';
   static const String notification = '$hocvienUrl/notification';
   static const String chat = '$hocvienUrl/chat';
+  static const String teacherChat = '${baseUrl}api/teachers/chat';
   static const String chatTeacherCustomer = '$hocvienUrl/chat_teacher_customer';
   static const String chatTeacher = '$hocvienUrl/chat_messages';
   static const String sendMessage = '$hocvienUrl/send_chat_messages';
+  static const String sendImageMessage = '$hocvienUrl/send_chat_img';
   //Lịch thi
   static const String offlineExamSchedule = '$hocvienUrl/offline_exam_schedule';
   static const String changeCoso = '$offlineExamSchedule/change_coso';

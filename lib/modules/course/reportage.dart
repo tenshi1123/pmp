@@ -40,11 +40,11 @@ class ReportageScreen extends StatelessWidget {
             SizedBox(
               height: 10.h,
             ),
-            ConversationItem(
-              index: 1,
-              title1: detailBaoCao.fullName,
-              title2: detailBaoCao.content,
-            ),
+            // ConversationItem(
+            //   index: 1,
+            //   title1: detailBaoCao.fullName,
+            //   title2: detailBaoCao.content,
+            // ),
             SizedBox(
               height: 20.h,
             ),

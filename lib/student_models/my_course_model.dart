@@ -222,8 +222,75 @@ class BaiTapValueModel {
           DateFormat("yyyy-MM-dd hh:mm:ss").parse(json['time_deadline'] ?? ''),
       type: json['type'] ?? '',
       typeName: json['type_name'] ?? '',
-      status: json['status'] ?? '',
+      status: int.tryParse(json['status'].toString()) ?? 0,
       note: json['note'] ?? '',
+    );
+  }
+}
+
+class VideoLessonModel {
+  final String id;
+  final String customerCourseScheduleId;
+  final String settingCourseTypeId;
+  final String name;
+  final String teachingContent;
+  final DateTime timeStart;
+  final DateTime timeEnd;
+  final String phongHoc;
+  final String teacherFullName;
+  final String content;
+  final bool viewVideo;
+  final String noteVideo;
+  VideoLessonModel({
+    required this.id,
+    required this.customerCourseScheduleId,
+    required this.settingCourseTypeId,
+    required this.name,
+    required this.teachingContent,
+    required this.timeStart,
+    required this.timeEnd,
+    required this.phongHoc,
+    required this.teacherFullName,
+    required this.content,
+    required this.viewVideo,
+    required this.noteVideo,
+  });
+  factory VideoLessonModel.fromJson(Map<String, dynamic> json) {
+    return VideoLessonModel(
+      id: json['id'] ?? '',
+      customerCourseScheduleId: json['customer_course_schedule_id'] ?? '',
+      settingCourseTypeId: json['setting_course_type_id'] ?? '',
+      name: json['name'] ?? '',
+      teachingContent: json['teaching_content'] ?? '',
+      timeStart:
+          DateFormat("yyyy-MM-dd hh:mm:ss").parse(json['time_start'] ?? ''),
+      timeEnd: DateFormat("yyyy-MM-dd hh:mm:ss").parse(json['time_end'] ?? ''),
+      phongHoc: json['phong_hoc'] ?? '',
+      teacherFullName: json['teachers_full_name'] ?? '',
+      content: json['content'] ?? '',
+      viewVideo: json['view_video'] ?? '',
+      noteVideo: json['note_video'] ?? '',
+    );
+  }
+}
+
+class EvaluationModel {
+  final String avatar;
+  final String fullName;
+  final String star;
+  final List<String> value;
+  EvaluationModel({
+    required this.avatar,
+    required this.fullName,
+    required this.star,
+    required this.value,
+  });
+  factory EvaluationModel.fromJson(Map<String, dynamic> json) {
+    return EvaluationModel(
+      avatar: json['avatar'] ?? '',
+      fullName: json['full_name'] ?? '',
+      star: json['star'] ?? '',
+      value: (json['value'] as List).map((e) => e['text'].toString()).toList(),
     );
   }
 }
