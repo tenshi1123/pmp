@@ -8,6 +8,7 @@ import 'package:pmp_english/student_repo/mycourse_repo.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:pmp_english/utils/widget/custom_widget.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DetailLessonScreen extends StatelessWidget {
   const DetailLessonScreen({super.key, required this.videoLessonModel});
@@ -200,8 +201,8 @@ class DetailLessonTabbar extends StatefulWidget {
 class _DetailLessonTabbarState extends State<DetailLessonTabbar>
     with TickerProviderStateMixin {
   late final TabController _tabController;
-  late List<DeValueModel> listdoc = [];
-  late EvaluationModel? evaModel;
+  List<DeValueModel> listdoc = [];
+  EvaluationModel? evaModel;
   @override
   void initState() {
     super.initState();
@@ -308,7 +309,15 @@ class _VideoWidget extends StatelessWidget {
         SizedBox(
           height: 10.h,
         ),
-        Image.asset('assets/images/demoVideo.png'),
+        GestureDetector(
+            onTap: () async {
+              if (!await launchUrl(
+                  Uri.parse(videoLessonModel.content.split('" ')[0]),
+                  mode: LaunchMode.externalApplication)) {
+                throw Exception('Could not launch ');
+              }
+            },
+            child: Image.asset('assets/images/demoVideo.png')),
         Row(
           children: [
             const Icon(
@@ -350,80 +359,87 @@ class _FeedbackItem extends StatelessWidget {
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 50.h,
-            width: 310.w,
-            child: Row(
+      child: evaModel != null
+          ? Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.network(
-                  evaModel?.avatar ?? '',
-                  width: 40.w,
-                  height: 40.h,
-                  fit: BoxFit.fill,
-                  errorBuilder: (BuildContext context, Object exception,
-                      StackTrace? stackTrace) {
-                    return const Text('N/A');
-                  },
-                ),
                 SizedBox(
-                  width: 10.w,
+                  height: 50.h,
+                  width: 310.w,
+                  child: Row(
+                    children: [
+                      Image.network(
+                        evaModel?.avatar ?? '',
+                        width: 40.w,
+                        height: 40.h,
+                        fit: BoxFit.fill,
+                        errorBuilder: (BuildContext context, Object exception,
+                            StackTrace? stackTrace) {
+                          return const Text('N/A');
+                        },
+                      ),
+                      SizedBox(
+                        width: 10.w,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            evaModel?.fullName ?? 'Nguyễn Văn A',
+                            style: defaultText14B,
+                          ),
+                          Text(
+                            'Giảng viên',
+                            style: defaultText12Re,
+                          )
+                        ],
+                      ),
+                      const Spacer(),
+                      Icon(
+                        Icons.star,
+                        color: const Color(0xffFFCF68),
+                        size: 24.dg,
+                      ),
+                      Icon(
+                        Icons.star,
+                        color: const Color(0xffFFCF68),
+                        size: 24.dg,
+                      ),
+                      Icon(
+                        Icons.star_border_outlined,
+                        color: const Color(0xffFFCF68),
+                        size: 24.dg,
+                      ),
+                    ],
+                  ),
+                ),
+                const Divider(
+                  thickness: 2,
+                ),
+                Text(
+                  'Nhận xét:',
+                  style: defaultText12B,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text(
-                      evaModel?.fullName ?? 'Nguyễn Văn A',
-                      style: defaultText14B,
-                    ),
-                    Text(
-                      'Giảng viên',
-                      style: defaultText12Re,
-                    )
-                  ],
-                ),
-                const Spacer(),
-                Icon(
-                  Icons.star,
-                  color: const Color(0xffFFCF68),
-                  size: 24.dg,
-                ),
-                Icon(
-                  Icons.star,
-                  color: const Color(0xffFFCF68),
-                  size: 24.dg,
-                ),
-                Icon(
-                  Icons.star_border_outlined,
-                  color: const Color(0xffFFCF68),
-                  size: 24.dg,
+                  children: evaModel!.value
+                      .map(
+                        (e) => Text(
+                          '- $e\n',
+                          style: defaultText12B,
+                        ),
+                      )
+                      .toList(),
                 ),
               ],
+            )
+          : Center(
+              child: Image.asset(
+                'assets/images/empty2.png',
+                scale: 2,
+              ),
             ),
-          ),
-          const Divider(
-            thickness: 2,
-          ),
-          Text(
-            'Nhận xét:',
-            style: defaultText12B,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: evaModel!.value
-                .map(
-                  (e) => Text(
-                    '- $e\n',
-                    style: defaultText12B,
-                  ),
-                )
-                .toList(),
-          ),
-        ],
-      ),
     );
   }
 }

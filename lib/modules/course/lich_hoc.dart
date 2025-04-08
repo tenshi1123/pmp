@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:pmp_english/modules/lesson/detail_lesson_screen.dart';
 import 'package:pmp_english/student_models/my_course_model.dart';
+import 'package:pmp_english/student_repo/mycourse_repo.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:pmp_english/utils/widget/custom_widget.dart';
@@ -138,173 +140,188 @@ class _ClassItem extends StatelessWidget {
   final int type;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 20.h),
-      //height: 222.h,
-      width: 349.w,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(
-            Radius.circular(8.r),
+    return GestureDetector(
+      onTap: () async {
+        VideoLessonModel videoLesson =
+            await MycourseRepo().getVideoLesson(id: model.id);
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: ((context) => DetailLessonScreen(
+                  videoLessonModel: videoLesson,
+                )),
           ),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withValues(alpha: 0.2),
-              spreadRadius: 5,
-              blurRadius: 7,
-              offset: const Offset(0, 2), // changes position of shadow
+        );
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 20.h),
+        //height: 222.h,
+        width: 349.w,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(
+              Radius.circular(8.r),
             ),
-          ]),
-      child: Column(
-        //mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          SizedBox(
-            height: 10.h,
-          ),
-          Row(
-            children: [
-              SizedBox(
-                width: 10.w,
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withValues(alpha: 0.2),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: const Offset(0, 2), // changes position of shadow
               ),
-              Container(
-                height: 70.h,
-                width: 70.w,
-                decoration: BoxDecoration(
-                  gradient: type == 1 ? mainGradient2 : mainGradientgray,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(12.r),
-                  ),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      model.day.day.toString(),
-                      style: defaultText20B.copyWith(
-                        color: Colors.white,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 2.h,
-                    ),
-                    Text(
-                      'Tháng ${model.day.month}',
-                      style: defaultText16M.copyWith(
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                width: 15.w,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    model.name,
-                    style: defaultText16B,
-                  ),
-                  Text(
-                    DateFormat("dd/MM/yyyy").format(model.day),
-                    style: defaultText14Re,
-                  ),
-                  Text(
-                    model.time,
-                    style: defaultText14Re,
-                  ),
-                ],
-              )
-            ],
-          ),
-          SizedBox(
-            height: 10.h,
-          ),
-          Container(
-            //height: 74.h,
-            width: 325.w,
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
-            decoration: BoxDecoration(
-              color: key1Color.withOpacity(0.1),
-              borderRadius: BorderRadius.all(
-                Radius.circular(8.r),
-              ),
+            ]),
+        child: Column(
+          //mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            SizedBox(
+              height: 10.h,
             ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.start,
+            Row(
               children: [
                 SizedBox(
-                  height: 4.h,
+                  width: 10.w,
                 ),
-                Row(
-                  children: [
-                    SizedBox(
-                      width: 80.w,
-                      child: Text(
-                        'Phòng học',
-                        style: defaultText14Re,
+                Container(
+                  height: 70.h,
+                  width: 70.w,
+                  decoration: BoxDecoration(
+                    gradient: type == 1 ? mainGradient2 : mainGradientgray,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(12.r),
+                    ),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        model.day.day.toString(),
+                        style: defaultText20B.copyWith(
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
-                    Text(
-                      model.phongHoc,
-                      style: defaultText14B,
-                    ),
-                  ],
-                ),
-                const Divider(
-                  color: Colors.white,
-                  thickness: 2,
-                ),
-                Row(
-                  children: [
-                    SizedBox(
-                      width: 80.w,
-                      child: Text(
-                        'Cơ sở',
-                        style: defaultText14Re,
+                      SizedBox(
+                        height: 2.h,
                       ),
-                    ),
-                    Text(
-                      model.cosoName,
-                      style: defaultText14B,
-                    ),
-                  ],
-                ),
-                const Divider(
-                  color: Colors.white,
-                  thickness: 2,
-                ),
-                Row(
-                  children: [
-                    SizedBox(
-                      width: 80.w,
-                      child: Text(
-                        'Địa chỉ',
-                        style: defaultText14Re,
+                      Text(
+                        'Tháng ${model.day.month}',
+                        style: defaultText16M.copyWith(
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      width: 200.w,
-                      child: Text(
-                        model.cosoAddress,
-                        style: defaultText14B,
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 SizedBox(
-                  height: 4.h,
+                  width: 15.w,
                 ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text(
+                      model.name,
+                      style: defaultText16B,
+                    ),
+                    Text(
+                      DateFormat("dd/MM/yyyy").format(model.day),
+                      style: defaultText14Re,
+                    ),
+                    Text(
+                      model.time,
+                      style: defaultText14Re,
+                    ),
+                  ],
+                )
               ],
             ),
-          ),
-          SizedBox(
-            height: 10.h,
-          ),
-        ],
+            SizedBox(
+              height: 10.h,
+            ),
+            Container(
+              //height: 74.h,
+              width: 325.w,
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              decoration: BoxDecoration(
+                color: key1Color.withOpacity(0.1),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(8.r),
+                ),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 4.h,
+                  ),
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 80.w,
+                        child: Text(
+                          'Phòng học',
+                          style: defaultText14Re,
+                        ),
+                      ),
+                      Text(
+                        model.phongHoc,
+                        style: defaultText14B,
+                      ),
+                    ],
+                  ),
+                  const Divider(
+                    color: Colors.white,
+                    thickness: 2,
+                  ),
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 80.w,
+                        child: Text(
+                          'Cơ sở',
+                          style: defaultText14Re,
+                        ),
+                      ),
+                      Text(
+                        model.cosoName,
+                        style: defaultText14B,
+                      ),
+                    ],
+                  ),
+                  const Divider(
+                    color: Colors.white,
+                    thickness: 2,
+                  ),
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 80.w,
+                        child: Text(
+                          'Địa chỉ',
+                          style: defaultText14Re,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 200.w,
+                        child: Text(
+                          model.cosoAddress,
+                          style: defaultText14B,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 4.h,
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+          ],
+        ),
       ),
     );
   }
