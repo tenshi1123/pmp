@@ -254,7 +254,7 @@ class CourseItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '${model.totalAttended / model.totalBuoiHoc * 100}%',
+                  '${(model.totalAttended / model.totalBuoiHoc * 100).toStringAsFixed(2)}%',
                   style: defaultText14M.copyWith(color: main1Color),
                 ),
                 RichText(
@@ -265,7 +265,7 @@ class CourseItem extends StatelessWidget {
                       TextSpan(
                         text: '/${model.totalBuoiHoc} buổi',
                         style: defaultText14M.copyWith(
-                          color: key1Color.withOpacity(0.5),
+                          color: key1Color.withValues(alpha: 0.5),
                         ),
                       ),
                     ],

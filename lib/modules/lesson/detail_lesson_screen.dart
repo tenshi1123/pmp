@@ -304,38 +304,45 @@ class _VideoWidget extends StatelessWidget {
   final VideoLessonModel videoLessonModel;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          height: 10.h,
-        ),
-        GestureDetector(
-            onTap: () async {
-              if (!await launchUrl(
-                  Uri.parse(videoLessonModel.content.split('" ')[0]),
-                  mode: LaunchMode.externalApplication)) {
-                throw Exception('Could not launch ');
-              }
-            },
-            child: Image.asset('assets/images/demoVideo.png')),
-        Row(
-          children: [
-            const Icon(
-              Icons.hourglass_top,
-              color: Colors.pink,
-              size: 24.0,
-              semanticLabel: 'Text to announce in accessibility modes',
+    return videoLessonModel.content == ''
+        ? Center(
+            child: Image.asset(
+              'assets/images/empty2.png',
+              scale: 2,
             ),
-            Text(
-              videoLessonModel.noteVideo,
-              style: defaultText14M.copyWith(
-                color: main1Color,
+          )
+        : Column(
+            children: [
+              SizedBox(
+                height: 10.h,
               ),
-            ),
-          ],
-        )
-      ],
-    );
+              GestureDetector(
+                  onTap: () async {
+                    if (!await launchUrl(
+                        Uri.parse(videoLessonModel.content.split('" ')[0]),
+                        mode: LaunchMode.inAppBrowserView)) {
+                      throw Exception('Could not launch ');
+                    }
+                  },
+                  child: Image.asset('assets/images/demoVideo.png')),
+              Row(
+                children: [
+                  const Icon(
+                    Icons.hourglass_top,
+                    color: Colors.pink,
+                    size: 24.0,
+                    semanticLabel: 'Text to announce in accessibility modes',
+                  ),
+                  Text(
+                    videoLessonModel.noteVideo,
+                    style: defaultText14M.copyWith(
+                      color: main1Color,
+                    ),
+                  ),
+                ],
+              )
+            ],
+          );
   }
 }
 
@@ -500,14 +507,21 @@ class _DocumentItem extends StatelessWidget {
   final List<DeValueModel> listdoc;
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        shrinkWrap: true,
-        physics: const ClampingScrollPhysics(),
-        itemCount: listdoc.length,
-        itemBuilder: (BuildContext context, int index) {
-          return DocumentItem(
-            model: listdoc[index],
-          );
-        });
+    return listdoc.isEmpty
+        ? Center(
+            child: Image.asset(
+              'assets/images/empty2.png',
+              scale: 2,
+            ),
+          )
+        : ListView.builder(
+            shrinkWrap: true,
+            physics: const ClampingScrollPhysics(),
+            itemCount: listdoc.length,
+            itemBuilder: (BuildContext context, int index) {
+              return DocumentItem(
+                model: listdoc[index],
+              );
+            });
   }
 }
