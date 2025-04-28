@@ -57,65 +57,63 @@ class _NewsScreenState extends State<NewsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          SizedBox(
-            height: 160.h,
-            child: Stack(
-              children: [
-                Positioned(
-                  top: 0,
-                  child: Container(
-                    width: 390.w,
-                    height: 140.h,
-                    decoration: BoxDecoration(gradient: mainGradient),
+    return Column(
+      children: [
+        SizedBox(
+          height: 160.h,
+          child: Stack(
+            children: [
+              Positioned(
+                top: 0,
+                child: Container(
+                  width: 390.w,
+                  height: 140.h,
+                  decoration: BoxDecoration(gradient: mainGradient),
+                ),
+              ),
+              Positioned(
+                bottom: 30.h,
+                left: 22.w,
+                child: Text(
+                  'Tin tức PMP ENGLISH ',
+                  style: defaultText20B.copyWith(
+                    color: Colors.white,
                   ),
                 ),
-                Positioned(
-                  bottom: 30.h,
-                  left: 22.w,
-                  child: Text(
-                    'Tin tức PMP ENGLISH ',
-                    style: defaultText20B.copyWith(
-                      color: Colors.white,
-                    ),
-                  ),
+              ),
+              Positioned(
+                bottom: 0.h,
+                left: 250.w,
+                child: Image.asset(
+                  'assets/images/news.png',
+                  width: 133.w,
+                  height: 125.h,
+                  fit: BoxFit.fill,
                 ),
-                Positioned(
-                  bottom: 0.h,
-                  left: 250.w,
-                  child: Image.asset(
-                    'assets/images/news.png',
-                    width: 133.w,
-                    height: 125.h,
-                    fit: BoxFit.fill,
-                  ),
-                )
-              ],
-            ),
+              )
+            ],
           ),
-          Expanded(
-            child: ListView.builder(
-              controller: _scrollController,
-              itemCount: items.length + 1, // +1 để hiển thị loading
-              itemBuilder: (context, index) {
-                if (index == items.length) {
-                  return isLoading
-                      ? const Padding(
-                          padding: EdgeInsets.all(16.0),
-                          child: Center(child: CircularProgressIndicator()),
-                        )
-                      : const SizedBox(); // Không hiển thị gì nếu không loading
-                }
-                return CourseItem(
-                  model: items[index],
-                );
-              },
-            ),
+        ),
+        Expanded(
+          child: ListView.builder(
+            controller: _scrollController,
+            itemCount: items.length + 1, // +1 để hiển thị loading
+            itemBuilder: (context, index) {
+              if (index == items.length) {
+                return isLoading
+                    ? const Padding(
+                        padding: EdgeInsets.all(16.0),
+                        child: Center(child: CircularProgressIndicator()),
+                      )
+                    : const SizedBox(); // Không hiển thị gì nếu không loading
+              }
+              return CourseItem(
+                model: items[index],
+              );
+            },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

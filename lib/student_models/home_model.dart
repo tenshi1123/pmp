@@ -213,22 +213,20 @@ class DetailTestModel {
 class BaoCaoHocTapModel {
   final int chuyenCan;
   final int baitap;
-  final int tichCuc;
   final List<ExamScheduleModel> schedules;
   BaoCaoHocTapModel({
     required this.baitap,
-    required this.tichCuc,
     required this.chuyenCan,
     required this.schedules,
   });
   factory BaoCaoHocTapModel.fromJson(Map<String, dynamic> json) {
     return BaoCaoHocTapModel(
-        chuyenCan: json["cc"],
-        baitap: json["bt"],
-        tichCuc: json["tich_cuc"],
-        schedules: ((json['orderOfflineExamSchedule'] as List)
-            .map((e) => ExamScheduleModel.fromJson(e))
-            .toList()));
+      chuyenCan: json["cc"] ?? '',
+      baitap: json["bt"] ?? '',
+      schedules: ((json['orderOfflineExamSchedule'] as List)
+          .map((e) => ExamScheduleModel.fromJson(e))
+          .toList()),
+    );
   }
 }
 
@@ -253,8 +251,8 @@ class ExamScheduleModel {
   factory ExamScheduleModel.fromJson(Map<String, dynamic> json) {
     return ExamScheduleModel(
       id: json["id"] ?? '',
-      cosoName: json["coso_name"],
-      cosoAddress: json["coso_address"],
+      cosoName: json["coso_name"] ?? '',
+      cosoAddress: json["coso_address"] ?? '',
       name: json["name"] ?? ' ',
       description: json["description"] ?? '',
       day: json["day"] ?? '',

@@ -28,6 +28,7 @@ class LichHocModel {
   final String phongHoc;
   final String coSo;
   final String type;
+  final String noidung;
   LichHocModel({
     required this.id,
     required this.name,
@@ -39,6 +40,7 @@ class LichHocModel {
     required this.phongHoc,
     required this.coSo,
     required this.type,
+    required this.noidung,
   });
   factory LichHocModel.fromJson(Map<String, dynamic> json) {
     return LichHocModel(
@@ -52,6 +54,7 @@ class LichHocModel {
       phongHoc: json['phong_hoc'] ?? '',
       coSo: json['coso'] ?? '',
       type: json['type'] ?? '',
+      noidung: json['noi_dung_buoi_hoc'] ?? '',
     );
   }
 }

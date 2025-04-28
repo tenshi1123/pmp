@@ -315,15 +315,22 @@ class _OnbondingState extends State<Onbonding> {
                           GestureDetector(
                             onTap: () {
                               //tips and trick
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: ((context) => DateTime.now()
-                                          .isAfter(DateTime(2025, 3, 2, 6, 30))
-                                      ? const WellcomeScreen()
-                                      : const LoginScreen()),
-                                ),
-                              );
+                              if (_currentPage != _numPages - 1) {
+                                _pageController.nextPage(
+                                    duration: const Duration(microseconds: 300),
+                                    curve: Curves.easeIn);
+                              } else {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: ((context) => DateTime.now()
+                                            .isAfter(
+                                                DateTime(2025, 3, 2, 6, 30))
+                                        ? const WellcomeScreen()
+                                        : const LoginScreen()),
+                                  ),
+                                );
+                              }
                             },
                             child: Container(
                               height: 42.h,

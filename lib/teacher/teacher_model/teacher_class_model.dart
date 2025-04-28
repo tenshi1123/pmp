@@ -80,6 +80,7 @@ class DetailBuoiHoc {
   final String timeEnd;
   final String classRoomName;
   final String address;
+  final String noiDungBuoiHoc;
   DetailBuoiHoc({
     required this.id,
     required this.name,
@@ -89,6 +90,7 @@ class DetailBuoiHoc {
     required this.timeEnd,
     required this.classRoomName,
     required this.address,
+    required this.noiDungBuoiHoc,
   });
   factory DetailBuoiHoc.fromJson(Map<String, dynamic> json) {
     return DetailBuoiHoc(
@@ -100,6 +102,7 @@ class DetailBuoiHoc {
       timeEnd: json['time_end'] ?? '',
       classRoomName: json['class_room_name'] ?? '',
       address: json['coso_address'] ?? '',
+      noiDungBuoiHoc: json['noi_dung_buoi_hoc'] ?? '',
     );
   }
 }

@@ -552,7 +552,7 @@ class DocumentItem extends StatelessWidget {
           color: Colors.white,
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.2),
+              color: Colors.grey.withValues(alpha: 0.2),
               spreadRadius: 5,
               blurRadius: 7,
               offset: const Offset(0, 1), // changes position of shadow
@@ -570,7 +570,7 @@ class DocumentItem extends StatelessWidget {
               width: 45.w,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: key1Color.withOpacity(0.3),
+                color: key1Color.withValues(alpha: 0.3),
               ),
               child: SvgPicture.asset(
                 'assets/icons/excercise.svg',

@@ -39,11 +39,10 @@ class ApiPath {
   static const String detailBaiTap = '$hocvienUrl/mycourse/detail_exercise';
   static const String reportExercise = '$hocvienUrl/bao_cao_hoc_tap';
   static const String listFeedback = '$hocvienUrl/danh_gia';
-  static const String detailFeedback = '$hocvienUrl/detail_danh_gia';
+  static const String detailsFeedback = '$hocvienUrl/detail_danh_gia';
   //TKB
   static const String calendar = '$hocvienUrl/calendar';
-  static const String listFeeback = '$hocvienUrl/danh_gia';
-  static const String detailsFeedback = '$hocvienUrl/detail_danh_gia';
+
   //Khóa học của tôi khoa hoc
   static const String myCourse = '$hocvienUrl/mycourse';
   static const String detailMyCourse = '$myCourse/detail';

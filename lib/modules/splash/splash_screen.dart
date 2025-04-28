@@ -41,6 +41,13 @@ class _SplshscreenState extends State<Splshscreen> {
                 'infoModel': infoModel,
                 'profileModel': profileModel,
               });
+            } else {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const Onbonding(),
+                ),
+              );
             }
           } else {
             TeacherHomeModel? infoModel = await TeacherRepo().getHomeInfo();

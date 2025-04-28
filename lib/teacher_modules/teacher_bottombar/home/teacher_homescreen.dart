@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
@@ -100,7 +101,7 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
                                 Radius.circular(16.r),
                               ),
                               child: SizedBox(
-                                height: 218.h,
+                                height: 220.h,
                                 width: 370.w,
                                 child: PageView.builder(
                                   padEnds: false,
@@ -269,6 +270,7 @@ class _AvatarRow extends StatelessWidget {
 class _CommingSchedule extends StatelessWidget {
   const _CommingSchedule({required this.lichHocModel});
   final LichHocModel lichHocModel;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -286,116 +288,177 @@ class _CommingSchedule extends StatelessWidget {
             id: lichHocModel.id,
             type: 2);
         pushWithoutNavBar(
-            context,
-            MaterialPageRoute(
-                builder: (context) => LessonDetail(
-                      listDiemDanh: listDiemDanh,
-                      title:
-                          "${lichHocModel.name} ${lichHocModel.dayOfWeek} ${DateFormat('dd/MM/yyyy').format(lichHocModel.day)}",
-                      listBaiTap: listBaiTap,
-                      listDeThi: listDeThi,
-                    )));
-      },
-      child: Container(
-        margin: EdgeInsets.symmetric(
-          horizontal: 5.w,
-          vertical: 10.h,
-        ),
-        padding: EdgeInsets.symmetric(
-          horizontal: 16.w,
-          vertical: 16.h,
-        ),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(
-            Radius.circular(16.r),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: const Color(0xff163065).withValues(alpha: 0.12),
-              spreadRadius: 0,
-              blurRadius: 12,
-              offset: const Offset(0, 4),
+          context,
+          MaterialPageRoute(
+            builder: (context) => LessonDetail(
+              listDiemDanh: listDiemDanh,
+              title:
+                  "${lichHocModel.name} ${lichHocModel.dayOfWeek} ${DateFormat('dd/MM/yyyy').format(lichHocModel.day)}",
+              listBaiTap: listBaiTap,
+              listDeThi: listDeThi,
             ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 10.w,
-                    vertical: 15.h,
-                  ),
-                  decoration: BoxDecoration(
-                    color: const Color(0xff00AEEF),
-                    borderRadius: BorderRadius.circular(12.r),
-                  ),
+          ),
+        );
+      },
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return Container(
+            margin: EdgeInsets.symmetric(horizontal: 5.w, vertical: 10.h),
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(16.r)),
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xff163065).withValues(alpha: 0.12),
+                  spreadRadius: 0,
+                  blurRadius: 12,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: SingleChildScrollView(
+              // Thêm Scroll nếu tràn
+              physics:
+                  const NeverScrollableScrollPhysics(), // Không cho scroll thực sự
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: constraints.maxHeight,
+                  maxHeight: constraints.maxHeight,
+                ),
+                child: IntrinsicHeight(
+                  // Tự co height theo nội dung bên trong
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        lichHocModel.day.day.toString(),
-                        style: defaultText16B.copyWith(
-                            color: Colors.white, fontSize: 26.sp),
+                      Row(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10.w, vertical: 15.h),
+                            decoration: BoxDecoration(
+                              color: const Color(0xff00AEEF),
+                              borderRadius: BorderRadius.circular(12.r),
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  lichHocModel.day.day.toString(),
+                                  style: defaultText16B.copyWith(
+                                      color: Colors.white, fontSize: 26.sp),
+                                ),
+                                Text(
+                                  'Tháng ${lichHocModel.day.month}',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(width: 12.w),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  lichHocModel.name,
+                                  style: defaultText18B,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                SizedBox(height: 5.h),
+                                Text(
+                                  lichHocModel.dayOfWeek,
+                                  style: defaultText14M,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                      Text(
-                        'Tháng ${lichHocModel.day.month}',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w500,
+                      SizedBox(height: 12.h),
+                      Expanded(
+                        // Expanded sẽ fill khoảng trống còn lại
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _buildInfoLine(
+                                'Phòng học: ', lichHocModel.phongHoc),
+                            SizedBox(height: 8.h),
+                            _buildInfoLine('Chi nhánh: ', lichHocModel.coSo),
+                            SizedBox(height: 8.h),
+                            Html(
+                              data: lichHocModel.noidung,
+                              style: {
+                                "table": Style(
+                                  backgroundColor: const Color.fromARGB(
+                                      0x50, 0xee, 0xee, 0xee),
+                                ),
+                                "th": Style(
+                                  padding: HtmlPaddings.all(6),
+                                  backgroundColor: Colors.grey,
+                                ),
+                                "td": Style(
+                                  padding: HtmlPaddings.all(6),
+                                  border: const Border(
+                                      bottom: BorderSide(color: Colors.grey)),
+                                ),
+                                'h5': Style(
+                                    maxLines: 2,
+                                    textOverflow: TextOverflow.ellipsis),
+                                'flutter': Style(
+                                  display: Display.block,
+                                  fontSize: FontSize(5, Unit.em),
+                                ),
+                                ".second-table": Style(
+                                  backgroundColor: Colors.transparent,
+                                ),
+                                ".second-table tr td:first-child": Style(
+                                  fontWeight: FontWeight.bold,
+                                  textAlign: TextAlign.end,
+                                ),
+                                "p": Style(
+                                  color: Colors.black,
+                                  fontSize: FontSize(16.sp),
+                                  fontWeight: FontWeight.w400,
+                                  lineHeight: const LineHeight(1.5),
+                                ),
+                              },
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(width: 20),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: 200.w,
-                      child: Text(lichHocModel.name, style: defaultText18B),
-                    ),
-                    const SizedBox(height: 5),
-                    Text(lichHocModel.dayOfWeek, style: defaultText14M),
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(height: 12.h),
-            RichText(
-              text: TextSpan(
-                text: 'Phòng học : ',
-                style: defaultText16M,
-                children: [
-                  TextSpan(
-                      text: lichHocModel.phongHoc,
-                      style: defaultText16B.copyWith(
-                          color: const Color(0xff00AEEF))),
-                ],
               ),
             ),
-            SizedBox(height: 10.h),
-            RichText(
-              text: TextSpan(
-                text: 'Chi nhánh : ',
-                style: defaultText16M,
-                children: [
-                  TextSpan(
-                      text: lichHocModel.coSo,
-                      style: defaultText16B.copyWith(
-                          color: const Color(0xff00AEEF))),
-                ],
-              ),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ],
-        ),
+          );
+        },
       ),
+    );
+  }
+
+  Widget _buildInfoLine(String label, String value, {int maxLines = 1}) {
+    return RichText(
+      text: TextSpan(
+        text: label,
+        style: defaultText16M,
+        children: [
+          TextSpan(
+            text: value,
+            style: defaultText16B.copyWith(color: const Color(0xff00AEEF)),
+          ),
+        ],
+      ),
+      maxLines: maxLines,
+      overflow: TextOverflow.ellipsis,
     );
   }
 }

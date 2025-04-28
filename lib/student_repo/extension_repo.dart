@@ -20,4 +20,19 @@ class ExtensionRepo {
     }
     return list;
   }
+
+  // Lấy chi tiết đánh giá của học viên
+  Future<ReviewDetailModels> getDetailReview(String id) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    Response response;
+    response = await dio.post(
+      ApiPath.detailsFeedback,
+      data: {
+        'id': id,
+      },
+    );
+    return ReviewDetailModels.fromJson(response.data['data']['value']);
+  }
 }

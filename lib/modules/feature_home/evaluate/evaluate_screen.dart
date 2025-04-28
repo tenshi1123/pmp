@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pmp_english/student_models/review_models.dart';
+import 'package:pmp_english/student_repo/extension_repo.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 
@@ -80,11 +81,15 @@ class EvaluateScreen extends StatelessWidget {
                 ),
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
-                    onTap: () {
+                    onTap: () async {
+                      ReviewDetailModels model = await ExtensionRepo()
+                          .getDetailReview(listReview[index].id);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const DetailEvaluateScreen(),
+                          builder: (context) => DetailEvaluateScreen(
+                            model: model,
+                          ),
                         ),
                       );
                     },

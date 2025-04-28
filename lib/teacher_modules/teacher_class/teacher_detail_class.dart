@@ -4,7 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:pmp_english/teacher/teacher_model/teacher_class_model.dart';
 import 'package:pmp_english/teacher/teacher_repo/teacher_class_repo.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
-
+import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_html_all/flutter_html_all.dart';
 import 'teacher_detail_lesson.dart';
 
 class TeacherDetail extends StatefulWidget {
@@ -295,8 +296,39 @@ class ListFbDaily extends StatelessWidget {
               )
             ],
           ),
-          SizedBox(
-            height: 8.h,
+          Html(
+            data: model.noiDungBuoiHoc,
+            style: {
+              "table": Style(
+                backgroundColor: const Color.fromARGB(0x50, 0xee, 0xee, 0xee),
+              ),
+              "th": Style(
+                padding: HtmlPaddings.all(6),
+                backgroundColor: Colors.grey,
+              ),
+              "td": Style(
+                padding: HtmlPaddings.all(6),
+                border: const Border(bottom: BorderSide(color: Colors.grey)),
+              ),
+              'h5': Style(maxLines: 2, textOverflow: TextOverflow.ellipsis),
+              'flutter': Style(
+                display: Display.block,
+                fontSize: FontSize(5, Unit.em),
+              ),
+              ".second-table": Style(
+                backgroundColor: Colors.transparent,
+              ),
+              ".second-table tr td:first-child": Style(
+                fontWeight: FontWeight.bold,
+                textAlign: TextAlign.end,
+              ),
+              "p": Style(
+                color: Colors.black,
+                fontSize: FontSize(16.sp),
+                fontWeight: FontWeight.w400,
+                lineHeight: const LineHeight(1.5),
+              ),
+            },
           ),
           const Divider(),
         ],

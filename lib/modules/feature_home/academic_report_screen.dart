@@ -178,49 +178,6 @@ class AcademicReportScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Container(
-                        height: 34.h,
-                        width: 318.w,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4.r),
-                          color: state2,
-                        ),
-                        child: Stack(
-                          children: [
-                            Positioned(
-                                left: 0,
-                                child: Container(
-                                  height: 34.h,
-                                  width: 318.w * model.tichCuc / 100,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(4.r),
-                                    gradient: mainGradient,
-                                  ),
-                                )),
-                            Positioned(
-                              left: 10.w,
-                              child: SizedBox(
-                                width: 298.w,
-                                height: 34.h,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'Tích cực',
-                                      style: defaultText14B,
-                                    ),
-                                    Text(
-                                      '${model.tichCuc}%',
-                                      style: defaultText14B,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
                     ],
                   ),
                 ),

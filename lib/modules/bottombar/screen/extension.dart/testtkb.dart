@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
@@ -389,6 +390,40 @@ class _ItemTableCalenderState extends State<ItemTableCalender> {
               ),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
+            ),
+            Html(
+              data: widget.model.noidung,
+              style: {
+                "table": Style(
+                  backgroundColor: const Color.fromARGB(0x50, 0xee, 0xee, 0xee),
+                ),
+                "th": Style(
+                  padding: HtmlPaddings.all(6),
+                  backgroundColor: Colors.grey,
+                ),
+                "td": Style(
+                  padding: HtmlPaddings.all(6),
+                  border: const Border(bottom: BorderSide(color: Colors.grey)),
+                ),
+                'h5': Style(maxLines: 2, textOverflow: TextOverflow.ellipsis),
+                'flutter': Style(
+                  display: Display.block,
+                  fontSize: FontSize(5, Unit.em),
+                ),
+                ".second-table": Style(
+                  backgroundColor: Colors.transparent,
+                ),
+                ".second-table tr td:first-child": Style(
+                  fontWeight: FontWeight.bold,
+                  textAlign: TextAlign.end,
+                ),
+                "p": Style(
+                  color: Colors.black,
+                  fontSize: FontSize(16.sp),
+                  fontWeight: FontWeight.w400,
+                  lineHeight: const LineHeight(1.5),
+                ),
+              },
             ),
           ],
         ),

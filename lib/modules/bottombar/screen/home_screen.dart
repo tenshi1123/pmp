@@ -27,6 +27,7 @@ import 'package:pmp_english/student_models/review_models.dart';
 import 'package:pmp_english/student_repo/mycourse_repo.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
+import 'package:pmp_english/utils/widget/custom_dialog.dart';
 
 import '../../feature_home/exercise/exercise_screen.dart';
 
@@ -356,56 +357,78 @@ class _HomeScreenState extends State<HomeScreen> {
           //   ),
           // ),
           SizedBox(
-            height: 10.h,
+            height: 30.h,
           ),
-          Text(
-            '    Lịch học gần nhất',
-            style: defaultText16B,
-          ),
-          SizedBox(
-            width: 380.w,
-            height: 250.h,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              shrinkWrap: true,
-              physics: const ScrollPhysics(),
-              //itemExtent: 390.0.w,
-              padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-              itemCount: infomodel.lichHocSapToi.length,
-              itemBuilder: (BuildContext context, int index) {
-                return _Upcoming(
-                  model: infomodel.lichHocSapToi[index],
-                );
-              },
+          Padding(
+            padding: EdgeInsets.only(left: 20.w),
+            child: Text(
+              infomodel.lichHocSapToi.isEmpty
+                  ? 'Hôm nay bạn không có lịch học nào'
+                  : 'Lịch học gần nhất',
+              style: defaultText16B,
             ),
           ),
-          Text(
-            '    Khóa học đề xuất cho bạn',
-            style: defaultText16B,
+          infomodel.lichHocSapToi.isEmpty
+              ? const SizedBox(
+                  height: 20,
+                )
+              : SizedBox(
+                  width: 380.w,
+                  height: 250.h,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    physics: const ScrollPhysics(),
+                    //itemExtent: 390.0.w,
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                    itemCount: infomodel.lichHocSapToi.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return _Upcoming(
+                        model: infomodel.lichHocSapToi[index],
+                      );
+                    },
+                  ),
+                ),
+          Padding(
+            padding: EdgeInsets.only(left: 20.w, top: 10.h),
+            child: Text(
+              'Khóa học đề xuất cho bạn',
+              style: defaultText16B,
+            ),
           ),
           SizedBox(
             width: 380.w,
             height: 230.h,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              shrinkWrap: true,
-              physics: const ScrollPhysics(),
-              //itemExtent: 390.0.w,
-              padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-              itemCount: infomodel.listCourse.length,
-              itemBuilder: (BuildContext context, int index) {
-                return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const RecommentCourse(),
-                        ),
-                      );
+            child: infomodel.listCourse.isEmpty
+                ? Center(
+                    child: Image.asset(
+                      'assets/images/empty2.png',
+                      scale: 2,
+                    ),
+                  )
+                : ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    physics: const ScrollPhysics(),
+                    //itemExtent: 390.0.w,
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                    itemCount: infomodel.listCourse.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const RecommentCourse(),
+                              ),
+                            );
+                          },
+                          child:
+                              _reComment(model: infomodel.listCourse[index]));
                     },
-                    child: _reComment(model: infomodel.listCourse[index]));
-              },
-            ),
+                  ),
           ),
         ],
       ),
@@ -763,18 +786,7 @@ class _Upcoming extends StatelessWidget {
             Row(
               children: [
                 SizedBox(
-                  width: 12.w,
-                ),
-                Container(
-                  height: 14.h,
-                  width: 14.w,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(),
-                  ),
-                ),
-                SizedBox(
-                  width: 4.w,
+                  width: 32.w,
                 ),
                 Text(
                   model.status,
@@ -783,20 +795,30 @@ class _Upcoming extends StatelessWidget {
                 SizedBox(
                   width: 80.w,
                 ),
-                Container(
-                  height: 29.h,
-                  width: 90.w,
-                  decoration: BoxDecoration(
-                    color: sub2Color,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(4.r),
+                InkWell(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => LeaveRequestDialog(
+                        id: model.id,
+                      ),
+                    );
+                  },
+                  child: Container(
+                    height: 29.h,
+                    width: 90.w,
+                    decoration: BoxDecoration(
+                      color: sub2Color,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(4.r),
+                      ),
                     ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Xin nghỉ',
-                      style: defaultText14B.copyWith(
-                        color: Colors.white,
+                    child: Center(
+                      child: Text(
+                        'Xin nghỉ',
+                        style: defaultText14B.copyWith(
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),

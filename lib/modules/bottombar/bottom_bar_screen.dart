@@ -46,11 +46,11 @@ class _BottombarState extends State<Bottombar> {
         // logic
       },
       child: Scaffold(
-// backgroundColor: notifire.getwihitecolor,
+        backgroundColor: Colors.white,
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           unselectedItemColor: key1Color,
-          backgroundColor: Colors.white.withOpacity(0.6),
+          backgroundColor: Colors.white,
           selectedLabelStyle: defaultText12M,
           fixedColor: Colors.blue,
           //unselectedLabelStyle: const TextStyle(fontFamily: 'Gilroy_Medium'),
