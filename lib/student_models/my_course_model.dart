@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+import 'package:pmp_english/student_models/review_models.dart';
 
 class MyCourseModel {
   final String id;
@@ -118,15 +119,13 @@ class DetailCourse {
 class DetailBaoCaoModel {
   final int chuyenCan;
   final int baiTap;
-  final int thaiDo;
   final String teacherId;
   final String fullName;
   final String content;
-  final List<MonthlyReviewModel> monthlyReview;
+  final List<ReviewDetailModels> monthlyReview;
   DetailBaoCaoModel({
     required this.chuyenCan,
     required this.baiTap,
-    required this.thaiDo,
     required this.teacherId,
     required this.fullName,
     required this.content,
@@ -134,14 +133,13 @@ class DetailBaoCaoModel {
   });
   factory DetailBaoCaoModel.fromJson(Map<String, dynamic> json) {
     return DetailBaoCaoModel(
-      chuyenCan: json['cc'],
-      baiTap: json['bt'],
-      thaiDo: json['tc'],
+      chuyenCan: json['cc'] ?? '',
+      baiTap: json['bt'] ?? '',
       teacherId: json['chat']['teachers_id'],
       fullName: json['chat']['full_name'],
       content: json['chat']['content'],
       monthlyReview: (json['value'] as List)
-          .map((e) => MonthlyReviewModel.fromJson(e))
+          .map((e) => ReviewDetailModels.fromJson(e))
           .toList(),
     );
   }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pmp_english/student_models/my_course_model.dart';
+import 'package:pmp_english/student_models/review_models.dart';
+import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:pmp_english/utils/widget/custom_widget.dart';
 
@@ -28,8 +30,7 @@ class ReportageScreen extends StatelessWidget {
                 title: 'Chuyên cần'),
             chartItem(
                 width: 350, percents: detailBaoCao.baiTap, title: 'Bài tập'),
-            chartItem(
-                width: 350, percents: detailBaoCao.thaiDo, title: 'Thái độ'),
+
             SizedBox(
               height: 10.h,
             ),
@@ -52,6 +53,7 @@ class ReportageScreen extends StatelessWidget {
               'Nhận xét',
               style: defaultText16B,
             ),
+
             ListView.builder(
                 shrinkWrap: true,
                 physics: const ClampingScrollPhysics(),
@@ -71,7 +73,7 @@ class ReportageScreen extends StatelessWidget {
 
 class _FeedbackItem extends StatelessWidget {
   const _FeedbackItem(this.model);
-  final MonthlyReviewModel model;
+  final ReviewDetailModels model;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -112,33 +114,23 @@ class _FeedbackItem extends StatelessWidget {
           ListView.builder(
               shrinkWrap: true,
               physics: const ClampingScrollPhysics(),
-              itemCount: model.nhanXet.length,
-              //itemCount: detailBaoCao.monthlyReview.length,
+              itemCount: model.listValue.length,
               itemBuilder: (BuildContext context, int index) {
-                return Text(
-                  "- ${model.nhanXet[index]}",
-                  style: defaultText12M,
-                );
-              }),
-          SizedBox(
-            height: 10.h,
-          ),
-          Text(
-            'Cần cải thiện :',
-            style: defaultText14B,
-          ),
-          SizedBox(
-            height: 10.h,
-          ),
-          ListView.builder(
-              shrinkWrap: true,
-              physics: const ClampingScrollPhysics(),
-              itemCount: model.caiThien.length,
-              //itemCount: detailBaoCao.monthlyReview.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Text(
-                  "- ${model.caiThien[index]}",
-                  style: defaultText12M,
+                return Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 8.h,
+                    horizontal: 16.w,
+                  ),
+                  child: Text(
+                    '${model.listValue[index].name}${model.listValue[index].type == '2' ? ': ${model.listValue[index].value}' : ''}',
+                    style: model.listValue[index].type == '1'
+                        ? defaultText14M
+                        : defaultText16B.copyWith(
+                            color: model.listValue[index].type == '0'
+                                ? main1Color
+                                : sub1Color,
+                          ),
+                  ),
                 );
               }),
         ],
