@@ -367,7 +367,7 @@ Widget chartItem({
             left: 0,
             child: Container(
               height: 34.h,
-              width: width.w * percents / 100,
+              width: width.w * percents / 10,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(4.r),
                 gradient: mainGradient,
@@ -386,7 +386,7 @@ Widget chartItem({
                   style: defaultText14B,
                 ),
                 Text(
-                  '$percents%',
+                  '${percents * 10}%',
                   style: defaultText14B,
                 ),
               ],

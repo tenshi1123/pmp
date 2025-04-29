@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:pmp_english/modules/lesson/video_screen.dart';
 import 'package:pmp_english/student_models/home_model.dart';
 import 'package:pmp_english/student_models/my_course_model.dart';
 import 'package:pmp_english/student_repo/mycourse_repo.dart';
@@ -317,14 +318,18 @@ class _VideoWidget extends StatelessWidget {
                 height: 10.h,
               ),
               GestureDetector(
-                  onTap: () async {
-                    if (!await launchUrl(
-                        Uri.parse(videoLessonModel.content.split('" ')[0]),
-                        mode: LaunchMode.inAppBrowserView)) {
-                      throw Exception('Could not launch ');
-                    }
-                  },
-                  child: Image.asset('assets/images/demoVideo.png')),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => VideoPlayerPage(
+                        videoUrl: videoLessonModel.content,
+                      ),
+                    ),
+                  );
+                },
+                child: Image.asset('assets/images/demoVideo.png'),
+              ),
               Row(
                 children: [
                   const Icon(
