@@ -14,8 +14,8 @@ class StudentHomeModel {
   factory StudentHomeModel.fromJson(Map<String, dynamic> json) {
     return StudentHomeModel(
       customerInfoModel: CustomerInfoModel.fromJson(json['customer']),
-      totalCourse: json['total_course'],
-      chuyenCan: json['chuyen_can'],
+      totalCourse: json['total_course'] ?? '',
+      chuyenCan: json['chuyen_can'] ?? '',
       lichHocSapToi: [
         for (var item in json['lich_hoc_sap_toi']) CalendarModel.fromJson(item)
       ],
