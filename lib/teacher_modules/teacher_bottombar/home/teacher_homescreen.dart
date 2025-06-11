@@ -101,7 +101,7 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
                                 Radius.circular(16.r),
                               ),
                               child: SizedBox(
-                                height: 220.h,
+                                height: 270.h,
                                 width: 370.w,
                                 child: PageView.builder(
                                   padEnds: false,
@@ -319,8 +319,7 @@ class _CommingSchedule extends StatelessWidget {
             ),
             child: SingleChildScrollView(
               // Thêm Scroll nếu tràn
-              physics:
-                  const NeverScrollableScrollPhysics(), // Không cho scroll thực sự
+
               child: ConstrainedBox(
                 constraints: BoxConstraints(
                   minHeight: constraints.maxHeight,
