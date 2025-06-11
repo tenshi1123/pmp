@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:pmp_english/student_models/customer_models.dart';
 import 'package:pmp_english/student_models/profile_model.dart';
 import 'package:pmp_english/utils/constants/api_path.dart';
@@ -25,6 +26,7 @@ class CustomerRepo {
     } catch (e) {
       await prefs.remove('token');
       await prefs.remove(ConstString.type);
+      print(e);
     }
     return null;
   }
@@ -51,6 +53,11 @@ class CustomerRepo {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? token = prefs.getString('token');
     dio.options.headers['Authorization'] = 'Bearer $token';
+    dio.interceptors.add(LogInterceptor(
+      responseBody: true,
+      requestBody: true,
+      logPrint: (obj) => debugPrint('📦 $obj'),
+    ));
     Response response;
     response = await dio.post(
       ApiPath.profile,

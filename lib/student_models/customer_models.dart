@@ -81,17 +81,17 @@ class CustomerInfoModel {
   });
   factory CustomerInfoModel.fromJson(Map<String, dynamic> json) {
     return CustomerInfoModel(
-      id: json['id'] ?? '',
-      code: json['code'],
-      fullName: json['full_name'] ?? '',
-      phone: json['phone'] ?? '',
-      email: json['email'],
-      gender: json['gender'],
-      dob: json['dob'],
-      img: json['img'],
-      schoolName: json['school_name'],
-      address: json['address'],
-      targetIelts: json['target_ielts'],
+      id: json['id'] ?? 'Không có dữ liệu',
+      code: json['code'] ?? 'Không có dữ liệu',
+      fullName: json['full_name'] ?? 'Không có dữ liệu',
+      phone: json['phone'] ?? 'Không có dữ liệu',
+      email: json['email'] ?? 'Không có dữ liệu',
+      gender: json['gender'] ?? 'Không có dữ liệu',
+      dob: json['dob'] ?? 'Không có dữ liệu',
+      img: json['img'] ?? 'Không có dữ liệu',
+      schoolName: json['school_name'] ?? 'Không có dữ liệu',
+      address: json['address'] ?? 'Không có dữ liệu',
+      targetIelts: json['target_ielts'] ?? 'Không có dữ liệu',
     );
   }
 }
