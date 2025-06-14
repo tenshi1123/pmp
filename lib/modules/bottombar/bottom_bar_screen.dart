@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:pmp_english/modules/bottombar/screen/extension.dart/schedule_screen.dart';
 import 'package:pmp_english/modules/bottombar/screen/user_info/account_screen.dart';
 import 'package:pmp_english/modules/bottombar/screen/news_screen.dart';
@@ -34,6 +37,34 @@ class _BottombarState extends State<Bottombar> {
     setState(() {
       _selectedIndex = widget.index;
     });
+    setupOneSignal();
+  }
+
+  Future<void> setupOneSignal() async {
+    // Enable verbose logging for debugging (remove in production)
+    OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
+    // Initialize with your OneSignal App ID
+    OneSignal.initialize("9eed43b6-3e7d-4d7b-a8fb-621e889f71c9");
+    // Use this method to prompt for push notifications.
+    // We recommend removing this method after testing and instead use In-App Messages to prompt for notification permission.
+    OneSignal.Notifications.requestPermission(false);
+    if (Platform.isAndroid) {
+      OneSignal.Notifications.addClickListener((event) {});
+    } else {
+      //do nothing :v tự báo chính mình
+      OneSignal.Notifications.addClickListener((event) {});
+    }
+    promptPolicyPrivacy();
+  }
+
+  Future<void> promptPolicyPrivacy() async {
+    if (Platform.isAndroid) {
+      OneSignal.consentRequired(true);
+      OneSignal.consentGiven(true);
+    } else {
+      //do nothing :v
+    }
+    // sendUserTag(userId);
   }
 
   @override

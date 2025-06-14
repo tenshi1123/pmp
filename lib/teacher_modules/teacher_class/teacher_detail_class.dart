@@ -5,7 +5,7 @@ import 'package:pmp_english/teacher/teacher_model/teacher_class_model.dart';
 import 'package:pmp_english/teacher/teacher_repo/teacher_class_repo.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:flutter_html_all/flutter_html_all.dart';
+//import 'package:flutter_html_all/flutter_html_all.dart';
 import 'teacher_detail_lesson.dart';
 
 class TeacherDetail extends StatefulWidget {

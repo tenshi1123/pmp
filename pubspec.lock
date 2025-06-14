@@ -105,22 +105,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.0"
-  chewie:
-    dependency: transitive
-    description:
-      name: chewie
-      sha256: "4d9554a8f87cc2dc6575dfd5ad20a4375015a29edd567fd6733febe6365e2566"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.11.3"
-  chewie_audio:
-    dependency: transitive
-    description:
-      name: chewie_audio
-      sha256: "73948a8b9841d050433af3498a1f8b11320bd5a2cd70b449bdbe16d4405e97c5"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.5.0"
   clock:
     dependency: transitive
     description:
@@ -193,14 +177,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.10.5"
-  dbus:
-    dependency: transitive
-    description:
-      name: dbus
-      sha256: "79e0c23480ff85dc68de79e2cd6334add97e48f7f4865d17686dd6ea81a47e8c"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.7.11"
   device_info_plus:
     dependency: transitive
     description:
@@ -305,6 +281,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.9.3+4"
+  firebase_core:
+    dependency: "direct main"
+    description:
+      name: firebase_core
+      sha256: "420d9111dcf095341f1ea8fdce926eef750cf7b9745d21f38000de780c94f608"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.14.0"
+  firebase_core_platform_interface:
+    dependency: transitive
+    description:
+      name: firebase_core_platform_interface
+      sha256: d7253d255ff10f85cfd2adaba9ac17bae878fa3ba577462451163bd9f1d1f0bf
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.4.0"
+  firebase_core_web:
+    dependency: transitive
+    description:
+      name: firebase_core_web
+      sha256: ddd72baa6f727e5b23f32d9af23d7d453d67946f380bd9c21daf474ee0f7326e
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.23.0"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -326,70 +326,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.0"
-  flutter_html_all:
-    dependency: "direct main"
-    description:
-      name: flutter_html_all
-      sha256: "9d7347c25b270aa110dddbbe1dda6eb1e5a8d58c2042b5029e9aaa495e7b786f"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.0"
-  flutter_html_audio:
-    dependency: transitive
-    description:
-      name: flutter_html_audio
-      sha256: eb7bd2afee8f93b33fe8fe2fded55c4ff261ebca797e35dbbfc322aa4428b6da
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.0"
-  flutter_html_iframe:
-    dependency: transitive
-    description:
-      name: flutter_html_iframe
-      sha256: "6da7a76853e1c0a5e0cd5a91236cad842c0d17056a439f966879f485ae0e2ffa"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.0"
-  flutter_html_math:
-    dependency: transitive
-    description:
-      name: flutter_html_math
-      sha256: a0170144034b3ddf5b5dbecfeebcd24f24b7b52f9db89283dfdac1fd0e04a2f0
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.0"
-  flutter_html_svg:
-    dependency: transitive
-    description:
-      name: flutter_html_svg
-      sha256: "76f59c238571333d95271817c3d94688b3c4dca2735552e481e49039d3efdb13"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.0"
-  flutter_html_table:
-    dependency: transitive
-    description:
-      name: flutter_html_table
-      sha256: de15300b1f6d8014e1702e7edfdf3411f362c8fb753e89bac4c99215ea94a4d8
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.0"
-  flutter_html_video:
-    dependency: transitive
-    description:
-      name: flutter_html_video
-      sha256: "558bca17a8a8e758e5cc14d4071fc356ecd141934e412e6b2d0b6cb1009b3332"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.0"
-  flutter_layout_grid:
-    dependency: transitive
-    description:
-      name: flutter_layout_grid
-      sha256: "739e568db97af031d528dfd8a80d333df0e5a310a126e087690fa42cd61dfb5f"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.8"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -398,14 +334,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.0.0"
-  flutter_math_fork:
-    dependency: transitive
-    description:
-      name: flutter_math_fork
-      sha256: "6d5f2f1aa57ae539ffb0a04bb39d2da67af74601d685a161aff7ce5bda5fa407"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.7.4"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -656,6 +584,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
+  onesignal_flutter:
+    dependency: "direct main"
+    description:
+      name: onesignal_flutter
+      sha256: e194393ab1fc55bddfbc1895bbd06554e9af0d895a40d5decad1b46313979860
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.3.3"
   os_detect:
     dependency: transitive
     description:
@@ -808,14 +744,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.5"
-  quiver:
-    dependency: transitive
-    description:
-      name: quiver
-      sha256: ea0b925899e64ecdfbf9c7becb60d5b50e706ade44a85b2363be2a22d88117d2
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.2.2"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -973,14 +901,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.4"
-  tuple:
-    dependency: transitive
-    description:
-      name: tuple
-      sha256: a97ce2013f240b2f3807bcbaf218765b6f301c3eff91092bcfa23a039e7dd151
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.2"
   typed_data:
     dependency: transitive
     description:
@@ -1117,46 +1037,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.2"
-  video_player:
-    dependency: transitive
-    description:
-      name: video_player
-      sha256: "0d55b1f1a31e5ad4c4967bfaa8ade0240b07d20ee4af1dfef5f531056512961a"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.10.0"
-  video_player_android:
-    dependency: transitive
-    description:
-      name: video_player_android
-      sha256: "4a5135754a62dbc827a64a42ef1f8ed72c962e191c97e2d48744225c2b9ebb73"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.8.7"
-  video_player_avfoundation:
-    dependency: transitive
-    description:
-      name: video_player_avfoundation
-      sha256: "9ee764e5cd2fc1e10911ae8ad588e1a19db3b6aa9a6eb53c127c42d3a3c3f22f"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.7.1"
-  video_player_platform_interface:
-    dependency: transitive
-    description:
-      name: video_player_platform_interface
-      sha256: df534476c341ab2c6a835078066fc681b8265048addd853a1e3c78740316a844
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.3.0"
-  video_player_web:
-    dependency: transitive
-    description:
-      name: video_player_web
-      sha256: e8bba2e5d1e159d5048c9a491bb2a7b29c535c612bb7d10c1e21107f5bd365ba
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.3.5"
   vm_service:
     dependency: transitive
     description:
@@ -1165,22 +1045,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "14.3.1"
-  wakelock_plus:
-    dependency: transitive
-    description:
-      name: wakelock_plus
-      sha256: a474e314c3e8fb5adef1f9ae2d247e57467ad557fa7483a2b895bc1b421c5678
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.3.2"
-  wakelock_plus_platform_interface:
-    dependency: transitive
-    description:
-      name: wakelock_plus_platform_interface
-      sha256: e10444072e50dbc4999d7316fd303f7ea53d31c824aa5eb05d7ccbdd98985207
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.2.3"
   web:
     dependency: transitive
     description:
@@ -1255,4 +1119,4 @@ packages:
     version: "6.5.0"
 sdks:
   dart: ">=3.7.0 <4.0.0"
-  flutter: ">=3.29.0"
+  flutter: ">=3.27.0"
