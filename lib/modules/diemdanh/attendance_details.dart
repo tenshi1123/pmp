@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pmp_english/modules/diemdanh/diem_danh_screen.dart';
+import 'package:pmp_english/student_models/diem_danh_model.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:pmp_english/utils/widget/custom_widget.dart';
 
 class AttendanceDetails extends StatelessWidget {
-  const AttendanceDetails({super.key});
-
+  const AttendanceDetails({super.key, required this.infoModel});
+  final InfoDiemDanh infoModel;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +53,7 @@ class AttendanceDetails extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(left: 20.w, top: 20.h),
                 child: Text(
-                  'TOEIC 4 kỹ năng ',
+                  infoModel.courseName,
                   style: defaultText16B,
                 ),
               ),
@@ -61,7 +62,15 @@ class AttendanceDetails extends StatelessWidget {
                   SizedBox(
                     height: 120.h,
                     width: 120.h,
-                    child: const PieChart(),
+                    child: PieChart(
+                      percent: 100 -
+                          (infoModel.totalChuahoc *
+                              100 ~/
+                              int.parse(infoModel.total)),
+                      attended: infoModel.totalAttended,
+                      abstract: infoModel.totalAbsent,
+                      total: infoModel.totalChuahoc.toString(),
+                    ),
                   ),
                   SizedBox(
                     height: 90.h,
@@ -77,7 +86,7 @@ class AttendanceDetails extends StatelessWidget {
                               style: defaultText12Re,
                             ),
                             Text(
-                              'TTH4',
+                              infoModel.alias,
                               style: defaultText12B,
                             ),
                           ],
@@ -90,7 +99,7 @@ class AttendanceDetails extends StatelessWidget {
                               style: defaultText12Re,
                             ),
                             Text(
-                              '07/05/2024',
+                              infoModel.startDate,
                               style: defaultText12B,
                             ),
                           ],
@@ -103,7 +112,7 @@ class AttendanceDetails extends StatelessWidget {
                               style: defaultText12Re,
                             ),
                             Text(
-                              '07/10/2024',
+                              infoModel.expiryDate,
                               style: defaultText12B,
                             ),
                           ],
@@ -135,7 +144,7 @@ class AttendanceDetails extends StatelessWidget {
                               ),
                               child: Center(
                                 child: Text(
-                                  '26',
+                                  infoModel.totalAttended,
                                   style: defaultText14B.copyWith(
                                     color: Colors.white,
                                   ),
@@ -153,13 +162,14 @@ class AttendanceDetails extends StatelessWidget {
                             ),
                             Container(
                               //height: 17.h,
-                              width: 24.w,
+                              //width: 24.w,
+                              padding: const EdgeInsets.all(6),
                               decoration: BoxDecoration(
                                 color: sub2Color,
                               ),
                               child: Center(
                                 child: Text(
-                                  '1',
+                                  infoModel.totalAbsent,
                                   style: defaultText14B.copyWith(
                                       color: Colors.white),
                                 ),
@@ -182,7 +192,7 @@ class AttendanceDetails extends StatelessWidget {
                               ),
                               child: Center(
                                 child: Text(
-                                  '13',
+                                  infoModel.totalChuahoc.toString(),
                                   style: defaultText14B.copyWith(
                                       color: Colors.white),
                                 ),
@@ -195,7 +205,7 @@ class AttendanceDetails extends StatelessWidget {
                   ),
                 ],
               ),
-              _tabSection(context),
+              _TabSection(infoModel),
             ],
           ),
         ),
@@ -204,66 +214,79 @@ class AttendanceDetails extends StatelessWidget {
   }
 }
 
-Widget _tabSection(
-  BuildContext context,
-) {
-  return DefaultTabController(
-    length: 2,
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        TabBar(
-            unselectedLabelColor: keyBlack.withOpacity(0.3),
-            labelColor: main1Color,
-            labelStyle: defaultText14B,
-            indicatorColor: main1Color,
-            //indicatorSize: TabBarIndicatorSize(),
-            tabs: [
-              homeTab(
-                title: "Đã qua",
-                isSeprator: false,
-              ),
-              homeTab(
-                title: "Sắp tới",
-              ),
+class _TabSection extends StatelessWidget {
+  const _TabSection(this.infoModel);
+  final InfoDiemDanh infoModel;
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 2,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          TabBar(
+              unselectedLabelColor: keyBlack.withOpacity(0.3),
+              labelColor: main1Color,
+              labelStyle: defaultText14B,
+              indicatorColor: main1Color,
+              //indicatorSize: TabBarIndicatorSize(),
+              tabs: [
+                homeTab(
+                  title: "Đã qua",
+                  isSeprator: false,
+                  number: infoModel.daqua.length,
+                ),
+                homeTab(
+                  title: "Sắp tới",
+                  number: infoModel.saptoi.length,
+                ),
+              ]),
+          SizedBox(
+            //Add this to give height
+            height: MediaQuery.of(context).size.height * 0.8,
+            child: TabBarView(children: [
+              ListView.builder(
+                  shrinkWrap: true,
+                  physics: const ClampingScrollPhysics(),
+                  itemCount: infoModel.daqua.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return CaseStudy(
+                      index: index,
+                      isCompleted: true,
+                      detailModel: infoModel.daqua[index],
+                    );
+                  }),
+              ListView.builder(
+                  shrinkWrap: true,
+                  physics: const ClampingScrollPhysics(),
+                  itemCount: infoModel.saptoi.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return CaseStudy(
+                      index: index,
+                      isCompleted: false,
+                      detailModel: infoModel.saptoi[index],
+                    );
+                  }),
             ]),
-        SizedBox(
-          //Add this to give height
-          height: MediaQuery.of(context).size.height * 0.8,
-          child: TabBarView(children: [
-            ListView.builder(
-                shrinkWrap: true,
-                physics: const ClampingScrollPhysics(),
-                itemCount: 15,
-                itemBuilder: (BuildContext context, int index) {
-                  return CaseStudy(
-                    index: index,
-                    isCompleted: true,
-                  );
-                }),
-            ListView.builder(
-                shrinkWrap: true,
-                physics: const ClampingScrollPhysics(),
-                itemCount: 15,
-                itemBuilder: (BuildContext context, int index) {
-                  return CaseStudy(
-                    index: index,
-                    isCompleted: false,
-                  );
-                }),
-          ]),
-        ),
-      ],
-    ),
-  );
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class CaseStudy extends StatelessWidget {
-  const CaseStudy({super.key, required this.index, required this.isCompleted});
+  const CaseStudy({
+    super.key,
+    required this.index,
+    required this.isCompleted,
+    required this.detailModel,
+  });
   final int index;
   final bool isCompleted;
+  final DetailDiemDanh detailModel;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -284,7 +307,7 @@ class CaseStudy extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '0${index + 1}/05/2024',
+                      detailModel.day,
                       style: defaultText14B,
                     ),
                     const Spacer(),
@@ -302,17 +325,17 @@ class CaseStudy extends StatelessWidget {
               SizedBox(width: 10.w),
               SizedBox(
                 height: 60.h,
-                width: 90.w,
+                width: 200.w,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Spacer(),
                     Text(
-                      '08:00 - 11:00',
+                      detailModel.time,
                       style: defaultText14B,
                     ),
                     Text(
-                      'Nguyễn Phú',
+                      detailModel.teacherName,
                       style: defaultText14B,
                     ),
                   ],
@@ -320,11 +343,11 @@ class CaseStudy extends StatelessWidget {
               ),
               const Spacer(),
               Image.asset(
-                !isCompleted
-                    ? 'assets/images/iscomming.png'
-                    : index == 0
+                (detailModel.gvStatus == '3')
+                    ? 'assets/images/complete.png'
+                    : (detailModel.gvStatus == '0')
                         ? 'assets/images/miss.png'
-                        : 'assets/images/complete.png',
+                        : 'assets/images/iscomming.png',
                 width: 36.w,
                 height: 36.h,
                 fit: BoxFit.fill,

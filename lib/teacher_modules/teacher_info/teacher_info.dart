@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/modules/bottombar/screen/user_info/change_pass_screen.dart';
+import 'package:pmp_english/modules/bottombar/screen/user_info/edit_info_screen.dart';
+import 'package:pmp_english/teacher/teacher_model/home_teacher_model.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../modules/splash/wellcom_screen.dart';
 
 class TeacherInfo extends StatelessWidget {
-  const TeacherInfo({super.key});
-
+  const TeacherInfo({super.key, required this.teacherProfileModel});
+  final TeacherProfileModel teacherProfileModel;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -45,7 +49,7 @@ class TeacherInfo extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(16.r),
             child: Image.network(
-              "https://i.pravatar.cc/100", // Thay bằng ảnh của bạn
+              teacherProfileModel.avatar, // Thay bằng ảnh của bạn
               width: 80.w,
               height: 80.h,
               fit: BoxFit.cover,
@@ -55,17 +59,17 @@ class TeacherInfo extends StatelessWidget {
         const SizedBox(height: 10),
 
         // Tên và số điện thoại
-        const Text(
-          "Nguyễn Trâm Anh",
-          style: TextStyle(
+        Text(
+          teacherProfileModel.fullName,
+          style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
             color: Colors.black87,
           ),
         ),
-        const Text(
-          "097 111 6262",
-          style: TextStyle(
+        Text(
+          teacherProfileModel.phone,
+          style: const TextStyle(
             fontSize: 16,
             color: Colors.black54,
           ),
@@ -91,12 +95,28 @@ class TeacherInfo extends StatelessWidget {
               _buildMenuItem(
                 icon: Icons.person_outline,
                 text: "Thông tin tài khoản",
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => InfoUser(
+                        teacherProfileModel: teacherProfileModel,
+                      ),
+                    ),
+                  );
+                },
               ),
               _buildMenuItem(
                 icon: Icons.vpn_key_outlined,
                 text: "Đổi mật khẩu",
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ChangePassScreen(),
+                    ),
+                  );
+                },
               ),
               _buildMenuItem(
                 icon: Icons.logout,
@@ -185,7 +205,12 @@ Future<void> _dialogBuilder(BuildContext context) {
               textStyle: Theme.of(context).textTheme.labelLarge,
             ),
             child: const Text('Xác nhận'),
-            onPressed: () {
+            onPressed: () async {
+              // Xóa token và thông tin người dùng khỏi SharedPreferences
+              // (Thay thế bằng mã của bạn để xóa token và thông tin người dùng)
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              await prefs.remove('token');
+
               Navigator.push(
                 context,
                 MaterialPageRoute(

@@ -2,14 +2,16 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pmp_english/modules/feature_home/exercise/test_detail_screen.dart';
+import 'package:pmp_english/student_models/home_model.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 
 class TestScreen extends StatelessWidget {
   const TestScreen({
     super.key,
+    required this.excerciseModel,
   });
-
+  final DetailExcerciseModel excerciseModel;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,32 +44,14 @@ class TestScreen extends StatelessWidget {
                 SizedBox(
                   width: 10.w,
                 ),
-
-                // RichText(
-                //   text: TextSpan(
-                //       text: '<  Chi tiết buổi học ',
-                //       style: defaultBoldText.copyWith(
-                //         fontSize: 14.sp,
-                //         color: keyBlack.withOpacity(0.5),
-                //       ),
-                //       recognizer: TapGestureRecognizer()
-                //         ..onTap = () => Navigator.of(context).pop(),
-                //       children: [
-                //         TextSpan(
-                //           text: ' <  Kiểm tra',
-                //           style: defaultBoldText.copyWith(fontSize: 14.sp),
-                //         )
-                //       ]),
-                // ),
-
-                //  SvgPicture.asset('assets/icons/three_dots_icon.svg'),
               ],
             ),
             SizedBox(
               height: 16.h,
             ),
-            const _InfoTest(
-              isComplete: false,
+            _InfoTest(
+              isComplete: true,
+              model: excerciseModel,
             ),
             SizedBox(
               height: 16.h,
@@ -88,36 +72,6 @@ class TestScreen extends StatelessWidget {
                 color: key1Color.withOpacity(0.5),
               ),
             ),
-
-            // Container(
-            //   width: 350.w,
-            //   height: 51.h,
-            //   decoration: BoxDecoration(
-            //     color: const Color(0xffDEE4ED),
-            //     borderRadius: BorderRadius.all(Radius.circular(10.r)),
-            //   ),
-            //   child: Row(
-            //     children: [
-            //       SizedBox(
-            //         width: 20.w,
-            //       ),
-            //       Text(
-            //         'Xem chi tiết bài làm',
-            //         style: defaultText16B,
-            //       ),
-            //       const Spacer(),
-            //       Icon(
-            //         Icons.keyboard_arrow_right,
-            //         color: key1Color,
-            //         size: 30.dm,
-            //         semanticLabel: 'Text to announce in accessibility modes',
-            //       ),
-            //       SizedBox(
-            //         width: 20.w,
-            //       ),
-            //     ],
-            //   ),
-            // ),
           ],
         ),
       ),
@@ -128,9 +82,10 @@ class TestScreen extends StatelessWidget {
 class _InfoTest extends StatelessWidget {
   const _InfoTest({
     required this.isComplete,
+    required this.model,
   });
   final bool isComplete;
-
+  final DetailExcerciseModel model;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -143,7 +98,7 @@ class _InfoTest extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: key1Color.withOpacity(0.1),
+            color: key1Color.withValues(alpha: 0.1),
             spreadRadius: 5,
             blurRadius: 7,
             offset: const Offset(4, 5), // changes position of shadow
@@ -156,87 +111,44 @@ class _InfoTest extends StatelessWidget {
         },
         child: Stack(
           children: [
-            Positioned(
-              right: 12.w,
-              top: 12.h,
-              child: Container(
-                height: 63.h,
-                width: 63.w,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.shade100,
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                        offset: const Offset(4, 5),
-                      )
-                    ]),
-                child: Center(
-                  child: Text(
-                    '--.--',
-                    style: defaultText18B.copyWith(color: main1Color),
-                  ),
-                ),
-              ),
-            ),
+            // Positioned(
+            //   right: 12.w,
+            //   top: 12.h,
+            //   child: Container(
+            //     height: 63.h,
+            //     width: 63.w,
+            //     decoration: BoxDecoration(
+            //         color: Colors.white,
+            //         shape: BoxShape.circle,
+            //         boxShadow: [
+            //           BoxShadow(
+            //             color: Colors.grey.shade100,
+            //             spreadRadius: 5,
+            //             blurRadius: 7,
+            //             offset: const Offset(4, 5),
+            //           )
+            //         ]),
+            //     child: Center(
+            //       child: Text(
+            //         '--.--',
+            //         style: defaultText18B.copyWith(color: main1Color),
+            //       ),
+            //     ),
+            //   ),
+            // ),
             Positioned(
               top: 10.h,
               left: 10.w,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Row(
-                  //   children: [
-                  //     Container(
-                  //       width: 90.w,
-                  //       height: 23.h,
-                  //       decoration: BoxDecoration(
-                  //         borderRadius: BorderRadius.all(Radius.circular(16.r)),
-                  //         color: kPrimaryColor,
-                  //       ),
-                  //       child: Center(
-                  //         child: Text(
-                  //           'Trắc nghiệm',
-                  //           style: defaultBoldText.copyWith(
-                  //             color: Colors.white,
-                  //             fontSize: 12.w,
-                  //           ),
-                  //           textAlign: TextAlign.center,
-                  //         ),
-                  //       ),
-                  //     ),
-                  //     SizedBox(
-                  //       width: 6.w,
-                  //     ),
-                  //     Container(
-                  //       width: 81.w,
-                  //       height: 21.h,
-                  //       decoration: BoxDecoration(
-                  //         borderRadius: BorderRadius.all(Radius.circular(16.r)),
-                  //         color: kPrimaryColor,
-                  //       ),
-                  //       child: Center(
-                  //         child: Text(
-                  //           '15 phút',
-                  //           style: defaultBoldText.copyWith(
-                  //             color: Colors.white,
-                  //             fontSize: 12.w,
-                  //           ),
-                  //           textAlign: TextAlign.center,
-                  //         ),
-                  //       ),
-                  //     )
-                  //   ],
-                  // ),
                   SizedBox(
                     height: 10.h,
                   ),
                   SizedBox(
                     width: 253.w,
                     child: Text(
-                      'Test 8: Reading',
+                      model.valueModel.name,
                       style: defaultText18B,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
@@ -246,7 +158,7 @@ class _InfoTest extends StatelessWidget {
                     height: 8.h,
                   ),
                   Text(
-                    'Thời lượng: 15 phút',
+                    'Thời lượng: ${model.detail[0].totalQuestions} Câu',
                     style: defaultText12Re,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
@@ -255,7 +167,7 @@ class _InfoTest extends StatelessWidget {
                     height: 2.h,
                   ),
                   Text(
-                    'Ngày giao: 26 tháng , 2024',
+                    'Ngày giao: ${model.detail[0].createAt}',
                     style: defaultText12Re,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
@@ -263,21 +175,26 @@ class _InfoTest extends StatelessWidget {
                   SizedBox(
                     height: 8.h,
                   ),
+                  if (model.valueModel.timeDeadline.contains('0000'))
+                    Text(
+                      'Hạn hoàn thành: Không giới hạn',
+                      style: defaultText12B,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                    )
+                  else
+                    Text(
+                      'Hạn hoàn thành: ${model.valueModel.timeDeadline}',
+                      style: defaultText12B,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                    ),
                   Text(
-                    'Hạn hoàn thành: 27 tháng 5, 2024',
+                    'Điểm : ${model.detail[0].finalMark}',
                     style: defaultText12B,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                   ),
-                  // SizedBox(
-                  //   width: 320.w,
-                  //   child: Text(
-                  //     'dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
-                  //     style: defaultText14,
-                  //     overflow: TextOverflow.ellipsis,
-                  //     maxLines: 3,
-                  //   ),
-                  // ),
                   Container(
                     margin: EdgeInsets.symmetric(vertical: 6.h),
                     height: 1.h,

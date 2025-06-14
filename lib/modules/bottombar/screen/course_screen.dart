@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pmp_english/modules/course/course_details.dart';
+import 'package:pmp_english/modules/course/course_details_screen.dart';
+import 'package:pmp_english/student_repo/mycourse_repo.dart';
+import 'package:pmp_english/student_models/my_course_model.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
@@ -28,116 +30,136 @@ class _CourseScreenState extends State<CourseScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey.shade200,
-      body: Column(
-        children: [
-          SizedBox(
-            height: 180.h,
-            child: Stack(
-              children: [
-                Positioned(
-                  top: 0,
-                  child: Container(
-                    width: 390.w,
-                    height: 140.h,
-                    decoration: BoxDecoration(gradient: mainGradient),
+    return Column(
+      children: [
+        SizedBox(
+          height: 180.h,
+          child: Stack(
+            children: [
+              Positioned(
+                top: 0,
+                child: Container(
+                  width: 390.w,
+                  height: 140.h,
+                  decoration: BoxDecoration(gradient: mainGradient),
+                ),
+              ),
+              Positioned(
+                top: 115.h,
+                left: 20.h,
+                child: Container(
+                  width: 350.w,
+                  height: 66.h,
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                  child: TabBar(
+                    controller: _tabController,
+                    indicator: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
+                      gradient: mainGradient2,
+                    ),
+                    dividerColor: Colors.transparent,
+                    indicatorSize: TabBarIndicatorSize.tab,
+                    labelStyle: const TextStyle(
+                        fontSize: 14, fontWeight: FontWeight.w500),
+                    labelColor: Colors.white,
+                    unselectedLabelColor: Colors.black,
+                    tabs: _tabs,
                   ),
                 ),
-                Positioned(
-                  top: 115.h,
-                  left: 20.h,
-                  child: Container(
-                    width: 350.w,
-                    height: 66.h,
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
-                    child: TabBar(
-                      controller: _tabController,
-                      indicator: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
-                        gradient: mainGradient2,
-                      ),
-                      dividerColor: Colors.transparent,
-                      indicatorSize: TabBarIndicatorSize.tab,
-                      labelStyle: const TextStyle(
-                          fontSize: 14, fontWeight: FontWeight.w500),
-                      labelColor: Colors.white,
-                      unselectedLabelColor: Colors.black,
-                      tabs: _tabs,
-                    ),
+              ),
+              Positioned(
+                bottom: 70.h,
+                left: 22.w,
+                child: Text(
+                  'Khóa học của bạn',
+                  style: defaultText20B.copyWith(
+                    color: Colors.white,
                   ),
                 ),
-                Positioned(
-                  bottom: 70.h,
-                  left: 22.w,
-                  child: Text(
-                    'Khóa học của bạn',
-                    style: defaultText20B.copyWith(
-                      color: Colors.white,
-                    ),
-                  ),
+              ),
+              Positioned(
+                bottom: 60.h,
+                left: 250.w,
+                child: Image.asset(
+                  'assets/images/course_icon.png',
+                  width: 115.w,
+                  height: 92.h,
+                  fit: BoxFit.fill,
                 ),
-                Positioned(
-                  bottom: 60.h,
-                  left: 250.w,
-                  child: Image.asset(
-                    'assets/images/course_icon.png',
-                    width: 115.w,
-                    height: 92.h,
-                    fit: BoxFit.fill,
-                  ),
-                )
-              ],
-            ),
+              )
+            ],
           ),
-          Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: [
-                ListView.builder(
-                    shrinkWrap: true,
-                    physics: const ClampingScrollPhysics(),
-                    itemCount: 5,
-                    itemBuilder: (BuildContext context, int index) {
-                      return CourseItem(
-                        index: index,
-                      );
-                    }),
-                ListView.builder(
-                    shrinkWrap: true,
-                    physics: const ClampingScrollPhysics(),
-                    itemCount: 5,
-                    itemBuilder: (BuildContext context, int index) {
-                      return CourseItem(
-                        index: index,
-                      );
-                    }),
-                ListView.builder(
-                    shrinkWrap: true,
-                    physics: const ClampingScrollPhysics(),
-                    itemCount: 5,
-                    itemBuilder: (BuildContext context, int index) {
-                      return CourseItem(
-                        index: index,
-                      );
-                    }),
-              ],
-            ),
-          ),
-        ],
-      ),
+        ),
+        FutureBuilder<List<MyCourseModel>>(
+          future: MycourseRepo().getListMyCourse(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              final listMyCourse = snapshot.data as List<MyCourseModel>;
+              return Expanded(
+                child: TabBarView(
+                  controller: _tabController,
+                  children: [
+                    ListView.builder(
+                        shrinkWrap: true,
+                        physics: const ClampingScrollPhysics(),
+                        itemCount: listMyCourse.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return CourseItem(
+                            index: index,
+                            model: listMyCourse[index],
+                          );
+                        }),
+                    ListView.builder(
+                        shrinkWrap: true,
+                        physics: const ClampingScrollPhysics(),
+                        itemCount: listMyCourse
+                            .where((e) => e.ccsStatus == '1')
+                            .toList()
+                            .length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return CourseItem(
+                            index: index,
+                            model: listMyCourse
+                                .where((e) => e.ccsStatus == '1')
+                                .toList()[index],
+                          );
+                        }),
+                    ListView.builder(
+                        shrinkWrap: true,
+                        physics: const ClampingScrollPhysics(),
+                        itemCount: listMyCourse
+                            .where((e) => e.ccsStatus == '2')
+                            .toList()
+                            .length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return CourseItem(
+                            index: index,
+                            model: listMyCourse
+                                .where((e) => e.ccsStatus == '2')
+                                .toList()[index],
+                          );
+                        }),
+                  ],
+                ),
+              );
+            } else {
+              return const Center(child: CircularProgressIndicator());
+            }
+          },
+        ),
+      ],
     );
   }
 }
 
 class CourseItem extends StatelessWidget {
-  const CourseItem({super.key, required this.index});
+  const CourseItem({super.key, required this.index, required this.model});
   final int index;
-
+  final MyCourseModel model;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -157,7 +179,8 @@ class CourseItem extends StatelessWidget {
               topLeft: Radius.circular(16),
               topRight: Radius.circular(16),
             ),
-            child: Image.asset('assets/images/course_image.png'),
+            child: Image.network(
+                'https://lms.pmpenglish.edu.vn/images/${model.img}'),
           ),
           SizedBox(
             height: 10.h,
@@ -170,7 +193,7 @@ class CourseItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'TOEIC 4 kỹ năng',
+                    model.name,
                     style: TextStyle(
                       color: key1Color,
                       fontWeight: FontWeight.w500,
@@ -187,7 +210,7 @@ class CourseItem extends StatelessWidget {
                       ),
                     ),
                     child: Text(
-                      'Đang học',
+                      model.statusName,
                       style: defaultText12B.copyWith(color: Colors.white),
                     ),
                   ),
@@ -201,9 +224,9 @@ class CourseItem extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.w),
             child: Text(
-              'Giảng viên: Nguyễn Phú',
+              'Giảng viên: ${model.teacherName}',
               style: defaultText14M.copyWith(
-                color: key1Color.withOpacity(0.5),
+                color: key1Color.withValues(alpha: 0.5),
               ),
             ),
           ),
@@ -213,9 +236,9 @@ class CourseItem extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.w),
             child: Text(
-              'Lớp: THH 499 - Cơ sở: Lê Văn Việt',
+              'Lớp: ${model.alias} ${model.cosoName}',
               style: defaultText14M.copyWith(
-                color: key1Color.withOpacity(0.5),
+                color: key1Color.withValues(alpha: 0.5),
               ),
             ),
           ),
@@ -228,18 +251,18 @@ class CourseItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '66%',
+                  '${(model.totalAttended / model.totalBuoiHoc * 100).toStringAsFixed(2)}%',
                   style: defaultText14M.copyWith(color: main1Color),
                 ),
                 RichText(
                   text: TextSpan(
-                    text: '26',
+                    text: model.totalAttended.toString(),
                     style: defaultText14M,
                     children: <TextSpan>[
                       TextSpan(
-                        text: '/40 buổi',
+                        text: '/${model.totalBuoiHoc} buổi',
                         style: defaultText14M.copyWith(
-                          color: key1Color.withOpacity(0.5),
+                          color: key1Color.withValues(alpha: 0.5),
                         ),
                       ),
                     ],
@@ -256,7 +279,7 @@ class CourseItem extends StatelessWidget {
             animation: true,
             lineHeight: 20.0,
             animationDuration: 2000,
-            percent: 0.66,
+            percent: model.totalAttended / model.totalBuoiHoc,
             barRadius: const Radius.circular(16),
             linearGradient: mainGradient,
             backgroundColor: state2,
@@ -265,11 +288,21 @@ class CourseItem extends StatelessWidget {
             height: 10.h,
           ),
           GestureDetector(
-            onTap: () {
+            onTap: () async {
+              DetailMyCourse courseDetail =
+                  await MycourseRepo().getDetailMyCourse(id: model.id);
+              MycourseBaiTapModel baiTap =
+                  await MycourseRepo().getMycourseBaitap(id: model.id);
+              DetailBaoCaoModel detailBaoCao =
+                  await MycourseRepo().getMycourseBaocao(id: model.id);
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const CourseDetails(),
+                  builder: (context) => CourseDetails(
+                    detailMyCourse: courseDetail,
+                    detailBaoCao: detailBaoCao,
+                    baiTapModel: baiTap,
+                  ),
                 ),
               );
             },

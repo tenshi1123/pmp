@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:pmp_english/modules/chat/screen/list_conversation_screen.dart';
 import 'package:pmp_english/modules/notification/notification.dart';
+import 'package:pmp_english/student_models/chat_models.dart';
+import 'package:pmp_english/student_models/profile_model.dart';
+import 'package:pmp_english/student_repo/chat_repo.dart';
+import 'package:pmp_english/teacher/teacher_model/home_teacher_model.dart';
+import 'package:pmp_english/teacher/teacher_model/teacher_class_model.dart';
+import 'package:pmp_english/teacher/teacher_repo/teacher_class_repo.dart';
+import 'package:pmp_english/teacher/teacher_repo/teacher_repo.dart';
 import 'package:pmp_english/teacher_modules/teacher_bottombar/home/lichhen_screen.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -10,8 +19,10 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../teacher_class/teacher_detail_lesson.dart';
 
 class TeacherHomeScreen extends StatefulWidget {
-  const TeacherHomeScreen({super.key});
-
+  const TeacherHomeScreen(
+      {super.key, required this.infoModel, required this.teacherProfileModel});
+  final TeacherHomeModel infoModel;
+  final TeacherProfileModel teacherProfileModel;
   @override
   State<TeacherHomeScreen> createState() => _TeacherHomeScreenState();
 }
@@ -40,7 +51,7 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
               Padding(
                 padding: EdgeInsets.only(left: 16.w, top: 16.h),
                 child: Text(
-                  'Hi, Trâm Anh',
+                  widget.teacherProfileModel.fullName,
                   style: defaultText16B.copyWith(
                       fontSize: 24.sp, color: Colors.white),
                 ),
@@ -48,7 +59,7 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
               Padding(
                 padding: EdgeInsets.only(left: 16.w, top: 2.h),
                 child: Text(
-                  'Today, 24 Nov 2025',
+                  'Today, ${DateFormat("dd-MM-yyyy").format(DateTime.now())}',
                   style: defaultText16Re.copyWith(
                     fontSize: 16.sp,
                     color: Colors.white.withValues(alpha: 0.72),
@@ -90,14 +101,19 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
                                 Radius.circular(16.r),
                               ),
                               child: SizedBox(
-                                height: 208.h,
-                                width: 390.w,
+                                height: 270.h,
+                                width: 370.w,
                                 child: PageView.builder(
                                   padEnds: false,
                                   controller: controller,
-                                  itemCount: 3,
+                                  itemCount: widget.infoModel.lichhoc.length > 3
+                                      ? 3
+                                      : widget.infoModel.lichhoc.length,
                                   itemBuilder: (_, index) {
-                                    return const _CommingSchedule();
+                                    return _CommingSchedule(
+                                      lichHocModel:
+                                          widget.infoModel.lichhoc[index],
+                                    );
                                   },
                                 ),
                               ),
@@ -107,7 +123,11 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
                             ),
                             SmoothPageIndicator(
                               controller: controller,
-                              count: 3,
+                              count: widget.infoModel.lichhoc.length > 3
+                                  ? 3
+                                  : widget.infoModel.lichhoc.isEmpty
+                                      ? 1
+                                      : widget.infoModel.lichhoc.length,
                               effect: CustomizableEffect(
                                 activeDotDecoration: DotDecoration(
                                   width: 20.w,
@@ -159,9 +179,14 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    const LichHenScreen()));
+                                                    LichHenScreen(
+                                                      listLichHen: widget
+                                                          .infoModel.lichhen,
+                                                    )));
                                       },
-                                      child: const AppointmentCard()),
+                                      child: AppointmentCard(
+                                        count: widget.infoModel.lichhen.length,
+                                      )),
                                 ],
                               ),
                             )
@@ -195,11 +220,15 @@ class _AvatarRow extends StatelessWidget {
         ),
         const Spacer(),
         GestureDetector(
-          onTap: () {
-            Navigator.push(
+          onTap: () async {
+            List<ChatModel> listConversation =
+                await ChatRepo().getTeacherListConversation();
+            pushWithoutNavBar(
               context,
               MaterialPageRoute(
-                builder: (context) => const ListConversationScreen(),
+                builder: (context) => ListConversationScreen(
+                  listConversation: listConversation,
+                ),
               ),
             );
           },
@@ -213,11 +242,14 @@ class _AvatarRow extends StatelessWidget {
           width: 16.w,
         ),
         GestureDetector(
-          onTap: () {
-            Navigator.push(
+          onTap: () async {
+            List<NotiModel> listNoti = await TeacherRepo().getListNoti();
+            pushWithoutNavBar(
               context,
               MaterialPageRoute(
-                builder: (context) => const NotificationScreen(),
+                builder: (context) => NotificationScreen(
+                  listNoti: listNoti,
+                ),
               ),
             );
           },
@@ -236,121 +268,203 @@ class _AvatarRow extends StatelessWidget {
 }
 
 class _CommingSchedule extends StatelessWidget {
-  const _CommingSchedule();
+  const _CommingSchedule({required this.lichHocModel});
+  final LichHocModel lichHocModel;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        pushWithoutNavBar(context,
-            MaterialPageRoute(builder: (context) => const LessonDetail()));
-      },
-      child: Container(
-        margin: EdgeInsets.symmetric(
-          horizontal: 16.w,
-          vertical: 10.h,
-        ),
-        padding: EdgeInsets.symmetric(
-          horizontal: 16.w,
-          vertical: 16.h,
-        ),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(
-            Radius.circular(16.r),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: const Color(0xff163065).withValues(alpha: 0.12),
-              spreadRadius: 0,
-              blurRadius: 12,
-              offset: const Offset(0, 4),
+      onTap: () async {
+        List<DiemDanhHSModel> listDiemDanh = await TeacherClassRepo()
+            .getListDiemDanh(
+                courseScheduleId: lichHocModel.courseScheduleId,
+                id: lichHocModel.id);
+        List<ExamModel> listBaiTap = await TeacherClassRepo().getlistExam(
+            courseScheduleId: lichHocModel.courseScheduleId,
+            id: lichHocModel.id,
+            type: 1);
+        List<ExamModel> listDeThi = await TeacherClassRepo().getlistExam(
+            courseScheduleId: lichHocModel.courseScheduleId,
+            id: lichHocModel.id,
+            type: 2);
+        pushWithoutNavBar(
+          context,
+          MaterialPageRoute(
+            builder: (context) => LessonDetail(
+              listDiemDanh: listDiemDanh,
+              title:
+                  "${lichHocModel.name} ${lichHocModel.dayOfWeek} ${DateFormat('dd/MM/yyyy').format(lichHocModel.day)}",
+              listBaiTap: listBaiTap,
+              listDeThi: listDeThi,
             ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 10.w,
-                    vertical: 15.h,
-                  ),
-                  decoration: BoxDecoration(
-                    color: const Color(0xff00AEEF),
-                    borderRadius: BorderRadius.circular(12.r),
-                  ),
+          ),
+        );
+      },
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return Container(
+            margin: EdgeInsets.symmetric(horizontal: 5.w, vertical: 10.h),
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(16.r)),
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xff163065).withValues(alpha: 0.12),
+                  spreadRadius: 0,
+                  blurRadius: 12,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: SingleChildScrollView(
+              // Thêm Scroll nếu tràn
+
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: constraints.maxHeight,
+                  maxHeight: constraints.maxHeight,
+                ),
+                child: IntrinsicHeight(
+                  // Tự co height theo nội dung bên trong
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        '01',
-                        style: defaultText16B.copyWith(
-                            color: Colors.white, fontSize: 26.sp),
+                      Row(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10.w, vertical: 15.h),
+                            decoration: BoxDecoration(
+                              color: const Color(0xff00AEEF),
+                              borderRadius: BorderRadius.circular(12.r),
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  lichHocModel.day.day.toString(),
+                                  style: defaultText16B.copyWith(
+                                      color: Colors.white, fontSize: 26.sp),
+                                ),
+                                Text(
+                                  'Tháng ${lichHocModel.day.month}',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(width: 12.w),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  lichHocModel.name,
+                                  style: defaultText18B,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                SizedBox(height: 5.h),
+                                Text(
+                                  lichHocModel.dayOfWeek,
+                                  style: defaultText14M,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                      Text(
-                        'Tháng 12',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w500,
+                      SizedBox(height: 12.h),
+                      Expanded(
+                        // Expanded sẽ fill khoảng trống còn lại
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _buildInfoLine(
+                                'Phòng học: ', lichHocModel.phongHoc),
+                            SizedBox(height: 8.h),
+                            _buildInfoLine('Chi nhánh: ', lichHocModel.coSo),
+                            SizedBox(height: 8.h),
+                            Html(
+                              data: lichHocModel.noidung,
+                              style: {
+                                "table": Style(
+                                  backgroundColor: const Color.fromARGB(
+                                      0x50, 0xee, 0xee, 0xee),
+                                ),
+                                "th": Style(
+                                  padding: HtmlPaddings.all(6),
+                                  backgroundColor: Colors.grey,
+                                ),
+                                "td": Style(
+                                  padding: HtmlPaddings.all(6),
+                                  border: const Border(
+                                      bottom: BorderSide(color: Colors.grey)),
+                                ),
+                                'h5': Style(
+                                    maxLines: 2,
+                                    textOverflow: TextOverflow.ellipsis),
+                                'flutter': Style(
+                                  display: Display.block,
+                                  fontSize: FontSize(5, Unit.em),
+                                ),
+                                ".second-table": Style(
+                                  backgroundColor: Colors.transparent,
+                                ),
+                                ".second-table tr td:first-child": Style(
+                                  fontWeight: FontWeight.bold,
+                                  textAlign: TextAlign.end,
+                                ),
+                                "p": Style(
+                                  color: Colors.black,
+                                  fontSize: FontSize(16.sp),
+                                  fontWeight: FontWeight.w400,
+                                  lineHeight: const LineHeight(1.5),
+                                ),
+                              },
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(width: 20),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: 200.w,
-                      child: Text('Khoá tiếng anh cơ bản - Off',
-                          style: defaultText18B),
-                    ),
-                    const SizedBox(height: 5),
-                    Text('Thứ 6 (08:30 - 10:30)', style: defaultText14M),
-                  ],
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            RichText(
-              text: TextSpan(
-                text: 'Phòng học: ',
-                style: defaultText16M,
-                children: [
-                  TextSpan(
-                      text: '101',
-                      style: defaultText16B.copyWith(
-                          color: const Color(0xff00AEEF))),
-                ],
               ),
             ),
-            const SizedBox(height: 10),
-            RichText(
-              text: TextSpan(
-                text: 'Chi nhánh: ',
-                style: defaultText16M,
-                children: [
-                  TextSpan(
-                      text: '34 Hồ Thị Tư',
-                      style: defaultText16B.copyWith(
-                          color: const Color(0xff00AEEF))),
-                ],
-              ),
-            ),
-          ],
-        ),
+          );
+        },
       ),
+    );
+  }
+
+  Widget _buildInfoLine(String label, String value, {int maxLines = 1}) {
+    return RichText(
+      text: TextSpan(
+        text: label,
+        style: defaultText16M,
+        children: [
+          TextSpan(
+            text: value,
+            style: defaultText16B.copyWith(color: const Color(0xff00AEEF)),
+          ),
+        ],
+      ),
+      maxLines: maxLines,
+      overflow: TextOverflow.ellipsis,
     );
   }
 }
 
 class AppointmentCard extends StatelessWidget {
-  const AppointmentCard({super.key});
-
+  const AppointmentCard({super.key, required this.count});
+  final int count; // Số lượng thông báo
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -404,9 +518,9 @@ class AppointmentCard extends StatelessWidget {
                 ),
               ],
             ),
-            child: const Text(
-              "3", // Số lượng thông báo
-              style: TextStyle(
+            child: Text(
+              count.toString(), // Số lượng thông báo
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 14,
                 fontWeight: FontWeight.bold,

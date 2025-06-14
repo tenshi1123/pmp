@@ -1,6 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pmp_english/student_repo/login_repo.dart';
+import 'package:pmp_english/teacher/teacher_model/home_teacher_model.dart';
+import 'package:pmp_english/teacher/teacher_repo/teacher_repo.dart';
 import 'package:pmp_english/teacher_modules/teacher_bottombar/teacher_bottombar.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
@@ -14,7 +18,8 @@ class TeacherLogin extends StatefulWidget {
 
 class _TeacherLoginState extends State<TeacherLogin> {
   bool _obscurePassword = true;
-
+  final TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,36 +85,104 @@ class _TeacherLoginState extends State<TeacherLogin> {
               height: 32.h,
             ),
             _buildTextField(
-              label: "Số điện thoại",
+              label: "Email",
               icon: Icons.person,
               isPassword: false,
+              controller: emailController,
             ),
             const SizedBox(height: 12),
             _buildTextField(
               label: "Mật khẩu",
               icon: Icons.lock,
               isPassword: true,
+              controller: passwordController,
             ),
             const SizedBox(height: 12),
-            _buildRememberPassword(),
+            //_buildRememberPassword(),
             const SizedBox(height: 16),
-            _buildLoginButton(),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () async {
+                  // Xử lý đăng nhập
+                  bool loged = await LoginRepo().loginTeacher(
+                      emailController.text, passwordController.text);
+
+                  if (loged == true) {
+                    TeacherHomeModel? infoModel =
+                        await TeacherRepo().getHomeInfo();
+                    TeacherProfileModel teacherProfileModel =
+                        await TeacherRepo().getCustomerProfile();
+                    if (infoModel != null) {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TeacherBottomBar(
+                            infoModel: infoModel,
+                            teacherProfileModel: teacherProfileModel,
+                          ),
+                        ),
+                      );
+                    }
+                  } else {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return CupertinoAlertDialog(
+                          title: const Text('Vui lòng thử lại'),
+                          content: const Text(
+                              'Vui lòng kiểm tra lại mã học sinh và mật khẩu của bạn'),
+                          actions: <Widget>[
+                            CupertinoDialogAction(
+                              isDefaultAction: true,
+                              child: Text(
+                                'Đồng ý',
+                                style:
+                                    TextStyle(fontSize: 20, color: key1Color),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context, rootNavigator: true).pop(
+                                  (_) => false,
+                                );
+                              },
+                            )
+                          ],
+                        );
+                      },
+                    );
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xff28B4E9),
+                  padding: EdgeInsets.symmetric(vertical: 16.h),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30)),
+                ),
+                child: const Text(
+                  "Đăng nhập",
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildTextField(
-      {required String label,
-      required IconData icon,
-      required bool isPassword}) {
+  Widget _buildTextField({
+    required String label,
+    required IconData icon,
+    required bool isPassword,
+    required TextEditingController controller,
+  }) {
     return TextField(
       obscureText: isPassword ? _obscurePassword : false,
       style: defaultText14M,
+      controller: controller,
       decoration: InputDecoration(
         filled: true,
-        fillColor: Colors.white,
+        fillColor: const Color(0xffF5F7FA),
         hintText: label,
         prefixIcon: Icon(icon, color: Colors.blue),
         suffixIcon: isPassword
@@ -166,33 +239,6 @@ class _TeacherLoginState extends State<TeacherLogin> {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildLoginButton() {
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: () {
-          // Xử lý đăng nhập
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const BottomNavBar(),
-            ),
-          );
-        },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xff28B4E9),
-          padding: EdgeInsets.symmetric(vertical: 16.h),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-        ),
-        child: const Text(
-          "Đăng nhập",
-          style: TextStyle(fontSize: 16, color: Colors.white),
-        ),
-      ),
     );
   }
 }

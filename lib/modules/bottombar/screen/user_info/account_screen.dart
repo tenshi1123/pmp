@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/modules/bottombar/screen/user_info/change_pass_screen.dart';
 import 'package:pmp_english/modules/infoAccount/my_certificate_screen.dart';
 import 'package:pmp_english/modules/infoAccount/payment_history.dart';
 import 'package:pmp_english/modules/infoAccount/redeem_reward_screen.dart';
+import 'package:pmp_english/student_models/profile_model.dart';
+import 'package:pmp_english/student_repo/customer_repo.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../login/login_screen.dart';
 import '../../../splash/wellcom_screen.dart';
 
 class AccountScreen extends StatefulWidget {
-  const AccountScreen({super.key});
-
+  const AccountScreen({super.key, required this.profileModel});
+  final ProfileModel profileModel;
   @override
   State<AccountScreen> createState() => _AccountScreenState();
 }
@@ -38,12 +41,12 @@ class _AccountScreenState extends State<AccountScreen> {
             height: 60.h,
           ),
           SizedBox(
-            height: 300.h,
+            height: 250.h,
             width: 349.w,
             child: Stack(
               children: [
                 Positioned(
-                  bottom: 0,
+                  top: 50.h,
                   child: Container(
                     //height: 242.h,
                     width: 349.w,
@@ -66,12 +69,17 @@ class _AccountScreenState extends State<AccountScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Nguyễn Hồng Anh',
+                                  widget.profileModel.fullName,
                                   style: defaultText18B,
                                 ),
+                                SizedBox(
+                                  height: 6.h,
+                                ),
                                 Text(
-                                  'Mã học viên: 214-32D',
-                                  style: defaultText12Re,
+                                  'Mã học viên: ${widget.profileModel.code}',
+                                  style: defaultText12Re.copyWith(
+                                    color: key1Color,
+                                  ),
                                 )
                               ],
                             ),
@@ -117,7 +125,7 @@ class _AccountScreenState extends State<AccountScreen> {
                               style: defaultText14Re,
                             ),
                             Text(
-                              'Nguyễn Hồng Anh',
+                              widget.profileModel.fullName,
                               style: defaultText14M,
                             ),
                           ],
@@ -133,7 +141,7 @@ class _AccountScreenState extends State<AccountScreen> {
                               style: defaultText14Re,
                             ),
                             Text(
-                              '27/5/2007',
+                              widget.profileModel.dob,
                               style: defaultText14M,
                             ),
                           ],
@@ -149,7 +157,7 @@ class _AccountScreenState extends State<AccountScreen> {
                               style: defaultText14Re,
                             ),
                             Text(
-                              '0913 339 029',
+                              widget.profileModel.phone,
                               style: defaultText14M,
                             ),
                           ],
@@ -169,9 +177,9 @@ class _AccountScreenState extends State<AccountScreen> {
                               //height: 38.h,
                               width: 202.w,
                               child: Text(
-                                'Bắc Xuân An, Phường Xuân An, Tp. Phan thiết, Tỉnh Bình Thuận.',
+                                widget.profileModel.address,
                                 style: defaultText14B,
-                                overflow: TextOverflow.fade,
+                                overflow: TextOverflow.ellipsis,
                                 maxLines: 2,
                               ),
                             ),
@@ -179,7 +187,7 @@ class _AccountScreenState extends State<AccountScreen> {
                         ),
                         SizedBox(
                           height: 10.h,
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -193,8 +201,14 @@ class _AccountScreenState extends State<AccountScreen> {
                       borderRadius: BorderRadius.circular(
                         56.r,
                       ),
-                      child:
-                          Image.asset('assets/images/placeholder_avatar.png'),
+                      child: Image.network(
+                        'https://lms.pmpenglish.edu.vn/images/${widget.profileModel.img}',
+                        fit: BoxFit.fill,
+                        errorBuilder: (BuildContext context, Object exception,
+                            StackTrace? stackTrace) {
+                          return const Text('N/A');
+                        },
+                      ),
                     ),
                   ),
                 ),
@@ -205,8 +219,11 @@ class _AccountScreenState extends State<AccountScreen> {
             height: 10.h,
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              SizedBox(
+                width: 20.w,
+              ),
               GestureDetector(
                 onTap: () {
                   Navigator.push(
@@ -248,58 +265,63 @@ class _AccountScreenState extends State<AccountScreen> {
                   ],
                 ),
               ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const MyCertificateScreen(),
-                    ),
-                  );
-                },
-                child: Stack(
-                  children: [
-                    Image.asset(
-                      'assets/images/bg_chungchi.png',
-                      height: 68.h,
-                      width: 168.w,
-                      fit: BoxFit.fill,
-                    ),
-                    Positioned(
-                      top: 10.h,
-                      right: 20.w,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            'Xem chi tiết',
-                            style: defaultText12Re.copyWith(
-                              color: Colors.white,
-                            ),
-                          ),
-                          Text(
-                            'Chứng chỉ',
-                            style: defaultText16B.copyWith(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              const Spacer(),
+              // GestureDetector(
+              //   onTap: () {
+              //     Navigator.push(
+              //       context,
+              //       MaterialPageRoute(
+              //         builder: (context) => const MyCertificateScreen(),
+              //       ),
+              //     );
+              //   },
+              //   child: Stack(
+              //     children: [
+              //       Image.asset(
+              //         'assets/images/bg_chungchi.png',
+              //         height: 68.h,
+              //         width: 168.w,
+              //         fit: BoxFit.fill,
+              //       ),
+              //       Positioned(
+              //         top: 10.h,
+              //         right: 20.w,
+              //         child: Column(
+              //           crossAxisAlignment: CrossAxisAlignment.end,
+              //           children: [
+              //             Text(
+              //               'Xem chi tiết',
+              //               style: defaultText12Re.copyWith(
+              //                 color: Colors.white,
+              //               ),
+              //             ),
+              //             Text(
+              //               'Chứng chỉ',
+              //               style: defaultText16B.copyWith(
+              //                 color: Colors.white,
+              //               ),
+              //             ),
+              //           ],
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
             ],
           ),
           SizedBox(
             height: 10.h,
           ),
           GestureDetector(
-            onTap: () {
+            onTap: () async {
+              List<PaymentModel> listPayments =
+                  await CustomerRepo().getPayment();
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const PaymentHistoryScreen(),
+                  builder: (context) => PaymentHistoryScreen(
+                    listPayments: listPayments,
+                  ),
                 ),
               );
             },
@@ -374,6 +396,30 @@ class _AccountScreenState extends State<AccountScreen> {
                 // ),
                 GestureDetector(
                   onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ChangePassScreen(),
+                      ),
+                    );
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Mật khẩu',
+                        style: defaultText14M,
+                      ),
+                      Icon(
+                        Icons.keyboard_arrow_right,
+                        size: 30.h,
+                        color: key1Color,
+                      ),
+                    ],
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
                     _makePhoneCall('19008978');
                   },
                   child: Row(
@@ -446,7 +492,9 @@ Future<void> _dialogBuilder(BuildContext context) {
               textStyle: Theme.of(context).textTheme.labelLarge,
             ),
             child: const Text('Xác nhận'),
-            onPressed: () {
+            onPressed: () async {
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              await prefs.remove('token');
               Navigator.push(
                 context,
                 MaterialPageRoute(

@@ -1,13 +1,34 @@
-gradle-wrapper.jar
-/.gradle
-/captures/
-/gradlew
-/gradlew.bat
-/local.properties
-GeneratedPluginRegistrant.java
+# Android
+/android/.gradle/
+/android/app/build/
+/android/local.properties
+/android/.idea/
+.gradle/
+captures/
 
-# Remember to never publicly share your keystore.
-# See https://flutter.dev/docs/deployment/android#reference-the-keystore-from-the-app
+# Gradle wrapper
+gradlew
+gradlew.bat
+gradle-wrapper.jar
+
+# Signing files
 key.properties
-**/*.keystore
 **/*.jks
+**/*.keystore
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Others
+*.log
+*.lock
+*.tmp

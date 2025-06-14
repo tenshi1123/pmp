@@ -3,13 +3,15 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pmp_english/modules/diemdanh/attendance_details.dart';
+import 'package:pmp_english/student_repo/diemdanh_repo.dart';
+import 'package:pmp_english/student_models/diem_danh_model.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:d_chart/d_chart.dart';
 
 class DiemDanhScreen extends StatelessWidget {
-  const DiemDanhScreen({super.key});
-
+  const DiemDanhScreen({super.key, required this.listDiemdanh});
+  final List<DiemDanhModel> listDiemdanh;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,19 +72,24 @@ class DiemDanhScreen extends StatelessWidget {
             child: ListView.builder(
                 shrinkWrap: true,
                 physics: const ClampingScrollPhysics(),
-                itemCount: 6,
+                itemCount: listDiemdanh.length,
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
-                    onTap: () {
+                    onTap: () async {
+                      InfoDiemDanh infoModel = await DiemdanhRepo()
+                          .getDetailDiemDanh(listDiemdanh[index].id);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const AttendanceDetails(),
+                          builder: (context) => AttendanceDetails(
+                            infoModel: infoModel,
+                          ),
                         ),
                       );
                     },
-                    child: Noti(
+                    child: _Noti(
                       index: index,
+                      model: listDiemdanh[index],
                     ),
                   );
                 }),
@@ -93,10 +100,10 @@ class DiemDanhScreen extends StatelessWidget {
   }
 }
 
-class Noti extends StatelessWidget {
-  const Noti({super.key, required this.index});
+class _Noti extends StatelessWidget {
+  const _Noti({required this.index, required this.model});
   final int index;
-
+  final DiemDanhModel model;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -124,7 +131,12 @@ class Noti extends StatelessWidget {
             SizedBox(
               height: 160.h,
               width: 160.w,
-              child: const PieChart(),
+              child: PieChart(
+                percent: model.percentage,
+                attended: model.totalAttended,
+                abstract: model.totalAbsent,
+                total: model.total,
+              ),
             ),
             SizedBox(
               height: 151.h,
@@ -133,7 +145,7 @@ class Noti extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(
-                    'TOEIC 4 kỹ năng ',
+                    model.courseName,
                     style: defaultText16B,
                   ),
                   Divider(
@@ -150,7 +162,7 @@ class Noti extends StatelessWidget {
                         style: defaultText12Re,
                       ),
                       Text(
-                        'TTH4',
+                        model.alias,
                         style: defaultText12B,
                       ),
                     ],
@@ -163,7 +175,7 @@ class Noti extends StatelessWidget {
                         style: defaultText12Re,
                       ),
                       Text(
-                        '07/05/2024',
+                        model.startDate,
                         style: defaultText12B,
                       ),
                     ],
@@ -176,7 +188,7 @@ class Noti extends StatelessWidget {
                         style: defaultText12Re,
                       ),
                       Text(
-                        '07/10/2024',
+                        model.expiryDate,
                         style: defaultText12B,
                       ),
                     ],
@@ -189,7 +201,7 @@ class Noti extends StatelessWidget {
                         style: defaultText14B.copyWith(color: main1Color),
                       ),
                       Text(
-                        '24/40',
+                        '${model.totalAttended}/${model.total}',
                         style: defaultText14B.copyWith(color: main1Color),
                       ),
                     ],
@@ -202,7 +214,7 @@ class Noti extends StatelessWidget {
                         style: defaultText14B.copyWith(color: sub2Color),
                       ),
                       Text(
-                        '1/40',
+                        '${model.totalAbsent}/${model.total}',
                         style: defaultText14B.copyWith(color: sub2Color),
                       ),
                     ],
@@ -218,14 +230,25 @@ class Noti extends StatelessWidget {
 }
 
 class PieChart extends StatelessWidget {
-  const PieChart({super.key});
-
+  const PieChart(
+      {super.key,
+      required this.percent,
+      required this.attended,
+      required this.abstract,
+      required this.total});
+  final int percent;
+  final String attended;
+  final String abstract;
+  final String total;
   @override
   Widget build(BuildContext context) {
     List<OrdinalData> ordinalDataList = [
-      OrdinalData(domain: 'tg', measure: 24, color: main1Color),
-      OrdinalData(domain: 'v', measure: 1, color: sub2Color),
-      OrdinalData(domain: 'c', measure: 15, color: state2),
+      OrdinalData(domain: '1', measure: int.parse(attended), color: main1Color),
+      OrdinalData(domain: '2', measure: int.parse(abstract), color: sub2Color),
+      OrdinalData(
+          domain: '3',
+          measure: int.parse(total) - int.parse(attended) - int.parse(abstract),
+          color: state2),
     ];
     return Stack(
       children: [
@@ -234,7 +257,7 @@ class PieChart extends StatelessWidget {
           child: DChartPieO(
             data: ordinalDataList,
             customLabel: (ordinalData, index) {
-              return "${ordinalData.domain}:${ordinalData.measure}";
+              return "";
             },
             configRenderPie: ConfigRenderPie(
               arcLabelDecorator: ArcLabelDecorator(
@@ -256,7 +279,7 @@ class PieChart extends StatelessWidget {
         ),
         Center(
           child: Text(
-            '70%',
+            '$percent%',
             style: defaultText20B,
           ),
         ),

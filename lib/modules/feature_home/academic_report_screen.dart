@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/student_models/home_model.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 
 class AcademicReportScreen extends StatelessWidget {
-  const AcademicReportScreen({super.key});
-
+  const AcademicReportScreen({super.key, required this.model});
+  final BaoCaoHocTapModel model;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,7 +75,7 @@ class AcademicReportScreen extends StatelessWidget {
                 ),
                 Container(
                   width: 350.w,
-                  height: 144.h,
+                  height: 100.h,
                   margin: EdgeInsets.only(top: 10.h, bottom: 6.h),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(8.r)),
@@ -104,7 +105,7 @@ class AcademicReportScreen extends StatelessWidget {
                                 left: 0,
                                 child: Container(
                                   height: 34.h,
-                                  width: 318.w * 92 / 100,
+                                  width: 318.w * model.chuyenCan / 100,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(4.r),
                                     gradient: mainGradient,
@@ -121,11 +122,10 @@ class AcademicReportScreen extends StatelessWidget {
                                   children: [
                                     Text(
                                       'Chuyên cần',
-                                      style: defaultText14B.copyWith(
-                                          color: Colors.white),
+                                      style: defaultText14B,
                                     ),
                                     Text(
-                                      '92%',
+                                      '${model.chuyenCan}%',
                                       style: defaultText14B,
                                     ),
                                   ],
@@ -148,7 +148,7 @@ class AcademicReportScreen extends StatelessWidget {
                                 left: 0,
                                 child: Container(
                                   height: 34.h,
-                                  width: 318.w * 75 / 100,
+                                  width: 318.w * model.baitap / 100,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(4.r),
                                     gradient: mainGradient,
@@ -165,11 +165,10 @@ class AcademicReportScreen extends StatelessWidget {
                                   children: [
                                     Text(
                                       'Điểm bài tập',
-                                      style: defaultText14B.copyWith(
-                                          color: Colors.white),
+                                      style: defaultText14B,
                                     ),
                                     Text(
-                                      '75%',
+                                      '${model.baitap}%',
                                       style: defaultText14B,
                                     ),
                                   ],
@@ -179,50 +178,6 @@ class AcademicReportScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Container(
-                        height: 34.h,
-                        width: 318.w,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4.r),
-                          color: state2,
-                        ),
-                        child: Stack(
-                          children: [
-                            Positioned(
-                                left: 0,
-                                child: Container(
-                                  height: 34.h,
-                                  width: 318.w * 95 / 100,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(4.r),
-                                    gradient: mainGradient,
-                                  ),
-                                )),
-                            Positioned(
-                              left: 10.w,
-                              child: SizedBox(
-                                width: 298.w,
-                                height: 34.h,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'Thái độ',
-                                      style: defaultText14B.copyWith(
-                                          color: Colors.white),
-                                    ),
-                                    Text(
-                                      '95%',
-                                      style: defaultText14B,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
                     ],
                   ),
                 ),
@@ -236,22 +191,22 @@ class AcademicReportScreen extends StatelessWidget {
                       'Báo cáo thi thử',
                       style: defaultText16B,
                     ),
-                    Container(
-                      width: 156.w,
-                      height: 25.h,
-                      decoration: BoxDecoration(
-                        color: sub2Color,
-                        borderRadius: BorderRadius.circular(4.r),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Mục tiêu cá nhân: 650',
-                          style: defaultText14B.copyWith(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
+                    // Container(
+                    //   padding:
+                    //       EdgeInsets.symmetric(vertical: 6.h, horizontal: 8.w),
+                    //   decoration: BoxDecoration(
+                    //     color: sub2Color,
+                    //     borderRadius: BorderRadius.circular(4.r),
+                    //   ),
+                    //   child: Center(
+                    //     child: Text(
+                    //       'Mục tiêu cá nhân: 650',
+                    //       style: defaultText14B.copyWith(
+                    //         color: Colors.white,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
                 //còn cái biểu đồ nữa chưa tìm thấy thư viện phù hợp tạm thời đang tìm hiểu fl_chart
@@ -269,7 +224,7 @@ class AcademicReportScreen extends StatelessWidget {
                     color: Colors.white,
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
+                        color: Colors.grey.withValues(alpha: 0.2),
                         spreadRadius: 5,
                         blurRadius: 7,
                         offset:
@@ -289,59 +244,25 @@ class AcademicReportScreen extends StatelessWidget {
                         indent: 15.w,
                         endIndent: 15.w,
                       ),
-                      Row(
-                        children: [
-                          Container(
-                            height: 56.h,
-                            width: 56.w,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.2),
-                                  spreadRadius: 5,
-                                  blurRadius: 7,
-                                  offset: const Offset(
-                                      0, 2), // changes position of shadow
-                                ),
-                              ],
-                            ),
-                            child: Center(
-                              child: Text(
-                                '680',
-                                style: defaultText20B.copyWith(
-                                  color: main2Color,
+                      model.schedules.isEmpty
+                          ? SizedBox(
+                              height: 100.h,
+                              child: Center(
+                                child: Text(
+                                  'Chưa có lịch thi nào',
+                                  style: defaultText14B,
                                 ),
                               ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10.w,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Thi thử tháng 12',
-                                style: defaultText14B,
-                              ),
-                              Text(
-                                '21/12/2024',
-                                style: defaultText14Re,
-                              ),
-                              Text(
-                                'Báo cáo kết quả',
-                                style: defaultText12Re.copyWith(
-                                  color: main1Color,
-                                  decoration: TextDecoration.underline,
-                                ),
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
+                            )
+                          : ListView.builder(
+                              shrinkWrap: true,
+                              physics: const ClampingScrollPhysics(),
+                              itemCount: model.schedules.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return DetailFeedback(
+                                  model: model.schedules[index],
+                                );
+                              }),
                       SizedBox(
                         height: 10.h,
                       ),
@@ -350,6 +271,69 @@ class AcademicReportScreen extends StatelessWidget {
                 ),
               ],
             ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class DetailFeedback extends StatelessWidget {
+  const DetailFeedback({super.key, required this.model});
+  final ExamScheduleModel model;
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 16.h),
+      child: Row(
+        children: [
+          Container(
+            height: 56.h,
+            width: 56.w,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.2),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: const Offset(0, 2), // changes position of shadow
+                ),
+              ],
+            ),
+            child: Center(
+              child: Text(
+                model.score,
+                style: defaultText20B.copyWith(
+                  color: main2Color,
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            width: 10.w,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                model.name,
+                style: defaultText14B,
+              ),
+              Text(
+                model.day,
+                style: defaultText14Re,
+              ),
+              Text(
+                'Báo cáo kết quả',
+                style: defaultText12Re.copyWith(
+                  color: main1Color,
+                  decoration: TextDecoration.underline,
+                ),
+              ),
+            ],
           ),
         ],
       ),

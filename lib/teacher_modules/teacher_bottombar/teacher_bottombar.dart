@@ -1,23 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pmp_english/modules/Bottombar/screen/schedule_screen.dart';
+import 'package:pmp_english/modules/bottombar/screen/extension.dart/testtkb.dart';
+import 'package:pmp_english/teacher/teacher_model/home_teacher_model.dart';
+
 import 'package:pmp_english/teacher_modules/teacher_info/teacher_info.dart';
 import 'screen/teacher_class.dart';
 import 'home/teacher_homescreen.dart';
 import "package:upgrader/upgrader.dart";
 import "package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart";
 
-class BottomNavBar extends StatefulWidget {
-  const BottomNavBar({
+class TeacherBottomBar extends StatefulWidget {
+  const TeacherBottomBar({
     super.key,
+    required this.infoModel,
+    required this.teacherProfileModel,
   });
-
+  final TeacherHomeModel infoModel;
+  final TeacherProfileModel teacherProfileModel;
   @override
-  State<BottomNavBar> createState() => _BottomNavBarState();
+  State<TeacherBottomBar> createState() => _TeacherBottomBarState();
 }
 
-class _BottomNavBarState extends State<BottomNavBar> {
+class _TeacherBottomBarState extends State<TeacherBottomBar> {
   final PersistentTabController _controller = PersistentTabController();
   @override
   void initState() {
@@ -49,7 +54,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   List<PersistentTabConfig> _tabs() => [
         PersistentTabConfig(
-          screen: const TeacherHomeScreen(),
+          screen: TeacherHomeScreen(
+            infoModel: widget.infoModel,
+            teacherProfileModel: widget.teacherProfileModel,
+          ),
           item: ItemConfig(
             icon: SvgPicture.asset(
               'assets/icons/home.svg',
@@ -94,7 +102,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
           ),
         ),
         PersistentTabConfig(
-          screen: const TeacherInfo(),
+          screen: TeacherInfo(
+            teacherProfileModel: widget.teacherProfileModel,
+          ),
           item: ItemConfig(
             icon: SvgPicture.asset(
               'assets/icons/person.svg',

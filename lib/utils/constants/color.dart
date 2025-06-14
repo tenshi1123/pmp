@@ -39,7 +39,14 @@ LinearGradient mainGradient2 = const LinearGradient(
     Color(0xff4EB2FF),
   ],
 );
-
+LinearGradient mainGradientgray = LinearGradient(
+  begin: Alignment.topLeft,
+  end: const Alignment(0.8, 1),
+  colors: [
+    key1Color.withValues(alpha: 0.3),
+    key1Color.withValues(alpha: 0.3),
+  ],
+);
 LinearGradient mainGradient3 = const LinearGradient(
   begin: Alignment.topLeft,
   end: Alignment(0.8, 1),

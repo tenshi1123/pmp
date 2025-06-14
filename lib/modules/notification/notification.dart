@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pmp_english/modules/notification/webview_screen.dart';
+import 'package:pmp_english/modules/notification/detail_notification.dart';
+import 'package:pmp_english/student_models/profile_model.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 
 class NotificationScreen extends StatelessWidget {
-  const NotificationScreen({super.key});
-
+  const NotificationScreen({super.key, required this.listNoti});
+  final List<NotiModel> listNoti;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,21 +65,14 @@ class NotificationScreen extends StatelessWidget {
               ],
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(left: 20.w),
-            child: Text(
-              '31.07.2024',
-              style: defaultText12B,
-            ),
-          ),
           Expanded(
             child: ListView.builder(
                 shrinkWrap: true,
                 physics: const ClampingScrollPhysics(),
-                itemCount: 2,
+                itemCount: listNoti.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Noti(
-                    index: index,
+                    noti: listNoti[index],
                   );
                 }),
           ),
@@ -89,9 +83,8 @@ class NotificationScreen extends StatelessWidget {
 }
 
 class Noti extends StatelessWidget {
-  const Noti({super.key, required this.index});
-  final int index;
-
+  const Noti({super.key, required this.noti});
+  final NotiModel noti;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -99,7 +92,9 @@ class Noti extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const WebViewExample(),
+            builder: (context) => DetailNotificationScreen(
+              notiModel: noti,
+            ),
           ),
         );
       },
@@ -118,6 +113,9 @@ class Noti extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
+            SizedBox(
+              height: 4.h,
+            ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 12.w),
               child: SizedBox(
@@ -126,7 +124,7 @@ class Noti extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Lớp học sắp diễn ra',
+                      noti.title,
                       style: TextStyle(
                         color: key1Color,
                         fontWeight: FontWeight.w500,
@@ -138,19 +136,22 @@ class Noti extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 12.w),
+              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
               child: Text(
-                'Cras interdum dolor nisi, eu ,',
+                noti.content,
                 style: defaultText12Re,
               ),
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 12.w),
               child: Text(
-                '09:03',
+                noti.createdAt,
                 style: defaultText12Re,
               ),
-            )
+            ),
+            SizedBox(
+              height: 4.h,
+            ),
           ],
         ),
       ),
