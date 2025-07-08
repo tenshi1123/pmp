@@ -3,11 +3,8 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
-import 'package:pmp_english/modules/chat/screen/list_conversation_screen.dart';
 import 'package:pmp_english/modules/notification/notification.dart';
-import 'package:pmp_english/student_models/chat_models.dart';
 import 'package:pmp_english/student_models/profile_model.dart';
-import 'package:pmp_english/student_repo/chat_repo.dart';
 import 'package:pmp_english/teacher/teacher_model/home_teacher_model.dart';
 import 'package:pmp_english/teacher/teacher_model/teacher_class_model.dart';
 import 'package:pmp_english/teacher/teacher_repo/teacher_class_repo.dart';
@@ -221,16 +218,16 @@ class _AvatarRow extends StatelessWidget {
         const Spacer(),
         GestureDetector(
           onTap: () async {
-            List<ChatModel> listConversation =
-                await ChatRepo().getTeacherListConversation();
-            pushWithoutNavBar(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ListConversationScreen(
-                  listConversation: listConversation,
-                ),
-              ),
-            );
+            // List<ChatModel> listConversation =
+            //     await ChatRepo().getTeacherListConversation();
+            // pushWithoutNavBar(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (context) => ListConversationScreen(
+            //       listConversation: listConversation,
+            //     ),
+            //   ),
+            // );
           },
           child: Image.asset(
             'assets/images/mess.png',

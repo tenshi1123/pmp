@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/modules/chat/list_teacher_sreen.dart';
 import 'package:pmp_english/student_models/chat_models.dart';
+import 'package:pmp_english/student_models/profile_model.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:pmp_english/utils/widget/custom_widget.dart';
 
 class ListConversationScreen extends StatelessWidget {
-  const ListConversationScreen({super.key, required this.listConversation});
+  const ListConversationScreen(
+      {super.key, required this.listConversation, required this.listTeacher});
+  final List<ProfileModel> listTeacher;
   final List<ChatModel> listConversation;
   @override
   Widget build(BuildContext context) {
@@ -63,6 +67,53 @@ class ListConversationScreen extends StatelessWidget {
                   )
                 ],
               ),
+            ),
+            Row(
+              children: [
+                SizedBox(
+                  width: 20.w,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ListTeacherScreen(
+                          listTeacher: listTeacher,
+                        ),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 10.w,
+                      vertical: 4.h,
+                    ),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(16.r),
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withValues(alpha: 0.2),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: const Offset(0, 2),
+                          ),
+                        ]),
+                    child: Text(
+                      'Danh sách giáo viên',
+                      style: defaultText14M.copyWith(
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10.h,
             ),
             ListView.builder(
                 shrinkWrap: true,

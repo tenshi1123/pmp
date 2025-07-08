@@ -176,39 +176,6 @@ class DeDetailModel {
   }
 }
 
-class DetailTestModel {
-  final String id;
-  final String cosoName;
-  final String cosoAddress;
-  final String name;
-  final String description;
-  final String day;
-  final String type;
-  final String score;
-
-  DetailTestModel(
-      {required this.id,
-      required this.cosoName,
-      required this.cosoAddress,
-      required this.name,
-      required this.description,
-      required this.day,
-      required this.type,
-      required this.score});
-  factory DetailTestModel.fromJson(Map<String, dynamic> json) {
-    return DetailTestModel(
-      id: json['id'] ?? '',
-      cosoName: json['coso_name'],
-      cosoAddress: json['coso_address'],
-      name: json['name'],
-      description: json['description'],
-      day: json['day'],
-      type: json['type'],
-      score: json['score'],
-    );
-  }
-}
-
 //Báo cáo học tập
 class BaoCaoHocTapModel {
   final int chuyenCan;

@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:pmp_english/student_models/customer_models.dart';
 import 'package:pmp_english/student_models/profile_model.dart';
+import 'package:pmp_english/utils/DioClient.dart';
 import 'package:pmp_english/utils/constants/api_path.dart';
 import 'package:pmp_english/utils/constants/const_string.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,7 +21,7 @@ class CustomerRepo {
         ApiPath.hocvienUrl,
       );
       return StudentHomeModel.fromJson(response.data['data']);
-    } on DioException catch (e) {
+    } on DioException {
       await prefs.remove('token');
       await prefs.remove(ConstString.type);
     } catch (e) {
@@ -29,6 +30,19 @@ class CustomerRepo {
       print(e);
     }
     return null;
+  }
+
+  Future<DetailRcmCourse> getDetailRecomentCourse({required String id}) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    Response response;
+    response = await dio.post(ApiPath.coureDetail,
+        data: jsonEncode({
+          'id': int.tryParse(id),
+        }));
+
+    return DetailRcmCourse.fromJson(response.data['data']);
   }
 
   Future<List<CalendarModel>> getListTkb(
@@ -67,9 +81,7 @@ class CustomerRepo {
 
   Future<String> changePassword(
       String oldPass, String password, String newPass) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     Response response;
     response = await dio.post(ApiPath.changePassword, data: {
       'password_old': oldPass,
@@ -77,6 +89,45 @@ class CustomerRepo {
       're_pass_new': newPass,
     });
     return response.data['message'];
+  }
+
+  Future<String> changeInfo(
+      {required String name,
+      required String phone,
+      required String email,
+      required String dob,
+      required String address}) async {
+    try {
+      final dio = await DioClient.getInstance();
+      final response = await dio.post(
+        ApiPath.changeInfo,
+        data: {
+          'full_name': name,
+          'phone': phone,
+          'email': email,
+          'dob': dob,
+          'address': address,
+          // 'target_ielts': '0' // Bỏ nếu không cần
+        },
+      );
+      final data = response.data;
+      if (data['type'] == 'success') {
+        return 'Cập nhật thông tin thành công';
+      } else if (data['type'] == 'error') {
+        final message = data['message'];
+        if (message is Map) {
+          return message.entries.map((e) => e.value.toString()).join(', ');
+        }
+        return message.toString();
+      } else {
+        return 'Có lỗi không xác định xảy ra.';
+      }
+    } catch (e) {
+      if (e is DioException) {
+        return 'Lỗi mạng hoặc server: ${e.message}';
+      }
+      return 'Đã xảy ra lỗi: ${e.toString()}';
+    }
   }
 
   Future<List<PaymentModel>> getPayment() async {
@@ -93,30 +144,6 @@ class CustomerRepo {
     }
     return list;
   }
-  // change teacher password
-  // Future<String> changePassword(
-  //     String oldPass, String password, String newPass) async {
-  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   final String? token = prefs.getString('token');
-  //   dio.options.headers['Authorization'] = 'Bearer $token';
-  //   Response response;
-  //   Response response2;
-  //   response = await dio.get(
-  //     ApiPath.checkPassword,
-  //     queryParameters: {
-  //       'password': oldPass,
-  //     },
-  //   );
-  //   if (response.data['message'] == "Mật khẩu đúng") {
-  //     response2 = await dio.post(ApiPath.changePassword, data: {
-  //       'password': password,
-  //       're_password': newPass,
-  //     });
-  //     return response2.data['message'];
-  //   } else {
-  //     return response.data['message'];
-  //   }
-  // }
 
   Future<List<NotiModel>> getListNoti() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();

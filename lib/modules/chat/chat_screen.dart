@@ -9,7 +9,6 @@ import 'package:pmp_english/student_repo/chat_repo.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sp_util/sp_util.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:camera_camera/camera_camera.dart';
 import 'package:image_picker/image_picker.dart';
@@ -321,7 +320,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                   senderType: "1",
                                   createdAt: DateTime.now(),
                                   teacherName: '',
-                                  senderId: id ?? '',
+                                  senderId: id,
                                   customerName: '',
                                   userName: '',
                                 ),

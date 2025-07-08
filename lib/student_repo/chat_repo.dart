@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:pmp_english/student_models/chat_models.dart';
+import 'package:pmp_english/student_models/profile_model.dart';
 import 'package:pmp_english/utils/constants/api_path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -24,6 +26,21 @@ class ChatRepo {
     return list;
   }
 
+  Future<List<ProfileModel>> getListTeacher() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    Response response;
+    response = await dio.post(
+      ApiPath.listTeachers,
+    );
+    List<ProfileModel> list = [];
+    for (var item in response.data['data']['value']) {
+      list.add(ProfileModel.fromJson(item));
+    }
+    return list;
+  }
+
   Future<List<ChatModel>> getTeacherListConversation() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? token = prefs.getString('token');
@@ -37,6 +54,26 @@ class ChatRepo {
       list.add(ChatModel.fromJson(item));
     }
     return list;
+  }
+
+  Future<ConverastionModel> createChatConversation(String teacherId) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    Response response;
+    // in ra log lỗi
+    dio.interceptors.add(LogInterceptor(
+      responseBody: true,
+      requestBody: true,
+      logPrint: (obj) => debugPrint('📦 $obj'),
+    ));
+    response = await dio.post(
+      ApiPath.chatTeacherCustomer,
+      data: {
+        "teachers_id": int.tryParse(teacherId),
+      },
+    );
+    return ConverastionModel.fromJson(response.data['data']);
   }
 
   Future<ConverastionModel> getConversationDetail(String chatId) async {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/utils/constants/styles.dart';
 
 import 'modules/splash/splash_screen.dart';
 
@@ -25,7 +26,20 @@ class _AppState extends State<App> {
           // You can use the library anywhere in the app even in theme
           theme: ThemeData(
             primarySwatch: Colors.blue,
-            textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
+            textTheme: TextTheme(
+              bodyLarge: defaultText14M, // Cho Text() bình thường
+              bodyMedium: defaultText14M,
+              bodySmall: defaultText12M,
+              titleLarge: defaultText18B,
+              titleMedium: defaultText16B,
+              titleSmall: defaultText14B,
+              labelLarge: defaultText14B,
+              labelSmall: defaultText12M,
+            ).apply(
+              fontFamily: 'Roboto', // hoặc font bạn đang dùng
+              displayColor: Colors.black, // màu cho Text hiển thị
+              bodyColor: Colors.black,
+            ),
           ),
           builder: (context, child) => MediaQuery(
             data: MediaQuery.of(context).copyWith(boldText: false),

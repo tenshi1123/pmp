@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pmp_english/teacher/teacher_model/teacher_class_model.dart';
-import 'package:pmp_english/teacher_modules/teacher_class/document/detail_exam_screen.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:url_launcher/url_launcher.dart';
 

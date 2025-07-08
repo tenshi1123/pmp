@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pmp_english/modules/bottombar/screen/user_info/change_pass_screen.dart';
-import 'package:pmp_english/modules/bottombar/screen/user_info/edit_info_screen.dart';
+import 'package:pmp_english/modules/bottombar/screen/user_info/edit_info_teacher_screen.dart';
 import 'package:pmp_english/teacher/teacher_model/home_teacher_model.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';

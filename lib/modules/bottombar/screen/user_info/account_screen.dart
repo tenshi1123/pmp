@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:pmp_english/modules/bottombar/screen/user_info/change_pass_screen.dart';
-import 'package:pmp_english/modules/infoAccount/my_certificate_screen.dart';
+import 'package:pmp_english/modules/bottombar/screen/user_info/edit_info_student_screen.dart';
 import 'package:pmp_english/modules/infoAccount/payment_history.dart';
 import 'package:pmp_english/modules/infoAccount/redeem_reward_screen.dart';
 import 'package:pmp_english/student_models/profile_model.dart';
@@ -84,28 +85,29 @@ class _AccountScreenState extends State<AccountScreen> {
                               ],
                             ),
                             const Spacer(),
-                            // GestureDetector(
-                            //   onTap: () {
-                            //     Navigator.push(
-                            //       context,
-                            //       MaterialPageRoute(
-                            //         builder: (context) =>
-                            //             const EditInfoScreen(),
-                            //       ),
-                            //     );
-                            //   },
-                            //   child: Container(
-                            //     height: 25.h,
-                            //     width: 25.w,
-                            //     padding: const EdgeInsets.all(3),
-                            //     decoration: BoxDecoration(
-                            //       shape: BoxShape.circle,
-                            //       gradient: mainGradient2,
-                            //     ),
-                            //     child:
-                            //         SvgPicture.asset('assets/icons/pencil.svg'),
-                            //   ),
-                            // ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => EditInfoStudentScreen(
+                                      profileModel: widget.profileModel,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                height: 25.h,
+                                width: 25.w,
+                                padding: const EdgeInsets.all(3),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  gradient: mainGradient2,
+                                ),
+                                child:
+                                    SvgPicture.asset('assets/icons/pencil.svg'),
+                              ),
+                            ),
                           ],
                         ),
                         SizedBox(

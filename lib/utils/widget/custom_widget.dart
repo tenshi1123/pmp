@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
-import 'package:pmp_english/modules/chat/screen/chat_screen.dart';
+import 'package:pmp_english/modules/chat/chat_screen.dart';
 import 'package:pmp_english/modules/feature_home/exercise/detail_exam_screen.dart';
 import 'package:pmp_english/modules/feature_home/exercise/exercise_detail_screen.dart';
 import 'package:pmp_english/student_models/chat_models.dart';
 import 'package:pmp_english/student_models/home_model.dart';
 import 'package:pmp_english/student_models/my_course_model.dart';
+import 'package:pmp_english/student_models/profile_model.dart';
 import 'package:pmp_english/student_repo/chat_repo.dart';
 import 'package:pmp_english/student_repo/home_repo.dart';
 import 'package:pmp_english/teacher/teacher_model/home_teacher_model.dart';
@@ -16,11 +17,12 @@ import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Lesson extends StatelessWidget {
-  const Lesson(
-      {super.key,
-      required this.title1,
-      required this.title2,
-      required this.title3});
+  const Lesson({
+    super.key,
+    required this.title1,
+    required this.title2,
+    required this.title3,
+  });
   final String title1;
   final String title2;
   final String title3;
@@ -304,15 +306,15 @@ class ConversationItem extends StatelessWidget {
         width: 350.w,
         decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: const BorderRadius.all(
-              Radius.circular(16),
+            borderRadius: BorderRadius.all(
+              Radius.circular(16.r),
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.withOpacity(0.2),
+                color: Colors.grey.withValues(alpha: 0.2),
                 spreadRadius: 5,
                 blurRadius: 7,
-                offset: const Offset(0, 2), // changes position of shadow
+                offset: const Offset(0, 2),
               ),
             ]),
         child: Row(
@@ -336,6 +338,76 @@ class ConversationItem extends StatelessWidget {
                   ),
                   Text(
                     model.content,
+                    style: defaultText12M,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ConversationTeacher extends StatelessWidget {
+  const ConversationTeacher({
+    super.key,
+    required this.model,
+  });
+  final ProfileModel model;
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () async {
+        ConverastionModel conversationModel =
+            await ChatRepo().createChatConversation(model.id);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ChatScreen(
+              model: conversationModel,
+            ),
+          ),
+        );
+      },
+      child: Container(
+        height: 73.h,
+        width: 350.w,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(
+              Radius.circular(16.r),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withValues(alpha: 0.2),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: const Offset(0, 2),
+              ),
+            ]),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            CircleAvatar(
+              radius: 21.r,
+              backgroundImage: NetworkImage(model.avatar),
+              backgroundColor: Colors.transparent,
+            ),
+            SizedBox(
+              width: 220.w,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    model.fullName,
+                    style: defaultText14B,
+                  ),
+                  Text(
+                    '',
                     style: defaultText12M,
                   ),
                 ],

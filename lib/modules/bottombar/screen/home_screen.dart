@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
-import 'package:pmp_english/modules/chat/screen/list_conversation_screen.dart';
+import 'package:pmp_english/modules/bottombar/screen/user_info/account_screen.dart';
+import 'package:pmp_english/modules/chat/list_conversation_screen.dart';
 import 'package:pmp_english/modules/course/recomment_course.dart';
 import 'package:pmp_english/modules/diemdanh/diem_danh_screen.dart';
 import 'package:pmp_english/modules/feature_home/academic_report_screen.dart';
@@ -35,8 +36,10 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({
     super.key,
     required this.infomodel,
+    //required this.profileModel,
   });
   final StudentHomeModel infomodel;
+  //final ProfileModel profileModel;
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -70,11 +73,23 @@ class _HomeScreenState extends State<HomeScreen> {
                       SizedBox(
                         width: 20.w,
                       ),
-                      CircleAvatar(
-                        radius: 24.r,
-                        backgroundImage:
-                            NetworkImage(infomodel.customerInfoModel.img),
-                        backgroundColor: Colors.transparent,
+                      GestureDetector(
+                        onTap: () {
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) => AccountScreen(
+                          //       profileModel: widget.profileModel,
+                          //     ),
+                          //   ),
+                          // );
+                        },
+                        child: CircleAvatar(
+                          radius: 24.r,
+                          backgroundImage:
+                              NetworkImage(infomodel.customerInfoModel.img),
+                          backgroundColor: Colors.transparent,
+                        ),
                       ),
                       SizedBox(
                         width: 15.w,
@@ -96,6 +111,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       const Spacer(),
                       GestureDetector(
                         onTap: () async {
+                          List<ProfileModel> listTeacher =
+                              await ChatRepo().getListTeacher();
                           List<ChatModel> listConversation =
                               await ChatRepo().getListConversation();
                           Navigator.push(
@@ -103,6 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             MaterialPageRoute(
                               builder: (context) => ListConversationScreen(
                                 listConversation: listConversation,
+                                listTeacher: listTeacher,
                               ),
                             ),
                           );
@@ -176,7 +194,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               indent: 16.w,
                               endIndent: 16.w,
                               thickness: 1,
-                              color: Colors.black.withOpacity(0.5),
+                              color: Colors.black.withValues(alpha: 0.5),
                               height: 1,
                             ),
                             Padding(
@@ -193,7 +211,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Text(
                                         'Chuyên cần',
                                         style: defaultText14Re.copyWith(
-                                            color: key1Color.withOpacity(0.8)),
+                                            color: key1Color.withValues(
+                                                alpha: 0.8)),
                                       ),
                                       Text(
                                         infomodel.chuyenCan,
@@ -210,7 +229,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Text(
                                         'Mục tiêu',
                                         style: defaultText14Re.copyWith(
-                                            color: key1Color.withOpacity(0.8)),
+                                            color: key1Color.withValues(
+                                                alpha: 0.8)),
                                       ),
                                       RichText(
                                         text: TextSpan(
@@ -372,22 +392,15 @@ class _HomeScreenState extends State<HomeScreen> {
               ? const SizedBox(
                   height: 20,
                 )
-              : SizedBox(
-                  width: 380.w,
-                  height: 250.h,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    physics: const ScrollPhysics(),
-                    //itemExtent: 390.0.w,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                    itemCount: infomodel.lichHocSapToi.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return _Upcoming(
-                        model: infomodel.lichHocSapToi[index],
+              : SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: infomodel.lichHocSapToi.map((item) {
+                      return Padding(
+                        padding: EdgeInsets.only(right: 12.w),
+                        child: _Upcoming(model: item),
                       );
-                    },
+                    }).toList(),
                   ),
                 ),
           Padding(
@@ -417,11 +430,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemCount: infomodel.listCourse.length,
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
-                          onTap: () {
+                          onTap: () async {
+                            DetailRcmCourse model = await CustomerRepo()
+                                .getDetailRecomentCourse(
+                                    id: infomodel.listCourse[index].id);
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const RecommentCourse(),
+                                builder: (context) => RecommentCourse(
+                                  model: model,
+                                ),
                               ),
                             );
                           },
@@ -613,18 +631,18 @@ Widget _chatNoti({
             child: SvgPicture.asset(icon),
           ),
         ),
-        Positioned(
-          top: 0,
-          right: 0,
-          child: Container(
-            height: 8.h,
-            width: 8.w,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: sub2Color,
-            ),
-          ),
-        ),
+        // Positioned(
+        //   top: 0,
+        //   right: 0,
+        //   child: Container(
+        //     height: 8.h,
+        //     width: 8.w,
+        //     decoration: BoxDecoration(
+        //       shape: BoxShape.circle,
+        //       color: sub2Color,
+        //     ),
+        //   ),
+        // ),
       ],
     ),
   );
@@ -749,9 +767,12 @@ class _Upcoming extends StatelessWidget {
                           style: defaultText14Re,
                         ),
                       ),
-                      Text(
-                        model.phongHocName,
-                        style: defaultText14B,
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 4.h),
+                        child: Text(
+                          model.phongHocName,
+                          style: defaultText14B,
+                        ),
                       ),
                     ],
                   ),
@@ -770,9 +791,12 @@ class _Upcoming extends StatelessWidget {
                       ),
                       SizedBox(
                         width: 220.w,
-                        child: Text(
-                          model.cosoAddress,
-                          style: defaultText14B,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 4.h),
+                          child: Text(
+                            model.cosoAddress,
+                            style: defaultText14B,
+                          ),
                         ),
                       ),
                     ],
@@ -824,6 +848,9 @@ class _Upcoming extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+            SizedBox(
+              height: 10.h,
             ),
           ],
         ),

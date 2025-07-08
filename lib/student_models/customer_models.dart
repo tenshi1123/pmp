@@ -140,3 +140,97 @@ class CalendarModel {
     );
   }
 }
+
+class DetailRcmCourse {
+  final RecommentCourseModel recommentCourse;
+  final List<LichKhaiGiangModel> listLichKhaiGiang;
+  DetailRcmCourse({
+    required this.recommentCourse,
+    required this.listLichKhaiGiang,
+  });
+  factory DetailRcmCourse.fromJson(Map<String, dynamic> json) {
+    return DetailRcmCourse(
+        recommentCourse: RecommentCourseModel.fromJson(json["value"]),
+        listLichKhaiGiang: (json["lich_khai_giang"] as List)
+            .map((e) => LichKhaiGiangModel.fromJson(e))
+            .toList());
+  }
+}
+
+class RecommentCourseModel {
+  final String categoryName;
+  final String soBuoiHoc;
+  final String id;
+  final String name;
+  final String img;
+  final String price;
+  final String priceOld;
+  final String descriptioin;
+  final String benefits;
+  final String content;
+  final String urlYoutube;
+  final int daDangKy;
+  RecommentCourseModel({
+    required this.categoryName,
+    required this.soBuoiHoc,
+    required this.id,
+    required this.name,
+    required this.img,
+    required this.price,
+    required this.priceOld,
+    required this.descriptioin,
+    required this.benefits,
+    required this.content,
+    required this.urlYoutube,
+    required this.daDangKy,
+  });
+  factory RecommentCourseModel.fromJson(Map<String, dynamic> json) {
+    return RecommentCourseModel(
+      categoryName: json['category_name'] ?? '',
+      soBuoiHoc: json['so_buoi_hoc'] ?? '',
+      id: json['id'] ?? '',
+      name: json['name'] ?? '',
+      img: json['img'] ?? '',
+      price: json['price'] ?? '',
+      priceOld: json['price_old'] ?? '',
+      descriptioin: json['description'] ?? '',
+      benefits: json['benefits'] ?? '',
+      content: json['content'] ?? '',
+      urlYoutube: json['url_youtube'] ?? "",
+      daDangKy: json['da_dang_ky'] ?? 0,
+    );
+  }
+}
+
+class LichKhaiGiangModel {
+  final String name;
+  final String alias;
+  final String dateStart;
+  final String cosoName;
+  final String cosoAddress;
+  final String note;
+  final String totalSlot;
+  final String totalDk;
+  LichKhaiGiangModel({
+    required this.name,
+    required this.alias,
+    required this.dateStart,
+    required this.cosoName,
+    required this.cosoAddress,
+    required this.note,
+    required this.totalSlot,
+    required this.totalDk,
+  });
+  factory LichKhaiGiangModel.fromJson(Map<String, dynamic> json) {
+    return LichKhaiGiangModel(
+      name: json["name"] ?? '',
+      alias: json["alias"] ?? '',
+      dateStart: json["date_start"] ?? '',
+      cosoName: json["coso_name"] ?? '',
+      cosoAddress: json["coso_address"] ?? '',
+      note: json["note"] ?? '',
+      totalSlot: json["total_slot"] ?? '',
+      totalDk: json["total_dk"] ?? '',
+    );
+  }
+}

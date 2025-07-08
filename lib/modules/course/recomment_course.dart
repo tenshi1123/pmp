@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
+import 'package:intl/intl.dart';
+import 'package:pmp_english/student_models/customer_models.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 
 class RecommentCourse extends StatefulWidget {
-  const RecommentCourse({super.key});
-
+  const RecommentCourse({super.key, required this.model});
+  final DetailRcmCourse model;
   @override
   State<RecommentCourse> createState() => _RecommentCourseState();
 }
@@ -14,10 +17,13 @@ class RecommentCourse extends StatefulWidget {
 class _RecommentCourseState extends State<RecommentCourse>
     with TickerProviderStateMixin {
   bool isExpanded = false;
-
+  late RecommentCourseModel _rcmModel;
+  late List<LichKhaiGiangModel> listLichKg;
   @override
   void initState() {
     super.initState();
+    _rcmModel = widget.model.recommentCourse;
+    listLichKg = widget.model.listLichKhaiGiang;
   }
 
   @override
@@ -37,15 +43,12 @@ class _RecommentCourseState extends State<RecommentCourse>
                       children: [
                         Positioned(
                           top: 0,
-                          child: Container(
-                            width: 390.w,
-                            height: 259.h,
-                            decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage(
-                                    "assets/images/course_image.png"),
-                                fit: BoxFit.cover,
-                              ),
+                          child: SizedBox(
+                            child: Image.network(
+                              'https://lms.pmpenglish.edu.vn/images/${_rcmModel.img}',
+                              width: 390.w,
+                              height: 259.h,
+                              //fit: BoxFit.cover,
                             ),
                           ),
                         ),
@@ -80,14 +83,14 @@ class _RecommentCourseState extends State<RecommentCourse>
                           height: 10.h,
                         ),
                         Text(
-                          'TOEIC 4 kỹ năng',
+                          _rcmModel.name,
                           style: defaultText20B,
                         ),
                         SizedBox(
                           height: 10.h,
                         ),
                         Text(
-                          'Đầu ra: TOEIC Nghe Đọc 650+',
+                          _rcmModel.categoryName,
                           style: defaultText14M,
                         ),
                         SizedBox(
@@ -128,9 +131,10 @@ class _RecommentCourseState extends State<RecommentCourse>
                                         style: defaultText14B,
                                       ),
                                       Text(
-                                        '60 buổi',
+                                        '${_rcmModel.soBuoiHoc} buổi',
                                         style: defaultText14Re.copyWith(
-                                          color: key1Color.withOpacity(0.5),
+                                          color:
+                                              key1Color.withValues(alpha: 0.9),
                                         ),
                                       ),
                                     ],
@@ -172,9 +176,10 @@ class _RecommentCourseState extends State<RecommentCourse>
                                         style: defaultText14B,
                                       ),
                                       Text(
-                                        '312 người',
+                                        '${_rcmModel.daDangKy} người',
                                         style: defaultText14Re.copyWith(
-                                          color: key1Color.withOpacity(0.5),
+                                          color:
+                                              key1Color.withValues(alpha: 0.9),
                                         ),
                                       ),
                                     ],
@@ -200,16 +205,14 @@ class _RecommentCourseState extends State<RecommentCourse>
                             Align(
                               alignment: Alignment.topLeft,
                               child: Text(
-                                'Một người như thế đấy yêu là yêu đến hết đời này, em không là thế giới ấy em thật là nhỏ bé thôi tại sao em mãi cứ ôm mãi không bao giờ nói ra có lẽ em yêu anh nhiều quá nên là em chẳng dám buông ra có lẽ anh thấy em mạnh mẽ nên là anh chẳng muốn vỗ về',
+                                _rcmModel.descriptioin,
                                 style: defaultText14Re,
                                 maxLines: isExpanded ? 11 : 4,
                                 softWrap: true,
                                 // overflow: TextOverflow.fade,
                               ),
                             ),
-                            'Một người như thế đấy yêu là yêu đến hết đời này, em không là thế giới ấy em thật là nhỏ bé thôi tại sao em mãi cứ ôm mãi không bao giờ nói ra có lẽ em yêu anh nhiều quá nên là em chẳng dám buông ra có lẽ anh thấy em mạnh mẽ nên là anh chẳng muốn vỗ về'
-                                        .length <
-                                    197
+                            _rcmModel.descriptioin.length < 197
                                 ? const SizedBox()
                                 : InkWell(
                                     onTap: () {
@@ -242,120 +245,17 @@ class _RecommentCourseState extends State<RecommentCourse>
                           height: 10.h,
                         ),
                         SizedBox(
-                          height: 155.h,
+                          height: 180.h,
                           width: 390.w,
                           child: ListView.builder(
                               shrinkWrap: true,
                               scrollDirection: Axis.horizontal,
-                              itemCount: 3,
+                              itemCount: listLichKg.length,
                               physics: const ClampingScrollPhysics(),
                               // itemExtent: 160.h,
                               itemBuilder: (BuildContext context, int index) {
-                                return Container(
-                                  margin: EdgeInsets.only(
-                                    right: 20.w,
-                                    left: 10.w,
-                                    top: 5.h,
-                                    bottom: 5.h,
-                                  ),
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 10.w, vertical: 5.h),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8.r),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.2),
-                                        spreadRadius: 5,
-                                        blurRadius: 7,
-                                        offset: const Offset(
-                                            0, 2), // changes position of shadow
-                                      ),
-                                    ],
-                                    color: Colors.white,
-                                  ),
-                                  height: 145.h,
-                                  width: 317.w,
-                                  child: Row(
-                                    children: [
-                                      SizedBox(
-                                        width: 200.w,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'Mã lớp',
-                                              style: defaultText12M,
-                                            ),
-                                            Text(
-                                              'THH 449',
-                                              style: defaultText14B.copyWith(
-                                                color: main1Color,
-                                              ),
-                                            ),
-                                            Text(
-                                              'Lịch học',
-                                              style: defaultText12M,
-                                            ),
-                                            Text(
-                                              '17h40 -19h20 (T3, T5, T7)',
-                                              style: defaultText14B.copyWith(
-                                                color: main1Color,
-                                              ),
-                                            ),
-                                            const Divider(
-                                              color: Colors.black,
-                                              thickness: 1,
-                                            ),
-                                            Text(
-                                              'Tình trạng',
-                                              style: defaultText12M,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 80.w,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'Khai giảng',
-                                              style: defaultText12M,
-                                            ),
-                                            Text(
-                                              '11/07/2024',
-                                              style: defaultText14B.copyWith(
-                                                color: main1Color,
-                                              ),
-                                            ),
-                                            Text(
-                                              'Cơ sở',
-                                              style: defaultText12M,
-                                            ),
-                                            Text(
-                                              'Lê Văn Việt',
-                                              style: defaultText14B.copyWith(
-                                                color: main1Color,
-                                              ),
-                                            ),
-                                            const Divider(
-                                              color: Colors.black,
-                                              thickness: 1,
-                                            ),
-                                            Text(
-                                              'Đã hết',
-                                              style: defaultText14B.copyWith(
-                                                color:
-                                                    key1Color.withOpacity(0.3),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                return LichKhaiGiangItem(
+                                  model: listLichKg[index],
                                 );
                               }),
                         ),
@@ -439,7 +339,7 @@ class _RecommentCourseState extends State<RecommentCourse>
                             style: defaultText14M,
                           ),
                           Text(
-                            '4.500.000 VND',
+                            '${formatCurrency(_rcmModel.price)} VND',
                             style: defaultText20B.copyWith(
                               color: main1Color,
                             ),
@@ -501,4 +401,137 @@ class _RecommentCourseState extends State<RecommentCourse>
       ),
     );
   }
+}
+
+class LichKhaiGiangItem extends StatelessWidget {
+  const LichKhaiGiangItem({super.key, required this.model});
+  final LichKhaiGiangModel model;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        margin: EdgeInsets.only(
+          right: 20.w,
+          left: 10.w,
+          top: 5.h,
+          bottom: 5.h,
+        ),
+        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8.r),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: const Offset(0, 2), // changes position of shadow
+            ),
+          ],
+          color: Colors.white,
+        ),
+        //height: 145.h,
+        width: 317.w,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                SizedBox(
+                  width: 120.w,
+                  child: Text('Mã lớp', style: defaultText12M),
+                ),
+                SizedBox(
+                  width: 160.w,
+                  child: Text('Khai giảng', style: defaultText12M),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                SizedBox(
+                  width: 120.w,
+                  child: Text(
+                    model.alias,
+                    style: defaultText14B.copyWith(color: main1Color),
+                  ),
+                ),
+                SizedBox(
+                  width: 160.w,
+                  child: Text(
+                    model.dateStart,
+                    style: defaultText14B.copyWith(color: main1Color),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                SizedBox(
+                  width: 120.w,
+                  child: Text('Lịch học', style: defaultText12M),
+                ),
+                SizedBox(
+                  width: 160.w,
+                  child: Text('Cơ sở', style: defaultText12M),
+                ),
+              ],
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 120.w,
+                  child: HtmlWidget(
+                    model.note,
+                    textStyle: defaultText14B.copyWith(color: main1Color),
+                  ),
+                ),
+                SizedBox(
+                  width: 160.w,
+                  child: Text(
+                    model.cosoName,
+                    style: defaultText14B.copyWith(color: main1Color),
+                  ),
+                ),
+              ],
+            ),
+            const Divider(color: Colors.black, thickness: 1),
+            Row(
+              children: [
+                SizedBox(
+                  width: 120.w,
+                  child: Text('Tổng số chỗ', style: defaultText12M),
+                ),
+                SizedBox(
+                  width: 160.w,
+                  child: Text(
+                    model.totalSlot,
+                    style: defaultText14B.copyWith(color: key1Color),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                SizedBox(
+                  width: 120.w,
+                  child: Text('Đã đăng ký', style: defaultText12M),
+                ),
+                SizedBox(
+                  width: 160.w,
+                  child: Text(
+                    model.totalDk,
+                    style: defaultText14B.copyWith(color: key1Color),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ));
+  }
+}
+
+String formatCurrency(String numberString) {
+  final number = int.tryParse(numberString.replaceAll('.', '')) ?? 0;
+  final formatter = NumberFormat.decimalPattern('vi_VN');
+  return formatter.format(number);
 }

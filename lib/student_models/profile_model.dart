@@ -9,6 +9,7 @@ class ProfileModel {
   final String address;
   final String targetIelts;
   final int? totalCustomerScore;
+  final String avatar;
   ProfileModel({
     required this.id,
     required this.code,
@@ -20,6 +21,7 @@ class ProfileModel {
     required this.address,
     required this.targetIelts,
     this.totalCustomerScore,
+    required this.avatar,
   });
   factory ProfileModel.fromJson(Map<String, dynamic> json) {
     return ProfileModel(
@@ -33,6 +35,7 @@ class ProfileModel {
       address: json['address'] ?? '',
       targetIelts: json['target_ielts'] ?? '',
       totalCustomerScore: json['total_customer_score'],
+      avatar: json['avatar'] ?? '',
     );
   }
 }
