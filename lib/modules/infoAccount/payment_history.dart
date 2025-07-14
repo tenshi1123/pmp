@@ -170,7 +170,8 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
                                   SizedBox(
                                     width: 150.w,
                                     child: Text(
-                                      '${widget.listPayments[index].conthieu}%',
+                                      NumberFormat("#,###", "vi_VN").format(
+                                          widget.listPayments[index].conthieu),
                                       style: defaultText12M,
                                     ),
                                   ),

@@ -165,7 +165,15 @@ class ClassCard extends StatelessWidget {
                     )));
       },
       child: Container(
-        padding: const EdgeInsets.all(12),
+        padding: EdgeInsets.symmetric(
+          horizontal: 16.w,
+          vertical: 12.h,
+        ),
+        margin: EdgeInsets.only(
+          top: 16.h,
+          right: 16.w,
+          left: 16.w,
+        ),
         decoration: BoxDecoration(
           color: const Color(0xffF5F7FA),
           borderRadius: BorderRadius.circular(12),

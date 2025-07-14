@@ -354,7 +354,7 @@ class _AccountScreenState extends State<AccountScreen> {
             height: 10.h,
           ),
           Container(
-            height: 133.h,
+            height: 140.h,
             width: 350.w,
             padding: EdgeInsets.symmetric(horizontal: 10.w),
             decoration: BoxDecoration(
@@ -457,6 +457,9 @@ class _AccountScreenState extends State<AccountScreen> {
                     ),
                   ),
                 ),
+                SizedBox(
+                  height: 6.h,
+                )
               ],
             ),
           )

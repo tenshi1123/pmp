@@ -825,6 +825,7 @@ class _Upcoming extends StatelessWidget {
                       context: context,
                       builder: (context) => LeaveRequestDialog(
                         id: model.id,
+                        time: model.day,
                       ),
                     );
                   },

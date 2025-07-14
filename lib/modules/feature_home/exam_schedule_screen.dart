@@ -143,7 +143,7 @@ class _ExamScheduleScreenState extends State<ExamScheduleScreen> {
                               ),
                               child: Center(
                                 child: Text(
-                                  'Toeic',
+                                  'TOEIC',
                                   style: defaultText14B.copyWith(
                                     color: Colors.white,
                                   ),
@@ -170,7 +170,7 @@ class _ExamScheduleScreenState extends State<ExamScheduleScreen> {
                               ),
                               child: Center(
                                 child: Text(
-                                  'Ielts',
+                                  'IELTS',
                                   style: defaultText14B.copyWith(
                                     color: Colors.white,
                                   ),
@@ -523,9 +523,12 @@ class _LichThiState extends State<_LichThi> with TickerProviderStateMixin {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Text(
-                                widget.listLichthi[index].name,
-                                style: defaultText16B,
+                              SizedBox(
+                                width: 250.w,
+                                child: Text(
+                                  widget.listLichthi[index].name,
+                                  style: defaultText16B,
+                                ),
                               ),
                               Text(
                                 widget.listLichthi[index].day,

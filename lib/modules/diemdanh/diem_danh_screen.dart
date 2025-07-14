@@ -277,12 +277,12 @@ class PieChart extends StatelessWidget {
             ),
           ),
         ),
-        Center(
-          child: Text(
-            '$percent%',
-            style: defaultText20B,
-          ),
-        ),
+        // Center(
+        //   child: Text(
+        //     '$percent%',
+        //     style: defaultText20B,
+        //   ),
+        // ),
       ],
     );
   }

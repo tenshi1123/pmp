@@ -116,7 +116,7 @@ class DetailEvaluateScreen extends StatelessWidget {
 
             // chartItem(width: 350, percents: 92, title: 'Chuyên cần'),
             // chartItem(width: 350, percents: 75, title: 'Bài tập'),
-            chartItem(width: 350, percents: 100, title: 'Thái độ'),
+            //chartItem(width: 350, percents: 100, title: 'Thái độ'),
             ListView.builder(
                 shrinkWrap: true,
                 physics: const ClampingScrollPhysics(),

@@ -388,16 +388,16 @@ class _ExcerciseItem extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                   ),
-                  if (model.timeDeadline.contains('0000'))
+                  if (model.note == '')
                     Text(
-                      'Hạn hoàn thành: Không giới hạn',
+                      model.timeDeadline,
                       style: defaultText14Re,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                     )
                   else
                     Text(
-                      'Hạn hoàn thành: ${model.timeDeadline}',
+                      model.note,
                       style: defaultText14Re,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,

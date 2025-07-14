@@ -114,11 +114,11 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: const Color(0xff273D8C),
+        backgroundColor: const Color(0xff00AEEF),
         automaticallyImplyLeading: false,
         title: Center(
           child: Text(
-            'Lịch học',
+            'Lịch dạy',
             style: defaultText18B.copyWith(
               color: Colors.white,
             ),
@@ -353,12 +353,16 @@ class _ItemTableCalenderState extends State<ItemTableCalender> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Text(
+                      widget.model.courseScheduleName,
+                      style: defaultText18B,
+                    ),
                     SizedBox(
                       width: 200.w,
                       child: Text(widget.model.name, style: defaultText18B),
                     ),
-                    const SizedBox(height: 5),
                     Text(widget.model.dayOfWeek, style: defaultText14M),
+                    Text(widget.model.time, style: defaultText14M),
                   ],
                 ),
               ],

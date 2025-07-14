@@ -6,6 +6,7 @@ import 'package:pmp_english/student_models/my_course_model.dart';
 import 'package:pmp_english/student_repo/mycourse_repo.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
+import 'package:pmp_english/utils/widget/custom_dialog.dart';
 import 'package:pmp_english/utils/widget/custom_widget.dart';
 
 class LichHocScreen extends StatelessWidget {
@@ -32,7 +33,7 @@ class LichHocScreen extends StatelessWidget {
               style: defaultText16B,
             ),
             SizedBox(
-                height: 330.h,
+                height: 600.h,
                 width: 390.w,
                 child: LichhocTabBar(
                   model: model,
@@ -316,6 +317,50 @@ class _ClassItem extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            Row(
+              children: [
+                SizedBox(
+                  width: 32.w,
+                ),
+                SizedBox(
+                  width: 80.w,
+                ),
+                type == 1
+                    ? InkWell(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => LeaveRequestDialog(
+                              id: model.id,
+                              time: model.day,
+                            ),
+                          );
+                        },
+                        child: Container(
+                          height: 29.h,
+                          width: 90.w,
+                          decoration: BoxDecoration(
+                            color: sub2Color,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(4.r),
+                            ),
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Xin nghỉ',
+                              style: defaultText14B.copyWith(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    : SizedBox(),
+              ],
             ),
             SizedBox(
               height: 10.h,

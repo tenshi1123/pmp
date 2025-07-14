@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 
 class LeaveRequestDialog extends StatelessWidget {
-  const LeaveRequestDialog({super.key, required this.id});
+  const LeaveRequestDialog({super.key, required this.id, required this.time});
   final String id;
+  final DateTime time;
   @override
   Widget build(BuildContext context) {
     TextEditingController reasonController = TextEditingController();
@@ -19,7 +21,7 @@ class LeaveRequestDialog extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Lịch học: 08:00 - 11:00, 21/05/2024.',
+              'Lịch học: ${DateFormat('yyyy-MM-dd').format(time)}',
               style: defaultText16M,
             ),
             const SizedBox(height: 16),

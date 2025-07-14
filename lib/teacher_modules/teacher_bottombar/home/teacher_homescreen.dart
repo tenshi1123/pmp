@@ -315,124 +315,120 @@ class _CommingSchedule extends StatelessWidget {
               ],
             ),
             child: SingleChildScrollView(
-              // Thêm Scroll nếu tràn
-
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight: constraints.maxHeight,
-                  maxHeight: constraints.maxHeight,
-                ),
-                child: IntrinsicHeight(
-                  // Tự co height theo nội dung bên trong
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
                     children: [
-                      Row(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 10.w, vertical: 15.h),
-                            decoration: BoxDecoration(
-                              color: const Color(0xff00AEEF),
-                              borderRadius: BorderRadius.circular(12.r),
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 10.w, vertical: 15.h),
+                        decoration: BoxDecoration(
+                          color: const Color(0xff00AEEF),
+                          borderRadius: BorderRadius.circular(12.r),
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              lichHocModel.day.day.toString(),
+                              style: defaultText16B.copyWith(
+                                  color: Colors.white, fontSize: 26.sp),
                             ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  lichHocModel.day.day.toString(),
-                                  style: defaultText16B.copyWith(
-                                      color: Colors.white, fontSize: 26.sp),
-                                ),
-                                Text(
-                                  'Tháng ${lichHocModel.day.month}',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
+                            Text(
+                              'Tháng ${lichHocModel.day.month}',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
-                          ),
-                          SizedBox(width: 12.w),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  lichHocModel.name,
-                                  style: defaultText18B,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                SizedBox(height: 5.h),
-                                Text(
-                                  lichHocModel.dayOfWeek,
-                                  style: defaultText14M,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                      SizedBox(height: 12.h),
+                      SizedBox(width: 12.w),
                       Expanded(
-                        // Expanded sẽ fill khoảng trống còn lại
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            _buildInfoLine(
-                                'Phòng học: ', lichHocModel.phongHoc),
-                            SizedBox(height: 8.h),
-                            _buildInfoLine('Chi nhánh: ', lichHocModel.coSo),
-                            SizedBox(height: 8.h),
-                            Html(
-                              data: lichHocModel.noidung,
-                              style: {
-                                "table": Style(
-                                  backgroundColor: const Color.fromARGB(
-                                      0x50, 0xee, 0xee, 0xee),
-                                ),
-                                "th": Style(
-                                  padding: HtmlPaddings.all(6),
-                                  backgroundColor: Colors.grey,
-                                ),
-                                "td": Style(
-                                  padding: HtmlPaddings.all(6),
-                                  border: const Border(
-                                      bottom: BorderSide(color: Colors.grey)),
-                                ),
-                                'h5': Style(
-                                    maxLines: 2,
-                                    textOverflow: TextOverflow.ellipsis),
-                                'flutter': Style(
-                                  display: Display.block,
-                                  fontSize: FontSize(5, Unit.em),
-                                ),
-                                ".second-table": Style(
-                                  backgroundColor: Colors.transparent,
-                                ),
-                                ".second-table tr td:first-child": Style(
-                                  fontWeight: FontWeight.bold,
-                                  textAlign: TextAlign.end,
-                                ),
-                                "p": Style(
-                                  color: Colors.black,
-                                  fontSize: FontSize(16.sp),
-                                  fontWeight: FontWeight.w400,
-                                  lineHeight: const LineHeight(1.5),
-                                ),
-                              },
+                            Text(
+                              lichHocModel.courseScheduleName,
+                              style: defaultText18B,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Text(
+                              lichHocModel.name,
+                              style: defaultText18B,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Text(
+                              lichHocModel.dayOfWeek,
+                              style: defaultText14M,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Text(
+                              lichHocModel.time,
+                              style: defaultText14M,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ],
                         ),
                       ),
                     ],
                   ),
-                ),
+                  SizedBox(height: 12.h),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildInfoLine('Phòng học: ', lichHocModel.phongHoc),
+                      SizedBox(height: 8.h),
+                      _buildInfoLine('Chi nhánh: ', lichHocModel.coSo),
+                      SizedBox(height: 8.h),
+                      Html(
+                        data: lichHocModel.noidung,
+                        style: {
+                          "table": Style(
+                            backgroundColor:
+                                const Color.fromARGB(0x50, 0xee, 0xee, 0xee),
+                          ),
+                          "th": Style(
+                            padding: HtmlPaddings.all(6),
+                            backgroundColor: Colors.grey,
+                          ),
+                          "td": Style(
+                            padding: HtmlPaddings.all(6),
+                            border: const Border(
+                                bottom: BorderSide(color: Colors.grey)),
+                          ),
+                          'h5': Style(
+                              maxLines: 2, textOverflow: TextOverflow.ellipsis),
+                          'flutter': Style(
+                            display: Display.block,
+                            fontSize: FontSize(5, Unit.em),
+                          ),
+                          ".second-table": Style(
+                            backgroundColor: Colors.transparent,
+                          ),
+                          ".second-table tr td:first-child": Style(
+                            fontWeight: FontWeight.bold,
+                            textAlign: TextAlign.end,
+                          ),
+                          "p": Style(
+                            color: Colors.black,
+                            fontSize: FontSize(16.sp),
+                            fontWeight: FontWeight.w400,
+                            lineHeight: const LineHeight(1.5),
+                          ),
+                        },
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           );
