@@ -90,6 +90,8 @@ class DetailCourse {
   final String phongHoc;
   final String cosoName;
   final String cosoAddress;
+  final String? ccsmslId;
+  final String? reason;
   DetailCourse({
     required this.id,
     required this.name,
@@ -100,6 +102,8 @@ class DetailCourse {
     required this.phongHoc,
     required this.cosoName,
     required this.cosoAddress,
+    required this.ccsmslId,
+    required this.reason,
   });
   factory DetailCourse.fromJson(Map<String, dynamic> json) {
     return DetailCourse(
@@ -112,6 +116,8 @@ class DetailCourse {
       phongHoc: json["phong_hoc"] ?? '',
       cosoName: json["coso_name"] ?? '',
       cosoAddress: json["coso_address"] ?? '',
+      ccsmslId: json["ccsmsl_id"],
+      reason: json["reason"],
     );
   }
 }
@@ -232,6 +238,7 @@ class VideoLessonModel {
   final String settingCourseTypeId;
   final String name;
   final String teachingContent;
+  final String? noiDungBuoiHoc;
   final DateTime timeStart;
   final DateTime timeEnd;
   final String phongHoc;
@@ -245,6 +252,7 @@ class VideoLessonModel {
     required this.settingCourseTypeId,
     required this.name,
     required this.teachingContent,
+    required this.noiDungBuoiHoc,
     required this.timeStart,
     required this.timeEnd,
     required this.phongHoc,
@@ -260,6 +268,7 @@ class VideoLessonModel {
       settingCourseTypeId: json['setting_course_type_id'] ?? '',
       name: json['name'] ?? '',
       teachingContent: json['teaching_content'] ?? '',
+      noiDungBuoiHoc: json['noi_dung_buoi_hoc'],
       timeStart:
           DateFormat("yyyy-MM-dd hh:mm:ss").parse(json['time_start'] ?? ''),
       timeEnd: DateFormat("yyyy-MM-dd hh:mm:ss").parse(json['time_end'] ?? ''),

@@ -819,35 +819,48 @@ class _Upcoming extends StatelessWidget {
                 SizedBox(
                   width: 80.w,
                 ),
-                InkWell(
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => LeaveRequestDialog(
-                        id: model.id,
-                        time: model.day,
-                      ),
-                    );
-                  },
-                  child: Container(
-                    height: 29.h,
-                    width: 90.w,
-                    decoration: BoxDecoration(
-                      color: sub2Color,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(4.r),
-                      ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Xin nghỉ',
-                        style: defaultText14B.copyWith(
-                          color: Colors.white,
+                model.reason != null
+                    ? RichText(
+                        text: TextSpan(
+                          text: 'Xin nghỉ: ',
+                          style: defaultText16M,
+                          children: [
+                            TextSpan(
+                              text: model.reason,
+                              style: defaultText16B.copyWith(color: sub1Color),
+                            ),
+                          ],
+                        ),
+                      )
+                    : InkWell(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => LeaveRequestDialog(
+                              id: model.id,
+                              time: model.day,
+                            ),
+                          );
+                        },
+                        child: Container(
+                          height: 29.h,
+                          width: 90.w,
+                          decoration: BoxDecoration(
+                            color: sub2Color,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(4.r),
+                            ),
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Xin nghỉ',
+                              style: defaultText14B.copyWith(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                ),
               ],
             ),
             SizedBox(

@@ -166,7 +166,7 @@ class _CalenderScreenState extends State<CalenderScreen> {
                 ),
               ),
               Container(
-                height: 403.h,
+                //height: 403.h,
                 width: 350.w,
                 decoration: BoxDecoration(
                   color: main2Color.withOpacity(0.24),
@@ -367,7 +367,8 @@ class _ItemTableCalenderState extends State<ItemTableCalender> {
               ),
             )
           : Container(
-              margin: EdgeInsets.only(top: 16.h, bottom: 10.h),
+              margin: EdgeInsets.only(
+                  top: 16.h, bottom: 10.h, left: 16.w, right: 16.w),
               padding: EdgeInsets.symmetric(
                 horizontal: 16.w,
                 vertical: 16.h,
@@ -459,6 +460,23 @@ class _ItemTableCalenderState extends State<ItemTableCalender> {
                     children: [
                       SizedBox(
                         height: 10.h,
+                      ),
+                      widget.model.reason != null
+                          ? RichText(
+                              text: TextSpan(
+                                text: 'Xin nghỉ: ',
+                                style: defaultText16M,
+                                children: [
+                                  TextSpan(
+                                      text: widget.model.reason,
+                                      style: defaultText16B.copyWith(
+                                          color: sub1Color)),
+                                ],
+                              ),
+                            )
+                          : SizedBox(),
+                      SizedBox(
+                        height: 6.h,
                       ),
                       RichText(
                         text: TextSpan(

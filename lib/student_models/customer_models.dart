@@ -105,6 +105,8 @@ class CalendarModel {
   final String timeEnd;
   final String cosoAddress;
   final String phongHocName;
+  final String? ccsmslId;
+  final String? reason;
   final String teacherName;
   final String teacherAvatar;
   final String type;
@@ -118,6 +120,8 @@ class CalendarModel {
     required this.timeEnd,
     required this.cosoAddress,
     required this.phongHocName,
+    required this.ccsmslId,
+    required this.reason,
     required this.teacherName,
     required this.teacherAvatar,
     required this.type,
@@ -133,6 +137,8 @@ class CalendarModel {
       timeEnd: json["time_end"] ?? '',
       cosoAddress: json["coso_address"] ?? '',
       phongHocName: json['phonghoc_name'] ?? '',
+      ccsmslId: json["ccsmsl_id"],
+      reason: json["reason"],
       teacherName: json['teachers_full_name'] ?? '',
       teacherAvatar: json['teachers_avatar'] ?? '',
       type: json['type'] ?? '',

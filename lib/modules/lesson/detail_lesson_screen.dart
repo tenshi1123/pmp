@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:pmp_english/modules/lesson/video_screen.dart';
@@ -57,7 +58,7 @@ class DetailLessonScreen extends StatelessWidget {
                 height: 20.h,
               ),
               Container(
-                height: 300.h,
+                //height: 300.h,
                 width: 350.w,
                 decoration: BoxDecoration(
                   boxShadow: [
@@ -91,12 +92,47 @@ class DetailLessonScreen extends StatelessWidget {
                       'Nội dung',
                       style: defaultText14B,
                     ),
-                    SizedBox(
-                      height: 10.h,
+                    Html(
+                      data: videoLessonModel.noiDungBuoiHoc,
+                      style: {
+                        "table": Style(
+                          backgroundColor:
+                              const Color.fromARGB(0x50, 0xee, 0xee, 0xee),
+                        ),
+                        "th": Style(
+                          padding: HtmlPaddings.all(6),
+                          backgroundColor: Colors.grey,
+                        ),
+                        "td": Style(
+                          padding: HtmlPaddings.all(6),
+                          border: const Border(
+                              bottom: BorderSide(color: Colors.grey)),
+                        ),
+                        'h5': Style(
+                            maxLines: 2, textOverflow: TextOverflow.ellipsis),
+                        'flutter': Style(
+                          display: Display.block,
+                          fontSize: FontSize(5, Unit.em),
+                        ),
+                        ".second-table": Style(
+                          backgroundColor: Colors.transparent,
+                        ),
+                        ".second-table tr td:first-child": Style(
+                          fontWeight: FontWeight.bold,
+                          textAlign: TextAlign.end,
+                        ),
+                        "p": Style(
+                          color: Colors.black,
+                          fontSize: FontSize(16.sp),
+                          fontWeight: FontWeight.w400,
+                          lineHeight: const LineHeight(1.5),
+                        ),
+                      },
                     ),
                     Container(
                       //height: 120.h,
                       width: 326.w,
+                      margin: EdgeInsets.symmetric(vertical: 10.h),
                       padding: EdgeInsets.symmetric(
                         horizontal: 10.w,
                         vertical: 8.h,

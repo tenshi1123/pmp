@@ -1,11 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:pmp_english/student_models/home_model.dart';
 import 'package:pmp_english/student_models/my_course_model.dart';
+import 'package:pmp_english/utils/DioClient.dart';
 import 'package:pmp_english/utils/constants/api_path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MycourseRepo {
   Dio dio = Dio();
+
   Future<List<MyCourseModel>> getListMyCourse() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? token = prefs.getString('token');
@@ -98,9 +100,7 @@ class MycourseRepo {
   Future<List<DeValueModel>> getDocument({
     required String id,
   }) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     Response response;
     response = await dio.post(
       ApiPath.detailBuoihoc,
@@ -125,5 +125,31 @@ class MycourseRepo {
       data: {'id': id, 'type': "evaluation"},
     );
     return EvaluationModel.fromJson(response.data['data']['evaluation']);
+  }
+
+  Future<String> takeADayOff(
+    String id,
+    String reason,
+  ) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    try {
+      Response response;
+      response = await dio.post(ApiPath.xinNghi, data: {
+        'id': id,
+        'reason': reason,
+      });
+      if (response.data['type'] == 'error') {
+        return "Xin nghỉ thất bại - error";
+      } else if (response.data['type'] == 'success') {
+        return "Xin nghỉ thành công";
+      } else if (response.data['type'] == 'warning') {
+        return "Xin nghỉ thất bại - warning";
+      }
+      return "Đã có lỗi xảy ra, vui lòng thử lại sau";
+    } catch (e) {
+      return "Xin nghỉ thất bại";
+    }
   }
 }

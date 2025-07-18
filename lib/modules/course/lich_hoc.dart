@@ -174,6 +174,7 @@ class _ClassItem extends StatelessWidget {
             ]),
         child: Column(
           //mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
               height: 10.h,
@@ -242,6 +243,7 @@ class _ClassItem extends StatelessWidget {
             Container(
               //height: 74.h,
               width: 325.w,
+              margin: EdgeInsets.only(left: 12.w),
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               decoration: BoxDecoration(
                 color: key1Color.withOpacity(0.1),
@@ -321,47 +323,59 @@ class _ClassItem extends StatelessWidget {
             SizedBox(
               height: 10.h,
             ),
-            Row(
-              children: [
-                SizedBox(
-                  width: 32.w,
-                ),
-                SizedBox(
-                  width: 80.w,
-                ),
-                type == 1
-                    ? InkWell(
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) => LeaveRequestDialog(
-                              id: model.id,
-                              time: model.day,
-                            ),
-                          );
-                        },
-                        child: Container(
-                          height: 29.h,
-                          width: 90.w,
-                          decoration: BoxDecoration(
-                            color: sub2Color,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(4.r),
-                            ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Xin nghỉ',
-                              style: defaultText14B.copyWith(
-                                color: Colors.white,
+            model.ccsmslId == null
+                ? Row(
+                    children: [
+                      SizedBox(
+                        width: 32.w,
+                      ),
+                      SizedBox(
+                        width: 80.w,
+                      ),
+                      type == 1
+                          ? InkWell(
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => LeaveRequestDialog(
+                                    id: model.id,
+                                    time: model.day,
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                height: 29.h,
+                                width: 90.w,
+                                decoration: BoxDecoration(
+                                  color: sub2Color,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(4.r),
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    'Xin nghỉ',
+                                    style: defaultText14B.copyWith(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                        ),
-                      )
-                    : SizedBox(),
-              ],
-            ),
+                            )
+                          : SizedBox(),
+                    ],
+                  )
+                : RichText(
+                    text: TextSpan(
+                      text: 'Xin nghỉ: ',
+                      style: defaultText16M,
+                      children: [
+                        TextSpan(
+                            text: model.reason,
+                            style: defaultText16B.copyWith(color: sub1Color)),
+                      ],
+                    ),
+                  ),
             SizedBox(
               height: 10.h,
             ),
