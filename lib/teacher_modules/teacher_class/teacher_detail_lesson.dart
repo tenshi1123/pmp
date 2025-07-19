@@ -163,23 +163,23 @@ class _LessonDetailState extends State<LessonDetail> {
               SizedBox(
                 height: 20.h,
               ),
-              value == 0
-                  ? ListView.builder(
-                      shrinkWrap: true,
-                      physics: const ClampingScrollPhysics(),
-                      itemCount: widget.listDiemDanh.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return _RollCallItem(
-                          model: widget.listDiemDanh[index],
-                        );
-                      })
-                  : value == 1
-                      ? _ListExam(
-                          listExam: widget.listBaiTap,
-                        )
-                      : _ListExam(
-                          listExam: widget.listDeThi,
-                        ),
+              Expanded(
+                child: value == 0
+                    ? ListView.builder(
+                        itemCount: widget.listDiemDanh.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return _RollCallItem(
+                            model: widget.listDiemDanh[index],
+                          );
+                        })
+                    : value == 1
+                        ? _ListExam(
+                            listExam: widget.listBaiTap,
+                          )
+                        : _ListExam(
+                            listExam: widget.listDeThi,
+                          ),
+              ),
             ],
           );
         },

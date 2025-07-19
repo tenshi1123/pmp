@@ -249,7 +249,7 @@ Widget homeTab(
             width: 3.w,
           ),
           SizedBox(
-            width: 77.w,
+            width: 80.w,
             child: Center(
               child: Text(
                 title,
