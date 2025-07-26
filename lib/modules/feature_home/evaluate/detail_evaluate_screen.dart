@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pmp_english/student_models/review_models.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
-import 'package:pmp_english/utils/widget/custom_widget.dart';
 
 class DetailEvaluateScreen extends StatelessWidget {
   const DetailEvaluateScreen({super.key, required this.model});

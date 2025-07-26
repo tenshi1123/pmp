@@ -3,8 +3,10 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:pmp_english/student_models/diem_danh_model.dart';
+import 'package:pmp_english/student_models/excercise_model.dart';
 import 'package:pmp_english/student_models/home_model.dart';
 import 'package:pmp_english/student_models/profile_model.dart';
+import 'package:pmp_english/utils/DioClient.dart';
 import 'package:pmp_english/utils/constants/api_path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -39,6 +41,32 @@ class HomeRepo {
         }));
     //return DiemDanhModel.fromJson(response.data['data']);
     return DetailExcerciseModel.fromJson((response.data)['data']);
+  }
+
+  //load bài tập trắc nghiệm
+  Future<List<QuestionGroupModel>> viewTracNghiem({
+    required String id,
+    required String customerCourseScheduleId,
+    required String examDetailId,
+  }) async {
+    final dio = await DioClient.getInstance();
+    Response response;
+    response = await dio.post(
+      ApiPath.viewTracNghiem,
+      data: jsonEncode(
+        {
+          'id': int.tryParse(id),
+          'customer_course_schedule_id': int.tryParse(
+            customerCourseScheduleId,
+          ),
+          'exam_detail_id': int.tryParse(examDetailId),
+        },
+      ),
+    );
+    //return DiemDanhModel.fromJson(response.data['data']);
+    return ((response.data['data']['question'] as List)
+        .map((e) => QuestionGroupModel.fromJson(e))
+        .toList());
   }
 
   Future uploadExcercise(

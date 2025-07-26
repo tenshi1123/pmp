@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:pmp_english/modules/bottombar/screen/extension.dart/testtkb.dart';
+import 'package:pmp_english/student_repo/login_repo.dart';
 import 'package:pmp_english/teacher/teacher_model/home_teacher_model.dart';
 
 import 'package:pmp_english/teacher_modules/teacher_info/teacher_info.dart';
@@ -27,30 +31,37 @@ class _TeacherBottomBarState extends State<TeacherBottomBar> {
   @override
   void initState() {
     super.initState();
-    //setupOneSignal();
+    setupOneSignal();
   }
 
-  // Future<void> setupOneSignal() async {
-  //   await initOneSignal();
-  //   if (Platform.isAndroid) {
-  //     OneSignal.Notifications.addClickListener((event) {});
-  //   } else {
-  //     //do nothing :v tự báo chính mình
-  //     OneSignal.Notifications.addClickListener((event) {});
-  //   }
+  Future<void> setupOneSignal() async {
+    // Enable verbose logging for debugging (remove in production)
+    // OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
+    // Initialize with your OneSignal App ID
+    OneSignal.initialize("9eed43b6-3e7d-4d7b-a8fb-621e889f71c9");
+    OneSignal.Notifications.requestPermission(true).then((value) {});
+    var onesignalId = await OneSignal.User.getOnesignalId();
+    await LoginRepo().pushOnesignalId(
+      onesignalId: onesignalId ?? '',
+    );
+    if (Platform.isAndroid) {
+      OneSignal.Notifications.addClickListener((event) {});
+    } else {
+      //do nothing :v tự báo chính mình
+      OneSignal.Notifications.addClickListener((event) {});
+    }
+    promptPolicyPrivacy();
+  }
 
-  //   promptPolicyPrivacy();
-  // }
-
-  // Future<void> promptPolicyPrivacy() async {
-  //   if (Platform.isAndroid) {
-  //     OneSignal.consentRequired(true);
-  //     OneSignal.consentGiven(true);
-  //   } else {
-  //     //do nothing :v
-  //   }
-  //   // sendUserTag(userId);
-  // }
+  Future<void> promptPolicyPrivacy() async {
+    if (Platform.isAndroid) {
+      OneSignal.consentRequired(true);
+      OneSignal.consentGiven(true);
+    } else {
+      //do nothing :v
+    }
+    // sendUserTag(userId);
+  }
 
   List<PersistentTabConfig> _tabs() => [
         PersistentTabConfig(

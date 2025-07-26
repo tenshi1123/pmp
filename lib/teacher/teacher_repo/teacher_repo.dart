@@ -17,7 +17,7 @@ class TeacherRepo {
         ApiPathTeacher.teachersUrl,
       );
       return TeacherHomeModel.fromJson(response.data['data']);
-    } on DioException catch (e) {
+    } on DioException {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.remove(ConstString.type);
       await prefs.remove('token');

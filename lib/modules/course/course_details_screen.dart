@@ -67,7 +67,7 @@ class _CourseDetailsState extends State<CourseDetails>
                   ),
                 ),
                 Positioned(
-                  top: 114.h,
+                  top: 110.h,
                   left: 20.h,
                   child: Container(
                     width: 350.w,

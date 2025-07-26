@@ -54,14 +54,18 @@ class ApiPath {
   static const String coureDetail = '$hocvienUrl/course/detail';
   //Xin nghi
   static const String xinNghi = '$myCourse/xin_nghi';
+  //Buổi học
   static const String detailBuoihoc = '$myCourse/detail/buoi_hoc';
-  static const String baiTapKhoahoc = '$myCourse/detail/bai_tap';
-  static const String detailBaitap = '$myCourse/detail_exercise';
   static const String submitExeTL = '$myCourse/submit_exercise_tu_luan';
+  static const String submitTracNghiem = '$myCourse/nop_bai_trac_nghiem';
+  static const String viewTracNghiem = '$myCourse/view_trac_nghiem';
+  static const String viewTestDone = '$myCourse/xem_lai_bai_trac_nghiem';
 
   //payment
   static const String payment = '$hocvienUrl/payment';
 
+  //push onesignal
+  static const String pushOnesignal = '$hocvienUrl/onesignal';
   //api do oneSignal cung cấp
   // static const String oneSignal =
   //     'https://api.onesignal.com/notifications?app_id=1f643336-9d73-4c65-ac00-38d499b8c462';

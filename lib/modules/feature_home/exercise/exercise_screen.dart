@@ -21,7 +21,7 @@ class ExerciseScreen extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(
-              height: 160.h,
+              height: 150.h,
               width: 390.w,
               child: Stack(
                 children: [
@@ -29,7 +29,7 @@ class ExerciseScreen extends StatelessWidget {
                     top: 0,
                     child: Container(
                       width: 390.w,
-                      height: 140.h,
+                      height: 130.h,
                       decoration: BoxDecoration(gradient: mainGradient),
                     ),
                   ),
@@ -194,7 +194,7 @@ class ExerciseScreen extends StatelessWidget {
               height: 10.h,
             ),
             SizedBox(
-              height: 400.h,
+              height: 450.h,
               width: 390.w,
               child: _ExcerciseTabBar(model.value),
             ),

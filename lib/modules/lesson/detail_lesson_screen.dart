@@ -10,7 +10,6 @@ import 'package:pmp_english/student_repo/mycourse_repo.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:pmp_english/utils/widget/custom_widget.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class DetailLessonScreen extends StatelessWidget {
   const DetailLessonScreen({super.key, required this.videoLessonModel});

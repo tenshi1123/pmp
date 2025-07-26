@@ -2,7 +2,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pmp_english/modules/feature_home/exercise/test_detail_screen.dart';
+import 'package:pmp_english/student_models/excercise_model.dart';
 import 'package:pmp_english/student_models/home_model.dart';
+import 'package:pmp_english/student_repo/home_repo.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 
@@ -16,63 +18,60 @@ class TestScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        title: Text(
+          'Chi tiết bài tập',
+          style: defaultText18B.copyWith(
+            color: Colors.white,
+          ),
+        ),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: mainGradient,
+          ),
+        ),
+      ),
       body: SafeArea(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 16.h,
-            ),
-            Row(
-              children: [
-                IconButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  icon: const Icon(
-                    Icons.arrow_back_ios_new,
-                    color: Colors.black,
-                  ),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: excerciseModel.detail.length,
+                padding: EdgeInsets.symmetric(
+                  horizontal: 20.w,
                 ),
-                RichText(
-                  text: TextSpan(
-                    text: 'Bài tập',
-                    style: defaultText14B,
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () => Navigator.of(context).pop(),
-                  ),
-                ),
-                SizedBox(
-                  width: 10.w,
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 16.h,
-            ),
-            _InfoTest(
-              isComplete: true,
-              model: excerciseModel,
-            ),
-            SizedBox(
-              height: 16.h,
-            ),
-            Text(
-              'Báo cáo kết quả',
-              style: defaultText18B.copyWith(
-                decoration: TextDecoration.underline,
+                itemBuilder: (context, index) {
+                  return _InfoTest(
+                    model: excerciseModel.detail[index],
+                    timeDeadline: excerciseModel.valueModel.timeDeadline,
+                  );
+                },
               ),
-            ),
-            //_resultTest(),
-            SizedBox(
-              height: 16.h,
-            ),
-            Text(
-              'Hiện chưa có bài làm',
-              style: defaultText14M.copyWith(
-                color: key1Color.withOpacity(0.5),
+              // _InfoTest(
+              //   isComplete: true,
+              //   model: excerciseModel,
+              // ),
+              SizedBox(
+                height: 16.h,
               ),
-            ),
-          ],
+              Text(
+                'Báo cáo kết quả',
+                style: defaultText18B.copyWith(
+                  decoration: TextDecoration.underline,
+                ),
+              ),
+              //_resultTest(),
+              SizedBox(
+                height: 16.h,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -81,16 +80,20 @@ class TestScreen extends StatelessWidget {
 
 class _InfoTest extends StatelessWidget {
   const _InfoTest({
-    required this.isComplete,
     required this.model,
+    required this.timeDeadline,
   });
-  final bool isComplete;
-  final DetailExcerciseModel model;
+
+  final String timeDeadline;
+  final DeDetailModel model;
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 350.w,
-      height: 200.h,
+      height: 225.h,
+      margin: EdgeInsets.only(
+        top: 16.h,
+      ),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.all(
@@ -148,7 +151,7 @@ class _InfoTest extends StatelessWidget {
                   SizedBox(
                     width: 253.w,
                     child: Text(
-                      model.valueModel.name,
+                      model.name,
                       style: defaultText18B,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
@@ -158,7 +161,7 @@ class _InfoTest extends StatelessWidget {
                     height: 8.h,
                   ),
                   Text(
-                    'Thời lượng: ${model.detail[0].totalQuestions} Câu',
+                    'Thời lượng: ${model.totalQuestions} Câu',
                     style: defaultText12Re,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
@@ -167,7 +170,7 @@ class _InfoTest extends StatelessWidget {
                     height: 2.h,
                   ),
                   Text(
-                    'Ngày giao: ${model.detail[0].createAt}',
+                    'Ngày giao: ${model.createAt}',
                     style: defaultText12Re,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
@@ -175,7 +178,7 @@ class _InfoTest extends StatelessWidget {
                   SizedBox(
                     height: 8.h,
                   ),
-                  if (model.valueModel.timeDeadline.contains('0000'))
+                  if (timeDeadline.contains('0000'))
                     Text(
                       'Hạn hoàn thành: Không giới hạn',
                       style: defaultText12B,
@@ -184,13 +187,13 @@ class _InfoTest extends StatelessWidget {
                     )
                   else
                     Text(
-                      'Hạn hoàn thành: ${model.valueModel.timeDeadline}',
+                      'Hạn hoàn thành: $timeDeadline',
                       style: defaultText12B,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                     ),
                   Text(
-                    'Điểm : ${model.detail[0].finalMark}',
+                    'Điểm : ${model.finalMark}',
                     style: defaultText12B,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
@@ -206,7 +209,7 @@ class _InfoTest extends StatelessWidget {
                   SizedBox(
                     height: 20.h,
                   ),
-                  isComplete
+                  model.ccseeId.isNotEmpty
                       ? Container(
                           width: 326.w,
                           height: 51.h,
@@ -221,10 +224,19 @@ class _InfoTest extends StatelessWidget {
                                       color: Colors.white))),
                         )
                       : GestureDetector(
-                          onTap: () {
+                          onTap: () async {
+                            List<QuestionGroupModel> detailExcerciseModel =
+                                await HomeRepo().viewTracNghiem(
+                              id: model.id,
+                              customerCourseScheduleId: '20',
+                              examDetailId: model.examDetailId,
+                            );
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) => const TestDetailScreen(),
+                                builder: (context) => TestDetailScreen(
+                                  listQuestion: detailExcerciseModel,
+                                  title: model.name,
+                                ),
                               ),
                             );
                           },

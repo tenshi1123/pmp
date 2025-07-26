@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pmp_english/modules/feature_home/exercise/exercise_detail_screen.dart';
-import 'package:pmp_english/student_repo/home_repo.dart';
-import 'package:pmp_english/student_models/home_model.dart';
 import 'package:pmp_english/student_models/my_course_model.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
@@ -14,55 +11,52 @@ class ExcerciseScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Text(
-          //   'Sắp đến hạn',
-          //   style: defaultText16B,
-          // ),
-          // Container(
-          //   margin: EdgeInsets.symmetric(vertical: 20.h),
-          //   height: 200.h,
-          //   width: 349.w,
-          //   decoration: BoxDecoration(
-          //     borderRadius: BorderRadius.all(
-          //       Radius.circular(8.r),
-          //     ),
-          //     color: Colors.white,
-          //     boxShadow: [
-          //       BoxShadow(
-          //         color: Colors.grey.withOpacity(0.2),
-          //         spreadRadius: 5,
-          //         blurRadius: 7,
-          //         offset: const Offset(0, 2), // changes position of shadow
-          //       ),
-          //     ],
-          //   ),
-          //   child: Column(
-          //     children: [
-          //       SizedBox(
-          //         height: 10.h,
-          //       ),
-          //       const ExcerciseItem(
-          //         isComplete: true,
-          //       ),
-          //       const ExcerciseItem(
-          //         isComplete: true,
-          //       ),
-          //     ],
-          //   ),
-          // ),
-          SizedBox(
-              height: 630.h,
-              width: 390.w,
-              child: _ExcerciseTabBar(
-                baiTapModel: baiTapModel,
-              )),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Text(
+        //   'Sắp đến hạn',
+        //   style: defaultText16B,
+        // ),
+        // Container(
+        //   margin: EdgeInsets.symmetric(vertical: 20.h),
+        //   height: 200.h,
+        //   width: 349.w,
+        //   decoration: BoxDecoration(
+        //     borderRadius: BorderRadius.all(
+        //       Radius.circular(8.r),
+        //     ),
+        //     color: Colors.white,
+        //     boxShadow: [
+        //       BoxShadow(
+        //         color: Colors.grey.withOpacity(0.2),
+        //         spreadRadius: 5,
+        //         blurRadius: 7,
+        //         offset: const Offset(0, 2), // changes position of shadow
+        //       ),
+        //     ],
+        //   ),
+        //   child: Column(
+        //     children: [
+        //       SizedBox(
+        //         height: 10.h,
+        //       ),
+        //       const ExcerciseItem(
+        //         isComplete: true,
+        //       ),
+        //       const ExcerciseItem(
+        //         isComplete: true,
+        //       ),
+        //     ],
+        //   ),
+        // ),
+        SizedBox(
+            height: 630.h,
+            width: 390.w,
+            child: _ExcerciseTabBar(
+              baiTapModel: baiTapModel,
+            )),
+      ],
     );
   }
 }
@@ -99,39 +93,42 @@ class _ExcerciseTabBarState extends State<_ExcerciseTabBar>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        TabBar.secondary(
-          tabAlignment: TabAlignment.start,
-          padding: EdgeInsets.zero,
-          indicatorPadding: EdgeInsets.zero,
-          labelPadding: EdgeInsets.only(right: 10.w),
-          isScrollable: true,
-          indicatorColor: keyBlack,
-          indicatorSize: TabBarIndicatorSize.label,
-          indicator: UnderlineTabIndicator(
-            borderSide: BorderSide(width: 2.w), //hight of indicator
-            insets: EdgeInsets.symmetric(
-                horizontal:
-                    20.w), //give some padding to reduce the size of indicator
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          child: TabBar.secondary(
+            tabAlignment: TabAlignment.start,
+            padding: EdgeInsets.zero,
+            indicatorPadding: EdgeInsets.zero,
+            labelPadding: EdgeInsets.only(right: 10.w),
+            isScrollable: true,
+            indicatorColor: keyBlack,
+            indicatorSize: TabBarIndicatorSize.label,
+            indicator: UnderlineTabIndicator(
+              borderSide: BorderSide(width: 2.w), //hight of indicator
+              insets: EdgeInsets.symmetric(
+                  horizontal:
+                      20.w), //give some padding to reduce the size of indicator
+            ),
+            unselectedLabelColor: keyBlack.withOpacity(0.3),
+            labelStyle: defaultText14M,
+            labelColor: keyBlack,
+            controller: _tabController,
+            tabs: <Widget>[
+              homeTab(
+                title: 'Toàn bộ',
+                isSeprator: false,
+                number: widget.baiTapModel.value.length,
+              ),
+              homeTab(
+                title: 'Chưa làm',
+                number: baitapChuaLam.length,
+              ),
+              homeTab(
+                title: 'Hoàn thành',
+                number: baitapDaLam.length,
+              ),
+            ],
           ),
-          unselectedLabelColor: keyBlack.withOpacity(0.3),
-          labelStyle: defaultText14M,
-          labelColor: keyBlack,
-          controller: _tabController,
-          tabs: <Widget>[
-            homeTab(
-              title: 'Toàn bộ',
-              isSeprator: false,
-              number: widget.baiTapModel.value.length,
-            ),
-            homeTab(
-              title: 'Chưa làm',
-              number: baitapChuaLam.length,
-            ),
-            homeTab(
-              title: 'Hoàn thành',
-              number: baitapDaLam.length,
-            ),
-          ],
         ),
         Expanded(
           child: TabBarView(

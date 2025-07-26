@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/student_models/excercise_model.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:number_paginator/number_paginator.dart';
@@ -17,8 +19,11 @@ extension Substrings on String {
 class TestDetailScreen extends StatefulWidget {
   const TestDetailScreen({
     super.key,
+    required this.listQuestion,
+    required this.title,
   });
-
+  final List<QuestionGroupModel> listQuestion;
+  final String title;
   @override
   State<TestDetailScreen> createState() => _TestDetailScreenState();
 }
@@ -27,6 +32,7 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
   int _currentPage = 0;
   var countdownDuration = const Duration(minutes: 15);
   Duration duration = const Duration();
+  List<QuestionGroupModel> _listQuestion = [];
   Timer? timer;
   Timer? timer1;
   bool countDown = true;
@@ -34,8 +40,20 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
   bool? isChecked = false;
   final ValueNotifier<Map<int, int>> _counter =
       ValueNotifier<Map<int, int>>({});
+  final cauController = CauHoiHtmlController();
+  late final List<Widget> pages;
+  late List<SubQuestionModel> allSubQuestions;
+  @override
+  void dispose() {
+    cauController.dispose();
+    super.dispose();
+  }
+
   @override
   void initState() {
+    _listQuestion = widget.listQuestion;
+    allSubQuestions =
+        widget.listQuestion.expand((q) => q.value.values).toList();
     int hours1;
     int mints1;
     int secs1;
@@ -46,6 +64,16 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
         Duration(hours: hours1, minutes: mints1, seconds: secs1);
     startTimer();
     reset();
+    pages = List.generate(
+      allSubQuestions.length,
+      (index) => CauHoiPage(
+        index: index,
+        question: allSubQuestions[index],
+        cauController: cauController,
+        counter: _counter,
+        answerGroup: _listQuestion.first.value, // cần đúng map
+      ),
+    );
     super.initState();
   }
 
@@ -71,249 +99,118 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
 
   void addTime() {
     const addSeconds = 1;
-    setState(() {
-      final seconds = duration.inSeconds - addSeconds;
-      if (seconds < 0) {
-        timer1?.cancel();
-      } else {
+    final seconds = duration.inSeconds - addSeconds;
+    if (seconds < 0) {
+      timer1?.cancel();
+    } else {
+      setState(() {
         duration = Duration(seconds: seconds);
-      }
-    });
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    var pages = List.generate(
-      10,
-      (index) => SizedBox(
-        height: 600.h,
-        child: ValueListenableBuilder(
-          valueListenable: _counter,
-          builder: (BuildContext context, value, Widget? child) {
-            return SingleChildScrollView(
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Container(
-                        height: 21.h,
-                        width: 21.w,
-                        decoration: BoxDecoration(
-                          color: key1Color,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Center(
-                          child: Text(
-                            "${index + 1}",
-                            style: defaultText16M.copyWith(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 304.w,
-                        child: Text(
-                          '$index question',
-                          style: defaultText16M,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  SizedBox(
-                    width: 390.w,
-                    //height: 400.h,
-                    child: ListView.builder(
-                        shrinkWrap: true,
-                        padding: EdgeInsets.fromLTRB(20.w, 0, 20.w, 20.h),
-                        //itemExtent: 90,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: 4,
-                        itemBuilder: (BuildContext context, int answer) {
-                          return GestureDetector(
-                            onTap: () {
-                              // dùng tạm cách này đi
-                              //_counter.value[index] = answer;
-                              _counter.value.addAll({index: answer});
-                              _counter.notifyListeners();
-                            },
-                            child: Container(
-                              margin: EdgeInsets.only(bottom: 10.h),
-                              decoration: BoxDecoration(
-                                // border: Border.all(),
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(8.r),
-                                ),
-                                color: _counter.value[index] == answer
-                                    ? const Color(0xff66D5FF).withOpacity(0.3)
-                                    : Colors.white,
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Checkbox(
-                                    //tristate: true,
-                                    value: _counter.value[index] == answer,
-                                    shape: const CircleBorder(),
-                                    onChanged: (bool? value) {},
-                                  ),
-                                  SizedBox(
-                                    width: 304.w,
-                                    child:
-                                        //check type of answer
-                                        Text(
-                                      'Answer $answer',
-                                      style: defaultText16M,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        }),
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
-      ),
-    );
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         //automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+            color: Colors.white,
+          ),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: mainGradient,
           ),
         ),
         title: Text(
-          'Test 8: Reading',
+          widget.title,
           style: defaultText18B.copyWith(
             color: Colors.white,
           ),
         ),
       ),
-      body: Column(children: [
-        SizedBox(
-          height: 10.h,
-        ),
-        Row(
-          children: [
-            SizedBox(
-              width: 20.w,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Thời gian còn lại',
-                  style: defaultText16B,
-                ),
-                buildTime1(),
-              ],
-            ),
-            const Spacer(),
-            GestureDetector(
-              onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return CupertinoAlertDialog(
-                      title: const Text('Bạn có chắc chắn muốn nộp bài'),
-                      actions: <Widget>[
-                        CupertinoDialogAction(
-                          isDefaultAction: true,
-                          child: Text('Đồng ý', style: defaultText20B),
-                          onPressed: () {
-                            stopTimer();
-                            Navigator.pop(context);
-                          },
-                        ),
-                        CupertinoDialogAction(
-                          isDefaultAction: true,
-                          child: Text('Hủy', style: defaultText20B),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        )
-                      ],
-                    );
-                  },
-                );
-              },
-              child: Container(
-                height: 35.h,
-                width: 74.w,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(
-                      10.r,
-                    ),
+      body: Column(
+        children: [
+          SizedBox(height: 10.h),
+          Row(
+            children: [
+              SizedBox(width: 20.w),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Thời gian còn lại', style: defaultText16B),
+                  buildTime1(),
+                ],
+              ),
+              const Spacer(),
+              GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return CupertinoAlertDialog(
+                        title: const Text('Bạn có chắc chắn muốn nộp bài'),
+                        actions: <Widget>[
+                          CupertinoDialogAction(
+                            isDefaultAction: true,
+                            child: Text('Đồng ý', style: defaultText20B),
+                            onPressed: () {
+                              stopTimer();
+                              Navigator.pop(context);
+                            },
+                          ),
+                          CupertinoDialogAction(
+                            isDefaultAction: true,
+                            child: Text('Hủy', style: defaultText20B),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          )
+                        ],
+                      );
+                    },
+                  );
+                },
+                child: Container(
+                  height: 35.h,
+                  width: 74.w,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(10.r)),
+                    color: sub1Color,
                   ),
-                  color: sub1Color,
-                ),
-                child: Center(
-                  child: Text(
-                    'Nộp bài',
-                    style: defaultText16B.copyWith(
-                      color: Colors.white,
+                  child: Center(
+                    child: Text(
+                      'Nộp bài',
+                      style: defaultText16B.copyWith(color: Colors.white),
                     ),
                   ),
                 ),
               ),
+              SizedBox(width: 20.w),
+            ],
+          ),
+          SizedBox(height: 10.h),
+          Expanded(
+            child: IndexedStack(
+              index: _currentPage,
+              children: pages,
             ),
-            SizedBox(
-              width: 20.w,
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 10.h,
-        ),
-        // Container(
-        //   width: 350.w,
-        //   height: 110.h,
-        //   padding: EdgeInsets.symmetric(horizontal: 10.w),
-        //   decoration: BoxDecoration(
-        //     borderRadius: BorderRadius.all(Radius.circular(8.r)),
-        //     boxShadow: [
-        //       BoxShadow(
-        //         color: kPrimaryColor.withOpacity(0.2),
-        //         spreadRadius: 5,
-        //         blurRadius: 7,
-        //         offset: const Offset(4, 7), // changes position of shadow
-        //       ),
-        //     ],
-        //     color: Colors.white,
-        //   ),
-        //   child: Column(
-        //     crossAxisAlignment: CrossAxisAlignment.start,
-        //     children: [
-        //       Text(
-        //         'Đề bài:',
-        //         style: defaultBoldText,
-        //       ),
-        //     ],
-        //   ),
-        // ),
-        SizedBox(
-          height: 20.h,
-        ),
-        pages[_currentPage],
-      ]),
+          ),
+        ],
+      ),
+
       // card for elevation
       bottomNavigationBar: Card(
         margin: EdgeInsets.zero,
         elevation: 4,
         child: NumberPaginator(
           // by default, the paginator shows numbers as center content
-          numberPages: 10,
+          numberPages: allSubQuestions.length,
           onPageChange: (int index) {
             setState(() {
               _currentPage = index;
@@ -399,6 +296,255 @@ class _AnswerState extends State<Answer> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class HtmlContentWidget extends StatelessWidget {
+  final String htmlContent;
+
+  const HtmlContentWidget({super.key, required this.htmlContent});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Html(
+        data: htmlContent,
+        style: {
+          "body": Style(
+            margin: Margins.all(0),
+            padding: HtmlPaddings.all(0),
+          ),
+          "p": Style(
+            fontSize: FontSize.medium,
+            margin: Margins.only(bottom: 12),
+          ),
+          "img": Style(
+            margin: Margins.only(bottom: 12),
+            width: Width.auto(),
+            height: Height.auto(),
+          ),
+        },
+        // onImageTap: (url, context, attributes, element) {
+        //   if (url != null) {
+        //     // TODO: mở ảnh toàn màn hình hoặc làm gì tùy ý
+        //   }
+        // },
+      ),
+    );
+  }
+}
+
+class CauHoiHtmlController {
+  final Map<int, TextEditingController> _controllers = {};
+
+  TextEditingController controllerOf(int index) {
+    return _controllers.putIfAbsent(index, () => TextEditingController());
+  }
+
+  Map<int, String> get values =>
+      _controllers.map((k, v) => MapEntry(k, v.text));
+
+  void dispose() {
+    for (final c in _controllers.values) {
+      c.dispose();
+    }
+  }
+}
+
+class CauHoiHtmlWidget extends StatefulWidget {
+  final String htmlContent;
+  final CauHoiHtmlController controller;
+
+  const CauHoiHtmlWidget({
+    super.key,
+    required this.htmlContent,
+    required this.controller,
+  });
+
+  @override
+  State<CauHoiHtmlWidget> createState() => _CauHoiHtmlWidgetState();
+}
+
+class _CauHoiHtmlWidgetState extends State<CauHoiHtmlWidget> {
+  late final String _transformedHtml;
+
+  @override
+  void initState() {
+    super.initState();
+    _transformedHtml = _injectPlaceholders(widget.htmlContent);
+  }
+
+  String _injectPlaceholders(String html) {
+    final regex = RegExp(r'\{cau\}');
+    int i = 0;
+    return html.replaceAllMapped(regex, (_) {
+      final tag = '<input-placeholder data-index="$i"></input-placeholder>';
+      i++;
+      return tag;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Html(
+      data: _transformedHtml,
+      style: {
+        'p': Style(margin: Margins.only(bottom: 12)),
+      },
+      extensions: [
+        TagExtension(
+          tagsToExtend: {'input-placeholder'},
+          builder: (context) {
+            // lấy index từ attribute
+            final el = context.element;
+            final idx = int.tryParse(el?.attributes['data-index'] ?? '0') ?? 0;
+            final controller = widget.controller.controllerOf(idx);
+
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: SizedBox(
+                width: 200,
+                child: TextField(
+                  controller: controller,
+                  decoration: const InputDecoration(
+                    hintText: 'Nhập câu trả lời',
+                    border: OutlineInputBorder(),
+                    isDense: true,
+                  ),
+                  onChanged: (_) {
+                    // nếu muốn notify ra ngoài, bạn có thể thêm callback
+                    // hoặc dùng ValueNotifier/Provider/BLoC...
+                    setState(() {});
+                  },
+                ),
+              ),
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  @override
+  void dispose() {
+    // KHÔNG dispose controller ở đây, vì controller sống ngoài widget (ở CauHoiHtmlController)
+    super.dispose();
+  }
+}
+
+class CauHoiPage extends StatefulWidget {
+  final int index;
+  final SubQuestionModel question;
+  final CauHoiHtmlController cauController;
+  final ValueNotifier<Map<int, int>> counter;
+  final Map<String, SubQuestionModel> answerGroup;
+
+  const CauHoiPage({
+    super.key,
+    required this.index,
+    required this.question,
+    required this.cauController,
+    required this.counter,
+    required this.answerGroup,
+  });
+
+  @override
+  State<CauHoiPage> createState() => _CauHoiPageState();
+}
+
+class _CauHoiPageState extends State<CauHoiPage>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context); // Đừng quên dòng này!
+    return SingleChildScrollView(
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+      ),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Container(
+                margin: const EdgeInsets.all(8),
+                padding: const EdgeInsets.all(8),
+                decoration: const BoxDecoration(
+                    shape: BoxShape.circle, color: Colors.blue),
+                child: Text('${widget.index + 1}',
+                    style: const TextStyle(color: Colors.white)),
+              ),
+              Expanded(
+                child: widget.question.type == '2'
+                    ? HtmlContentWidget(htmlContent: widget.question.content)
+                    : CauHoiHtmlWidget(
+                        htmlContent: widget.question.content,
+                        controller: widget.cauController,
+                      ),
+              ),
+            ],
+          ),
+          ValueListenableBuilder(
+            valueListenable: widget.counter,
+            builder: (_, value, __) {
+              return ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: widget.question.choices.length,
+                itemBuilder: (context, answer) {
+                  final isSelected = value[widget.index] == answer;
+
+                  return GestureDetector(
+                    onTap: () {
+                      widget.counter.value = {
+                        ...widget.counter.value,
+                        widget.index: answer
+                      };
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(vertical: 4),
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: isSelected
+                            ? Colors.lightBlueAccent.withOpacity(0.3)
+                            : Colors.white,
+                      ),
+                      child: Row(
+                        children: [
+                          Checkbox(
+                            value: isSelected,
+                            shape: const CircleBorder(),
+                            onChanged: (_) {
+                              widget.counter.value = {
+                                ...widget.counter.value,
+                                widget.index: answer
+                              };
+                            },
+                          ),
+                          Expanded(
+                            child: HtmlContentWidget(
+                              htmlContent: widget
+                                      .answerGroup[
+                                          (widget.index + 1).toString()]
+                                      ?.choices[answer]
+                                      .text ??
+                                  '',
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
+          )
+        ],
+      ),
     );
   }
 }

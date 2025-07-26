@@ -9,9 +9,7 @@ class MycourseRepo {
   Dio dio = Dio();
 
   Future<List<MyCourseModel>> getListMyCourse() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     Response response;
     response = await dio.post(
       ApiPath.myCourse,
@@ -24,9 +22,7 @@ class MycourseRepo {
   }
 
   Future<DetailMyCourse> getDetailMyCourse({required String id}) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     Response response;
     response = await dio.post(
       ApiPath.detailMyCourse,
@@ -38,9 +34,7 @@ class MycourseRepo {
   }
 
   Future<DetailBaoCaoModel> getMycourseBaocao({required String id}) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     Response response;
     response = await dio.post(
       ApiPath.detailBaoCao,
@@ -52,9 +46,7 @@ class MycourseRepo {
   }
 
   Future<MycourseBaiTapModel> getMycourseBaitap({required String id}) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     Response response;
     response = await dio.post(
       ApiPath.myCoursedetailBaiTap,
@@ -68,9 +60,7 @@ class MycourseRepo {
   Future<VideoLessonModel> getVideoLesson({
     required String id,
   }) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     Response response;
     response = await dio.post(
       ApiPath.detailBuoihoc,
@@ -82,9 +72,7 @@ class MycourseRepo {
   Future<List<BaiTapValueModel>> getExerciseLesson({
     required String id,
   }) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     Response response;
     response = await dio.post(
       ApiPath.detailBuoihoc,
@@ -116,9 +104,7 @@ class MycourseRepo {
   Future<EvaluationModel> getEvaluation({
     required String id,
   }) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     Response response;
     response = await dio.post(
       ApiPath.detailBuoihoc,

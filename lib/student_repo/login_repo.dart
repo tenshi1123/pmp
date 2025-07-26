@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:pmp_english/utils/DioClient.dart';
 import 'package:pmp_english/utils/constants/api_path.dart';
 import 'package:pmp_english/utils/constants/api_path_teacher.dart';
 import 'package:pmp_english/utils/constants/const_string.dart';
@@ -65,5 +67,21 @@ class LoginRepo {
     await prefs.setString(ConstString.type, 'teacher');
     await prefs.setString('id_user', response.data["teachers_id"]);
     return response.data["refresh_token"] != null;
+  }
+
+  Future pushOnesignalId({required String onesignalId}) async {
+    final dio = await DioClient.getInstance();
+    dio.interceptors.add(LogInterceptor(
+      responseBody: true,
+      requestBody: true,
+      logPrint: (obj) => debugPrint('📦 $obj'),
+    ));
+
+    await dio.post(
+      ApiPath.pushOnesignal,
+      data: jsonEncode({
+        'onesignal_id': onesignalId,
+      }),
+    );
   }
 }

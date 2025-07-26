@@ -8,6 +8,7 @@ import 'package:pmp_english/modules/bottombar/screen/user_info/account_screen.da
 import 'package:pmp_english/modules/bottombar/screen/news_screen.dart';
 import 'package:pmp_english/student_models/customer_models.dart';
 import 'package:pmp_english/student_models/profile_model.dart';
+import 'package:pmp_english/student_repo/login_repo.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'screen/course_screen.dart';
@@ -41,12 +42,14 @@ class _BottombarState extends State<Bottombar> {
 
   Future<void> setupOneSignal() async {
     // Enable verbose logging for debugging (remove in production)
-    OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
+    // OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
     // Initialize with your OneSignal App ID
     OneSignal.initialize("9eed43b6-3e7d-4d7b-a8fb-621e889f71c9");
-    // Use this method to prompt for push notifications.
-    // We recommend removing this method after testing and instead use In-App Messages to prompt for notification permission.
-    OneSignal.Notifications.requestPermission(false);
+    OneSignal.Notifications.requestPermission(true).then((value) {});
+    var onesignalId = await OneSignal.User.getOnesignalId();
+    await LoginRepo().pushOnesignalId(
+      onesignalId: onesignalId ?? '',
+    );
     if (Platform.isAndroid) {
       OneSignal.Notifications.addClickListener((event) {});
     } else {

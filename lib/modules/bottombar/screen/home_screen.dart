@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
-import 'package:pmp_english/modules/bottombar/screen/user_info/account_screen.dart';
 import 'package:pmp_english/modules/chat/list_conversation_screen.dart';
 import 'package:pmp_english/modules/course/recomment_course.dart';
 import 'package:pmp_english/modules/diemdanh/diem_danh_screen.dart';

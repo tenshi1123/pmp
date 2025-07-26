@@ -161,8 +161,12 @@ class ExcerciseItem extends StatelessWidget {
       child: Container(
         height: 66.h,
         width: 350.w,
-        margin:
-            EdgeInsets.only(bottom: 10.h, right: 10.w, left: 10.w, top: 10.h),
+        margin: EdgeInsets.only(
+          bottom: 10.h,
+          right: 20.w,
+          left: 20.w,
+          top: 10.h,
+        ),
         decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [
@@ -178,7 +182,7 @@ class ExcerciseItem extends StatelessWidget {
         child: Row(
           children: [
             SizedBox(
-              width: 10.w,
+              width: 8.w,
             ),
             Container(
               height: 45.h,
@@ -198,7 +202,8 @@ class ExcerciseItem extends StatelessWidget {
               width: 15.w,
             ),
             SizedBox(
-              height: 70.h,
+              width: 194.w,
+              height: 66.h,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -213,6 +218,23 @@ class ExcerciseItem extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+            Container(
+              height: 20.h,
+              width: 80.w,
+              decoration: BoxDecoration(
+                color: main1Color,
+                borderRadius: BorderRadius.all(Radius.circular(4.r)),
+              ),
+              child: Center(
+                child: Text(
+                  model?.typeName ?? 'Trắc nghiệm',
+                  style: defaultText12B.copyWith(color: Colors.white),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 8.w,
             )
           ],
         ),
