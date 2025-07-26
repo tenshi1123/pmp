@@ -8,6 +8,7 @@ import 'package:pmp_english/student_models/excercise_model.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:number_paginator/number_paginator.dart';
+import 'package:pmp_english/utils/widget/custom_audio.dart';
 
 extension Substrings on String {
   /// Drops the last n characters.
@@ -33,6 +34,7 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
   var countdownDuration = const Duration(minutes: 15);
   Duration duration = const Duration();
   List<QuestionGroupModel> _listQuestion = [];
+  QuestionGroupModel? _selectedQuestion;
   Timer? timer;
   Timer? timer1;
   bool countDown = true;
@@ -41,8 +43,11 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
   final ValueNotifier<Map<int, int>> _counter =
       ValueNotifier<Map<int, int>>({});
   final cauController = CauHoiHtmlController();
-  late final List<Widget> pages;
+
   late List<SubQuestionModel> allSubQuestions;
+  late String selectedQuestionId = "-1";
+  final PageController _pageController = PageController();
+
   @override
   void dispose() {
     cauController.dispose();
@@ -52,6 +57,10 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
   @override
   void initState() {
     _listQuestion = widget.listQuestion;
+    selectedQuestionId = _listQuestion.first.id;
+    _selectedQuestion =
+        _listQuestion.firstWhere((q) => q.id == selectedQuestionId);
+
     allSubQuestions =
         widget.listQuestion.expand((q) => q.value.values).toList();
     int hours1;
@@ -64,17 +73,16 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
         Duration(hours: hours1, minutes: mints1, seconds: secs1);
     startTimer();
     reset();
-    pages = List.generate(
-      allSubQuestions.length,
-      (index) => CauHoiPage(
-        index: index,
-        question: allSubQuestions[index],
-        cauController: cauController,
-        counter: _counter,
-        answerGroup: _listQuestion.first.value, // cần đúng map
-      ),
-    );
+
     super.initState();
+  }
+
+  Future<void> fetchPostsByCategory(String id) async {
+    setState(() {
+      selectedQuestionId = id;
+      _selectedQuestion =
+          _listQuestion.firstWhere((q) => q.id == selectedQuestionId);
+    });
   }
 
   void startTimer() {
@@ -195,29 +203,91 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
             ],
           ),
           SizedBox(height: 10.h),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            padding: EdgeInsets.symmetric(horizontal: 12.w),
+            child: Row(
+              children: _listQuestion.map((question) {
+                final bool isSelected = question.id == selectedQuestionId;
+                return Padding(
+                  padding: EdgeInsets.only(right: 12.w),
+                  child: ChoiceChip(
+                    label: Text(question.title),
+                    selected: isSelected,
+                    onSelected: (_) => fetchPostsByCategory(question.id),
+                    selectedColor: Colors.white,
+                    labelStyle: TextStyle(
+                      color: isSelected
+                          ? Colors.lightBlue
+                          : const Color(0xff8A8A8A),
+                      fontSize: 14.sp,
+                      fontWeight:
+                          isSelected ? FontWeight.bold : FontWeight.w600,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(
+                        color: isSelected
+                            ? Colors.lightBlue
+                            : Colors.grey.shade300,
+                      ),
+                      borderRadius: BorderRadius.circular(10.r),
+                    ),
+                    backgroundColor: Colors.white,
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+          if (selectedQuestionId != "-1")
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 12.w),
+              child: HtmlContentWidget(
+                htmlContent: _selectedQuestion?.content ?? '',
+              ),
+            ),
           Expanded(
-            child: IndexedStack(
-              index: _currentPage,
-              children: pages,
+            child: PageView.builder(
+              controller: _pageController,
+              itemCount: _selectedQuestion?.type != '2'
+                  ? _selectedQuestion?.value.values.toList().length
+                  : 1,
+              onPageChanged: (index) {
+                setState(() {
+                  _currentPage = index;
+                });
+              },
+              itemBuilder: (context, index) {
+                return CauHoiPage(
+                  index: index,
+                  question: _listQuestion
+                      .firstWhere((q) => q.id == selectedQuestionId)
+                      .value
+                      .values
+                      .toList()[index],
+                  cauController: cauController,
+                  counter: _counter,
+                  answerGroup: _listQuestion.first.value,
+                );
+              },
             ),
           ),
         ],
       ),
 
       // card for elevation
-      bottomNavigationBar: Card(
-        margin: EdgeInsets.zero,
-        elevation: 4,
-        child: NumberPaginator(
-          // by default, the paginator shows numbers as center content
-          numberPages: allSubQuestions.length,
-          onPageChange: (int index) {
-            setState(() {
-              _currentPage = index;
-            });
-          },
-        ),
-      ),
+      // bottomNavigationBar: Card(
+      //   margin: EdgeInsets.zero,
+      //   elevation: 4,
+      //   child: NumberPaginator(
+      //     // by default, the paginator shows numbers as center content
+      //     numberPages: allSubQuestions.length,
+      //     onPageChange: (int index) {
+      //       setState(() {
+      //         _currentPage = index;
+      //       });
+      //     },
+      //   ),
+      // ),
     );
   }
 
@@ -264,42 +334,6 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
       );
 }
 
-class Answer extends StatefulWidget {
-  const Answer({super.key, required this.title});
-  final String title;
-  @override
-  State<Answer> createState() => _AnswerState();
-}
-
-class _AnswerState extends State<Answer> {
-  bool? isChecked = false;
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Checkbox(
-          //tristate: true,
-          value: isChecked,
-          shape: const CircleBorder(),
-          onChanged: (bool? value) {
-            setState(() {
-              isChecked = value;
-            });
-          },
-        ),
-        SizedBox(
-          width: 304.w,
-          child: Text(
-            widget.title,
-            style: defaultText16B,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
 class HtmlContentWidget extends StatelessWidget {
   final String htmlContent;
 
@@ -310,26 +344,6 @@ class HtmlContentWidget extends StatelessWidget {
     return Center(
       child: Html(
         data: htmlContent,
-        style: {
-          "body": Style(
-            margin: Margins.all(0),
-            padding: HtmlPaddings.all(0),
-          ),
-          "p": Style(
-            fontSize: FontSize.medium,
-            margin: Margins.only(bottom: 12),
-          ),
-          "img": Style(
-            margin: Margins.only(bottom: 12),
-            width: Width.auto(),
-            height: Height.auto(),
-          ),
-        },
-        // onImageTap: (url, context, attributes, element) {
-        //   if (url != null) {
-        //     // TODO: mở ảnh toàn màn hình hoặc làm gì tùy ý
-        //   }
-        // },
       ),
     );
   }
@@ -428,7 +442,6 @@ class _CauHoiHtmlWidgetState extends State<CauHoiHtmlWidget> {
 
   @override
   void dispose() {
-    // KHÔNG dispose controller ở đây, vì controller sống ngoài widget (ở CauHoiHtmlController)
     super.dispose();
   }
 }
@@ -487,6 +500,10 @@ class _CauHoiPageState extends State<CauHoiPage>
               ),
             ],
           ),
+          if (widget.question.audioAttachment != null)
+            SimpleAudioPlayer(
+              url: widget.question.audioAttachment!,
+            ),
           ValueListenableBuilder(
             valueListenable: widget.counter,
             builder: (_, value, __) {

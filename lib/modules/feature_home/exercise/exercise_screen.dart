@@ -334,7 +334,7 @@ class _ExcerciseItem extends StatelessWidget {
         }
       },
       child: Container(
-        height: 66.h,
+        //height: 66.h,
         width: 350.w,
         margin:
             EdgeInsets.only(bottom: 10.h, right: 10.w, left: 10.w, top: 10.h),
