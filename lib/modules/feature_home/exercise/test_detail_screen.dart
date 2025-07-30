@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pmp_english/student_models/excercise_model.dart';
+import 'package:pmp_english/student_repo/home_repo.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
-import 'package:number_paginator/number_paginator.dart';
 import 'package:pmp_english/utils/widget/custom_audio.dart';
 
 extension Substrings on String {
@@ -22,9 +22,15 @@ class TestDetailScreen extends StatefulWidget {
     super.key,
     required this.listQuestion,
     required this.title,
+    required this.id,
+    required this.customerCourseScheduleId,
+    required this.examDetailId,
   });
   final List<QuestionGroupModel> listQuestion;
   final String title;
+  final String id;
+  final String customerCourseScheduleId;
+  final String examDetailId;
   @override
   State<TestDetailScreen> createState() => _TestDetailScreenState();
 }
@@ -169,6 +175,19 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
                             child: Text('Đồng ý', style: defaultText20B),
                             onPressed: () {
                               stopTimer();
+                              HomeRepo().submitTracNghiem(
+                                id: widget.id,
+                                examDetailId: widget.examDetailId,
+                                customerCourseScheduleId:
+                                    widget.customerCourseScheduleId,
+                                startTime: DateTime.now().toIso8601String(),
+                                data: _counter.value.entries.map((entry) {
+                                  return {
+                                    'id': entry.key.toString(),
+                                    'answer': entry.value.toString(),
+                                  };
+                                }).toList(),
+                              );
                               Navigator.pop(context);
                             },
                           ),
@@ -248,9 +267,10 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
           Expanded(
             child: PageView.builder(
               controller: _pageController,
-              itemCount: _selectedQuestion?.type != '2'
-                  ? _selectedQuestion?.value.values.toList().length
-                  : 1,
+              itemCount:
+                  _selectedQuestion?.value.values.toList().first.type != '5'
+                      ? _selectedQuestion?.value.values.toList().length
+                      : 1,
               onPageChanged: (index) {
                 setState(() {
                   _currentPage = index;
@@ -269,6 +289,82 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
                   answerGroup: _listQuestion.first.value,
                 );
               },
+            ),
+          ),
+          SizedBox(
+            height: 60,
+            child: Row(
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.chevron_left),
+                  onPressed: _currentPage > 0
+                      ? () {
+                          _pageController.previousPage(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.ease,
+                          );
+                        }
+                      : null,
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount:
+                        _selectedQuestion?.value.values.toList().first.type !=
+                                '5'
+                            ? _selectedQuestion?.value.values.toList().length
+                            : 1,
+                    itemBuilder: (context, index) {
+                      final bool isSelected = index == _currentPage;
+                      return GestureDetector(
+                        onTap: () {
+                          _pageController.animateToPage(
+                            index,
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.ease,
+                          );
+                        },
+                        child: Container(
+                          width: 36,
+                          height: 36,
+                          margin: const EdgeInsets.symmetric(horizontal: 4),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: isSelected
+                                ? Colors.lightBlue
+                                : Colors.grey[300],
+                            border: isSelected
+                                ? Border.all(color: Colors.blue, width: 2)
+                                : null,
+                          ),
+                          child: Text(
+                            '${index + 1}',
+                            style: TextStyle(
+                              color: isSelected ? Colors.white : Colors.black54,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.chevron_right),
+                  onPressed: _currentPage <
+                          (_selectedQuestion?.value.values.toList().length ??
+                                  0) -
+                              1
+                      ? () {
+                          _pageController.nextPage(
+                            duration: const Duration(milliseconds: 100),
+                            curve: Curves.ease,
+                          );
+                        }
+                      : null,
+                ),
+              ],
             ),
           ),
         ],
@@ -337,7 +433,10 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
 class HtmlContentWidget extends StatelessWidget {
   final String htmlContent;
 
-  const HtmlContentWidget({super.key, required this.htmlContent});
+  const HtmlContentWidget({
+    super.key,
+    required this.htmlContent,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -513,7 +612,6 @@ class _CauHoiPageState extends State<CauHoiPage>
                 itemCount: widget.question.choices.length,
                 itemBuilder: (context, answer) {
                   final isSelected = value[widget.index] == answer;
-
                   return GestureDetector(
                     onTap: () {
                       widget.counter.value = {

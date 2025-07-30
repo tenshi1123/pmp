@@ -5,8 +5,10 @@ import 'package:pmp_english/modules/bottombar/screen/user_info/change_pass_scree
 import 'package:pmp_english/modules/bottombar/screen/user_info/edit_info_student_screen.dart';
 import 'package:pmp_english/modules/infoAccount/payment_history.dart';
 import 'package:pmp_english/modules/infoAccount/redeem_reward_screen.dart';
+import 'package:pmp_english/student_models/gift_models.dart';
 import 'package:pmp_english/student_models/profile_model.dart';
 import 'package:pmp_english/student_repo/customer_repo.dart';
+import 'package:pmp_english/student_repo/home_repo.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -227,11 +229,14 @@ class _AccountScreenState extends State<AccountScreen> {
                 width: 20.w,
               ),
               GestureDetector(
-                onTap: () {
+                onTap: () async {
+                  GiftModel giftModel = await HomeRepo().getListGift();
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const RedeemRewardScreen(),
+                      builder: (context) => RedeemRewardScreen(
+                        giftModel: giftModel,
+                      ),
                     ),
                   );
                 },

@@ -60,7 +60,9 @@ class ApiPath {
   static const String submitTracNghiem = '$myCourse/nop_bai_trac_nghiem';
   static const String viewTracNghiem = '$myCourse/view_trac_nghiem';
   static const String viewTestDone = '$myCourse/xem_lai_bai_trac_nghiem';
-
+  //quà tặng
+  static const String gift = '$hocvienUrl/gift';
+  static const String giftChange = '$hocvienUrl/gift/change';
   //payment
   static const String payment = '$hocvienUrl/payment';
 

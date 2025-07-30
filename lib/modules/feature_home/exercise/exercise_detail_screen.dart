@@ -14,6 +14,7 @@ class TestScreen extends StatelessWidget {
     required this.excerciseModel,
   });
   final DetailExcerciseModel excerciseModel;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,6 +51,8 @@ class TestScreen extends StatelessWidget {
                   return _InfoTest(
                     model: excerciseModel.detail[index],
                     timeDeadline: excerciseModel.valueModel.timeDeadline,
+                    customerCourseScheduleId:
+                        excerciseModel.valueModel.customerCourseScheduleId,
                   );
                 },
               ),
@@ -82,10 +85,12 @@ class _InfoTest extends StatelessWidget {
   const _InfoTest({
     required this.model,
     required this.timeDeadline,
+    required this.customerCourseScheduleId,
   });
 
   final String timeDeadline;
   final DeDetailModel model;
+  final String customerCourseScheduleId;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -228,7 +233,8 @@ class _InfoTest extends StatelessWidget {
                             List<QuestionGroupModel> detailExcerciseModel =
                                 await HomeRepo().viewTracNghiem(
                               id: model.id,
-                              customerCourseScheduleId: '20',
+                              customerCourseScheduleId:
+                                  customerCourseScheduleId,
                               examDetailId: model.examDetailId,
                             );
                             Navigator.of(context).push(
@@ -236,6 +242,10 @@ class _InfoTest extends StatelessWidget {
                                 builder: (context) => TestDetailScreen(
                                   listQuestion: detailExcerciseModel,
                                   title: model.name,
+                                  id: model.id,
+                                  customerCourseScheduleId:
+                                      customerCourseScheduleId,
+                                  examDetailId: model.examDetailId,
                                 ),
                               ),
                             );
