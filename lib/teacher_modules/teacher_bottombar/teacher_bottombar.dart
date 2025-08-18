@@ -41,7 +41,7 @@ class _TeacherBottomBarState extends State<TeacherBottomBar> {
     OneSignal.initialize("9eed43b6-3e7d-4d7b-a8fb-621e889f71c9");
     OneSignal.Notifications.requestPermission(true).then((value) {});
     var onesignalId = await OneSignal.User.getOnesignalId();
-    await LoginRepo().pushOnesignalId(
+    await LoginRepo().pushTeacherOnesignal(
       onesignalId: onesignalId ?? '',
     );
     if (Platform.isAndroid) {

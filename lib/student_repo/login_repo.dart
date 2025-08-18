@@ -73,14 +73,26 @@ class LoginRepo {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? token = prefs.getString('token');
     dio.options.headers['Authorization'] = 'Bearer $token';
+
+    await dio.post(
+      ApiPath.pushOnesignal,
+      data: jsonEncode({
+        'onesignal_id': onesignalId,
+      }),
+    );
+  }
+
+  Future pushTeacherOnesignal({required String onesignalId}) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
     dio.interceptors.add(LogInterceptor(
       responseBody: true,
       requestBody: true,
       logPrint: (obj) => debugPrint('📦 $obj'),
     ));
-
     await dio.post(
-      ApiPath.pushOnesignal,
+      ApiPathTeacher.pushTeacherOnesignal,
       data: jsonEncode({
         'onesignal_id': onesignalId,
       }),

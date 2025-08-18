@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:pmp_english/student_models/excercise_model.dart';
@@ -472,49 +471,40 @@ class HtmlContentWidget extends StatelessWidget {
 
 class CauHoiHtmlController {
   final Map<int, TextEditingController> _controllers = {};
-
-  TextEditingController controllerOf(int index) {
-    return _controllers.putIfAbsent(index, () => TextEditingController());
+  TextEditingController controllerOf(int idx) {
+    return _controllers.putIfAbsent(idx, () => TextEditingController());
   }
 
-  Map<int, String> get values =>
-      _controllers.map((k, v) => MapEntry(k, v.text));
+  Map<int, String> getAllAnswers() {
+    final result = <int, String>{};
+    _controllers.forEach((idx, c) {
+      result[idx] = c.text;
+    });
+    return result;
+  }
 
   void dispose() {
     for (final c in _controllers.values) {
       c.dispose();
     }
+    _controllers.clear();
   }
 }
 
-class CauHoiHtmlWidget extends StatefulWidget {
+class CauHoiHtmlWidget extends StatelessWidget {
   final String htmlContent;
   final CauHoiHtmlController controller;
-
   const CauHoiHtmlWidget({
     super.key,
     required this.htmlContent,
     required this.controller,
   });
 
-  @override
-  State<CauHoiHtmlWidget> createState() => _CauHoiHtmlWidgetState();
-}
-
-class _CauHoiHtmlWidgetState extends State<CauHoiHtmlWidget> {
-  late final String _transformedHtml;
-
-  @override
-  void initState() {
-    super.initState();
-    _transformedHtml = _injectPlaceholders(widget.htmlContent);
-  }
-
   String _injectPlaceholders(String html) {
     final regex = RegExp(r'\{cau\}');
     int i = 0;
     return html.replaceAllMapped(regex, (_) {
-      final tag = '<input-placeholder data-index="$i"></input-placeholder>';
+      final tag = '<input-placeholder data-idx="$i"></input-placeholder>';
       i++;
       return tag;
     });
@@ -522,48 +512,31 @@ class _CauHoiHtmlWidgetState extends State<CauHoiHtmlWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Html(
-      data: _transformedHtml,
-      style: {
-        'p': Style(margin: Margins.only(bottom: 12)),
-      },
-      extensions: [
-        TagExtension(
-          tagsToExtend: {'input-placeholder'},
-          builder: (context) {
-            // lấy index từ attribute
-            final el = context.element;
-            final idx = int.tryParse(el?.attributes['data-index'] ?? '0') ?? 0;
-            final controller = widget.controller.controllerOf(idx);
-
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: SizedBox(
-                width: 200,
-                child: TextField(
-                  controller: controller,
-                  decoration: const InputDecoration(
-                    hintText: 'Nhập câu trả lời',
-                    border: OutlineInputBorder(),
-                    isDense: true,
-                  ),
-                  onChanged: (_) {
-                    // nếu muốn notify ra ngoài, bạn có thể thêm callback
-                    // hoặc dùng ValueNotifier/Provider/BLoC...
-                    setState(() {});
-                  },
+    final transformedHtml = _injectPlaceholders(htmlContent);
+    return HtmlWidget(
+      transformedHtml,
+      customWidgetBuilder: (element) {
+        if (element.localName == 'input-placeholder') {
+          final idx = int.tryParse(element.attributes['data-idx'] ?? '0') ?? 0;
+          final textController = controller.controllerOf(idx);
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: SizedBox(
+              width: 200,
+              child: TextField(
+                controller: textController,
+                decoration: const InputDecoration(
+                  hintText: 'Nhập câu trả lời',
+                  border: OutlineInputBorder(),
+                  isDense: true,
                 ),
               ),
-            );
-          },
-        ),
-      ],
+            ),
+          );
+        }
+        return null;
+      },
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 }
 
