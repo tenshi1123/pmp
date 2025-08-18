@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:pmp_english/student_models/excercise_model.dart';
 import 'package:pmp_english/student_repo/home_repo.dart';
 import 'package:pmp_english/utils/constants/color.dart';
@@ -46,8 +47,8 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
   bool countDown = true;
   bool countDown1 = true;
   bool? isChecked = false;
-  final ValueNotifier<Map<int, int>> _counter =
-      ValueNotifier<Map<int, int>>({});
+  final ValueNotifier<Map<String, int>> _counter =
+      ValueNotifier<Map<String, int>>({});
   final cauController = CauHoiHtmlController();
 
   late List<SubQuestionModel> allSubQuestions;
@@ -183,7 +184,7 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
                                 startTime: DateTime.now().toIso8601String(),
                                 data: _counter.value.entries.map((entry) {
                                   return {
-                                    'id': entry.key.toString(),
+                                    'id': entry.key,
                                     'answer': entry.value.toString(),
                                   };
                                 }).toList(),
@@ -258,10 +259,17 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
             ),
           ),
           if (selectedQuestionId != "-1")
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 12.w),
-              child: HtmlContentWidget(
-                htmlContent: _selectedQuestion?.content ?? '',
+            ConstrainedBox(
+              constraints: BoxConstraints(
+                maxHeight: 360.h, // tối đa
+              ),
+              child: Padding(
+                padding: EdgeInsets.only(left: 16.w, right: 12.w, top: 8.h),
+                child: SingleChildScrollView(
+                  child: HtmlContentWidget(
+                    htmlContent: _selectedQuestion?.content ?? '',
+                  ),
+                ),
               ),
             ),
           Expanded(
@@ -440,10 +448,24 @@ class HtmlContentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Html(
-        data: htmlContent,
-      ),
+    return HtmlWidget(
+      htmlContent.replaceAll('\r\n', ' ').replaceAll('&nbsp;', ' '),
+      // customStylesBuilder: (element) {
+      //   if (element.localName == 'p') {
+      //     return {
+      //       'margin': '0', // bỏ margin mặc định
+      //       'padding': '0',
+      //     };
+      //   }
+      //   if (element.localName == 'table') {
+      //     return {
+      //       'margin': '0',
+      //       'padding': '0',
+      //       'border-collapse': 'collapse',
+      //     };
+      //   }
+      //   return null;
+      // },
     );
   }
 }
@@ -549,7 +571,7 @@ class CauHoiPage extends StatefulWidget {
   final int index;
   final SubQuestionModel question;
   final CauHoiHtmlController cauController;
-  final ValueNotifier<Map<int, int>> counter;
+  final ValueNotifier<Map<String, int>> counter;
   final Map<String, SubQuestionModel> answerGroup;
 
   const CauHoiPage({
@@ -581,6 +603,9 @@ class _CauHoiPageState extends State<CauHoiPage>
         children: [
           Row(
             children: [
+              SizedBox(
+                width: 8.w,
+              ),
               Container(
                 margin: const EdgeInsets.all(8),
                 padding: const EdgeInsets.all(8),
@@ -616,12 +641,13 @@ class _CauHoiPageState extends State<CauHoiPage>
                     onTap: () {
                       widget.counter.value = {
                         ...widget.counter.value,
-                        widget.index: answer
+                        widget.answerGroup[(widget.index + 1).toString()]?.id ??
+                            '': answer
                       };
                     },
                     child: Container(
-                      margin: const EdgeInsets.symmetric(vertical: 4),
-                      padding: const EdgeInsets.all(8),
+                      //margin: const EdgeInsets.symmetric(vertical: 4),
+                      padding: EdgeInsets.only(left: 8.w),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
                         color: isSelected
@@ -636,10 +662,15 @@ class _CauHoiPageState extends State<CauHoiPage>
                             onChanged: (_) {
                               widget.counter.value = {
                                 ...widget.counter.value,
-                                widget.index: answer
+                                widget
+                                        .answerGroup[
+                                            (widget.index + 1).toString()]
+                                        ?.id ??
+                                    '': answer
                               };
                             },
                           ),
+                          Text('${answers[answer]} .'),
                           Expanded(
                             child: HtmlContentWidget(
                               htmlContent: widget
@@ -663,3 +694,5 @@ class _CauHoiPageState extends State<CauHoiPage>
     );
   }
 }
+
+List<String> answers = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];

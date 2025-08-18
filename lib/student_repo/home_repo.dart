@@ -117,13 +117,14 @@ class HomeRepo {
     };
 
     Response response;
-    response = await dio.post(ApiPath.submitTracNghiem, data: body);
-    // in ra log lỗi
     dio.interceptors.add(LogInterceptor(
       responseBody: true,
       requestBody: true,
       logPrint: (obj) => debugPrint('📦 $obj'),
     ));
+    response = await dio.post(ApiPath.submitTracNghiem, data: body);
+    // in ra log lỗi
+
     return response.data;
   }
 

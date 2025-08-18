@@ -134,7 +134,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  height: 403.h,
+                  //height: 403.h,
                   width: 350.w,
                   decoration: BoxDecoration(
                     color: main2Color.withOpacity(0.24),
@@ -197,7 +197,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                 ),
                 SizedBox(height: 24.h),
                 Text(
-                  'Lịch học của bạn',
+                  'Lịch dạy của bạn',
                   style: defaultText16B,
                 ),
                 ValueListenableBuilder<List<LichHocModel>>(

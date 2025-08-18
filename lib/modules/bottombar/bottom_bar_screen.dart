@@ -11,6 +11,7 @@ import 'package:pmp_english/student_models/profile_model.dart';
 import 'package:pmp_english/student_repo/login_repo.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
+import 'package:pmp_english/utils/onesignal.dart';
 import 'screen/course_screen.dart';
 import 'screen/home_screen.dart';
 
@@ -34,18 +35,14 @@ class _BottombarState extends State<Bottombar> {
   @override
   void initState() {
     super.initState();
+    setupOneSignal();
     setState(() {
       _selectedIndex = widget.index;
     });
-    setupOneSignal();
   }
 
   Future<void> setupOneSignal() async {
-    // Enable verbose logging for debugging (remove in production)
-    // OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
-    // Initialize with your OneSignal App ID
-    OneSignal.initialize("9eed43b6-3e7d-4d7b-a8fb-621e889f71c9");
-    OneSignal.Notifications.requestPermission(true).then((value) {});
+    await initOneSignal();
     var onesignalId = await OneSignal.User.getOnesignalId();
     await LoginRepo().pushOnesignalId(
       onesignalId: onesignalId ?? '',

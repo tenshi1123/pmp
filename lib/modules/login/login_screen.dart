@@ -57,14 +57,31 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 SizedBox(height: 20.h),
                 Container(
-                  width: 340.w,
-                  height: 309.h,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage('assets/images/login.png'),
-                        fit: BoxFit.fitWidth),
-                  ),
-                ),
+                    width: 340.w,
+                    height: 309.h,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage('assets/images/login.png'),
+                          fit: BoxFit.fitWidth),
+                    ),
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          top: 20.h,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Image.asset(
+                              "assets/images/back_icon.png",
+                              width: 48.w,
+                              height: 48.h,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
+                      ],
+                    )),
                 Text(
                   'Đăng nhập để tiếp tục sử dụng ứng dụng',
                   textAlign: TextAlign.center,
@@ -109,10 +126,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 58.h,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(8.r)),
-                    color: const Color(0xffF4F1F3),
+                    //color: const Color(0xffF4F1F3),
                   ),
                   child: TextField(
-                    //keyboardType: const TextInputType.numberWithOptions(),
+                    keyboardType: const TextInputType.numberWithOptions(),
                     controller: studenIdController,
                     focusNode: _focusNode1,
                     style: defaultText14M,
@@ -125,6 +142,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         fontSize: 16.sp,
                         color: Colors.black,
                       ),
+                      fillColor: Color(0xffF2F2F2),
+                      filled: true,
                     ),
                   ),
                 ),
@@ -152,7 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 58.h,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(8.r)),
-                    color: const Color(0xffF4F1F3),
+                    //color: const Color(0xffF4F1F3),
                   ),
                   child: TextField(
                     obscureText: _isObscure,
@@ -169,6 +188,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         fontSize: 16.sp,
                         color: Colors.black,
                       ),
+                      fillColor: Color(0xffF2F2F2),
+                      filled: true,
                       suffix: IconButton(
                         padding: const EdgeInsets.all(0),
                         iconSize: 20.0,

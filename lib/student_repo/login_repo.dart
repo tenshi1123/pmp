@@ -70,7 +70,9 @@ class LoginRepo {
   }
 
   Future pushOnesignalId({required String onesignalId}) async {
-    final dio = await DioClient.getInstance();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
     dio.interceptors.add(LogInterceptor(
       responseBody: true,
       requestBody: true,

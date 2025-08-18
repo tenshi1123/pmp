@@ -3,7 +3,7 @@ description: "pmp english"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-version: 1.0.1+22
+version: 1.0.4+24
 environment:
   sdk: '>=3.4.0 <4.0.0'
 dependencies:
@@ -16,14 +16,14 @@ dependencies:
   flutter_svg: ^2.0.10+1
   percent_indicator: ^4.2.3
   table_calendar: ^3.1.2
-  intl: ^0.19.0
+  intl: ^0.20.2
   d_chart: ^2.6.9
   path_provider: ^2.1.4
   webview_flutter: ^4.8.0
   webview_flutter_android: ^4.7.0
   webview_flutter_wkwebview: ^3.14.0
   url_launcher: ^6.3.0
-  flutter_widget_from_html_core: ^0.16.0
+  flutter_widget_from_html_core: ^0.17.0
   number_paginator: ^1.1.0
   otp_pin_field: ^1.4.0
   camera_camera: ^3.0.0
@@ -37,16 +37,16 @@ dependencies:
   crypto: ^3.0.6
   flutter_bloc: ^9.1.0
   file_picker: ^10.0.0
-  dotted_border: ^2.1.0
+  dotted_border: ^3.1.0
   flutter_html:  ^3.0.0-alpha.6
-  just_audio: ^0.9.36
-  audio_video_progress_bar: ^1.0.1
-  firebase_core: ^3.14.0
+  just_audio: ^0.10.4
+  audio_video_progress_bar: ^2.0.3
+  firebase_core: ^4.0.0
   onesignal_flutter: ^5.1.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
 flutter:
   uses-material-design: true
   assets:

@@ -92,26 +92,26 @@ class _DetailTuLuanScreenState extends State<DetailTuLuanScreen> {
             SizedBox(
               height: 20.h,
             ),
-            DottedBorder(
-              borderType: BorderType.RRect,
-              radius: const Radius.circular(8),
-              dashPattern: const [6, 3], // Áp dụng nét đứt
-              strokeWidth: 1,
-              color: Colors.blue,
-              child: GestureDetector(
-                onTap: _pickFile,
-                child: Container(
-                  width: 343.w,
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                  color: Colors.blue.withOpacity(0.1),
-                  alignment: Alignment.center,
-                  child: const Text(
-                    "+ Chọn tệp tải lên",
-                    style: TextStyle(color: Colors.blue, fontSize: 16),
-                  ),
-                ),
-              ),
-            ),
+            // DottedBorder(
+            //   borderType: BorderType.RRect,
+            //   radius: const Radius.circular(8),
+            //   dashPattern: const [6, 3], // Áp dụng nét đứt
+            //   strokeWidth: 1,
+            //   color: Colors.blue,
+            //   child: GestureDetector(
+            //     onTap: _pickFile,
+            //     child: Container(
+            //       width: 343.w,
+            //       padding: const EdgeInsets.symmetric(vertical: 15),
+            //       color: Colors.blue.withOpacity(0.1),
+            //       alignment: Alignment.center,
+            //       child: const Text(
+            //         "+ Chọn tệp tải lên",
+            //         style: TextStyle(color: Colors.blue, fontSize: 16),
+            //       ),
+            //     ),
+            //   ),
+            // ),
             GestureDetector(
               onTap: () async {
                 if (!await launchUrl(Uri.parse(widget.valueModel.urlFile))) {
