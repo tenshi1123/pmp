@@ -609,17 +609,16 @@ class _CauHoiPageState extends State<CauHoiPage>
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: widget.question.choices.length,
                 itemBuilder: (context, answer) {
-                  final isSelected = value[widget.index] == answer;
+                  final isSelected = value[widget.question.id] == answer;
                   return GestureDetector(
+                    behavior: HitTestBehavior.opaque,
                     onTap: () {
                       widget.counter.value = {
                         ...widget.counter.value,
-                        widget.answerGroup[(widget.index + 1).toString()]?.id ??
-                            '': answer
+                        widget.question.id: answer,
                       };
                     },
                     child: Container(
-                      //margin: const EdgeInsets.symmetric(vertical: 4),
                       padding: EdgeInsets.only(left: 8.w),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
@@ -635,23 +634,15 @@ class _CauHoiPageState extends State<CauHoiPage>
                             onChanged: (_) {
                               widget.counter.value = {
                                 ...widget.counter.value,
-                                widget
-                                        .answerGroup[
-                                            (widget.index + 1).toString()]
-                                        ?.id ??
-                                    '': answer
+                                widget.question.id: answer,
                               };
                             },
                           ),
                           Text('${answers[answer]} .'),
                           Expanded(
                             child: HtmlContentWidget(
-                              htmlContent: widget
-                                      .answerGroup[
-                                          (widget.index + 1).toString()]
-                                      ?.choices[answer]
-                                      .text ??
-                                  '',
+                              htmlContent:
+                                  widget.question.choices[answer].text ?? '',
                             ),
                           ),
                         ],
