@@ -46,8 +46,8 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
   bool countDown = true;
   bool countDown1 = true;
   bool? isChecked = false;
-  final ValueNotifier<Map<String, int>> _counter =
-      ValueNotifier<Map<String, int>>({});
+  final ValueNotifier<Map<String, String>> _counter =
+      ValueNotifier<Map<String, String>>({});
   final cauController = CauHoiHtmlController();
 
   late List<SubQuestionModel> allSubQuestions;
@@ -174,6 +174,23 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
                             isDefaultAction: true,
                             child: Text('Đồng ý', style: defaultText20B),
                             onPressed: () {
+                              final answerList = cauController
+                                  .getAnswers()
+                                  .entries
+                                  .map((entry) {
+                                return {
+                                  'id': entry.key,
+                                  'answer': entry.value,
+                                };
+                              }).toList();
+                              final counterList =
+                                  _counter.value.entries.map((entry) {
+                                return {
+                                  'id': entry.key,
+                                  'answer': entry.value,
+                                };
+                              }).toList();
+                              final result = [...counterList, ...answerList];
                               stopTimer();
                               HomeRepo().submitTracNghiem(
                                 id: widget.id,
@@ -181,12 +198,7 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
                                 customerCourseScheduleId:
                                     widget.customerCourseScheduleId,
                                 startTime: DateTime.now().toIso8601String(),
-                                data: _counter.value.entries.map((entry) {
-                                  return {
-                                    'id': entry.key,
-                                    'answer': entry.value.toString(),
-                                  };
-                                }).toList(),
+                                data: result,
                               );
                               Navigator.pop(context);
                             },
@@ -475,34 +487,44 @@ class CauHoiHtmlController {
     return _controllers.putIfAbsent(idx, () => TextEditingController());
   }
 
-  Map<int, String> getAllAnswers() {
-    final result = <int, String>{};
-    _controllers.forEach((idx, c) {
-      result[idx] = c.text;
+  Map<String, String> getAnswers() {
+    final Map<String, String> answers = {};
+    _controllers.forEach((key, value) {
+      answers["$key"] = value.text;
     });
-    return result;
+    return answers;
+  }
+
+  void setAnswers(Map<String, String> data) {
+    data.forEach((key, value) {
+      final idx = int.tryParse(key);
+      if (idx != null) {
+        controllerOf(idx).text = value;
+      }
+    });
   }
 
   void dispose() {
     for (final c in _controllers.values) {
       c.dispose();
     }
-    _controllers.clear();
   }
 }
 
 class CauHoiHtmlWidget extends StatelessWidget {
   final String htmlContent;
+  final int id;
   final CauHoiHtmlController controller;
   const CauHoiHtmlWidget({
     super.key,
     required this.htmlContent,
     required this.controller,
+    required this.id,
   });
 
   String _injectPlaceholders(String html) {
     final regex = RegExp(r'\{cau\}');
-    int i = 0;
+    int i = id + 1;
     return html.replaceAllMapped(regex, (_) {
       final tag = '<input-placeholder data-idx="$i"></input-placeholder>';
       i++;
@@ -544,7 +566,7 @@ class CauHoiPage extends StatefulWidget {
   final int index;
   final SubQuestionModel question;
   final CauHoiHtmlController cauController;
-  final ValueNotifier<Map<String, int>> counter;
+  final ValueNotifier<Map<String, String>> counter;
   final Map<String, SubQuestionModel> answerGroup;
 
   const CauHoiPage({
@@ -593,6 +615,7 @@ class _CauHoiPageState extends State<CauHoiPage>
                     : CauHoiHtmlWidget(
                         htmlContent: widget.question.content,
                         controller: widget.cauController,
+                        id: int.parse(widget.question.id),
                       ),
               ),
             ],
@@ -604,18 +627,25 @@ class _CauHoiPageState extends State<CauHoiPage>
           ValueListenableBuilder(
             valueListenable: widget.counter,
             builder: (_, value, __) {
+              if (!value.containsKey(widget.question.id)) {
+                widget.counter.value = {
+                  ...value,
+                  widget.question.id: '',
+                };
+              }
               return ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: widget.question.choices.length,
                 itemBuilder: (context, answer) {
-                  final isSelected = value[widget.question.id] == answer;
+                  final isSelected =
+                      value[widget.question.id] == answer.toString();
                   return GestureDetector(
                     behavior: HitTestBehavior.opaque,
                     onTap: () {
                       widget.counter.value = {
                         ...widget.counter.value,
-                        widget.question.id: answer,
+                        widget.question.id: answer.toString(),
                       };
                     },
                     child: Container(
@@ -634,15 +664,14 @@ class _CauHoiPageState extends State<CauHoiPage>
                             onChanged: (_) {
                               widget.counter.value = {
                                 ...widget.counter.value,
-                                widget.question.id: answer,
+                                widget.question.id: answer.toString(),
                               };
                             },
                           ),
                           Text('${answers[answer]} .'),
                           Expanded(
                             child: HtmlContentWidget(
-                              htmlContent:
-                                  widget.question.choices[answer].text ?? '',
+                              htmlContent: widget.question.choices[answer].text,
                             ),
                           ),
                         ],

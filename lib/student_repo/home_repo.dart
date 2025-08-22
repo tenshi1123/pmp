@@ -126,6 +126,7 @@ class HomeRepo {
     // in ra log lỗi
 
     return response.data;
+    //return '';
   }
 
   //Báo cáo điểm

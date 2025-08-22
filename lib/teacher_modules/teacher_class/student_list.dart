@@ -39,40 +39,43 @@ class _StudentListState extends State<StudentList> {
           ),
         ),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: double.infinity,
-            height: 20.h,
-            color: const Color(0xff00AEEF),
-            child: Container(
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
               width: double.infinity,
-              height: 20.h,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
-                color: Colors.white,
+              height: 19.h,
+              color: const Color(0xff00AEEF),
+              child: Container(
+                width: double.infinity,
+                height: 20.h,
+                decoration: BoxDecoration(
+                  borderRadius:
+                      BorderRadius.vertical(top: Radius.circular(20.r)),
+                  color: Colors.white,
+                ),
               ),
             ),
-          ),
-          ListView.builder(
-              shrinkWrap: true,
-              physics: const ClampingScrollPhysics(),
-              itemCount: _type == 1
-                  ? widget.model.documentModel.length
-                  : widget.model.examModel.length,
-              itemBuilder: (BuildContext context, int index) {
-                return _type == 1
-                    ? _StudentItem(
-                        documentModel: widget.model.documentModel[index],
-                        type: _type,
-                      )
-                    : _StudentItem(
-                        examModel: widget.model.examModel[index],
-                        type: _type,
-                      );
-              })
-        ],
+            ListView.builder(
+                shrinkWrap: true,
+                physics: const ClampingScrollPhysics(),
+                itemCount: _type == 1
+                    ? widget.model.documentModel.length
+                    : widget.model.examModel.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return _type == 1
+                      ? _StudentItem(
+                          documentModel: widget.model.documentModel[index],
+                          type: _type,
+                        )
+                      : _StudentItem(
+                          examModel: widget.model.examModel[index],
+                          type: _type,
+                        );
+                })
+          ],
+        ),
       ),
     );
   }
