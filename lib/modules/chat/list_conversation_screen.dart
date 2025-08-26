@@ -9,9 +9,13 @@ import 'package:pmp_english/utils/widget/custom_widget.dart';
 
 class ListConversationScreen extends StatelessWidget {
   const ListConversationScreen(
-      {super.key, required this.listConversation, required this.listTeacher});
+      {super.key,
+      required this.listConversation,
+      required this.listTeacher,
+      required this.type});
   final List<ProfileModel> listTeacher;
   final List<ChatModel> listConversation;
+  final String type;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,50 +72,54 @@ class ListConversationScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Row(
-              children: [
-                SizedBox(
-                  width: 20.w,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ListTeacherScreen(
-                          listTeacher: listTeacher,
-                        ),
+            type == 'teacher'
+                ? SizedBox(
+                    height: 10.h,
+                  )
+                : Row(
+                    children: [
+                      SizedBox(
+                        width: 20.w,
                       ),
-                    );
-                  },
-                  child: Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 10.w,
-                      vertical: 4.h,
-                    ),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(16.r),
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withValues(alpha: 0.2),
-                            spreadRadius: 5,
-                            blurRadius: 7,
-                            offset: const Offset(0, 2),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ListTeacherScreen(
+                                listTeacher: listTeacher,
+                              ),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 10.w,
+                            vertical: 4.h,
                           ),
-                        ]),
-                    child: Text(
-                      'Danh sách giáo viên',
-                      style: defaultText14M.copyWith(
-                        decoration: TextDecoration.underline,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(16.r),
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withValues(alpha: 0.2),
+                                  spreadRadius: 5,
+                                  blurRadius: 7,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ]),
+                          child: Text(
+                            'Danh sách giáo viên',
+                            style: defaultText14M.copyWith(
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ),
-              ],
-            ),
             SizedBox(
               height: 10.h,
             ),

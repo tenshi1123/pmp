@@ -120,6 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               builder: (context) => ListConversationScreen(
                                 listConversation: listConversation,
                                 listTeacher: listTeacher,
+                                type: 'student',
                               ),
                             ),
                           );

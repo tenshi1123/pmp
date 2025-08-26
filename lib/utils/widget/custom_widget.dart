@@ -345,8 +345,14 @@ class ConversationItem extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 21.r,
+              backgroundColor: Colors.grey[200],
               backgroundImage: NetworkImage(model.teacherAvatar),
-              backgroundColor: Colors.transparent,
+              onBackgroundImageError: (_, __) {},
+              child: Icon(
+                Icons.person,
+                size: 21.r,
+                color: Colors.grey,
+              ),
             ),
             SizedBox(
               width: 220.w,
