@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:pmp_english/student_models/chat_models.dart';
 import 'package:pmp_english/student_models/profile_model.dart';
 import 'package:pmp_english/utils/constants/api_path.dart';
+import 'package:pmp_english/utils/constants/api_path_teacher.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatRepo {
@@ -83,6 +84,20 @@ class ChatRepo {
     Response response;
     response = await dio.post(
       ApiPath.chatTeacher,
+      data: {
+        'chat_id': chatId,
+      },
+    );
+    return ConverastionModel.fromJson(response.data['data']);
+  }
+
+  Future<ConverastionModel> getConversationDetailTeacher(String chatId) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    Response response;
+    response = await dio.post(
+      ApiPathTeacher.chatMessages,
       data: {
         'chat_id': chatId,
       },

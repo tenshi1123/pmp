@@ -14,8 +14,9 @@ import 'package:camera_camera/camera_camera.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key, required this.model});
+  const ChatScreen({super.key, required this.model, required this.type});
   final ConverastionModel model;
+  final String type;
   @override
   State<ChatScreen> createState() => _ChatScreenState();
 }
@@ -128,14 +129,20 @@ class _ChatScreenState extends State<ChatScreen> {
             children: [
               CircleAvatar(
                 radius: 21.r,
+                backgroundColor: Colors.grey[200],
                 backgroundImage: NetworkImage(widget.model.teacherAvatar),
-                backgroundColor: Colors.transparent,
+                onBackgroundImageError: (_, __) {},
+                child: Icon(
+                  Icons.person,
+                  size: 21.r,
+                  color: Colors.grey,
+                ),
               ),
               SizedBox(
                 width: 10.w,
               ),
               Text(
-                widget.model.teacherFullName,
+                widget.model.chatName ?? 'No name',
                 style: defaultText18B.copyWith(
                   color: Colors.white,
                 ),
@@ -159,7 +166,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 color: Colors.white,
               ),
               onPressed: () {
-                _makePhoneCall('19008978');
+                _makePhoneCall(widget.model.customerPhone ?? '0');
               },
             ),
           ],
@@ -176,78 +183,88 @@ class _ChatScreenState extends State<ChatScreen> {
                 reverse: true,
                 //physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
+                  final message = listMessage[index];
+                  final isMine =
+                      (message.senderType == "1" && message.senderId == id);
+
                   return Container(
                     padding: const EdgeInsets.only(
                         left: 14, right: 14, top: 10, bottom: 10),
                     child: Align(
-                      alignment: ((listMessage[index].senderType == "1" &&
-                              listMessage[index].senderId == id)
-                          ? Alignment.topRight
-                          : Alignment.topLeft),
-                      child: Container(
-                        constraints: const BoxConstraints(maxWidth: 300),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: ((listMessage[index].senderType == "1" &&
-                                  listMessage[index].senderId == id)
-                              ? key1Color
-                              : state1),
-                        ),
-                        padding: const EdgeInsets.all(16),
-                        child: (listMessage[index].messageType == '0')
-                            ? Text(
-                                listMessage[index].content,
+                      alignment:
+                          isMine ? Alignment.topRight : Alignment.topLeft,
+                      child: Column(
+                        crossAxisAlignment: isMine
+                            ? CrossAxisAlignment.end
+                            : CrossAxisAlignment.start,
+                        children: [
+                          // 👉 Hiển thị tên người gửi nếu không phải mình
+                          if (!isMine)
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 4),
+                              child: Text(
+                                message.userName ??
+                                    message.customerName ??
+                                    message.teacherName ??
+                                    '',
                                 style: defaultText14M.copyWith(
-                                  color:
-                                      ((listMessage[index].senderType == "1" &&
-                                              listMessage[index].senderId == id)
-                                          ? Colors.white
-                                          : keyBlack),
+                                  color: keyBlack,
+                                  fontWeight: FontWeight.bold,
                                 ),
-                              )
-                            : GridView.builder(
-                                physics: const NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount:
-                                      listMessage[index].content.length == 1
-                                          ? 1
-                                          : 2,
-                                  crossAxisSpacing: 5,
-                                  mainAxisSpacing: 5,
-                                ),
-                                itemCount: listMessage[index].content.length,
-                                itemBuilder: (context, index2) {
-                                  return Column(
-                                    children: [
-                                      GestureDetector(
+                              ),
+                            ),
+
+                          // 👉 Bubble tin nhắn
+                          Container(
+                            constraints: const BoxConstraints(maxWidth: 300),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: isMine ? key1Color : state1,
+                            ),
+                            padding: const EdgeInsets.all(16),
+                            child: (message.messageType == '0')
+                                ? Text(
+                                    message.content,
+                                    style: defaultText14M.copyWith(
+                                      color: isMine ? Colors.white : keyBlack,
+                                    ),
+                                  )
+                                : GridView.builder(
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount:
+                                          message.content.length == 1 ? 1 : 2,
+                                      crossAxisSpacing: 5,
+                                      mainAxisSpacing: 5,
+                                    ),
+                                    itemCount: message.content.length,
+                                    itemBuilder: (context, index2) {
+                                      return GestureDetector(
                                         onTap: () {
                                           Navigator.of(context).push(
                                             MaterialPageRoute(
                                               builder: (context) =>
                                                   _FullsizeImage(
-                                                url: listMessage[index]
-                                                    .content[index2],
+                                                url: message.content[index2],
                                               ),
                                             ),
                                           );
                                         },
                                         child: Image.network(
-                                          listMessage[index].content[index2],
-                                          height: listMessage[index]
-                                                      .content
-                                                      .length ==
-                                                  1
+                                          message.content[index2],
+                                          height: message.content.length == 1
                                               ? 250.h
                                               : 125.h,
                                           fit: BoxFit.fitHeight,
                                         ),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              ),
+                                      );
+                                    },
+                                  ),
+                          ),
+                        ],
                       ),
                     ),
                   );

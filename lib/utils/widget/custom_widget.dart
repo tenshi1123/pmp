@@ -306,19 +306,23 @@ class ConversationItem extends StatelessWidget {
   const ConversationItem({
     super.key,
     required this.model,
+    required this.type,
   });
   final ChatModel model;
+  final String type;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        ConverastionModel conversationModel =
-            await ChatRepo().getConversationDetail(model.chatId);
+        ConverastionModel conversationModel = type == 'teacher'
+            ? await ChatRepo().getConversationDetailTeacher(model.chatId)
+            : await ChatRepo().getConversationDetail(model.chatId);
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => ChatScreen(
               model: conversationModel,
+              type: type,
             ),
           ),
         );
@@ -361,12 +365,13 @@ class ConversationItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    model.teacherName,
+                    model.chatName ?? model.teacherName,
                     style: defaultText14B,
                   ),
                   Text(
                     model.content,
                     style: defaultText12M,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ],
               ),
@@ -395,6 +400,7 @@ class ConversationTeacher extends StatelessWidget {
           MaterialPageRoute(
             builder: (context) => ChatScreen(
               model: conversationModel,
+              type: 'teacher',
             ),
           ),
         );

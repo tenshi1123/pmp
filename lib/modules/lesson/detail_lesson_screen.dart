@@ -92,7 +92,7 @@ class DetailLessonScreen extends StatelessWidget {
                       style: defaultText14B,
                     ),
                     Html(
-                      data: videoLessonModel.noiDungBuoiHoc,
+                      data: videoLessonModel.noiDungBuoiHoc ?? "",
                       style: {
                         "table": Style(
                           backgroundColor:

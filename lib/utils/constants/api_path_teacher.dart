@@ -24,4 +24,7 @@ class ApiPathTeacher {
   static const String notification = '$teachersUrl/notification';
   //lich-day
   static const String lichDay = '$teachersUrl/lich-day';
+  //chat
+  static const String chat = '$teachersUrl/chat';
+  static const String chatMessages = '$teachersUrl/chat_messages';
 }

@@ -8,11 +8,12 @@ import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:pmp_english/utils/widget/custom_widget.dart';
 
 class ListConversationScreen extends StatelessWidget {
-  const ListConversationScreen(
-      {super.key,
-      required this.listConversation,
-      required this.listTeacher,
-      required this.type});
+  const ListConversationScreen({
+    super.key,
+    required this.listConversation,
+    required this.listTeacher,
+    required this.type,
+  });
   final List<ProfileModel> listTeacher;
   final List<ChatModel> listConversation;
   final String type;
@@ -124,18 +125,20 @@ class ListConversationScreen extends StatelessWidget {
               height: 10.h,
             ),
             ListView.builder(
-                shrinkWrap: true,
-                padding: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 20.w),
-                physics: const ClampingScrollPhysics(),
-                itemCount: listConversation.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                    padding: EdgeInsets.only(bottom: 10.h),
-                    child: ConversationItem(
-                      model: listConversation[index],
-                    ),
-                  );
-                }),
+              shrinkWrap: true,
+              padding: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 20.w),
+              physics: const ClampingScrollPhysics(),
+              itemCount: listConversation.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Padding(
+                  padding: EdgeInsets.only(bottom: 10.h),
+                  child: ConversationItem(
+                    model: listConversation[index],
+                    type: type,
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),

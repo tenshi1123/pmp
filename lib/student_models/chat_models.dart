@@ -1,5 +1,5 @@
 class ChatModel {
-  final String chatName;
+  String? chatName;
   final String chatType;
   final String teacherName;
   final String teacherAvatar;
@@ -10,7 +10,7 @@ class ChatModel {
   final String senderId;
 
   ChatModel({
-    required this.chatName,
+    this.chatName,
     required this.chatType,
     required this.teacherName,
     required this.teacherAvatar,
@@ -22,7 +22,7 @@ class ChatModel {
   });
   factory ChatModel.fromJson(Map<String, dynamic> json) {
     return ChatModel(
-      chatName: json['chat_name'] ?? '',
+      chatName: json['chat_name'],
       chatType: json['chat_type'] ?? '',
       teacherName: json['teachers_chat_full_name'] ??
           json['customer_chat_full_name'] ??
@@ -39,28 +39,30 @@ class ChatModel {
 }
 
 class ConverastionModel {
-  final String teacherFullName;
+  final String? chatName;
   final String teacherAvatar;
   final String teacherEmail;
+  final String? customerPhone;
   final String id;
-  final String name;
   final List<ChatMessageModel> messages;
 
   ConverastionModel({
-    required this.teacherFullName,
+    this.chatName,
     required this.teacherAvatar,
     required this.teacherEmail,
+    this.customerPhone,
     required this.id,
-    required this.name,
     required this.messages,
   });
   factory ConverastionModel.fromJson(Map<String, dynamic> json) {
     return ConverastionModel(
-      teacherFullName: json['value']['teachers_full_name'] ?? '',
+      chatName: json['value']['name'] ??
+          json['value']['customer_full_name'] ??
+          json['value']['teachers_full_name'],
       teacherAvatar: json['value']['teachers_avatar'] ?? '',
       teacherEmail: json['value']['teachers_email'] ?? '',
+      customerPhone: json['value']['customer_phone'] ?? '',
       id: json['value']['id'] ?? '',
-      name: json['value']['name'] ?? '',
       messages: List<ChatMessageModel>.from(
         (json['chat_messages'] as List).map(
           (e) => ChatMessageModel.fromJson(e),
@@ -76,18 +78,18 @@ class ChatMessageModel {
   final String messageType;
   final String senderType;
   final DateTime createdAt;
-  final String customerName;
-  final String userName;
-  final String teacherName;
+  String? customerName;
+  String? userName;
+  String? teacherName;
   ChatMessageModel({
     required this.content,
     required this.senderId,
     required this.messageType,
     required this.senderType,
     required this.createdAt,
-    required this.customerName,
-    required this.userName,
-    required this.teacherName,
+    this.customerName,
+    this.userName,
+    this.teacherName,
   });
   factory ChatMessageModel.fromJson(Map<String, dynamic> json) {
     return ChatMessageModel(
@@ -96,9 +98,9 @@ class ChatMessageModel {
       messageType: json['message_type'] ?? '',
       senderType: json['sender_type'] ?? '',
       createdAt: DateTime.parse(json['created_at']),
-      customerName: json['customer_full_name'] ?? '',
-      userName: json['user_name'] ?? '',
-      teacherName: json['teachers_full_name'] ?? '',
+      customerName: json['customer_full_name'],
+      userName: json['user_name'],
+      teacherName: json['teachers_full_name'],
     );
   }
 }

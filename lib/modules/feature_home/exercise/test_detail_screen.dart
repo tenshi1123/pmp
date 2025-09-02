@@ -46,7 +46,7 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
   bool countDown = true;
   bool countDown1 = true;
   bool? isChecked = false;
-  final ValueNotifier<Map<String, String>> _counter =
+  ValueNotifier<Map<String, String>> _counter =
       ValueNotifier<Map<String, String>>({});
   final cauController = CauHoiHtmlController();
 
@@ -79,7 +79,9 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
         Duration(hours: hours1, minutes: mints1, seconds: secs1);
     startTimer();
     reset();
-
+    _counter = ValueNotifier({
+      for (var q in _listQuestion) q.id: "",
+    });
     super.initState();
   }
 
@@ -191,6 +193,8 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
                                 };
                               }).toList();
                               final result = [...counterList, ...answerList];
+                              result.sort((a, b) => int.parse(a['id']!)
+                                  .compareTo(int.parse(b['id']!)));
                               stopTimer();
                               HomeRepo().submitTracNghiem(
                                 id: widget.id,
@@ -483,8 +487,12 @@ class HtmlContentWidget extends StatelessWidget {
 
 class CauHoiHtmlController {
   final Map<int, TextEditingController> _controllers = {};
+
   TextEditingController controllerOf(int idx) {
-    return _controllers.putIfAbsent(idx, () => TextEditingController());
+    return _controllers.putIfAbsent(idx, () {
+      // khởi tạo mặc định với text = ''
+      return TextEditingController(text: '');
+    });
   }
 
   Map<String, String> getAnswers() {
@@ -493,15 +501,6 @@ class CauHoiHtmlController {
       answers["$key"] = value.text;
     });
     return answers;
-  }
-
-  void setAnswers(Map<String, String> data) {
-    data.forEach((key, value) {
-      final idx = int.tryParse(key);
-      if (idx != null) {
-        controllerOf(idx).text = value;
-      }
-    });
   }
 
   void dispose() {
@@ -526,6 +525,7 @@ class CauHoiHtmlWidget extends StatelessWidget {
     final regex = RegExp(r'\{cau\}');
     int i = id + 1;
     return html.replaceAllMapped(regex, (_) {
+      controller.controllerOf(i);
       final tag = '<input-placeholder data-idx="$i"></input-placeholder>';
       i++;
       return tag;

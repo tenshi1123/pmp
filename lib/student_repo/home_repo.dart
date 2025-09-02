@@ -122,11 +122,11 @@ class HomeRepo {
       requestBody: true,
       logPrint: (obj) => debugPrint('📦 $obj'),
     ));
-    response = await dio.post(ApiPath.submitTracNghiem, data: body);
+    //response = await dio.post(ApiPath.submitTracNghiem, data: body);
     // in ra log lỗi
 
-    return response.data;
-    //return '';
+    //return response.data;
+    return '';
   }
 
   //Báo cáo điểm
