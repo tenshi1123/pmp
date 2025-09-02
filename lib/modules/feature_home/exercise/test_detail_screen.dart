@@ -205,6 +205,12 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
                                 data: result,
                               );
                               Navigator.pop(context);
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Nộp bài thành công'),
+                                ),
+                              );
                             },
                           ),
                           CupertinoDialogAction(
