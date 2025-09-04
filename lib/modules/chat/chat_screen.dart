@@ -186,6 +186,8 @@ class _ChatScreenState extends State<ChatScreen> {
                   final message = listMessage[index];
                   final isMine =
                       (message.senderType == "1" && message.senderId == id);
+                  final isLastMessage = (index == 0 &&
+                      isMine); // tin nhắn mới nhất và là của mình
 
                   return Container(
                     padding: const EdgeInsets.only(
@@ -264,6 +266,19 @@ class _ChatScreenState extends State<ChatScreen> {
                                     },
                                   ),
                           ),
+
+                          // 👉 Thêm chữ "Đã gửi" nếu là tin nhắn cuối cùng của mình
+                          if (isLastMessage)
+                            Padding(
+                              padding: const EdgeInsets.only(top: 4),
+                              child: Text(
+                                "Đã gửi",
+                                style: defaultText14M.copyWith(
+                                  fontSize: 12,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ),
                         ],
                       ),
                     ),
@@ -345,31 +360,31 @@ class _ChatScreenState extends State<ChatScreen> {
                             });
                             messageController.clear();
 
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return CupertinoAlertDialog(
-                                  title: const Text('Tin nhắn đã được gửi'),
-                                  actions: <Widget>[
-                                    CupertinoDialogAction(
-                                      isDefaultAction: true,
-                                      child: Text(
-                                        'ok',
-                                        style: TextStyle(
-                                            fontSize: 20, color: key1Color),
-                                      ),
-                                      onPressed: () {
-                                        Navigator.of(context,
-                                                rootNavigator: true)
-                                            .pop(
-                                          (_) => false,
-                                        );
-                                      },
-                                    )
-                                  ],
-                                );
-                              },
-                            );
+                            // showDialog(
+                            //   context: context,
+                            //   builder: (BuildContext context) {
+                            //     return CupertinoAlertDialog(
+                            //       title: const Text('Tin nhắn đã được gửi'),
+                            //       actions: <Widget>[
+                            //         CupertinoDialogAction(
+                            //           isDefaultAction: true,
+                            //           child: Text(
+                            //             'ok',
+                            //             style: TextStyle(
+                            //                 fontSize: 20, color: key1Color),
+                            //           ),
+                            //           onPressed: () {
+                            //             Navigator.of(context,
+                            //                     rootNavigator: true)
+                            //                 .pop(
+                            //               (_) => false,
+                            //             );
+                            //           },
+                            //         )
+                            //       ],
+                            //     );
+                            //   },
+                            // );
                           }
                         },
                         // onTap: () async {

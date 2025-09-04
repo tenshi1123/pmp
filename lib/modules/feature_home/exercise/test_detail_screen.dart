@@ -25,12 +25,14 @@ class TestDetailScreen extends StatefulWidget {
     required this.id,
     required this.customerCourseScheduleId,
     required this.examDetailId,
+    this.isDone = false,
   });
   final List<QuestionGroupModel> listQuestion;
   final String title;
   final String id;
   final String customerCourseScheduleId;
   final String examDetailId;
+  final bool isDone;
   @override
   State<TestDetailScreen> createState() => _TestDetailScreenState();
 }
@@ -153,96 +155,97 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
       body: Column(
         children: [
           SizedBox(height: 10.h),
-          Row(
-            children: [
-              SizedBox(width: 20.w),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Thời gian còn lại', style: defaultText16B),
-                  buildTime1(),
-                ],
-              ),
-              const Spacer(),
-              GestureDetector(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return CupertinoAlertDialog(
-                        title: const Text('Bạn có chắc chắn muốn nộp bài'),
-                        actions: <Widget>[
-                          CupertinoDialogAction(
-                            isDefaultAction: true,
-                            child: Text('Đồng ý', style: defaultText20B),
-                            onPressed: () {
-                              final answerList = cauController
-                                  .getAnswers()
-                                  .entries
-                                  .map((entry) {
-                                return {
-                                  'id': entry.key,
-                                  'answer': entry.value,
-                                };
-                              }).toList();
-                              final counterList =
-                                  _counter.value.entries.map((entry) {
-                                return {
-                                  'id': entry.key,
-                                  'answer': entry.value,
-                                };
-                              }).toList();
-                              final result = [...counterList, ...answerList];
-                              result.sort((a, b) => int.parse(a['id']!)
-                                  .compareTo(int.parse(b['id']!)));
-                              stopTimer();
-                              HomeRepo().submitTracNghiem(
-                                id: widget.id,
-                                examDetailId: widget.examDetailId,
-                                customerCourseScheduleId:
-                                    widget.customerCourseScheduleId,
-                                startTime: DateTime.now().toIso8601String(),
-                                data: result,
-                              );
-                              Navigator.pop(context);
+          if (!widget.isDone)
+            Row(
+              children: [
+                SizedBox(width: 20.w),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Thời gian còn lại', style: defaultText16B),
+                    buildTime1(),
+                  ],
+                ),
+                const Spacer(),
+                GestureDetector(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return CupertinoAlertDialog(
+                          title: const Text('Bạn có chắc chắn muốn nộp bài'),
+                          actions: <Widget>[
+                            CupertinoDialogAction(
+                              isDefaultAction: true,
+                              child: Text('Đồng ý', style: defaultText20B),
+                              onPressed: () {
+                                final answerList = cauController
+                                    .getAnswers()
+                                    .entries
+                                    .map((entry) {
+                                  return {
+                                    'id': entry.key,
+                                    'answer': entry.value,
+                                  };
+                                }).toList();
+                                final counterList =
+                                    _counter.value.entries.map((entry) {
+                                  return {
+                                    'id': entry.key,
+                                    'answer': entry.value,
+                                  };
+                                }).toList();
+                                final result = [...counterList, ...answerList];
+                                result.sort((a, b) => int.parse(a['id']!)
+                                    .compareTo(int.parse(b['id']!)));
+                                stopTimer();
+                                HomeRepo().submitTracNghiem(
+                                  id: widget.id,
+                                  examDetailId: widget.examDetailId,
+                                  customerCourseScheduleId:
+                                      widget.customerCourseScheduleId,
+                                  startTime: DateTime.now().toIso8601String(),
+                                  data: result,
+                                );
+                                Navigator.pop(context);
 
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Nộp bài thành công'),
-                                ),
-                              );
-                            },
-                          ),
-                          CupertinoDialogAction(
-                            isDefaultAction: true,
-                            child: Text('Hủy', style: defaultText20B),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                          )
-                        ],
-                      );
-                    },
-                  );
-                },
-                child: Container(
-                  height: 35.h,
-                  width: 74.w,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10.r)),
-                    color: sub1Color,
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Nộp bài',
-                      style: defaultText16B.copyWith(color: Colors.white),
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Nộp bài thành công'),
+                                  ),
+                                );
+                              },
+                            ),
+                            CupertinoDialogAction(
+                              isDefaultAction: true,
+                              child: Text('Hủy', style: defaultText20B),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            )
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  child: Container(
+                    height: 35.h,
+                    width: 74.w,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10.r)),
+                      color: sub1Color,
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Nộp bài',
+                        style: defaultText16B.copyWith(color: Colors.white),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(width: 20.w),
-            ],
-          ),
+                SizedBox(width: 20.w),
+              ],
+            ),
           SizedBox(height: 10.h),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
@@ -296,8 +299,9 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
           Expanded(
             child: PageView.builder(
               controller: _pageController,
-              itemCount:
-                  _selectedQuestion?.value.values.toList().first.type != '5'
+              itemCount: widget.isDone
+                  ? _selectedQuestion?.value.values.toList().length
+                  : _selectedQuestion?.value.values.toList().first.type != '5'
                       ? _selectedQuestion?.value.values.toList().length
                       : 1,
               onPageChanged: (index) {
@@ -307,7 +311,18 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
               },
               itemBuilder: (context, index) {
                 return CauHoiPage(
-                  index: index,
+                  index:
+                      _selectedQuestion?.value.values.toList().first.type != '5'
+                          ? index
+                          : getDisplayNumber(
+                                  _selectedQuestion?.value.values
+                                          .toList()
+                                          .first
+                                          .content ??
+                                      "",
+                                  index) -
+                              1, // Sử dụng _currentPage
+
                   question: _listQuestion
                       .firstWhere((q) => q.id == selectedQuestionId)
                       .value
@@ -338,8 +353,9 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
                 Expanded(
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount:
-                        _selectedQuestion?.value.values.toList().first.type !=
+                    itemCount: widget.isDone
+                        ? _selectedQuestion?.value.values.toList().length
+                        : _selectedQuestion?.value.values.toList().first.type !=
                                 '5'
                             ? _selectedQuestion?.value.values.toList().length
                             : 1,
@@ -368,7 +384,13 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
                                 : null,
                           ),
                           child: Text(
-                            '${index + 1}',
+                            _selectedQuestion?.value.values
+                                        .toList()
+                                        .first
+                                        .type !=
+                                    '5'
+                                ? '${index + 1}'
+                                : '${getDisplayNumber(_selectedQuestion?.value.values.toList().first.content ?? "", index)}',
                             style: TextStyle(
                               color: isSelected ? Colors.white : Colors.black54,
                               fontWeight: FontWeight.bold,
@@ -398,21 +420,6 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
           ),
         ],
       ),
-
-      // card for elevation
-      // bottomNavigationBar: Card(
-      //   margin: EdgeInsets.zero,
-      //   elevation: 4,
-      //   child: NumberPaginator(
-      //     // by default, the paginator shows numbers as center content
-      //     numberPages: allSubQuestions.length,
-      //     onPageChange: (int index) {
-      //       setState(() {
-      //         _currentPage = index;
-      //       });
-      //     },
-      //   ),
-      // ),
     );
   }
 
@@ -470,23 +477,13 @@ class HtmlContentWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HtmlWidget(
-      htmlContent.replaceAll('\r\n', ' ').replaceAll('&nbsp;', ' '),
-      // customStylesBuilder: (element) {
-      //   if (element.localName == 'p') {
-      //     return {
-      //       'margin': '0', // bỏ margin mặc định
-      //       'padding': '0',
-      //     };
-      //   }
-      //   if (element.localName == 'table') {
-      //     return {
-      //       'margin': '0',
-      //       'padding': '0',
-      //       'border-collapse': 'collapse',
-      //     };
-      //   }
-      //   return null;
-      // },
+      htmlContent.trim(),
+      customStylesBuilder: (element) {
+        if (element.localName == 'p') {
+          return {'margin': '0'};
+        }
+        return null;
+      },
     );
   }
 }
@@ -687,7 +684,29 @@ class _CauHoiPageState extends State<CauHoiPage>
                 },
               );
             },
-          )
+          ),
+          if (widget.question.answerSolutions != null &&
+              widget.question.answerSolutions!.isNotEmpty)
+            RichText(
+              text: TextSpan(
+                text: 'Trả lời: ',
+                style: defaultText14M,
+                children: <TextSpan>[
+                  TextSpan(
+                      text: widget.question.type == '2'
+                          ? getAnswerLabel(widget.question.answer)
+                          : widget.question.answer,
+                      style: defaultText16B),
+                  TextSpan(text: ' | Đáp án đúng: '),
+                  TextSpan(
+                      text: widget.question.type == '2'
+                          ? getAnswerLabel(
+                              widget.question.answerSolutions ?? '')
+                          : widget.question.answerSolutions,
+                      style: defaultText16B.copyWith(color: main1Color)),
+                ],
+              ),
+            ),
         ],
       ),
     );
@@ -695,3 +714,25 @@ class _CauHoiPageState extends State<CauHoiPage>
 }
 
 List<String> answers = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+String getAnswerLabel(String index) {
+  final i = int.tryParse(index) ?? -1;
+  if (i >= 0 && i < answers.length) {
+    return answers[i];
+  }
+  return '';
+}
+
+int? extractQuestionNumber(String html) {
+  final regex = RegExp(r'Question\s+(\d+)');
+  final match = regex.firstMatch(html);
+  if (match != null) {
+    return int.tryParse(match.group(1) ?? '');
+  }
+  return null;
+}
+
+int getDisplayNumber(String content, int index) {
+  if (index == 0) return 1; // số đầu tiên luôn là 1
+  final base = extractQuestionNumber(content) ?? 0;
+  return base + index - 1;
+}

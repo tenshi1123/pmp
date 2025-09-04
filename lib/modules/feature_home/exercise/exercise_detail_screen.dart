@@ -199,7 +199,7 @@ class _InfoTest extends StatelessWidget {
                     ),
                   Text(
                     'Điểm : ${model.finalMark}',
-                    style: defaultText12B,
+                    style: defaultText14B,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                   ),
@@ -215,18 +215,42 @@ class _InfoTest extends StatelessWidget {
                     height: 20.h,
                   ),
                   model.ccseeId.isNotEmpty
-                      ? Container(
-                          width: 326.w,
-                          height: 51.h,
-                          decoration: BoxDecoration(
-                            color: const Color(0xffDEE4ED),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.r)),
+                      ? GestureDetector(
+                          onTap: () async {
+                            List<QuestionGroupModel> detailExcerciseModel =
+                                await HomeRepo().viewTestDone(
+                              id: model.ccseeId,
+                            );
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => TestDetailScreen(
+                                  listQuestion: detailExcerciseModel,
+                                  title: model.name,
+                                  id: model.id,
+                                  customerCourseScheduleId:
+                                      customerCourseScheduleId,
+                                  examDetailId: model.examDetailId,
+                                  isDone: true,
+                                ),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            width: 326.w,
+                            height: 51.h,
+                            decoration: BoxDecoration(
+                              color: const Color(0xffDEE4ED),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10.r)),
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Xem bài đã làm',
+                                style: defaultText20B.copyWith(
+                                    color: Colors.white),
+                              ),
+                            ),
                           ),
-                          child: Center(
-                              child: Text('Đã hoàn thành',
-                                  style: defaultText20B.copyWith(
-                                      color: Colors.white))),
                         )
                       : GestureDetector(
                           onTap: () async {

@@ -65,6 +65,25 @@ class HomeRepo {
         },
       ),
     );
+    return ((response.data['data']['question'] as List)
+        .map((e) => QuestionGroupModel.fromJson(e))
+        .toList());
+  }
+
+  //load bài tập trắc nghiệm đã làm
+  Future<List<QuestionGroupModel>> viewTestDone({
+    required String id,
+  }) async {
+    final dio = await DioClient.getInstance();
+    Response response;
+    response = await dio.post(
+      ApiPath.viewTestDone,
+      data: jsonEncode(
+        {
+          'ccsee_id': int.tryParse(id),
+        },
+      ),
+    );
     //return DiemDanhModel.fromJson(response.data['data']);
     return ((response.data['data']['question'] as List)
         .map((e) => QuestionGroupModel.fromJson(e))

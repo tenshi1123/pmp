@@ -54,7 +54,8 @@ class SubQuestionModel {
   final List<QuestionChoice> choices;
   final String type;
   final String answer;
-
+  final String? answerSolutions;
+  final String? answerLoiGiai;
   SubQuestionModel({
     required this.id,
     required this.examDetailQuestionId,
@@ -66,6 +67,8 @@ class SubQuestionModel {
     required this.choices,
     required this.type,
     required this.answer,
+    this.answerSolutions,
+    this.answerLoiGiai,
   });
 
   factory SubQuestionModel.fromJson(Map<String, dynamic> json) {
@@ -92,6 +95,8 @@ class SubQuestionModel {
       choices: parsedChoices,
       type: json['type'] ?? '',
       answer: json['answer'] ?? '',
+      answerSolutions: json['answer_solutions'],
+      answerLoiGiai: json['answer_loi_giai'],
     );
   }
 }

@@ -869,6 +869,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  smart_text_flutter:
+    dependency: "direct main"
+    description:
+      name: smart_text_flutter
+      sha256: dd10a348945912d7cccb63c8f2202a9ce33efcded13efce710efa88115273bc0
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.5"
   smooth_page_indicator:
     dependency: "direct main"
     description:

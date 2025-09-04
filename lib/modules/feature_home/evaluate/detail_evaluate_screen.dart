@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pmp_english/student_models/review_models.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
+import 'package:smart_text_flutter/smart_text_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DetailEvaluateScreen extends StatelessWidget {
   const DetailEvaluateScreen({super.key, required this.model});
@@ -112,32 +114,69 @@ class DetailEvaluateScreen extends StatelessWidget {
             SizedBox(
               height: 10.h,
             ),
-
-            // chartItem(width: 350, percents: 92, title: 'Chuyên cần'),
-            // chartItem(width: 350, percents: 75, title: 'Bài tập'),
-            //chartItem(width: 350, percents: 100, title: 'Thái độ'),
-            ListView.builder(
-                shrinkWrap: true,
-                physics: const ClampingScrollPhysics(),
+            Expanded(
+              child: ListView.builder(
                 itemCount: model.listValue.length,
+                padding: EdgeInsets.zero,
                 itemBuilder: (BuildContext context, int index) {
+                  final item = model.listValue[index];
                   return Padding(
                     padding: EdgeInsets.symmetric(
                       vertical: 8.h,
                       horizontal: 16.w,
                     ),
-                    child: Text(
-                      '${model.listValue[index].name}${model.listValue[index].type == '2' ? ': ${model.listValue[index].value}' : ''}',
-                      style: model.listValue[index].type == '1'
-                          ? defaultText14M
-                          : defaultText16B.copyWith(
-                              color: model.listValue[index].type == '0'
-                                  ? main1Color
-                                  : sub1Color,
-                            ),
+                    child: SmartText(
+                      '${item.name}${item.type == '2' ? ': ${item.value}' : ''}',
+                      // detectTypes: const [
+                      //   DetectType.url,
+                      //   DetectType.phone,
+                      //   DetectType.email,
+                      // ],
+                      config: ItemSpanConfig(
+                        textStyle: item.type == '1'
+                            ? defaultText14M
+                            : defaultText16M.copyWith(
+                                color:
+                                    item.type == '0' ? main1Color : key1Color,
+                              ),
+                      ),
+                      phoneConfig: ItemSpanConfig(
+                        textStyle: const TextStyle(
+                          color: Colors.green,
+                          decoration: TextDecoration.underline,
+                        ),
+                        onClicked: (data) async {
+                          final uri = Uri(scheme: 'tel', path: data);
+                          if (!await launchUrl(uri)) {
+                            debugPrint("Không gọi được số: $data");
+                          }
+                        },
+                      ),
+                      emailConfig: ItemSpanConfig(
+                        textStyle: const TextStyle(
+                          color: Colors.blue,
+                          decoration: TextDecoration.underline,
+                        ),
+                        onClicked: (data) => debugPrint('✉️ Email: $data'),
+                      ),
+                      urlConfig: ItemSpanConfig(
+                        textStyle: const TextStyle(
+                          color: Colors.blue,
+                          decoration: TextDecoration.underline,
+                        ),
+                        onClicked: (data) async {
+                          final uri = Uri.parse(data);
+                          if (!await launchUrl(uri,
+                              mode: LaunchMode.externalApplication)) {
+                            debugPrint("Không mở được link: $data");
+                          }
+                        },
+                      ),
                     ),
                   );
-                }),
+                },
+              ),
+            ),
           ],
         ),
       ),
