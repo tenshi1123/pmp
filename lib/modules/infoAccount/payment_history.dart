@@ -75,40 +75,20 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   SizedBox(
-                                    width: 150.w,
-                                    child: Text(
-                                      'Khóa học',
-                                      style: defaultText12Re,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 150.w,
-                                    child: Text(
-                                      'Tình trạng thanh toán',
-                                      style: defaultText12M,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  SizedBox(
-                                    width: 150.w,
+                                    width: 300.w,
                                     child: Text(
                                       widget.listPayments[index].courseName,
                                       style: defaultText14B,
                                     ),
                                   ),
-                                  SizedBox(
-                                    width: 150.w,
-                                    child: Text(
-                                      '${widget.listPayments[index].tinhTrang}%',
-                                      style: defaultText14B.copyWith(
-                                          color: main1Color),
-                                    ),
-                                  ),
+                                  // SizedBox(
+                                  //   width: 150.w,
+                                  //   child: Text(
+                                  //     '${widget.listPayments[index].tinhTrang}%',
+                                  //     style: defaultText14B.copyWith(
+                                  //         color: main1Color),
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                               Row(
@@ -119,7 +99,7 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
                                     width: 150.w,
                                     child: Text(
                                       'Chi phí',
-                                      style: defaultText12Re,
+                                      style: defaultText14Re,
                                     ),
                                   ),
                                   SizedBox(
@@ -141,7 +121,7 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
                                     width: 150.w,
                                     child: Text(
                                       'Đã thanh toán',
-                                      style: defaultText12Re,
+                                      style: defaultText14Re,
                                     ),
                                   ),
                                   SizedBox(
@@ -164,7 +144,7 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
                                     width: 150.w,
                                     child: Text(
                                       'Còn thiếu',
-                                      style: defaultText12Re,
+                                      style: defaultText14Re,
                                     ),
                                   ),
                                   SizedBox(
@@ -172,7 +152,44 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
                                     child: Text(
                                       NumberFormat("#,###", "vi_VN").format(
                                           widget.listPayments[index].conthieu),
-                                      style: defaultText12M,
+                                      style: defaultText14M,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SizedBox(
+                                    width: 150.w,
+                                    child: Text(
+                                      'Tình trạng thanh toán',
+                                      style: defaultText14M,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 150.w,
+                                    child: Text(
+                                      widget.listPayments[index].tinhTrang ==
+                                              100
+                                          ? 'Đã thanh toán'
+                                          : widget.listPayments[index]
+                                                      .tinhTrang ==
+                                                  0
+                                              ? 'Chưa thanh toán'
+                                              : 'Còn nợ',
+                                      style: defaultText14B.copyWith(
+                                        color: widget.listPayments[index]
+                                                    .tinhTrang ==
+                                                100
+                                            ? Colors.green
+                                            : widget.listPayments[index]
+                                                        .tinhTrang ==
+                                                    0
+                                                ? Colors.red
+                                                : Colors.orange,
+                                      ),
                                     ),
                                   ),
                                 ],

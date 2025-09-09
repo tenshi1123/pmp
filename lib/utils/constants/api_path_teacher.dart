@@ -27,4 +27,7 @@ class ApiPathTeacher {
   //chat
   static const String chat = '$teachersUrl/chat';
   static const String chatMessages = '$teachersUrl/chat_messages';
+  static const String listCustomers = '$teachersUrl/chat/list_customer';
+  static const String createConversation =
+      '$teachersUrl/chat/chat_teachers_customer';
 }

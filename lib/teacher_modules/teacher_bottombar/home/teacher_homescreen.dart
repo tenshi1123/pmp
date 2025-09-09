@@ -223,12 +223,13 @@ class _AvatarRow extends StatelessWidget {
           onTap: () async {
             List<ChatModel> listConversation =
                 await ChatRepo().getTeacherListConversation();
+            List<ProfileModel> listTeacher = await ChatRepo().getListCustomer();
             pushWithoutNavBar(
               context,
               MaterialPageRoute(
                 builder: (context) => ListConversationScreen(
                   listConversation: listConversation,
-                  listTeacher: [],
+                  listTeacher: listTeacher,
                   type: 'teacher',
                 ),
               ),

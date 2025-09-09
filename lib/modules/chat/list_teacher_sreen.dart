@@ -6,8 +6,10 @@ import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:pmp_english/utils/widget/custom_widget.dart';
 
 class ListTeacherScreen extends StatelessWidget {
-  const ListTeacherScreen({super.key, required this.listTeacher});
+  const ListTeacherScreen(
+      {super.key, required this.listTeacher, required this.type});
   final List<ProfileModel> listTeacher;
+  final String type;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +44,7 @@ class ListTeacherScreen extends StatelessWidget {
                             color: Colors.white,
                           ),
                           Text(
-                            'Giáo viên',
+                            type == 'teacher' ? 'Học sinh' : 'Giáo viên',
                             style: defaultText20B.copyWith(
                               color: Colors.white,
                             ),

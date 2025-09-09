@@ -73,54 +73,53 @@ class ListConversationScreen extends StatelessWidget {
                 ],
               ),
             ),
-            type == 'teacher'
-                ? SizedBox(
-                    height: 10.h,
-                  )
-                : Row(
-                    children: [
-                      SizedBox(
-                        width: 20.w,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ListTeacherScreen(
-                                listTeacher: listTeacher,
-                              ),
-                            ),
-                          );
-                        },
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 10.w,
-                            vertical: 4.h,
-                          ),
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(16.r),
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withValues(alpha: 0.2),
-                                  spreadRadius: 5,
-                                  blurRadius: 7,
-                                  offset: const Offset(0, 2),
-                                ),
-                              ]),
-                          child: Text(
-                            'Danh sách giáo viên',
-                            style: defaultText14M.copyWith(
-                              decoration: TextDecoration.underline,
-                            ),
-                          ),
+            Row(
+              children: [
+                SizedBox(
+                  width: 20.w,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ListTeacherScreen(
+                          listTeacher: listTeacher,
+                          type: type,
                         ),
                       ),
-                    ],
+                    );
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 10.w,
+                      vertical: 4.h,
+                    ),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(16.r),
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withValues(alpha: 0.2),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: const Offset(0, 2),
+                          ),
+                        ]),
+                    child: Text(
+                      type == 'teacher'
+                          ? 'Danh sách học viên'
+                          : 'Danh sách giáo viên',
+                      style: defaultText14M.copyWith(
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
                   ),
+                ),
+              ],
+            ),
             SizedBox(
               height: 10.h,
             ),

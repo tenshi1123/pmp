@@ -393,8 +393,8 @@ class ConversationTeacher extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        ConverastionModel conversationModel =
-            await ChatRepo().createChatConversation(model.id);
+        ConverastionModel conversationModel = await ChatRepo()
+            .createChatConversation(teacherId: model.id, type: '');
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -427,8 +427,15 @@ class ConversationTeacher extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 21.r,
-              backgroundImage: NetworkImage(model.avatar),
-              backgroundColor: Colors.transparent,
+              backgroundColor: Colors.grey[300],
+              backgroundImage:
+                  model.avatar.isNotEmpty ? NetworkImage(model.avatar) : null,
+              child: (model.avatar.isEmpty)
+                  ? const Icon(
+                      Icons.person,
+                      color: Colors.white,
+                    )
+                  : null,
             ),
             SizedBox(
               width: 220.w,

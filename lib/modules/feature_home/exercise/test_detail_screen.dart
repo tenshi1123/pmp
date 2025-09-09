@@ -198,6 +198,8 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
                                 final result = [...counterList, ...answerList];
                                 result.sort((a, b) => int.parse(a['id']!)
                                     .compareTo(int.parse(b['id']!)));
+                                final cleaned =
+                                    removeDuplicatesKeepLast(result);
                                 stopTimer();
                                 HomeRepo().submitTracNghiem(
                                   id: widget.id,
@@ -205,7 +207,7 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
                                   customerCourseScheduleId:
                                       widget.customerCourseScheduleId,
                                   startTime: DateTime.now().toIso8601String(),
-                                  data: result,
+                                  data: cleaned,
                                 );
                                 Navigator.pop(context);
 
@@ -735,4 +737,15 @@ int getDisplayNumber(String content, int index) {
   if (index == 0) return 1; // số đầu tiên luôn là 1
   final base = extractQuestionNumber(content) ?? 0;
   return base + index - 1;
+}
+
+List<Map<String, String>> removeDuplicatesKeepLast(
+    List<Map<String, String>> data) {
+  final Map<String, Map<String, String>> uniqueMap = {};
+
+  for (var item in data) {
+    uniqueMap[item['id'] ?? ''] = item; // trùng thì override => giữ bản cuối
+  }
+
+  return uniqueMap.values.toList();
 }

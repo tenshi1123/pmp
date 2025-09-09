@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:pmp_english/utils/DioClient.dart';
 import 'package:pmp_english/utils/constants/api_path.dart';
 import 'package:pmp_english/utils/constants/api_path_teacher.dart';
 import 'package:pmp_english/utils/constants/const_string.dart';
@@ -97,5 +96,22 @@ class LoginRepo {
         'onesignal_id': onesignalId,
       }),
     );
+  }
+
+  Future<String> getToken() async {
+    Response response;
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final String? type = prefs.getString(ConstString.type);
+    dio.interceptors.add(LogInterceptor(
+      responseBody: true,
+      requestBody: true,
+      logPrint: (obj) => debugPrint('📦 $obj'),
+    ));
+    response = await dio.get(
+      ApiPath.getSocketToken,
+      queryParameters: {'id': 12, 'name': 'dio'},
+    );
+    return response.data["refresh_token"];
   }
 }

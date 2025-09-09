@@ -42,6 +42,21 @@ class ChatRepo {
     return list;
   }
 
+  Future<List<ProfileModel>> getListCustomer() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    Response response;
+    response = await dio.post(
+      ApiPathTeacher.listCustomers,
+    );
+    List<ProfileModel> list = [];
+    for (var item in response.data['data']['value']) {
+      list.add(ProfileModel.fromJson(item));
+    }
+    return list;
+  }
+
   Future<List<ChatModel>> getTeacherListConversation() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? token = prefs.getString('token');
@@ -57,7 +72,10 @@ class ChatRepo {
     return list;
   }
 
-  Future<ConverastionModel> createChatConversation(String teacherId) async {
+  Future<ConverastionModel> createChatConversation({
+    required String teacherId,
+    required String type,
+  }) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? token = prefs.getString('token');
     dio.options.headers['Authorization'] = 'Bearer $token';
@@ -68,13 +86,30 @@ class ChatRepo {
       requestBody: true,
       logPrint: (obj) => debugPrint('📦 $obj'),
     ));
-    response = await dio.post(
-      ApiPath.chatTeacherCustomer,
-      data: {
-        "teachers_id": int.tryParse(teacherId),
-      },
-    );
-    return ConverastionModel.fromJson(response.data['data']);
+    if (type == 'teacher') {
+      response = await dio.post(
+        ApiPath.chatTeacherCustomer,
+        data: {
+          "teachers_id": int.tryParse(teacherId),
+        },
+      );
+      return ConverastionModel.fromJson(response.data['data']);
+    } else {
+      response = await dio.post(
+        ApiPathTeacher.createConversation,
+        data: {
+          "customer_id": int.tryParse(teacherId),
+        },
+      );
+      return ConverastionModel.fromJson(response.data['data']);
+    }
+    // response = await dio.post(
+    //   ApiPath.chatTeacherCustomer,
+    //   data: {
+    //     "teachers_id": int.tryParse(teacherId),
+    //   },
+    // );
+    //return ConverastionModel.fromJson(response.data['data']);
   }
 
   Future<ConverastionModel> getConversationDetail(String chatId) async {
