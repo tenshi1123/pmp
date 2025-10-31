@@ -24,10 +24,20 @@ class LichHocScreen extends StatelessWidget {
               'Lịch học gần nhất',
               style: defaultText16B,
             ),
-            _ClassItem(
-              model: model.saptoi[0],
-              type: 1,
-            ),
+            model.saptoi.isEmpty
+                ? Padding(
+                    padding: EdgeInsets.only(top: 20.h, bottom: 20.h),
+                    child: Center(
+                      child: Text(
+                        'Chưa có lịch học',
+                        style: defaultText16M,
+                      ),
+                    ),
+                  )
+                : _ClassItem(
+                    model: model.saptoi[0],
+                    type: 1,
+                  ),
             Text(
               'Thời khóa biểu',
               style: defaultText16B,

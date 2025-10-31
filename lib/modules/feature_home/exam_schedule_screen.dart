@@ -369,9 +369,35 @@ class _ExamScheduleScreenState extends State<ExamScheduleScreen> {
                                   ),
                                   onPressed: () {
                                     if (selectedValue != null) {
+                                      //gọi api
                                       ExamScheduleRepo()
                                           .dkiThi(id: selectedValue!.id);
-                                    }
+                                      //hiện dialog
+                                      showDialog<void>(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text(
+                                              'Đã đăng ký thành công',
+                                              style: defaultText14M,
+                                            ),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                style: TextButton.styleFrom(
+                                                  textStyle: Theme.of(context)
+                                                      .textTheme
+                                                      .labelLarge,
+                                                ),
+                                                child: const Text('ok'),
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    } else {}
 
                                     Navigator.of(context, rootNavigator: true)
                                         .pop(

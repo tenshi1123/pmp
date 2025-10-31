@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
+import 'package:pmp_english/modules/feature_home/exercise/simple_audio_recorder.dart';
 import 'package:pmp_english/student_models/excercise_model.dart';
 import 'package:pmp_english/student_repo/home_repo.dart';
 import 'package:pmp_english/utils/constants/color.dart';
@@ -26,6 +27,7 @@ class TestDetailScreen extends StatefulWidget {
     required this.customerCourseScheduleId,
     required this.examDetailId,
     this.isDone = false,
+    required this.skill,
   });
   final List<QuestionGroupModel> listQuestion;
   final String title;
@@ -33,12 +35,14 @@ class TestDetailScreen extends StatefulWidget {
   final String customerCourseScheduleId;
   final String examDetailId;
   final bool isDone;
+  final String skill;
   @override
   State<TestDetailScreen> createState() => _TestDetailScreenState();
 }
 
 class _TestDetailScreenState extends State<TestDetailScreen> {
   int _currentPage = 0;
+  final Map<String, TextEditingController> _textControllers = {};
   var countdownDuration = const Duration(minutes: 15);
   Duration duration = const Duration();
   List<QuestionGroupModel> _listQuestion = [];
@@ -55,6 +59,23 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
   late List<SubQuestionModel> allSubQuestions;
   late String selectedQuestionId = "-1";
   final PageController _pageController = PageController();
+  TextEditingController _getController(String questionId) {
+    if (!_textControllers.containsKey(questionId)) {
+      final initialValue = _counter.value[questionId] ?? '';
+      final controller = TextEditingController(text: initialValue);
+
+      controller.addListener(() {
+        _counter.value = {
+          ..._counter.value,
+          questionId: controller.text,
+        };
+      });
+
+      _textControllers[questionId] = controller;
+    }
+
+    return _textControllers[questionId]!;
+  }
 
   @override
   void dispose() {
@@ -155,6 +176,14 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
       body: Column(
         children: [
           SizedBox(height: 10.h),
+          // if (widget.skill == '4')
+          //   Padding(
+          //     padding: EdgeInsetsGeometry.symmetric(horizontal: 20.w),
+          //     child: Text(
+          //       'Học viên vui lòng thao tác bài tập dạng nghe trên web',
+          //       style: defaultText16B,
+          //     ),
+          //   ),
           if (!widget.isDone)
             Row(
               children: [
@@ -211,10 +240,33 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
                                 );
                                 Navigator.pop(context);
 
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Nộp bài thành công'),
-                                  ),
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      title: Row(
+                                        children: [
+                                          const Icon(Icons.check_circle,
+                                              color: Colors.green, size: 28),
+                                          const SizedBox(width: 10),
+                                          Text("Nộp bài thành công!",
+                                              style: defaultText16B),
+                                        ],
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.of(context).pop(),
+                                          child: const Text("Đóng",
+                                              style: TextStyle(
+                                                  color: Colors.blue)),
+                                        ),
+                                      ],
+                                    );
+                                  },
                                 );
                               },
                             ),
@@ -253,12 +305,19 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
             scrollDirection: Axis.horizontal,
             padding: EdgeInsets.symmetric(horizontal: 12.w),
             child: Row(
-              children: _listQuestion.map((question) {
+              children: _listQuestion.asMap().entries.map((entry) {
+                final index = entry.key;
+                final question = entry.value;
                 final bool isSelected = question.id == selectedQuestionId;
+
                 return Padding(
                   padding: EdgeInsets.only(right: 12.w),
                   child: ChoiceChip(
-                    label: Text(question.title),
+                    label: Text(
+                      question.title == ''
+                          ? 'Task ${index + 1}'
+                          : question.title,
+                    ),
                     selected: isSelected,
                     onSelected: (_) => fetchPostsByCategory(question.id),
                     selectedColor: Colors.white,
@@ -333,6 +392,8 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
                   cauController: cauController,
                   counter: _counter,
                   answerGroup: _listQuestion.first.value,
+                  textController: _getController(
+                      _selectedQuestion?.value.values.toList()[index].id ?? ''),
                 );
               },
             ),
@@ -573,7 +634,7 @@ class CauHoiPage extends StatefulWidget {
   final CauHoiHtmlController cauController;
   final ValueNotifier<Map<String, String>> counter;
   final Map<String, SubQuestionModel> answerGroup;
-
+  final TextEditingController textController;
   const CauHoiPage({
     super.key,
     required this.index,
@@ -581,6 +642,7 @@ class CauHoiPage extends StatefulWidget {
     required this.cauController,
     required this.counter,
     required this.answerGroup,
+    required this.textController,
   });
 
   @override
@@ -616,9 +678,12 @@ class _CauHoiPageState extends State<CauHoiPage>
               ),
               Expanded(
                 child: widget.question.type == '2'
-                    ? HtmlContentWidget(htmlContent: widget.question.content)
+                    ? HtmlContentWidget(
+                        htmlContent: widget.question.content
+                            .replaceAll(RegExp(r'<p>\s*</p>'), ''))
                     : CauHoiHtmlWidget(
-                        htmlContent: widget.question.content,
+                        htmlContent: widget.question.content
+                            .replaceAll(RegExp(r'<p>\s*</p>'), ''),
                         controller: widget.cauController,
                         id: int.parse(widget.question.id),
                       ),
@@ -628,6 +693,13 @@ class _CauHoiPageState extends State<CauHoiPage>
           if (widget.question.audioAttachment != null)
             SimpleAudioPlayer(
               url: widget.question.audioAttachment!,
+            ),
+          if (widget.question.type == '8')
+            AnswerInput(
+              questionId: widget.question.id,
+              counter: widget.counter,
+              controller: widget.textController,
+              answer: widget.question.answer,
             ),
           ValueListenableBuilder(
             valueListenable: widget.counter,
@@ -658,7 +730,7 @@ class _CauHoiPageState extends State<CauHoiPage>
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
                         color: isSelected
-                            ? Colors.lightBlueAccent.withOpacity(0.3)
+                            ? Colors.lightBlueAccent.withValues(alpha: 0.3)
                             : Colors.white,
                       ),
                       child: Row(
@@ -687,7 +759,14 @@ class _CauHoiPageState extends State<CauHoiPage>
               );
             },
           ),
+          if (widget.question.type == '9')
+            FlutterSoundRecorderWidget(
+              questionId: widget.question.id,
+              counter: widget.counter,
+            ),
           if (widget.question.answerSolutions != null &&
+              widget.question.answerSolutions != '' &&
+              widget.question.type != '9' &&
               widget.question.answerSolutions!.isNotEmpty)
             RichText(
               text: TextSpan(
@@ -748,4 +827,74 @@ List<Map<String, String>> removeDuplicatesKeepLast(
   }
 
   return uniqueMap.values.toList();
+}
+
+class AnswerInput extends StatefulWidget {
+  final String questionId;
+  final ValueNotifier<Map<String, String>> counter;
+  final TextEditingController controller;
+  final String answer;
+  const AnswerInput({
+    super.key,
+    required this.questionId,
+    required this.counter,
+    required this.controller,
+    required this.answer,
+  });
+
+  @override
+  State<AnswerInput> createState() => _AnswerInputState();
+}
+
+class _AnswerInputState extends State<AnswerInput> {
+  late VoidCallback _listener;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Khi người dùng nhập thì cập nhật lại counter
+    _listener = () {
+      final updated = Map<String, String>.from(widget.counter.value);
+      updated[widget.questionId] = widget.controller.text;
+      widget.counter.value = updated;
+    };
+    widget.controller.addListener(_listener);
+
+    // Nếu counter thay đổi từ bên ngoài, đồng bộ lại textfield
+    widget.counter.addListener(_syncWithCounter);
+  }
+
+  void _syncWithCounter() {
+    final newValue = widget.counter.value[widget.questionId] ?? '';
+    if (newValue != widget.controller.text) {
+      widget.controller.text = newValue;
+    }
+  }
+
+  @override
+  void dispose() {
+    widget.controller.removeListener(_listener);
+
+    widget.counter.removeListener(_syncWithCounter);
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return widget.answer != ''
+        ? Text(
+            widget.answer,
+            style: defaultText16B,
+          )
+        : Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: widget.controller,
+              decoration: const InputDecoration(
+                hintText: 'Nhập câu trả lời...',
+              ),
+            ),
+          );
+  }
 }

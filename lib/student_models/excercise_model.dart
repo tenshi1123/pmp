@@ -26,6 +26,21 @@ class QuestionGroupModel {
   });
 
   factory QuestionGroupModel.fromJson(Map<String, dynamic> json) {
+    Map<String, SubQuestionModel> parsedValue = {};
+
+    final rawValue = json['value'];
+
+    if (rawValue is Map<String, dynamic>) {
+      // ✅ Trường hợp là Map (như ví dụ bạn vừa gửi)
+      parsedValue = rawValue.map(
+        (key, val) => MapEntry(key, SubQuestionModel.fromJson(val)),
+      );
+    } else if (rawValue is List) {
+      // ✅ Trường hợp là List
+      for (var i = 0; i < rawValue.length; i++) {
+        parsedValue[i.toString()] = SubQuestionModel.fromJson(rawValue[i]);
+      }
+    }
     return QuestionGroupModel(
       id: json['id'] ?? '',
       examDetailQuestionId: json['exam_detail_question_id'] ?? '',
@@ -36,9 +51,7 @@ class QuestionGroupModel {
       questions: json['questions'] ?? '',
       type: json['type'] ?? '',
       answer: json['answer'] ?? '',
-      value: (json['value'] as Map<String, dynamic>).map(
-        (key, val) => MapEntry(key, SubQuestionModel.fromJson(val)),
-      ),
+      value: parsedValue,
     );
   }
 }

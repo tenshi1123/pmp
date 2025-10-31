@@ -85,6 +85,11 @@ class HomeRepo {
       ),
     );
     //return DiemDanhModel.fromJson(response.data['data']);
+    if (response.data['data']['question'] == null) {
+      return [
+        QuestionGroupModel.fromJson(response.data['data']['value']),
+      ];
+    }
     return ((response.data['data']['question'] as List)
         .map((e) => QuestionGroupModel.fromJson(e))
         .toList());
@@ -119,6 +124,34 @@ class HomeRepo {
     await dio.post(ApiPath.submitExeTL, data: formData);
   }
 
+  // Future<String> submitTracNghiem({
+  //   required String id,
+  //   required String examDetailId,
+  //   required String customerCourseScheduleId,
+  //   required String startTime,
+  //   required List<Map<String, String>> data,
+  // }) async {
+  //   final dio = await DioClient.getInstance();
+  //   final body = {
+  //     "id": int.parse(id),
+  //     "exam_detail_id": int.parse(examDetailId),
+  //     "customer_course_schedule_id": int.parse(customerCourseScheduleId),
+  //     "start_time": startTime,
+  //     "data": data,
+  //   };
+
+  //   Response response;
+  //   dio.interceptors.add(LogInterceptor(
+  //     responseBody: true,
+  //     requestBody: true,
+  //     logPrint: (obj) => debugPrint('📦 $obj'),
+  //   ));
+  //   response = await dio.post(ApiPath.submitTracNghiem, data: body);
+  //   // in ra log lỗi
+
+  //   return response.data;
+  //   //return '';
+  // }
   Future<String> submitTracNghiem({
     required String id,
     required String examDetailId,
@@ -127,25 +160,52 @@ class HomeRepo {
     required List<Map<String, String>> data,
   }) async {
     final dio = await DioClient.getInstance();
-    final body = {
-      "id": int.parse(id),
-      "exam_detail_id": int.parse(examDetailId),
-      "customer_course_schedule_id": int.parse(customerCourseScheduleId),
-      "start_time": startTime,
-      "data": data,
-    };
+
+    // kiểm tra xem có ghi âm nào trong data không
+    final hasAudio = data.any((item) => item['answer']!.endsWith('.aac'));
 
     Response response;
-    dio.interceptors.add(LogInterceptor(
-      responseBody: true,
-      requestBody: true,
-      logPrint: (obj) => debugPrint('📦 $obj'),
-    ));
-    response = await dio.post(ApiPath.submitTracNghiem, data: body);
-    // in ra log lỗi
 
-    return response.data;
-    //return '';
+    if (hasAudio) {
+      // 🟢 Gửi dạng multipart/form-data nếu có ghi âm
+      final formData = FormData();
+
+      formData.fields.addAll([
+        MapEntry("id", id),
+        MapEntry("exam_detail_id", examDetailId),
+        MapEntry("customer_course_schedule_id", customerCourseScheduleId),
+        MapEntry("start_time", startTime),
+      ]);
+
+      for (final item in data) {
+        final answer = item['answer']!;
+        if (answer.endsWith('.aac') && File(answer).existsSync()) {
+          formData.files.add(MapEntry(
+            "file",
+            await MultipartFile.fromFile(answer,
+                filename: answer.split('/').last),
+          ));
+        } else {}
+      }
+      dio.interceptors
+          .add(LogInterceptor(responseBody: true, requestBody: true));
+      response = await dio.post(ApiPath.submitSpeaking, data: formData);
+    } else {
+      // 🟡 Gửi dạng JSON nếu không có ghi âm
+      final body = {
+        "id": int.parse(id),
+        "exam_detail_id": int.parse(examDetailId),
+        "customer_course_schedule_id": int.parse(customerCourseScheduleId),
+        "start_time": startTime,
+        "data": data,
+      };
+
+      dio.interceptors
+          .add(LogInterceptor(responseBody: true, requestBody: true));
+      response = await dio.post(ApiPath.submitTracNghiem, data: body);
+    }
+
+    return response.data.toString();
   }
 
   //Báo cáo điểm

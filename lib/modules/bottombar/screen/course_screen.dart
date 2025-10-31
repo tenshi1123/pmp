@@ -192,12 +192,15 @@ class CourseItem extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    model.name,
-                    style: TextStyle(
-                      color: key1Color,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14.sp,
+                  SizedBox(
+                    width: 200.w,
+                    child: Text(
+                      model.name,
+                      style: TextStyle(
+                        color: key1Color,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14.sp,
+                      ),
                     ),
                   ),
                   Container(

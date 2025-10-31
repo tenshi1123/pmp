@@ -58,6 +58,7 @@ class ApiPath {
   static const String detailBuoihoc = '$myCourse/detail/buoi_hoc';
   static const String submitExeTL = '$myCourse/submit_exercise_tu_luan';
   static const String submitTracNghiem = '$myCourse/nop_bai_trac_nghiem';
+  static const String submitSpeaking = '$myCourse/nop_bai_speaking';
   static const String viewTracNghiem = '$myCourse/view_trac_nghiem';
   static const String viewTestDone = '$myCourse/xem_lai_bai_trac_nghiem';
   //quà tặng

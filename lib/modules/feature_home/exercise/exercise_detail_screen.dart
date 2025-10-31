@@ -231,6 +231,7 @@ class _InfoTest extends StatelessWidget {
                                       customerCourseScheduleId,
                                   examDetailId: model.examDetailId,
                                   isDone: true,
+                                  skill: model.skills,
                                 ),
                               ),
                             );
@@ -270,6 +271,7 @@ class _InfoTest extends StatelessWidget {
                                   customerCourseScheduleId:
                                       customerCourseScheduleId,
                                   examDetailId: model.examDetailId,
+                                  skill: model.skills,
                                 ),
                               ),
                             );

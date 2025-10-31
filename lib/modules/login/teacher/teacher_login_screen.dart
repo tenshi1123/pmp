@@ -131,7 +131,7 @@ class _TeacherLoginState extends State<TeacherLogin> {
                         return CupertinoAlertDialog(
                           title: const Text('Vui lòng thử lại'),
                           content: const Text(
-                              'Vui lòng kiểm tra lại mã học sinh và mật khẩu của bạn'),
+                              'Vui lòng kiểm tra lại email và mật khẩu của bạn'),
                           actions: <Widget>[
                             CupertinoDialogAction(
                               isDefaultAction: true,
@@ -204,41 +204,6 @@ class _TeacherLoginState extends State<TeacherLogin> {
         contentPadding:
             const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
       ),
-    );
-  }
-
-  Widget _buildRememberPassword() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        // Row(
-        //   children: [
-        //     Radio(
-        //       value: true,
-        //       groupValue: _rememberPassword,
-        //       onChanged: (bool? value) {
-        //         setState(() {
-        //           _rememberPassword = value!;
-        //         });
-        //       },
-        //       activeColor: Colors.blue,
-        //     ),
-        //     const Text("Ghi nhớ mật khẩu"),
-        //   ],
-        // ),
-        SizedBox(
-          width: 24.w,
-        ),
-        TextButton(
-          onPressed: () {
-            // Xử lý quên mật khẩu
-          },
-          child: const Text(
-            "Quên mật khẩu?",
-            style: TextStyle(color: Colors.blue),
-          ),
-        ),
-      ],
     );
   }
 }
