@@ -59,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Container(
             width: 390.w,
-            height: 250.h,
+            //height: 260.h,
             decoration: BoxDecoration(gradient: mainGradient),
             child: SafeArea(
               child: Column(
