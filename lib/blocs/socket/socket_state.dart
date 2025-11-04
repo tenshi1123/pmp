@@ -1,24 +1,21 @@
-import 'package:equatable/equatable.dart';
+part of 'socket_cubit.dart';
 
-class SocketState extends Equatable {
-  final bool connected;
-  final Map<String, dynamic>? lastMessage;
+abstract class SocketState {}
 
-  const SocketState({
-    this.connected = false,
-    this.lastMessage,
-  });
+class SocketInitial extends SocketState {}
 
-  SocketState copyWith({
-    bool? connected,
-    Map<String, dynamic>? lastMessage,
-  }) {
-    return SocketState(
-      connected: connected ?? this.connected,
-      lastMessage: lastMessage ?? this.lastMessage,
-    );
-  }
+class SocketConnecting extends SocketState {}
 
-  @override
-  List<Object?> get props => [connected, lastMessage];
+class SocketConnected extends SocketState {}
+
+class SocketDisconnected extends SocketState {}
+
+class SocketError extends SocketState {
+  final String message;
+  SocketError(this.message);
+}
+
+class SocketMessage extends SocketState {
+  final dynamic message;
+  SocketMessage(this.message);
 }
