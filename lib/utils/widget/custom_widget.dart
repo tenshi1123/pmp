@@ -369,7 +369,7 @@ class ConversationItem extends StatelessWidget {
                     style: defaultText14B,
                   ),
                   Text(
-                    model.content,
+                    model.content.replaceAll(RegExp(r'<[^>]*>'), ''),
                     style: defaultText12M,
                     overflow: TextOverflow.ellipsis,
                   ),

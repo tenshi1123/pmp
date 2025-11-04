@@ -2,16 +2,19 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pmp_english/student_models/chat_models.dart';
 import 'package:pmp_english/student_repo/chat_repo.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
+import 'package:pmp_english/blocs/socket/socket_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:camera_camera/camera_camera.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key, required this.model, required this.type});
@@ -121,6 +124,11 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
@@ -184,8 +192,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 //physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
                   final message = listMessage[index];
-                  final isMine =
-                      (message.senderType == "1" && message.senderId == id);
+                  final isMine = (message.senderId == id);
                   final isLastMessage = (index == 0 &&
                       isMine); // tin nhắn mới nhất và là của mình
 
@@ -218,19 +225,30 @@ class _ChatScreenState extends State<ChatScreen> {
 
                           // 👉 Bubble tin nhắn
                           Container(
-                            constraints: const BoxConstraints(maxWidth: 300),
+                            constraints: BoxConstraints(maxWidth: 300.w),
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius: BorderRadius.circular(20.r),
                               color: isMine ? key1Color : state1,
                             ),
-                            padding: const EdgeInsets.all(16),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 12.w,
+                              vertical: 6.w,
+                            ),
                             child: (message.messageType == '0')
-                                ? Text(
-                                    message.content,
-                                    style: defaultText14M.copyWith(
-                                      color: isMine ? Colors.white : keyBlack,
-                                    ),
+                                ? AutoLinkText(
+                                    text:
+                                        prepareHtmlForDisplay(message.content),
+                                    isMine: isMine,
                                   )
+                                //  Html(
+                                //     data: message.content,
+                                //   )
+                                //  Text(
+                                //     message.content,
+                                //     style: defaultText14M.copyWith(
+                                //       color: isMine ? Colors.white : keyBlack,
+                                //     ),
+                                //   )
                                 : GridView.builder(
                                     physics:
                                         const NeverScrollableScrollPhysics(),
@@ -455,6 +473,35 @@ class _FullsizeImage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+String prepareHtmlForDisplay(String html) {
+  final text = html.replaceAll(RegExp(r'<[^>]+>'), '\n');
+  return text.replaceAll(RegExp(r'\n{2,}'), '\n').trim();
+}
+
+class AutoLinkText extends StatelessWidget {
+  final String text;
+  final bool isMine;
+  const AutoLinkText({super.key, required this.text, required this.isMine});
+  Future<void> _onOpen(LinkableElement link) async {
+    final uri = Uri.parse(link.url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SelectableLinkify(
+      text: text,
+      onOpen: _onOpen,
+      style: defaultText14M.copyWith(
+        color: isMine ? Colors.white : keyBlack,
+      ),
+      linkStyle: defaultText14M.copyWith(color: Colors.blue),
     );
   }
 }
