@@ -179,17 +179,17 @@ class _ChatScreenState extends State<ChatScreen> {
                 gradient: mainGradient,
               ),
             ),
-            actions: [
-              IconButton(
-                icon: const Icon(
-                  Icons.phone,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  _makePhoneCall(widget.model.customerPhone ?? '0');
-                },
-              ),
-            ],
+            // actions: [
+            //   IconButton(
+            //     icon: const Icon(
+            //       Icons.phone,
+            //       color: Colors.white,
+            //     ),
+            //     onPressed: () {
+            //       _makePhoneCall(widget.model.customerPhone ?? '0');
+            //     },
+            //   ),
+            // ],
           ),
           body: Stack(
             children: [

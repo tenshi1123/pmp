@@ -690,7 +690,8 @@ class _CauHoiPageState extends State<CauHoiPage>
               ),
             ],
           ),
-          if (widget.question.audioAttachment != null)
+          if (widget.question.audioAttachment != null &&
+              widget.question.audioAttachment != '')
             SimpleAudioPlayer(
               url: widget.question.audioAttachment!,
             ),

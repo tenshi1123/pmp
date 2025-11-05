@@ -427,7 +427,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    _makePhoneCall('19008978');
+                    _makePhoneCall('0935 404 641');
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
