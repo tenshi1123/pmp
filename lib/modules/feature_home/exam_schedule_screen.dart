@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:pmp_english/student_repo/lichthi_repo.dart';
 import 'package:pmp_english/student_models/lichthi_models.dart';
 import 'package:pmp_english/utils/constants/color.dart';
@@ -112,7 +113,7 @@ class _ExamScheduleScreenState extends State<ExamScheduleScreen> {
                     height: 10.h,
                   ),
                   Text(
-                    'Đăng kí thi thử tháng 9/2024',
+                    'Đăng kí thi thử tháng ${DateFormat('MM/yyyy').format(DateTime.now())}',
                     style: defaultText16B,
                     textAlign: TextAlign.center,
                   ),
@@ -388,7 +389,7 @@ class _ExamScheduleScreenState extends State<ExamScheduleScreen> {
                                                       .textTheme
                                                       .labelLarge,
                                                 ),
-                                                child: const Text('ok'),
+                                                child: const Text('OK'),
                                                 onPressed: () {
                                                   Navigator.of(context).pop();
                                                 },
@@ -397,7 +398,32 @@ class _ExamScheduleScreenState extends State<ExamScheduleScreen> {
                                           );
                                         },
                                       );
-                                    } else {}
+                                    } else {
+                                      showDialog<void>(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text(
+                                              'Bạn phải chọn ca thi',
+                                              style: defaultText14M,
+                                            ),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                style: TextButton.styleFrom(
+                                                  textStyle: Theme.of(context)
+                                                      .textTheme
+                                                      .labelLarge,
+                                                ),
+                                                child: const Text('OK'),
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    }
 
                                     Navigator.of(context, rootNavigator: true)
                                         .pop(

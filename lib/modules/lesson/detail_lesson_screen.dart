@@ -10,10 +10,20 @@ import 'package:pmp_english/student_repo/mycourse_repo.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:pmp_english/utils/widget/custom_widget.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DetailLessonScreen extends StatelessWidget {
   const DetailLessonScreen({super.key, required this.videoLessonModel});
   final VideoLessonModel videoLessonModel;
+  void _launchUrl(String url) async {
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(
+        uri,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,8 +101,21 @@ class DetailLessonScreen extends StatelessWidget {
                       'Nội dung',
                       style: defaultText14B,
                     ),
+                    // AutoLinkText(
+                    //   text: videoLessonModel.noiDungBuoiHoc ?? "",
+                    //   isMine: false,
+                    // ),
                     Html(
                       data: videoLessonModel.noiDungBuoiHoc ?? "",
+                      // onAnchorTap: (url, attributes, element) {
+                      //   if (url == null) return;
+                      //   _launchUrl(url);
+                      // },
+                      onLinkTap: (url, attributes, element) async {
+                        if (!await launchUrl(Uri.parse(url ?? ''))) {
+                          throw Exception('Could not launch');
+                        }
+                      },
                       style: {
                         "table": Style(
                           backgroundColor:
@@ -563,5 +586,78 @@ class _DocumentItem extends StatelessWidget {
                 model: listdoc[index],
               );
             });
+  }
+}
+
+class HtmlCopyAndOpenDemo extends StatelessWidget {
+  const HtmlCopyAndOpenDemo({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    const htmlData = """
+      <p>
+        Đây là đoạn nội dung có link:
+        <a href="https://flutter.dev">Flutter.dev</a> và
+        <a href="https://pub.dev">Pub.dev</a>.
+      </p>
+    """;
+
+    return Scaffold(
+      appBar: AppBar(title: const Text('HTML Copy & Open Demo')),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Html(
+          data: htmlData,
+
+          // ✅ Xử lý khi bấm vào link
+          onAnchorTap: (url, attributes, element) {
+            if (url == null) return;
+            _launchUrl(url);
+          },
+
+          // ✅ Tuỳ chỉnh render riêng cho <a> để hỗ trợ long-press copy
+          // customRenders: {
+          //   tagMatcher("a"): CustomRender.widget(
+          //     widget: (context, buildChildren) {
+          //       final href = context.tree.element?.attributes['href'];
+          //       final child = buildChildren(context);
+
+          //       return GestureDetector(
+          //         behavior: HitTestBehavior.translucent,
+          //         onTap: () {
+          //           if (href != null) _launchUrl(href);
+          //         },
+          //         onLongPress: () {
+          //           if (href != null) {
+          //             Clipboard.setData(ClipboardData(text: href));
+          //             ScaffoldMessenger.of(context.buildContext).showSnackBar(
+          //               SnackBar(
+          //                 content: Text('Đã copy link: $href'),
+          //                 duration: const Duration(seconds: 2),
+          //               ),
+          //             );
+          //           }
+          //         },
+          //         child: DefaultTextStyle.merge(
+          //           style: const TextStyle(
+          //             color: Colors.blue,
+          //             decoration: TextDecoration.underline,
+          //           ),
+          //           child: Wrap(children: child),
+          //         ),
+          //       );
+          //     },
+          //   ),
+          // },
+        ),
+      ),
+    );
+  }
+
+  void _launchUrl(String url) async {
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    }
   }
 }
