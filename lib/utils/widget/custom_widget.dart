@@ -253,6 +253,7 @@ Widget homeTab(
     child: Container(
       //width: 70.w,
       height: 50.h,
+      padding: EdgeInsets.symmetric(horizontal: 12.w),
       decoration: isSeprator
           ? const BoxDecoration(
               border: Border(
@@ -271,7 +272,7 @@ Widget homeTab(
             width: 3.w,
           ),
           SizedBox(
-            width: 80.w,
+            //width: 80.w,
             child: Center(
               child: Text(
                 title,
