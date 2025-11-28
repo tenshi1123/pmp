@@ -39,12 +39,12 @@ class ListTeacherScreen extends StatelessWidget {
                       child: Row(
                         children: [
                           Icon(
-                            Icons.keyboard_arrow_left,
+                            Icons.arrow_back_ios_new,
                             size: 30.h,
                             color: Colors.white,
                           ),
                           Text(
-                            type == 'teacher' ? 'Học sinh' : 'Giáo viên',
+                            type == 'teacher' ? '\tHọc sinh' : '\tGiáo viên',
                             style: defaultText20B.copyWith(
                               color: Colors.white,
                             ),

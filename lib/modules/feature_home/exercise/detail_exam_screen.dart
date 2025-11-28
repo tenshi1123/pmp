@@ -1,7 +1,5 @@
 import 'dart:io';
 
-import 'package:dotted_border/dotted_border.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pmp_english/student_models/home_model.dart';
@@ -24,15 +22,6 @@ class _DetailTuLuanScreenState extends State<DetailTuLuanScreen> {
   File? file;
 
   final TextEditingController noteController = TextEditingController();
-  Future<void> _pickFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
-    if (result != null) {
-      file = File(result.files.single.path!);
-      setState(() {
-        _fileName = result.files.single.name;
-      });
-    }
-  }
 
   @override
   void initState() {

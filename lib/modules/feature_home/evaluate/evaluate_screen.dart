@@ -39,12 +39,12 @@ class EvaluateScreen extends StatelessWidget {
                     child: Row(
                       children: [
                         Icon(
-                          Icons.keyboard_arrow_left,
+                          Icons.arrow_back_ios_new,
                           size: 30.h,
                           color: Colors.white,
                         ),
                         Text(
-                          'Đánh giá',
+                          '\tĐánh giá',
                           style: defaultText20B.copyWith(
                             color: Colors.white,
                           ),
@@ -72,32 +72,33 @@ class EvaluateScreen extends StatelessWidget {
           ),
           Expanded(
             child: ListView.builder(
-                shrinkWrap: true,
-                physics: const ClampingScrollPhysics(),
-                itemCount: listReview.length,
-                padding: EdgeInsets.symmetric(
-                  horizontal: 10.w,
-                  vertical: 10.h,
-                ),
-                itemBuilder: (BuildContext context, int index) {
-                  return GestureDetector(
-                    onTap: () async {
-                      ReviewDetailModels model = await ExtensionRepo()
-                          .getDetailReview(listReview[index].id);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => DetailEvaluateScreen(
-                            model: model,
-                          ),
+              shrinkWrap: true,
+              physics: const ClampingScrollPhysics(),
+              itemCount: listReview.length,
+              padding: EdgeInsets.symmetric(
+                horizontal: 10.w,
+                vertical: 10.h,
+              ),
+              itemBuilder: (BuildContext context, int index) {
+                return GestureDetector(
+                  onTap: () async {
+                    ReviewDetailModels model = await ExtensionRepo()
+                        .getDetailReview(listReview[index].id);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DetailEvaluateScreen(
+                          model: model,
                         ),
-                      );
-                    },
-                    child: _ReviewItem(
-                      model: listReview[index],
-                    ),
-                  );
-                }),
+                      ),
+                    );
+                  },
+                  child: _ReviewItem(
+                    model: listReview[index],
+                  ),
+                );
+              },
+            ),
           ),
         ],
       ),
@@ -111,14 +112,15 @@ class _ReviewItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 166.h,
+      //height: 166.h,
       width: 350.w,
-      padding: EdgeInsets.symmetric(
-        horizontal: 10.w,
-      ),
+      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 12.h),
       margin: EdgeInsets.only(bottom: 10.h),
       decoration: BoxDecoration(
         color: Colors.white,
+        borderRadius: BorderRadius.all(
+          Radius.circular(8.r),
+        ),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.2),
@@ -130,9 +132,6 @@ class _ReviewItem extends StatelessWidget {
       ),
       child: Column(
         children: [
-          SizedBox(
-            height: 10.h,
-          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -151,7 +150,8 @@ class _ReviewItem extends StatelessWidget {
           ),
           Container(
             width: 330.w,
-            height: 120.h,
+            //height: 120.h,
+            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
             decoration: BoxDecoration(
               color: baseColor,
               borderRadius: BorderRadius.all(
@@ -232,6 +232,11 @@ class _ReviewItem extends StatelessWidget {
                 )
               ],
             ),
+          ),
+          Text(
+            'Xem chi tiết',
+            style:
+                defaultText14Re.copyWith(decoration: TextDecoration.underline),
           ),
         ],
       ),

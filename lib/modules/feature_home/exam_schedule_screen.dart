@@ -66,12 +66,12 @@ class _ExamScheduleScreenState extends State<ExamScheduleScreen> {
                       child: Row(
                         children: [
                           Icon(
-                            Icons.keyboard_arrow_left,
+                            Icons.arrow_back_ios_new,
                             size: 30.h,
                             color: Colors.white,
                           ),
                           Text(
-                            'Lịch thi',
+                            '\tLịch thi',
                             style: defaultText20B.copyWith(
                               color: Colors.white,
                             ),

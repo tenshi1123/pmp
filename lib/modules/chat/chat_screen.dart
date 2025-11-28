@@ -29,13 +29,6 @@ class _ChatScreenState extends State<ChatScreen> {
   List<File> photos = <File>[];
   String id = '';
   List<ChatMessageModel> listMessage = <ChatMessageModel>[];
-  Future<void> _makePhoneCall(String phoneNumber) async {
-    final Uri launchUri = Uri(
-      scheme: 'tel',
-      path: phoneNumber,
-    );
-    await launchUrl(launchUri);
-  }
 
   void openCamera() {
     Navigator.push(
