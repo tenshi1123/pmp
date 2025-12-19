@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -15,6 +16,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:camera_camera/camera_camera.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:photo_view/photo_view_gallery.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key, required this.model, required this.type});
@@ -230,65 +233,35 @@ class _ChatScreenState extends State<ChatScreen> {
 
                             // 👉 Bubble tin nhắn
                             Container(
-                              constraints: BoxConstraints(maxWidth: 300.w),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20.r),
-                                color: isMine ? key1Color : state1,
-                              ),
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 12.w,
-                                vertical: 6.w,
-                              ),
-                              child: (message.messageType == '0')
-                                  ? AutoLinkText(
-                                      text: prepareHtmlForDisplay(
-                                          message.content),
-                                      isMine: isMine,
-                                    )
-                                  //  Html(
-                                  //     data: message.content,
-                                  //   )
-                                  //  Text(
-                                  //     message.content,
-                                  //     style: defaultText14M.copyWith(
-                                  //       color: isMine ? Colors.white : keyBlack,
-                                  //     ),
-                                  //   )
-                                  : GridView.builder(
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      shrinkWrap: true,
-                                      gridDelegate:
-                                          SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount:
-                                            message.content.length == 1 ? 1 : 2,
-                                        crossAxisSpacing: 5,
-                                        mainAxisSpacing: 5,
-                                      ),
-                                      itemCount: message.content.length,
-                                      itemBuilder: (context, index2) {
-                                        return GestureDetector(
-                                          onTap: () {
-                                            Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    _FullsizeImage(
-                                                  url: message.content[index2],
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                          child: Image.network(
-                                            message.content[index2],
-                                            height: message.content.length == 1
-                                                ? 250.h
-                                                : 125.h,
-                                            fit: BoxFit.fitHeight,
-                                          ),
-                                        );
-                                      },
-                                    ),
-                            ),
+                                constraints: BoxConstraints(maxWidth: 300.w),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20.r),
+                                  color: isMine ? key1Color : state1,
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 12.w,
+                                  vertical: 6.w,
+                                ),
+                                child: (message.messageType == '1')
+                                    ? ChatImageGrid(
+                                        images: parseImageUrls(message.content),
+                                        isMine: isMine,
+                                      )
+
+                                    //  Html(
+                                    //     data: message.content,
+                                    //   )
+                                    //  Text(
+                                    //     message.content,
+                                    //     style: defaultText14M.copyWith(
+                                    //       color: isMine ? Colors.white : keyBlack,
+                                    //     ),
+                                    //   )
+                                    : AutoLinkText(
+                                        text: prepareHtmlForDisplay(
+                                            message.content),
+                                        isMine: isMine,
+                                      )),
 
                             // 👉 Thêm chữ "Đã gửi" nếu là tin nhắn cuối cùng của mình
                             if (isLastMessage)
@@ -486,6 +459,160 @@ class AutoLinkText extends StatelessWidget {
         color: isMine ? Colors.white : keyBlack,
       ),
       linkStyle: defaultText14M.copyWith(color: Colors.blue),
+    );
+  }
+}
+
+List<String> parseImageUrls(String raw) {
+  try {
+    final decoded = jsonDecode(raw);
+    if (decoded is List) {
+      return decoded.map((e) => e.toString()).toList();
+    }
+  } catch (_) {}
+  return [];
+}
+
+class ChatImageGrid extends StatelessWidget {
+  final List<String> images;
+  final bool isMine;
+
+  const ChatImageGrid({
+    super.key,
+    required this.images,
+    required this.isMine,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (images.isEmpty) return const SizedBox();
+
+    final radius = BorderRadius.circular(12);
+
+    if (images.length == 1) {
+      return _imageItem(context, images[0], radius);
+    }
+
+    return SizedBox(
+      width: 220,
+      child: GridView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          mainAxisSpacing: 4,
+          crossAxisSpacing: 4,
+        ),
+        itemCount: images.length > 4 ? 4 : images.length,
+        itemBuilder: (context, index) {
+          if (index == 3 && images.length > 4) {
+            return Stack(
+              fit: StackFit.expand,
+              children: [
+                _imageItem(context, images[index], radius),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black54,
+                    borderRadius: radius,
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    '+${images.length - 4}',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            );
+          }
+          return _imageItem(context, images[index], radius);
+        },
+      ),
+    );
+  }
+
+  Widget _imageItem(
+    BuildContext context,
+    String url,
+    BorderRadius radius,
+  ) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => ImageViewer(
+              images: images,
+              initialIndex: images.indexOf(url),
+            ),
+          ),
+        );
+      },
+      child: ClipRRect(
+        borderRadius: radius,
+        child: Image.network(
+          url,
+          fit: BoxFit.cover,
+          loadingBuilder: (c, w, p) =>
+              p == null ? w : const Center(child: CircularProgressIndicator()),
+          errorBuilder: (_, __, ___) =>
+              const Center(child: Icon(Icons.broken_image)),
+        ),
+      ),
+    );
+  }
+}
+
+class ImageViewer extends StatefulWidget {
+  final List<String> images;
+  final int initialIndex;
+
+  const ImageViewer({
+    super.key,
+    required this.images,
+    required this.initialIndex,
+  });
+
+  @override
+  State<ImageViewer> createState() => _ImageViewerState();
+}
+
+class _ImageViewerState extends State<ImageViewer> {
+  late final PageController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = PageController(initialPage: widget.initialIndex);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        foregroundColor: Colors.white,
+        title: Text(
+          '${widget.initialIndex + 1}/${widget.images.length}',
+        ),
+      ),
+      body: PhotoViewGallery.builder(
+        pageController: _controller,
+        itemCount: widget.images.length,
+        builder: (context, index) {
+          return PhotoViewGalleryPageOptions(
+            imageProvider: NetworkImage(widget.images[index]),
+            minScale: PhotoViewComputedScale.contained,
+            maxScale: PhotoViewComputedScale.covered * 3,
+          );
+        },
+        loadingBuilder: (context, _) =>
+            const Center(child: CircularProgressIndicator()),
+      ),
     );
   }
 }

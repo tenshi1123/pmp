@@ -24,14 +24,13 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
       ..setNavigationDelegate(
         NavigationDelegate(
           onPageFinished: (url) async {
-            // Bổ sung: Nếu là Youtube, enable fullscreen attribute cho iframe
             if (widget.videoUrl.contains('youtube.com')) {
               await _controller.runJavaScript('''
-                var iframes = document.querySelectorAll('iframe');
-                for (var i = 0; i < iframes.length; i++) {
-                  iframes[i].setAttribute('allowfullscreen', '');
-                }
-              ''');
+            var iframes = document.querySelectorAll('iframe');
+            for (var i = 0; i < iframes.length; i++) {
+              iframes[i].setAttribute('allowfullscreen', '');
+            }
+          ''');
             }
           },
         ),
@@ -67,5 +66,19 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
   void dispose() {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     super.dispose();
+  }
+}
+
+String convertEmbedUrlToShareUrl(String embedUrl) {
+  // Dùng regex để trích xuất video ID từ URL
+  final RegExp regExp = RegExp(r"embed\/([a-zA-Z0-9_-]+)");
+  final match = regExp.firstMatch(embedUrl);
+
+  if (match != null) {
+    // Trả về URL chia sẻ với video ID
+    return 'https://youtu.be/${match.group(1)}';
+  } else {
+    // Nếu không tìm thấy video ID trong URL, trả về một thông báo lỗi
+    return 'Invalid YouTube embed URL';
   }
 }
