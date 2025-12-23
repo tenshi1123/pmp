@@ -95,7 +95,7 @@ class _InfoTest extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 350.w,
-      height: 225.h,
+      //height: 225.h,
       margin: EdgeInsets.only(
         top: 16.h,
       ),
@@ -113,189 +113,150 @@ class _InfoTest extends StatelessWidget {
           ),
         ],
       ),
-      child: GestureDetector(
-        onTap: () async {
-          //comment qua dot review apple
-        },
-        child: Stack(
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: 16.w,
+          vertical: 16.h,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Positioned(
-            //   right: 12.w,
-            //   top: 12.h,
-            //   child: Container(
-            //     height: 63.h,
-            //     width: 63.w,
-            //     decoration: BoxDecoration(
-            //         color: Colors.white,
-            //         shape: BoxShape.circle,
-            //         boxShadow: [
-            //           BoxShadow(
-            //             color: Colors.grey.shade100,
-            //             spreadRadius: 5,
-            //             blurRadius: 7,
-            //             offset: const Offset(4, 5),
-            //           )
-            //         ]),
-            //     child: Center(
-            //       child: Text(
-            //         '--.--',
-            //         style: defaultText18B.copyWith(color: main1Color),
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            Positioned(
-              top: 10.h,
-              left: 10.w,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  SizedBox(
-                    width: 253.w,
-                    child: Text(
-                      model.name,
-                      style: defaultText18B,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 8.h,
-                  ),
-                  Text(
-                    'Thời lượng: ${model.totalQuestions} Câu',
-                    style: defaultText12Re,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                  ),
-                  SizedBox(
-                    height: 2.h,
-                  ),
-                  Text(
-                    'Ngày giao: ${model.createAt}',
-                    style: defaultText12Re,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                  ),
-                  SizedBox(
-                    height: 8.h,
-                  ),
-                  if (timeDeadline.contains('0000'))
-                    Text(
-                      'Hạn hoàn thành: Không giới hạn',
-                      style: defaultText12B,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                    )
-                  else
-                    Text(
-                      'Hạn hoàn thành: $timeDeadline',
-                      style: defaultText12B,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                    ),
-                  Text(
-                    'Điểm : ${model.finalMark}',
-                    style: defaultText14B,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 6.h),
-                    height: 1.h,
-                    width: 300.w,
-                    decoration: const BoxDecoration(
-                      color: Colors.grey,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  model.ccseeId.isNotEmpty
-                      ? GestureDetector(
-                          onTap: () async {
-                            List<QuestionGroupModel> detailExcerciseModel =
-                                await HomeRepo().viewTestDone(
-                              id: model.ccseeId,
-                            );
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => TestDetailScreen(
-                                  listQuestion: detailExcerciseModel,
-                                  title: model.name,
-                                  id: model.id,
-                                  customerCourseScheduleId:
-                                      customerCourseScheduleId,
-                                  examDetailId: model.examDetailId,
-                                  isDone: true,
-                                  skill: model.skills,
-                                ),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            width: 326.w,
-                            height: 51.h,
-                            decoration: BoxDecoration(
-                              color: const Color(0xffDEE4ED),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10.r)),
-                            ),
-                            child: Center(
-                              child: Text(
-                                'Xem bài đã làm',
-                                style: defaultText20B.copyWith(
-                                    color: Colors.white),
-                              ),
-                            ),
+            SizedBox(
+              width: 253.w,
+              child: Text(
+                model.name,
+                style: defaultText18B,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+              ),
+            ),
+            SizedBox(
+              height: 8.h,
+            ),
+            Text(
+              'Thời lượng: ${model.totalQuestions} Câu',
+              style: defaultText12Re,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
+            ),
+            SizedBox(
+              height: 2.h,
+            ),
+            Text(
+              'Ngày giao: ${model.createAt}',
+              style: defaultText12Re,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
+            ),
+            SizedBox(
+              height: 8.h,
+            ),
+            if (timeDeadline.contains('0000'))
+              Text(
+                'Hạn hoàn thành: Không giới hạn',
+                style: defaultText12B,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+              )
+            else
+              Text(
+                'Hạn hoàn thành: $timeDeadline',
+                style: defaultText12B,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+              ),
+            Text(
+              'Điểm : ${model.finalMark}',
+              style: defaultText14B,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 6.h),
+              height: 1.h,
+              width: 300.w,
+              decoration: const BoxDecoration(
+                color: Colors.grey,
+              ),
+            ),
+            SizedBox(
+              height: 20.h,
+            ),
+            model.ccseeId.isNotEmpty
+                ? GestureDetector(
+                    onTap: () async {
+                      List<QuestionGroupModel> detailExcerciseModel =
+                          await HomeRepo().viewTestDone(
+                        id: model.ccseeId,
+                      );
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => TestDetailScreen(
+                            listQuestion: detailExcerciseModel,
+                            title: model.name,
+                            id: model.id,
+                            customerCourseScheduleId: customerCourseScheduleId,
+                            examDetailId: model.examDetailId,
+                            isDone: true,
+                            skill: model.skills,
                           ),
-                        )
-                      : GestureDetector(
-                          onTap: () async {
-                            List<QuestionGroupModel> detailExcerciseModel =
-                                await HomeRepo().viewTracNghiem(
+                        ),
+                      );
+                    },
+                    child: Container(
+                      width: 326.w,
+                      height: 51.h,
+                      decoration: BoxDecoration(
+                        color: const Color(0xffDEE4ED),
+                        borderRadius: BorderRadius.all(Radius.circular(10.r)),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Xem bài đã làm',
+                          style: defaultText20B.copyWith(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  )
+                : GestureDetector(
+                    onTap: () async {
+                      List<QuestionGroupModel> detailExcerciseModel =
+                          await HomeRepo().viewTracNghiem(
+                        id: model.id,
+                        customerCourseScheduleId: customerCourseScheduleId,
+                        examDetailId: model.examDetailId,
+                      );
+                      if (context.mounted) {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => TestDetailScreen(
+                              listQuestion: detailExcerciseModel,
+                              title: model.name,
                               id: model.id,
                               customerCourseScheduleId:
                                   customerCourseScheduleId,
                               examDetailId: model.examDetailId,
-                            );
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => TestDetailScreen(
-                                  listQuestion: detailExcerciseModel,
-                                  title: model.name,
-                                  id: model.id,
-                                  customerCourseScheduleId:
-                                      customerCourseScheduleId,
-                                  examDetailId: model.examDetailId,
-                                  skill: model.skills,
-                                ),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            width: 326.w,
-                            height: 51.h,
-                            decoration: BoxDecoration(
-                              gradient: mainGradient,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10.r)),
-                            ),
-                            child: Center(
-                              child: Text(
-                                'Làm bài',
-                                style: defaultText20B.copyWith(
-                                    color: Colors.white),
-                              ),
+                              skill: model.skills,
                             ),
                           ),
+                        );
+                      }
+                    },
+                    child: Container(
+                      width: 326.w,
+                      height: 51.h,
+                      decoration: BoxDecoration(
+                        gradient: mainGradient,
+                        borderRadius: BorderRadius.all(Radius.circular(10.r)),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Làm bài',
+                          style: defaultText20B.copyWith(color: Colors.white),
                         ),
-                ],
-              ),
-            )
+                      ),
+                    ),
+                  ),
           ],
         ),
       ),

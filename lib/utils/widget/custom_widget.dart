@@ -275,7 +275,7 @@ Widget homeTab(
             //width: 80.w,
             child: Center(
               child: Text(
-                title,
+                '$title  ',
               ),
             ),
           ),

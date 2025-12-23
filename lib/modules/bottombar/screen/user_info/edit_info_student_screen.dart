@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pmp_english/student_models/profile_model.dart';
 import 'package:pmp_english/student_repo/customer_repo.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
+import 'package:image_picker/image_picker.dart';
 
 class EditInfoStudentScreen extends StatefulWidget {
   final ProfileModel profileModel;
@@ -19,10 +22,27 @@ class _EditInfoStudentScreenState extends State<EditInfoStudentScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController birthdayController = TextEditingController();
   TextEditingController addressController = TextEditingController();
+  final ImagePicker _picker = ImagePicker();
+
+  File? _avatarFile;
+  Future<void> _pickImage() async {
+    final XFile? pickedFile = await _picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 80,
+    );
+
+    if (pickedFile == null) return;
+
+    if (!mounted) return;
+
+    setState(() {
+      _avatarFile = File(pickedFile.path);
+    });
+  }
 
   @override
   void initState() {
-    nameController.text = widget.profileModel.email;
+    nameController.text = widget.profileModel.fullName;
     phoneController.text = widget.profileModel.phone;
     emailController.text = widget.profileModel.email;
     birthdayController.text = widget.profileModel.dob;
@@ -49,24 +69,29 @@ class _EditInfoStudentScreenState extends State<EditInfoStudentScreen> {
               alignment: Alignment.bottomRight,
               children: [
                 CircleAvatar(
-                    radius: 60,
-                    backgroundImage: NetworkImage(
-                      'https://lms.pmpenglish.edu.vn/images/${widget.profileModel.img}',
-                    ) // hoặc NetworkImage
-                    ),
+                  radius: 60,
+                  backgroundImage: _avatarFile != null
+                      ? FileImage(_avatarFile!)
+                      : NetworkImage(
+                          'https://lms.pmpenglish.edu.vn/images/${widget.profileModel.img}',
+                        ) as ImageProvider,
+                ),
                 Positioned(
                   bottom: 4,
                   right: 4,
-                  child: Container(
-                    padding: const EdgeInsets.all(6),
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.blue,
-                    ),
-                    child: const Icon(
-                      Icons.add,
-                      size: 18,
-                      color: Colors.white,
+                  child: GestureDetector(
+                    onTap: _pickImage,
+                    child: Container(
+                      padding: const EdgeInsets.all(6),
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.blue,
+                      ),
+                      child: const Icon(
+                        Icons.add,
+                        size: 18,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),

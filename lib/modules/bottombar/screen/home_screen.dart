@@ -93,19 +93,23 @@ class _HomeScreenState extends State<HomeScreen> {
                       SizedBox(
                         width: 15.w,
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Chào mừng trở lại !',
-                            style:
-                                defaultText14Re.copyWith(color: Colors.white),
-                          ),
-                          Text(
-                            infomodel.customerInfoModel.fullName,
-                            style: defaultText18B.copyWith(color: Colors.white),
-                          ),
-                        ],
+                      SizedBox(
+                        width: 210.w,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Chào mừng trở lại !',
+                              style:
+                                  defaultText14Re.copyWith(color: Colors.white),
+                            ),
+                            Text(
+                              infomodel.customerInfoModel.fullName,
+                              style:
+                                  defaultText18B.copyWith(color: Colors.white),
+                            ),
+                          ],
+                        ),
                       ),
                       const Spacer(),
                       GestureDetector(

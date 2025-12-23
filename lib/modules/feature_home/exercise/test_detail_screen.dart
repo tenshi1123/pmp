@@ -80,15 +80,25 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
   @override
   void dispose() {
     cauController.dispose();
+    timer1?.cancel();
+    timer?.cancel();
     super.dispose();
   }
 
   @override
   void initState() {
+    super.initState();
+
     _listQuestion = widget.listQuestion;
+
+    if (_listQuestion.isEmpty) {
+      selectedQuestionId = "-1";
+      _selectedQuestion = null;
+      return;
+    }
+
     selectedQuestionId = _listQuestion.first.id;
-    _selectedQuestion =
-        _listQuestion.firstWhere((q) => q.id == selectedQuestionId);
+    _selectedQuestion = _listQuestion.first;
 
     allSubQuestions =
         widget.listQuestion.expand((q) => q.value.values).toList();
@@ -105,14 +115,18 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
     _counter = ValueNotifier({
       for (var q in _listQuestion) q.id: "",
     });
-    super.initState();
   }
 
   Future<void> fetchPostsByCategory(String id) async {
+    final index = _listQuestion.indexWhere((q) => q.id == id);
+
+    if (index == -1) return;
+
+    if (!mounted) return;
+
     setState(() {
       selectedQuestionId = id;
-      _selectedQuestion =
-          _listQuestion.firstWhere((q) => q.id == selectedQuestionId);
+      _selectedQuestion = _listQuestion[index];
     });
   }
 
@@ -121,11 +135,10 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
   }
 
   void reset() {
-    if (countDown) {
-      setState(() => duration = countdownDuration);
-    } else {
-      setState(() => duration = const Duration());
-    }
+    if (!mounted) return;
+    setState(() {
+      duration = countDown ? countdownDuration : const Duration();
+    });
   }
 
   void stopTimer() {
@@ -142,6 +155,7 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
     if (seconds < 0) {
       timer1?.cancel();
     } else {
+      if (!mounted) return;
       setState(() {
         duration = Duration(seconds: seconds);
       });
@@ -150,10 +164,16 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final values = _selectedQuestion?.value.values.toList() ?? [];
+    final String? firstType = values.isNotEmpty ? values.first.type : null;
+    if (_listQuestion.isEmpty || _selectedQuestion == null) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        //automaticallyImplyLeading: false,
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back_ios_new,
@@ -343,7 +363,8 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
               }).toList(),
             ),
           ),
-          if (selectedQuestionId != "-1")
+
+          if (selectedQuestionId != "-1" && _selectedQuestion != null)
             ConstrainedBox(
               constraints: BoxConstraints(
                 maxHeight: 360.h, // tối đa
@@ -357,130 +378,155 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
                 ),
               ),
             ),
-          Expanded(
-            child: PageView.builder(
-              controller: _pageController,
-              itemCount: widget.isDone
-                  ? _selectedQuestion?.value.values.toList().length
-                  : _selectedQuestion?.value.values.toList().first.type != '5'
-                      ? _selectedQuestion?.value.values.toList().length
-                      : 1,
-              onPageChanged: (index) {
-                setState(() {
-                  _currentPage = index;
-                });
-              },
-              itemBuilder: (context, index) {
-                return CauHoiPage(
-                  index:
-                      _selectedQuestion?.value.values.toList().first.type != '5'
-                          ? index
-                          : getDisplayNumber(
-                                  _selectedQuestion?.value.values
-                                          .toList()
-                                          .first
-                                          .content ??
-                                      "",
-                                  index) -
-                              1, // Sử dụng _currentPage
 
-                  question: _listQuestion
-                      .firstWhere((q) => q.id == selectedQuestionId)
-                      .value
-                      .values
-                      .toList()[index],
-                  cauController: cauController,
-                  counter: _counter,
-                  answerGroup: _listQuestion.first.value,
-                  textController: _getController(
-                      _selectedQuestion?.value.values.toList()[index].id ?? ''),
-                );
-              },
-            ),
-          ),
-          SizedBox(
-            height: 60,
-            child: Row(
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.chevron_left),
-                  onPressed: _currentPage > 0
-                      ? () {
-                          _pageController.previousPage(
-                            duration: const Duration(milliseconds: 300),
-                            curve: Curves.ease,
-                          );
-                        }
-                      : null,
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
+          values.isEmpty
+              ? SizedBox(
+                  child: Center(
+                    child: Text(
+                      'Không có câu hỏi nào trong bài tập này',
+                      style: defaultText14M,
+                    ),
+                  ),
+                )
+              : Expanded(
+                  child: PageView.builder(
+                    controller: _pageController,
                     itemCount: widget.isDone
-                        ? _selectedQuestion?.value.values.toList().length
-                        : _selectedQuestion?.value.values.toList().first.type !=
-                                '5'
-                            ? _selectedQuestion?.value.values.toList().length
+                        ? values.length
+                        : firstType != '5'
+                            ? values.length
                             : 1,
+                    onPageChanged: (index) {
+                      setState(() {
+                        _currentPage = index;
+                      });
+                    },
                     itemBuilder: (context, index) {
-                      final bool isSelected = index == _currentPage;
-                      return GestureDetector(
-                        onTap: () {
-                          _pageController.animateToPage(
-                            index,
-                            duration: const Duration(milliseconds: 300),
-                            curve: Curves.ease,
-                          );
-                        },
-                        child: Container(
-                          width: 36,
-                          height: 36,
-                          margin: const EdgeInsets.symmetric(horizontal: 4),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: isSelected
-                                ? Colors.lightBlue
-                                : Colors.grey[300],
-                            border: isSelected
-                                ? Border.all(color: Colors.blue, width: 2)
-                                : null,
-                          ),
-                          child: Text(
-                            _selectedQuestion?.value.values
-                                        .toList()
-                                        .first
-                                        .type !=
-                                    '5'
-                                ? '${index + 1}'
-                                : '${getDisplayNumber(_selectedQuestion?.value.values.toList().first.content ?? "", index)}',
-                            style: TextStyle(
-                              color: isSelected ? Colors.white : Colors.black54,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
+                      final groupIndex = _listQuestion
+                          .indexWhere((q) => q.id == selectedQuestionId);
+                      if (groupIndex == -1) {
+                        return const SizedBox();
+                      }
+                      final values =
+                          _listQuestion[groupIndex].value.values.toList();
+                      if (index >= values.length) {
+                        return const SizedBox();
+                      }
+                      return CauHoiPage(
+                        index: _selectedQuestion?.value.values
+                                    .toList()
+                                    .first
+                                    .type !=
+                                '5'
+                            ? index
+                            : getDisplayNumber(
+                                    _selectedQuestion?.value.values
+                                            .toList()
+                                            .first
+                                            .content ??
+                                        "",
+                                    index) -
+                                1,
+                        question: values[index],
+                        cauController: cauController,
+                        counter: _counter,
+                        answerGroup: _listQuestion[groupIndex].value,
+                        textController: _getController(values[index].id),
                       );
                     },
                   ),
                 ),
-                IconButton(
-                  icon: const Icon(Icons.chevron_right),
-                  onPressed: _currentPage <
-                          (_selectedQuestion?.value.values.toList().length ??
-                                  0) -
-                              1
-                      ? () {
-                          _pageController.nextPage(
-                            duration: const Duration(milliseconds: 100),
-                            curve: Curves.ease,
-                          );
-                        }
-                      : null,
+          (_selectedQuestion?.value.values.toList() ?? []).isEmpty
+              ? const SizedBox.shrink()
+              : SizedBox(
+                  height: 60,
+                  child: Row(
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.chevron_left),
+                        onPressed: _currentPage > 0
+                            ? () {
+                                _pageController.previousPage(
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.ease,
+                                );
+                              }
+                            : null,
+                      ),
+                      Expanded(
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: widget.isDone
+                              ? _selectedQuestion?.value.values.toList().length
+                              : firstType != '5'
+                                  ? _selectedQuestion?.value.values
+                                      .toList()
+                                      .length
+                                  : 1,
+                          itemBuilder: (context, index) {
+                            final bool isSelected = index == _currentPage;
+                            return GestureDetector(
+                              onTap: () {
+                                _pageController.animateToPage(
+                                  index,
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.ease,
+                                );
+                              },
+                              child: Container(
+                                width: 36,
+                                height: 36,
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 4),
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: isSelected
+                                      ? Colors.lightBlue
+                                      : Colors.grey[300],
+                                  border: isSelected
+                                      ? Border.all(color: Colors.blue, width: 2)
+                                      : null,
+                                ),
+                                child: Text(
+                                  _selectedQuestion?.value.values
+                                              .toList()
+                                              .first
+                                              .type !=
+                                          '5'
+                                      ? '${index + 1}'
+                                      : '${getDisplayNumber(_selectedQuestion?.value.values.toList().first.content ?? "", index)}',
+                                  style: TextStyle(
+                                    color: isSelected
+                                        ? Colors.white
+                                        : Colors.black54,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.chevron_right),
+                        onPressed: _currentPage <
+                                (_selectedQuestion?.value.values
+                                            .toList()
+                                            .length ??
+                                        0) -
+                                    1
+                            ? () {
+                                _pageController.nextPage(
+                                  duration: const Duration(milliseconds: 100),
+                                  curve: Curves.ease,
+                                );
+                              }
+                            : null,
+                      ),
+                    ],
+                  ),
                 ),
-              ],
-            ),
-          ),
         ],
       ),
     );
@@ -676,6 +722,15 @@ class _CauHoiPageState extends State<CauHoiPage>
                 child: Text('${widget.index + 1}',
                     style: const TextStyle(color: Colors.white)),
               ),
+              widget.question.title != ''
+                  ? SizedBox(
+                      width: 320.w,
+                      child: Text(
+                        widget.question.title,
+                        style: defaultText16B,
+                      ),
+                    )
+                  : const SizedBox.shrink(),
               Expanded(
                 child: widget.question.type == '2'
                     ? HtmlContentWidget(
@@ -701,6 +756,55 @@ class _CauHoiPageState extends State<CauHoiPage>
               counter: widget.counter,
               controller: widget.textController,
               answer: widget.question.answer,
+            ),
+          if (widget.question.type == '4')
+            ValueListenableBuilder(
+              valueListenable: widget.counter,
+              builder: (_, value, __) {
+                final List<String> list = widget.question.question.split(',');
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: list.length,
+                  itemBuilder: (context, answer) {
+                    final isSelected =
+                        value[widget.question.id] == list[answer];
+                    return GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      // onTap: () {
+                      //   widget.counter.value = {
+                      //     ...widget.counter.value,
+                      //     widget.question.id: answer.toString(),
+                      //   };
+                      // },
+                      child: Container(
+                        padding: EdgeInsets.only(left: 8.w),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: isSelected
+                              ? Colors.lightBlueAccent.withValues(alpha: 0.3)
+                              : Colors.white,
+                        ),
+                        child: Row(
+                          children: [
+                            Checkbox(
+                              value: isSelected,
+                              shape: const CircleBorder(),
+                              onChanged: (_) {
+                                widget.counter.value = {
+                                  ...widget.counter.value,
+                                  widget.question.id: list[answer],
+                                };
+                              },
+                            ),
+                            Text('${list[answer]} .'),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
             ),
           ValueListenableBuilder(
             valueListenable: widget.counter,

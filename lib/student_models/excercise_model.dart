@@ -29,9 +29,7 @@ class QuestionGroupModel {
     Map<String, SubQuestionModel> parsedValue = {};
 
     final rawValue = json['value'];
-
     if (rawValue is Map<String, dynamic>) {
-      // ✅ Trường hợp là Map (như ví dụ bạn vừa gửi)
       parsedValue = rawValue.map(
         (key, val) => MapEntry(key, SubQuestionModel.fromJson(val)),
       );
@@ -65,6 +63,7 @@ class SubQuestionModel {
   final String? videoAttachment;
   final String? audioAttachment;
   final List<QuestionChoice> choices;
+  final String question;
   final String type;
   final String answer;
   final String? answerSolutions;
@@ -78,6 +77,7 @@ class SubQuestionModel {
     required this.videoAttachment,
     required this.audioAttachment,
     required this.choices,
+    required this.question,
     required this.type,
     required this.answer,
     this.answerSolutions,
@@ -106,6 +106,7 @@ class SubQuestionModel {
       videoAttachment: json['video_attachment'],
       audioAttachment: json['audio_attachment'],
       choices: parsedChoices,
+      question: json['questions'] ?? '',
       type: json['type'] ?? '',
       answer: json['answer'] ?? '',
       answerSolutions: json['answer_solutions'],

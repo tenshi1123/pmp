@@ -44,7 +44,7 @@ class _AccountScreenState extends State<AccountScreen> {
             height: 60.h,
           ),
           SizedBox(
-            height: 250.h,
+            height: 300.h,
             width: 349.w,
             child: Stack(
               children: [
@@ -68,23 +68,26 @@ class _AccountScreenState extends State<AccountScreen> {
                             SizedBox(
                               width: 120.w,
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  widget.profileModel.fullName,
-                                  style: defaultText18B,
-                                ),
-                                SizedBox(
-                                  height: 6.h,
-                                ),
-                                Text(
-                                  'Mã học viên: ${widget.profileModel.code}',
-                                  style: defaultText12Re.copyWith(
-                                    color: key1Color,
+                            SizedBox(
+                              width: 160.w,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    widget.profileModel.fullName,
+                                    style: defaultText18B,
                                   ),
-                                )
-                              ],
+                                  SizedBox(
+                                    height: 6.h,
+                                  ),
+                                  Text(
+                                    'Mã học viên: ${widget.profileModel.code}',
+                                    style: defaultText12Re.copyWith(
+                                      color: key1Color,
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                             const Spacer(),
                             GestureDetector(
@@ -359,7 +362,7 @@ class _AccountScreenState extends State<AccountScreen> {
             height: 10.h,
           ),
           Container(
-            height: 140.h,
+            //height: 140.h,
             width: 350.w,
             padding: EdgeInsets.symmetric(horizontal: 10.w),
             decoration: BoxDecoration(
@@ -463,7 +466,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 6.h,
+                  height: 20.h,
                 )
               ],
             ),
