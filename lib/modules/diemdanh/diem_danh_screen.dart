@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/modules/diemdanh/attendance_details.dart';
 import 'package:pmp_english/student_repo/diemdanh_repo.dart';
 import 'package:pmp_english/student_models/diem_danh_model.dart';
@@ -46,7 +47,7 @@ class DiemDanhScreen extends StatelessWidget {
                           color: Colors.white,
                         ),
                         Text(
-                          '\tĐiểm danh ',
+                          '\t${L10n.of(context).diemdanh}',
                           style: defaultText20B.copyWith(
                             color: Colors.white,
                           ),
@@ -158,7 +159,7 @@ class _Noti extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Lớp',
+                        L10n.of(context).lophoc,
                         style: defaultText12Re,
                       ),
                       Text(
@@ -171,7 +172,7 @@ class _Noti extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Bắt đầu',
+                        L10n.of(context).start,
                         style: defaultText12Re,
                       ),
                       Text(
@@ -184,7 +185,7 @@ class _Noti extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Kết thúc',
+                        L10n.of(context).end,
                         style: defaultText12Re,
                       ),
                       Text(
@@ -197,7 +198,7 @@ class _Noti extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Tham gia',
+                        L10n.of(context).join,
                         style: defaultText14B.copyWith(color: main1Color),
                       ),
                       Text(
@@ -210,7 +211,7 @@ class _Noti extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Vắng',
+                        L10n.of(context).absent,
                         style: defaultText14B.copyWith(color: sub2Color),
                       ),
                       Text(

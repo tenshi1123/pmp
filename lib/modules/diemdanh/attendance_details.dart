@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/modules/diemdanh/diem_danh_screen.dart';
 import 'package:pmp_english/student_models/diem_danh_model.dart';
 import 'package:pmp_english/utils/constants/color.dart';
@@ -13,16 +14,6 @@ class AttendanceDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      // appBar: AppBar(
-      //   backgroundColor: Colors.blue,
-      //   leading: IconButton(
-      //     icon: const Icon(Icons.arrow_back, color: Colors.white),
-      //     onPressed: () => Navigator.of(context).pop(),
-      //   ),
-      //   title: Text('Chi tiết điểm danh',
-      //       textAlign: TextAlign.right,
-      //       style: defaultText20B.copyWith(color: Colors.white)),
-      // ),
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const NeverScrollableScrollPhysics(),
@@ -42,7 +33,7 @@ class AttendanceDetails extends StatelessWidget {
                     SizedBox(
                       width: 6.w,
                     ),
-                    Text('Chi tiết điểm danh',
+                    Text(L10n.of(context).attendanceDetails,
                         textAlign: TextAlign.right,
                         style: defaultText20B.copyWith(color: Colors.white)),
 
@@ -181,7 +172,7 @@ class AttendanceDetails extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Chưa học',
+                              L10n.of(context).notYetStudied,
                               style: defaultText14Re,
                             ),
                             Container(

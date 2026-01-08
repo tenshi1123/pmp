@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/modules/chat/chat_screen.dart';
 import 'package:pmp_english/modules/feature_home/exercise/detail_exam_screen.dart';
 import 'package:pmp_english/modules/feature_home/exercise/exercise_detail_screen.dart';
@@ -15,109 +16,6 @@ import 'package:pmp_english/teacher/teacher_model/home_teacher_model.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-class Lesson extends StatelessWidget {
-  const Lesson({
-    super.key,
-    required this.title1,
-    required this.title2,
-    required this.title3,
-  });
-  final String title1;
-  final String title2;
-  final String title3;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        // Navigator.of(context).push(
-        //   MaterialPageRoute(
-        //     builder: (context) => const DetailLessonScreen(),
-        //   ),
-        // );
-      },
-      child: Container(
-        height: 100.h,
-        width: 350.w,
-        margin: EdgeInsets.only(bottom: 10.h, right: 10.w, left: 10.w),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.2),
-              spreadRadius: 5,
-              blurRadius: 7,
-              offset: const Offset(0, 1), // changes position of shadow
-            ),
-          ],
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Row(
-          children: [
-            SizedBox(
-              width: 10.w,
-            ),
-            Container(
-              height: 70.h,
-              width: 70.w,
-              decoration: BoxDecoration(
-                gradient: mainGradient2,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(12.r),
-                ),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    '21',
-                    style: defaultText20B.copyWith(
-                      color: Colors.white,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 2.h,
-                  ),
-                  Text(
-                    'Tháng 5',
-                    style: defaultText16M.copyWith(
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              width: 15.w,
-            ),
-            SizedBox(
-              height: 70.h,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    'TOEIC 4 kỹ năng - Buổi 3',
-                    style: defaultText16B,
-                  ),
-                  Text(
-                    '21/05/2024',
-                    style: defaultText14Re,
-                  ),
-                  Text(
-                    '08:00 - 11:00 ~ 3 tiếng',
-                    style: defaultText14Re,
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
 
 class ExamDay extends StatelessWidget {
   const ExamDay({super.key});
@@ -213,7 +111,7 @@ class ExcerciseItem extends StatelessWidget {
                     style: defaultText16B,
                   ),
                   Text(
-                    'Hạn nộp: ${DateFormat("dd-MM-yyyy").format(model?.timeDeadline ?? DateTime.now())}',
+                    '${L10n.of(context).dealine}${DateFormat("dd-MM-yyyy").format(model?.timeDeadline ?? DateTime.now())}',
                     style: defaultText14Re,
                   ),
                 ],
@@ -563,7 +461,7 @@ class _InfoLichhenState extends State<InfoLichhen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Thông tin lịch hẹn',
+                        L10n.of(context).appointmentInformation,
                         style: defaultText16B.copyWith(color: Colors.white),
                       ),
                       const CloseButton(
@@ -707,7 +605,7 @@ class DocumentItem extends StatelessWidget {
                     style: defaultText16B,
                   ),
                   Text(
-                    'Xem',
+                    L10n.of(context).see,
                     style: defaultText14Re,
                   ),
                 ],

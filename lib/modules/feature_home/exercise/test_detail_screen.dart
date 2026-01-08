@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/modules/feature_home/exercise/simple_audio_recorder.dart';
 import 'package:pmp_english/student_models/excercise_model.dart';
 import 'package:pmp_english/student_repo/home_repo.dart';
@@ -227,7 +228,7 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
                             CupertinoDialogAction(
                               isDefaultAction: true,
                               child: Text('Đồng ý', style: defaultText20B),
-                              onPressed: () {
+                              onPressed: () async {
                                 final answerList = cauController
                                     .getAnswers()
                                     .entries
@@ -250,7 +251,8 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
                                 final cleaned =
                                     removeDuplicatesKeepLast(result);
                                 stopTimer();
-                                HomeRepo().submitTracNghiem(
+                                String message =
+                                    await HomeRepo().submitTracNghiem(
                                   id: widget.id,
                                   examDetailId: widget.examDetailId,
                                   customerCourseScheduleId:
@@ -272,8 +274,7 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
                                           const Icon(Icons.check_circle,
                                               color: Colors.green, size: 28),
                                           const SizedBox(width: 10),
-                                          Text("Nộp bài thành công!",
-                                              style: defaultText16B),
+                                          Text(message, style: defaultText16B),
                                         ],
                                       ),
                                       actions: [
@@ -292,7 +293,8 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
                             ),
                             CupertinoDialogAction(
                               isDefaultAction: true,
-                              child: Text('Hủy', style: defaultText20B),
+                              child: Text(L10n.of(context).cancel,
+                                  style: defaultText20B),
                               onPressed: () {
                                 Navigator.pop(context);
                               },
@@ -311,7 +313,7 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
                     ),
                     child: Center(
                       child: Text(
-                        'Nộp bài',
+                        L10n.of(context).submit,
                         style: defaultText16B.copyWith(color: Colors.white),
                       ),
                     ),
@@ -659,8 +661,8 @@ class CauHoiHtmlWidget extends StatelessWidget {
               width: 200,
               child: TextField(
                 controller: textController,
-                decoration: const InputDecoration(
-                  hintText: 'Nhập câu trả lời',
+                decoration: InputDecoration(
+                  hintText: L10n.of(context).enterAnswer,
                   border: OutlineInputBorder(),
                   isDense: true,
                 ),
@@ -875,7 +877,7 @@ class _CauHoiPageState extends State<CauHoiPage>
               widget.question.answerSolutions!.isNotEmpty)
             RichText(
               text: TextSpan(
-                text: 'Trả lời: ',
+                text: L10n.of(context).answer,
                 style: defaultText14M,
                 children: <TextSpan>[
                   TextSpan(
@@ -883,7 +885,7 @@ class _CauHoiPageState extends State<CauHoiPage>
                           ? getAnswerLabel(widget.question.answer)
                           : widget.question.answer,
                       style: defaultText16B),
-                  TextSpan(text: ' | Đáp án đúng: '),
+                  TextSpan(text: ' | ${L10n.of(context).rightAnswer}: '),
                   TextSpan(
                       text: widget.question.type == '2'
                           ? getAnswerLabel(
@@ -996,8 +998,8 @@ class _AnswerInputState extends State<AnswerInput> {
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               controller: widget.controller,
-              decoration: const InputDecoration(
-                hintText: 'Nhập câu trả lời...',
+              decoration: InputDecoration(
+                hintText: L10n.of(context).enterAnswer,
               ),
             ),
           );

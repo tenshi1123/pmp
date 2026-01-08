@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/modules/notification/webview_screen.dart';
 import 'package:pmp_english/student_models/profile_model.dart';
 import 'package:pmp_english/utils/constants/color.dart';
@@ -38,7 +39,7 @@ class DetailNotificationScreen extends StatelessWidget {
                             color: Colors.white,
                           ),
                           Text(
-                            '\tChi tiết thông báo',
+                            '\t${L10n.of(context).detailNoti}',
                             style: defaultText20B.copyWith(
                               color: Colors.white,
                             ),

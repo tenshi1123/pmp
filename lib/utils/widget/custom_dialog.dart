@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:pmp_english/core/localization/language_cubit.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/student_repo/mycourse_repo.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
@@ -35,7 +38,7 @@ class LeaveRequestDialog extends StatelessWidget {
               controller: reasonController,
               maxLines: 3,
               decoration: InputDecoration(
-                hintText: 'Nhập lý do nghỉ',
+                hintText: L10n.of(context).enterReasonForLeave,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -55,7 +58,9 @@ class LeaveRequestDialog extends StatelessWidget {
                       backgroundColor: const Color(0xFFF7F4F6),
                       padding: const EdgeInsets.symmetric(vertical: 14),
                     ),
-                    child: const Text('Hủy'),
+                    child: Text(
+                      L10n.of(context).cancel,
+                    ),
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -95,7 +100,9 @@ class LeaveRequestDialog extends StatelessWidget {
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(vertical: 14),
                     ),
-                    child: const Text('Xác nhận'),
+                    child: Text(
+                      L10n.of(context).confirm,
+                    ),
                   ),
                 ),
               ],
@@ -103,6 +110,56 @@ class LeaveRequestDialog extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+void showLanguageDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (_) {
+      return AlertDialog(
+        title: Text(L10n.of(context).chooseLanguage),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _LanguageItem(
+              title: 'Tiếng Việt',
+              locale: const Locale('vi'),
+            ),
+            _LanguageItem(
+              title: 'English',
+              locale: const Locale('en'),
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}
+
+class _LanguageItem extends StatelessWidget {
+  final String title;
+  final Locale locale;
+
+  const _LanguageItem({
+    required this.title,
+    required this.locale,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final current = context.watch<LanguageCubit>().state;
+
+    return ListTile(
+      title: Text(title),
+      trailing: current.languageCode == locale.languageCode
+          ? const Icon(Icons.check, color: Colors.green)
+          : null,
+      onTap: () {
+        context.read<LanguageCubit>().changeLanguage(locale);
+        Navigator.pop(context);
+      },
     );
   }
 }

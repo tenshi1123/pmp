@@ -14,42 +14,6 @@ class ExcerciseScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Text(
-        //   'Sắp đến hạn',
-        //   style: defaultText16B,
-        // ),
-        // Container(
-        //   margin: EdgeInsets.symmetric(vertical: 20.h),
-        //   height: 200.h,
-        //   width: 349.w,
-        //   decoration: BoxDecoration(
-        //     borderRadius: BorderRadius.all(
-        //       Radius.circular(8.r),
-        //     ),
-        //     color: Colors.white,
-        //     boxShadow: [
-        //       BoxShadow(
-        //         color: Colors.grey.withOpacity(0.2),
-        //         spreadRadius: 5,
-        //         blurRadius: 7,
-        //         offset: const Offset(0, 2), // changes position of shadow
-        //       ),
-        //     ],
-        //   ),
-        //   child: Column(
-        //     children: [
-        //       SizedBox(
-        //         height: 10.h,
-        //       ),
-        //       const ExcerciseItem(
-        //         isComplete: true,
-        //       ),
-        //       const ExcerciseItem(
-        //         isComplete: true,
-        //       ),
-        //     ],
-        //   ),
-        // ),
         SizedBox(
             height: 630.h,
             width: 390.w,

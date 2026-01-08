@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/modules/course/course_details_screen.dart';
 import 'package:pmp_english/student_repo/mycourse_repo.dart';
 import 'package:pmp_english/student_models/my_course_model.dart';
@@ -17,11 +18,7 @@ class CourseScreen extends StatefulWidget {
 class _CourseScreenState extends State<CourseScreen>
     with TickerProviderStateMixin {
   late TabController _tabController;
-  final _tabs = [
-    const Tab(text: 'Tất cả'),
-    const Tab(text: 'Đang học'),
-    const Tab(text: 'Hoàn thành'),
-  ];
+
   @override
   void initState() {
     _tabController = TabController(length: 3, vsync: this);
@@ -30,6 +27,11 @@ class _CourseScreenState extends State<CourseScreen>
 
   @override
   Widget build(BuildContext context) {
+    final tabs = [
+      Tab(text: L10n.of(context).all),
+      Tab(text: L10n.of(context).studying),
+      Tab(text: L10n.of(context).complete),
+    ];
     return Column(
       children: [
         SizedBox(
@@ -67,7 +69,7 @@ class _CourseScreenState extends State<CourseScreen>
                         fontSize: 14, fontWeight: FontWeight.w500),
                     labelColor: Colors.white,
                     unselectedLabelColor: Colors.black,
-                    tabs: _tabs,
+                    tabs: tabs,
                   ),
                 ),
               ),
@@ -75,7 +77,7 @@ class _CourseScreenState extends State<CourseScreen>
                 bottom: 70.h,
                 left: 22.w,
                 child: Text(
-                  'Khóa học của bạn',
+                  L10n.of(context).yourCourse,
                   style: defaultText20B.copyWith(
                     color: Colors.white,
                   ),
@@ -227,7 +229,7 @@ class CourseItem extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.w),
             child: Text(
-              'Giảng viên: ${model.teacherName}',
+              '${L10n.of(context).teacher} ${model.teacherName}',
               style: defaultText14M.copyWith(
                 color: key1Color.withValues(alpha: 0.5),
               ),
@@ -239,7 +241,7 @@ class CourseItem extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.w),
             child: Text(
-              'Lớp: ${model.alias} ${model.cosoName}',
+              '${L10n.of(context).classroom} ${model.alias} ${model.cosoName}',
               style: defaultText14M.copyWith(
                 color: key1Color.withValues(alpha: 0.5),
               ),
@@ -263,7 +265,8 @@ class CourseItem extends StatelessWidget {
                     style: defaultText14M,
                     children: <TextSpan>[
                       TextSpan(
-                        text: '/${model.totalBuoiHoc} buổi',
+                        text:
+                            '/${model.totalBuoiHoc} ${L10n.of(context).lesson}',
                         style: defaultText14M.copyWith(
                           color: key1Color.withValues(alpha: 0.5),
                         ),
@@ -319,7 +322,7 @@ class CourseItem extends StatelessWidget {
                   )),
               child: Center(
                 child: Text(
-                  'Chi tiết',
+                  L10n.of(context).detail,
                   style: TextStyle(
                     color: key1Color,
                     fontWeight: FontWeight.w500,

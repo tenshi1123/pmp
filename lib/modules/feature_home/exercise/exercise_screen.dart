@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/modules/diemdanh/diem_danh_screen.dart';
 import 'package:pmp_english/modules/feature_home/exercise/detail_exam_screen.dart';
 import 'package:pmp_english/modules/feature_home/exercise/exercise_detail_screen.dart';
@@ -48,7 +49,7 @@ class ExerciseScreen extends StatelessWidget {
                             color: Colors.white,
                           ),
                           Text(
-                            'Bài tập',
+                            L10n.of(context).assignments,
                             style: defaultText20B.copyWith(
                               color: Colors.white,
                             ),

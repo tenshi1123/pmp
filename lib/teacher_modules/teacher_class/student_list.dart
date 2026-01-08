@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/teacher/teacher_model/teacher_class_model.dart';
 import 'package:pmp_english/teacher_modules/teacher_class/document/chambaithi.dart';
 import 'package:pmp_english/teacher_modules/teacher_class/document/detail_exam_screen.dart';
@@ -33,7 +34,7 @@ class _StudentListState extends State<StudentList> {
           },
         ),
         title: Text(
-          '    Danh sách học viên',
+          L10n.of(context).listStudent,
           style: defaultText18B.copyWith(
             color: Colors.white,
           ),

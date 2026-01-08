@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/student_models/profile_model.dart';
 import 'package:pmp_english/student_repo/customer_repo.dart';
 import 'package:pmp_english/utils/constants/color.dart';
@@ -55,7 +56,9 @@ class _EditInfoStudentScreenState extends State<EditInfoStudentScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Thông tin cá nhân'),
+        title: Text(
+          L10n.of(context).profileInfo,
+        ),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0,
@@ -100,13 +103,13 @@ class _EditInfoStudentScreenState extends State<EditInfoStudentScreen> {
 
             SizedBox(height: 24.h),
             buildLabeledField(
-              label: 'Họ và tên',
+              label: L10n.of(context).fullName,
               controller: nameController,
               context: context,
             ),
             SizedBox(height: 16.h),
             buildLabeledField(
-              label: 'Số điện thoại',
+              label: L10n.of(context).phone,
               controller: phoneController,
               context: context,
             ),
@@ -125,7 +128,7 @@ class _EditInfoStudentScreenState extends State<EditInfoStudentScreen> {
             ),
             SizedBox(height: 16.h),
             buildLabeledField(
-              label: 'Địa chỉ',
+              label: L10n.of(context).address,
               controller: addressController,
               context: context,
             ),
@@ -160,7 +163,7 @@ class _EditInfoStudentScreenState extends State<EditInfoStudentScreen> {
                         actions: <Widget>[
                           TextButton(
                             child: Text(
-                              'ok',
+                              'Ok',
                               style: defaultText16M.copyWith(
                                   color: const Color(0xff3C3C3C)),
                             ),

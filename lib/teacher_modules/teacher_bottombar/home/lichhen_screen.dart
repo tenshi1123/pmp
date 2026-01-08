@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/teacher/teacher_model/home_teacher_model.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 
@@ -45,7 +46,7 @@ class _LichHenScreenState extends State<LichHenScreen>
           },
         ),
         title: Text(
-          '    Danh sách lịch hẹn học viên',
+          '    ${L10n.of(context).listStudentApoint}',
           style: defaultText18B.copyWith(
             color: Colors.white,
           ),
@@ -208,7 +209,8 @@ class _ItemLichHen extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  DateFormat("HH:mm - dd/MMyyyy").format(model.appointmentDate),
+                  DateFormat("HH:mm - dd/MM/yyyy")
+                      .format(model.appointmentDate),
                   style: defaultText14Re.copyWith(
                     color: const Color(
                       0xff09204E,

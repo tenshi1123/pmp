@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/student_models/review_models.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
@@ -19,7 +20,7 @@ class DetailEvaluateScreen extends StatelessWidget {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
-          'Chi tiết đánh giá',
+          L10n.of(context).detailFeedback,
           style: defaultText18B.copyWith(
             color: Colors.white,
           ),
@@ -50,7 +51,7 @@ class DetailEvaluateScreen extends StatelessWidget {
                 SizedBox(
                   width: 120.w,
                   child: Text(
-                    'Giảng viên',
+                    L10n.of(context).teacher,
                     style: defaultText14Re,
                   ),
                 ),
@@ -71,7 +72,7 @@ class DetailEvaluateScreen extends StatelessWidget {
                 SizedBox(
                   width: 120.w,
                   child: Text(
-                    'Khóa học',
+                    L10n.of(context).course,
                     style: defaultText14Re,
                   ),
                 ),
@@ -92,7 +93,7 @@ class DetailEvaluateScreen extends StatelessWidget {
                 SizedBox(
                   width: 120.w,
                   child: Text(
-                    'Lớp',
+                    L10n.of(context).lophoc,
                     style: defaultText14Re,
                   ),
                 ),

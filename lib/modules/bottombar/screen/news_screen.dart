@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/modules/bottombar/screen/details_new_screen.dart';
 import 'package:pmp_english/student_repo/home_repo.dart';
 import 'package:pmp_english/student_models/profile_model.dart';
@@ -75,7 +76,7 @@ class _NewsScreenState extends State<NewsScreen> {
                 bottom: 30.h,
                 left: 22.w,
                 child: Text(
-                  'Tin tức PMP ENGLISH ',
+                  L10n.of(context).news,
                   style: defaultText20B.copyWith(
                     color: Colors.white,
                   ),

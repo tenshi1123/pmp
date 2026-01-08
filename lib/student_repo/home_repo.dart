@@ -205,7 +205,7 @@ class HomeRepo {
       response = await dio.post(ApiPath.submitTracNghiem, data: body);
     }
 
-    return response.data.toString();
+    return response.data['message'].toString();
   }
 
   //Báo cáo điểm

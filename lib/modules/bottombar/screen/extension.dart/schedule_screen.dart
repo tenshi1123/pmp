@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:pmp_english/core/localization/language_cubit.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/modules/bottombar/utils.dart';
 import 'package:pmp_english/modules/lesson/detail_lesson_screen.dart';
 import 'package:pmp_english/student_models/my_course_model.dart';
@@ -110,20 +113,9 @@ class _CalenderScreenState extends State<CalenderScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final systemLocale = context.watch<LanguageCubit>().state;
     return Scaffold(
       backgroundColor: Colors.white,
-      // appBar: AppBar(
-      //   backgroundColor: const Color(0xff273D8C),
-      //   automaticallyImplyLeading: false,
-      //   title: Center(
-      //     child: Text(
-      //       'Lịch học',
-      //       style: defaultText18B.copyWith(
-      //         color: Colors.white,
-      //       ),
-      //     ),
-      //   ),
-      // ),
       body: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints viewportConstraints) {
         return SingleChildScrollView(
@@ -146,7 +138,7 @@ class _CalenderScreenState extends State<CalenderScreen> {
                       bottom: 70.h,
                       left: 22.w,
                       child: Text(
-                        'Thời khóa biểu',
+                        L10n.of(context).timetable,
                         style: defaultText20B.copyWith(
                           color: Colors.white,
                         ),
@@ -175,7 +167,8 @@ class _CalenderScreenState extends State<CalenderScreen> {
                   ),
                 ),
                 child: TableCalendar<CalendarModel>(
-                  locale: 'vi_VI',
+                  locale:
+                      '${systemLocale.languageCode}_${systemLocale.countryCode}',
                   firstDay: kFirstDay,
                   lastDay: kLastDay,
                   focusedDay: _focusedDay,
@@ -232,7 +225,7 @@ class _CalenderScreenState extends State<CalenderScreen> {
                 // DateFormat("yyyy-MM-dd").format(
                 //   _selectedDay ?? DateTime.now(),
                 // ),
-                'Lịch học của bạn',
+                L10n.of(context).yourSchedule,
                 style: defaultText16B,
               ),
               ValueListenableBuilder<List<CalendarModel>>(
@@ -241,7 +234,7 @@ class _CalenderScreenState extends State<CalenderScreen> {
                   return value.isEmpty
                       ? Center(
                           child: Text(
-                            'Không có lịch học',
+                            L10n.of(context).noSchedule,
                             style: defaultText16B,
                           ),
                         )
@@ -258,38 +251,6 @@ class _CalenderScreenState extends State<CalenderScreen> {
                 },
               ),
               SizedBox(height: 24.h),
-              // FutureBuilder(
-              //   future: ScheduleRepo().getScheduleList(
-              //       DateFormat('dd-MM-yyyy')
-              //           .format(_rangeStart ?? DateTime.now()),
-              //       DateFormat('dd-MM-yyyy')
-              //           .format(_rangeEnd ?? DateTime.now())), // Hàm gọi API
-              //   //               if (start != null && end != null) {
-              //   //   _selectedEvents.value = ScheduleRepo().getScheduleList(dayStart, dayEnd),
-              //   // } else if (start != null) {
-              //   //   _selectedEvents.value = ScheduleRepo().getScheduleList(dayStart, dayEnd),
-              //   // } else if (end != null) {
-              //   //   _selectedEvents.value = ScheduleRepo().getScheduleList(dayStart, dayEnd),
-              //   // }
-              //   builder: (context, snapshot) {
-              //     if (snapshot.connectionState == ConnectionState.waiting) {
-              //       return const CircularProgressIndicator();
-              //     } else if (snapshot.hasError) {
-              //       return Text(
-              //         'Vui lòng kiểm tra lại kết nối internet',
-              //         style: defaultText14M,
-              //       );
-              //     } else if (snapshot.hasData) {
-              //       _listLichHoc = snapshot.data as List<ScheduleModel>;
-              //       return
-              //     } else {
-              //       return Text(
-              //         'Vui lòng kiểm tra lại kết nối internet2',
-              //         style: defaultText14M,
-              //       );
-              //     }
-              //   },
-              // ),
             ],
           ),
         );
@@ -330,6 +291,7 @@ class _ItemTableCalenderState extends State<ItemTableCalender> {
   bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
+    final systemLocale = context.watch<LanguageCubit>().state;
     return GestureDetector(
       onTap: () async {
         setState(() {
@@ -415,10 +377,20 @@ class _ItemTableCalenderState extends State<ItemTableCalender> {
                             SizedBox(
                               height: 8.h,
                             ),
-                            Text(
-                              '  Tháng ${widget.model.day.month}  ',
-                              style: defaultText16B.copyWith(
-                                  color: Colors.white, fontSize: 24.sp),
+                            SizedBox(
+                              width: 108.w,
+                              child: Center(
+                                child: Text(
+                                  DateFormat(
+                                          'MMMM',
+                                          systemLocale.languageCode == 'vi'
+                                              ? 'vi_Vi'
+                                              : 'en_US')
+                                      .format(widget.model.day),
+                                  style: defaultText16B.copyWith(
+                                      color: Colors.white, fontSize: 24.sp),
+                                ),
+                              ),
                             ),
                             SizedBox(
                               height: 8.h,
@@ -464,7 +436,7 @@ class _ItemTableCalenderState extends State<ItemTableCalender> {
                       widget.model.reason != null
                           ? RichText(
                               text: TextSpan(
-                                text: 'Xin nghỉ: ',
+                                text: L10n.of(context).requestingLeave,
                                 style: defaultText16M,
                                 children: [
                                   TextSpan(
@@ -480,7 +452,7 @@ class _ItemTableCalenderState extends State<ItemTableCalender> {
                       ),
                       RichText(
                         text: TextSpan(
-                          text: 'Giáo viên: ',
+                          text: L10n.of(context).teacher,
                           style: defaultText16M,
                           children: [
                             TextSpan(
@@ -495,7 +467,7 @@ class _ItemTableCalenderState extends State<ItemTableCalender> {
                       ),
                       RichText(
                         text: TextSpan(
-                          text: 'Phòng học: ',
+                          text: L10n.of(context).classroom,
                           style: defaultText16M,
                           children: [
                             TextSpan(
@@ -510,7 +482,7 @@ class _ItemTableCalenderState extends State<ItemTableCalender> {
                       ),
                       RichText(
                         text: TextSpan(
-                          text: 'Chi nhánh: ',
+                          text: L10n.of(context).branch,
                           style: defaultText16M,
                           children: [
                             TextSpan(

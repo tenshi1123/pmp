@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/teacher/teacher_model/teacher_class_model.dart';
 import 'package:pmp_english/teacher/teacher_repo/teacher_class_repo.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
@@ -282,7 +283,7 @@ class _DetailExamScreenState extends State<DetailExamScreen> {
                 ),
                 child: Center(
                   child: Text(
-                    'Lưu thay đổi',
+                    L10n.of(context).saveChange,
                     style: defaultText16B.copyWith(color: Colors.white),
                   ),
                 ),

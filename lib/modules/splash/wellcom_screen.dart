@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/modules/login/teacher/teacher_login_screen.dart';
 import '../../utils/constants/color.dart';
 import '../login/login_screen.dart';
@@ -42,7 +43,7 @@ class WellcomeScreen extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                    'Đăng nhập với vai trò Học Sinh',
+                    L10n.of(context).loginAsStudent,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: key1Color,
@@ -76,7 +77,7 @@ class WellcomeScreen extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                    'Đăng nhập với vai trò Giáo Viên',
+                    L10n.of(context).loginAsTeacher,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: key1Color,

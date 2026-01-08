@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/student_models/my_course_model.dart';
 import 'package:pmp_english/student_models/review_models.dart';
 import 'package:pmp_english/utils/constants/color.dart';
@@ -30,7 +31,7 @@ class ReportageScreen extends StatelessWidget {
           child: chartItem(
             width: 350,
             percents: detailBaoCao.chuyenCan,
-            title: 'Chuyên cần',
+            title: L10n.of(context).attendance,
           ),
         ),
         Padding(
@@ -38,7 +39,7 @@ class ReportageScreen extends StatelessWidget {
           child: chartItem(
             width: 350,
             percents: detailBaoCao.baiTap,
-            title: 'Bài tập',
+            title: L10n.of(context).assignments,
           ),
         ),
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/modules/login/otp_screen.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 
@@ -45,7 +46,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                   ),
                 ),
                 Text(
-                  'Quên mật khẩu ?',
+                  '${L10n.of(context).forgotPassword} ?',
                   textAlign: TextAlign.right,
                   overflow: TextOverflow.clip,
                   style: TextStyle(
@@ -131,7 +132,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                         color: main1Color),
                     child: Center(
                       child: Text(
-                        'Xác nhận',
+                        L10n.of(context).confirm,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white,
@@ -150,7 +151,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                     Navigator.of(context).pop();
                   },
                   child: Text(
-                    'Quay lại',
+                    L10n.of(context).back,
                     style: TextStyle(
                       color: main1Color,
                       fontSize: 14.sp,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/modules/bottombar/screen/extension.dart/schedule_screen.dart';
 import 'package:pmp_english/modules/bottombar/screen/user_info/account_screen.dart';
 import 'package:pmp_english/modules/bottombar/screen/news_screen.dart';
@@ -95,7 +96,7 @@ class _BottombarState extends State<Bottombar> {
                       ? 'assets/icons/home_gradient.svg'
                       : 'assets/icons/home_icon.svg',
                 ),
-                label: 'Trang chủ'),
+                label: L10n.of(context).home),
             BottomNavigationBarItem(
                 // backgroundColor: notifire.getprimerycolor,
                 icon: SvgPicture.asset(
@@ -104,16 +105,17 @@ class _BottombarState extends State<Bottombar> {
                       : 'assets/icons/course_icon.svg',
                   height: 30.h,
                 ),
-                label: 'Khóa học'),
+                label: L10n.of(context).course),
             BottomNavigationBarItem(
-                // backgroundColor: notifire.getprimerycolor,
-                icon: SvgPicture.asset(
-                  _selectedIndex == 2
-                      ? 'assets/icons/schedule_gradient.svg'
-                      : 'assets/icons/schedule_icon.svg',
-                  height: 30.h,
-                ),
-                label: 'Thời khóa biểu'),
+              // backgroundColor: notifire.getprimerycolor,
+              icon: SvgPicture.asset(
+                _selectedIndex == 2
+                    ? 'assets/icons/schedule_gradient.svg'
+                    : 'assets/icons/schedule_icon.svg',
+                height: 30.h,
+              ),
+              label: L10n.of(context).timetable,
+            ),
             BottomNavigationBarItem(
                 // backgroundColor: notifire.getprimerycolor,
                 icon: SvgPicture.asset(
@@ -122,7 +124,7 @@ class _BottombarState extends State<Bottombar> {
                       : 'assets/icons/news.svg',
                   height: 30.h,
                 ),
-                label: 'Tin tức'),
+                label: L10n.of(context).news1),
             BottomNavigationBarItem(
               // backgroundColor: notifire.getprimerycolor,
               icon: SvgPicture.asset(
@@ -132,7 +134,7 @@ class _BottombarState extends State<Bottombar> {
                 height: 30.h,
                 fit: BoxFit.fitHeight,
               ),
-              label: 'Tài khoản',
+              label: L10n.of(context).profile,
             ),
           ],
           onTap: (index) {

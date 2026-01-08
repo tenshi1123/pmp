@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
+import 'package:pmp_english/core/localization/language_cubit.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/modules/bottombar/utils.dart';
 import 'package:pmp_english/teacher/teacher_model/home_teacher_model.dart';
 import 'package:pmp_english/teacher/teacher_model/teacher_class_model.dart';
@@ -111,6 +114,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final systemLocale = context.watch<LanguageCubit>().state;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -118,7 +122,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
         automaticallyImplyLeading: false,
         title: Center(
           child: Text(
-            'Lịch dạy',
+            L10n.of(context).teachingSchedule,
             style: defaultText18B.copyWith(
               color: Colors.white,
             ),
@@ -143,7 +147,8 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                     ),
                   ),
                   child: TableCalendar<LichHocModel>(
-                    locale: 'vi_VI',
+                    locale:
+                        '${systemLocale.languageCode}_${systemLocale.countryCode}',
                     firstDay: kFirstDay,
                     lastDay: kLastDay,
                     focusedDay: _focusedDay,
@@ -197,7 +202,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                 ),
                 SizedBox(height: 24.h),
                 Text(
-                  'Lịch dạy của bạn',
+                  L10n.of(context).yourTeachingSchedule,
                   style: defaultText16B,
                 ),
                 ValueListenableBuilder<List<LichHocModel>>(
@@ -206,7 +211,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                     return value.isEmpty
                         ? Center(
                             child: Text(
-                              'Không có lịch học',
+                              L10n.of(context).noTeachingSchedule,
                               style: defaultText16B,
                             ),
                           )
@@ -269,6 +274,7 @@ class _ItemTableCalenderState extends State<ItemTableCalender> {
 
   @override
   Widget build(BuildContext context) {
+    final systemLocale = context.watch<LanguageCubit>().state;
     return GestureDetector(
       onTap: () async {
         List<DiemDanhHSModel> listDiemDanh = await TeacherClassRepo()
@@ -339,7 +345,12 @@ class _ItemTableCalenderState extends State<ItemTableCalender> {
                             color: Colors.white, fontSize: 26.sp),
                       ),
                       Text(
-                        'Tháng ${widget.model.day.month}',
+                        DateFormat(
+                                'MMMM',
+                                systemLocale.languageCode == 'vi'
+                                    ? 'vi_Vi'
+                                    : 'en_US')
+                            .format(widget.model.day),
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16.sp,
@@ -370,7 +381,7 @@ class _ItemTableCalenderState extends State<ItemTableCalender> {
             SizedBox(height: 12.h),
             RichText(
               text: TextSpan(
-                text: 'Phòng học : ',
+                text: L10n.of(context).classroom,
                 style: defaultText16M,
                 children: [
                   TextSpan(
@@ -383,7 +394,7 @@ class _ItemTableCalenderState extends State<ItemTableCalender> {
             SizedBox(height: 10.h),
             RichText(
               text: TextSpan(
-                text: 'Chi nhánh : ',
+                text: L10n.of(context).branch,
                 style: defaultText16M,
                 children: [
                   TextSpan(

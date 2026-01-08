@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/teacher/teacher_model/teacher_class_model.dart';
 import 'package:pmp_english/teacher/teacher_repo/teacher_class_repo.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
@@ -47,7 +48,7 @@ class _TeacherDetailState extends State<TeacherDetail>
           },
         ),
         title: Text(
-          '    Chi tiết lớp học',
+          '    ${L10n.of(context).detailClass}',
           style: defaultText18B.copyWith(
             color: Colors.white,
           ),
@@ -72,12 +73,14 @@ class _TeacherDetailState extends State<TeacherDetail>
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   _detailItem(
-                      title1: 'Tên lớp:', title2: widget.detailClass.name),
+                      title1: L10n.of(context).nameClass,
+                      title2: widget.detailClass.name),
                   _detailItem(
-                      title1: 'Hình thức:',
+                      title1: L10n.of(context).learningFormat,
                       title2: widget.detailClass.hinhThucHoc),
                   _detailItem(
-                      title1: 'Khóa học:', title2: widget.detailClass.alias),
+                      title1: '${L10n.of(context).course} :',
+                      title2: widget.detailClass.alias),
                 ],
               ),
             ),
@@ -94,7 +97,7 @@ class _TeacherDetailState extends State<TeacherDetail>
               bottom: 16.h,
             ),
             child: Text(
-              'Danh sách buổi học',
+              L10n.of(context).listLesson,
               style: defaultText16B,
             ),
           ),
@@ -131,12 +134,12 @@ class _TeacherDetailState extends State<TeacherDetail>
                         color: Colors.white),
                     labelColor: Colors.black,
                     unselectedLabelColor: const Color(0xff292929).withAlpha(84),
-                    tabs: const [
+                    tabs: [
                       Tab(
-                        text: "Chưa học",
+                        text: L10n.of(context).notYetStudied,
                       ),
                       Tab(
-                        text: "Đã học",
+                        text: L10n.of(context).learned,
                       ),
                     ],
                   ),
@@ -371,7 +374,7 @@ Widget _detailItem({required String title1, required String title2}) {
         width: 18.w,
       ),
       SizedBox(
-        width: 120.w,
+        width: 132.w,
         child: Text(
           title1,
           style: defaultText16M,

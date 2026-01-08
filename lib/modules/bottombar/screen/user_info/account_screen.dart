@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/modules/bottombar/screen/user_info/change_pass_screen.dart';
 import 'package:pmp_english/modules/bottombar/screen/user_info/edit_info_student_screen.dart';
 import 'package:pmp_english/modules/infoAccount/payment_history.dart';
@@ -11,6 +12,7 @@ import 'package:pmp_english/student_repo/customer_repo.dart';
 import 'package:pmp_english/student_repo/home_repo.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
+import 'package:pmp_english/utils/widget/custom_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -81,7 +83,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                     height: 6.h,
                                   ),
                                   Text(
-                                    'Mã học viên: ${widget.profileModel.code}',
+                                    '${L10n.of(context).studentCode}: ${widget.profileModel.code}',
                                     style: defaultText12Re.copyWith(
                                       color: key1Color,
                                     ),
@@ -128,7 +130,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Họ và tên',
+                              L10n.of(context).fullName,
                               style: defaultText14Re,
                             ),
                             Text(
@@ -144,7 +146,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Ngày sinh',
+                              L10n.of(context).dob,
                               style: defaultText14Re,
                             ),
                             Text(
@@ -160,7 +162,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Số điện thoại',
+                              L10n.of(context).phone,
                               style: defaultText14Re,
                             ),
                             Text(
@@ -177,7 +179,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Địa chỉ',
+                              L10n.of(context).address,
                               style: defaultText14Re,
                             ),
                             SizedBox(
@@ -258,13 +260,13 @@ class _AccountScreenState extends State<AccountScreen> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            'Điểm thưởng',
+                            L10n.of(context).rewardPoints,
                             style: defaultText12Re.copyWith(
                               color: Colors.white,
                             ),
                           ),
                           Text(
-                            '30 điểm',
+                            '30 ${L10n.of(context).point}',
                             style: defaultText16B.copyWith(
                               color: Colors.white,
                             ),
@@ -276,47 +278,6 @@ class _AccountScreenState extends State<AccountScreen> {
                 ),
               ),
               const Spacer(),
-              // GestureDetector(
-              //   onTap: () {
-              //     Navigator.push(
-              //       context,
-              //       MaterialPageRoute(
-              //         builder: (context) => const MyCertificateScreen(),
-              //       ),
-              //     );
-              //   },
-              //   child: Stack(
-              //     children: [
-              //       Image.asset(
-              //         'assets/images/bg_chungchi.png',
-              //         height: 68.h,
-              //         width: 168.w,
-              //         fit: BoxFit.fill,
-              //       ),
-              //       Positioned(
-              //         top: 10.h,
-              //         right: 20.w,
-              //         child: Column(
-              //           crossAxisAlignment: CrossAxisAlignment.end,
-              //           children: [
-              //             Text(
-              //               'Xem chi tiết',
-              //               style: defaultText12Re.copyWith(
-              //                 color: Colors.white,
-              //               ),
-              //             ),
-              //             Text(
-              //               'Chứng chỉ',
-              //               style: defaultText16B.copyWith(
-              //                 color: Colors.white,
-              //               ),
-              //             ),
-              //           ],
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
             ],
           ),
           SizedBox(
@@ -348,7 +309,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 children: [
                   Image.asset('assets/images/fee.png'),
                   Text(
-                    'Học phí và thanh toán',
+                    L10n.of(context).feeAndPay,
                     style: defaultText14B.copyWith(
                       color: Colors.white,
                     ),
@@ -372,38 +333,16 @@ class _AccountScreenState extends State<AccountScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                SizedBox(
+                  height: 15.h,
+                ),
                 Text(
-                  'Quản lý tài khoản',
+                  L10n.of(context).accountManagement,
                   style: defaultText14M,
                 ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //   children: [
-                //     Text(
-                //       'Mật khẩu',
-                //       style: defaultText14M,
-                //     ),
-                //     Icon(
-                //       Icons.keyboard_arrow_right,
-                //       size: 30.h,
-                //       color: key1Color,
-                //     ),
-                //   ],
-                // ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //   children: [
-                //     Text(
-                //       'Thông báo',
-                //       style: defaultText14M,
-                //     ),
-                //     Icon(
-                //       Icons.keyboard_arrow_right,
-                //       size: 30.h,
-                //       color: key1Color,
-                //     ),
-                //   ],
-                // ),
+                SizedBox(
+                  height: 8.h,
+                ),
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
@@ -417,7 +356,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Mật khẩu',
+                        L10n.of(context).password,
                         style: defaultText14M,
                       ),
                       Icon(
@@ -428,19 +367,22 @@ class _AccountScreenState extends State<AccountScreen> {
                     ],
                   ),
                 ),
+                SizedBox(
+                  height: 8.h,
+                ),
                 GestureDetector(
                   onTap: () {
-                    _makePhoneCall('0935 404 641');
+                    _makePhoneCall('0909 383 358');
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Hotline hỗ trợ',
+                        L10n.of(context).hotline,
                         style: defaultText14M,
                       ),
                       Text(
-                        '1900 8978',
+                        '0909 383 358',
                         style: defaultText14M.copyWith(
                           color: sub1Color,
                         ),
@@ -448,19 +390,48 @@ class _AccountScreenState extends State<AccountScreen> {
                     ],
                   ),
                 ),
+                SizedBox(
+                  height: 8.h,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    showLanguageDialog(context);
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        L10n.of(context).language,
+                        style: defaultText14M,
+                      ),
+                      Icon(
+                        Icons.keyboard_arrow_right,
+                        size: 30.h,
+                        color: key1Color,
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 8.h,
+                ),
                 GestureDetector(
                   onTap: () => _dialogBuilder(context),
                   child: Container(
-                    height: 49.h,
                     width: 315.w,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: state1,
                     ),
                     child: Center(
-                      child: Text(
-                        'Đăng xuất',
-                        style: defaultText14M,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: 8.h,
+                        ),
+                        child: Text(
+                          L10n.of(context).logout,
+                          style: defaultText14B,
+                        ),
                       ),
                     ),
                   ),
@@ -483,11 +454,11 @@ Future<void> _dialogBuilder(BuildContext context) {
     builder: (BuildContext context) {
       return AlertDialog(
         title: Text(
-          'Đăng xuất',
+          L10n.of(context).logout,
           style: defaultText14M,
         ),
         content: Text(
-          'Bạn có chắc muốn đăng xuất ?',
+          L10n.of(context).confirmLogout,
           style: defaultText14M,
         ),
         actions: <Widget>[
@@ -495,7 +466,9 @@ Future<void> _dialogBuilder(BuildContext context) {
             style: TextButton.styleFrom(
               textStyle: Theme.of(context).textTheme.labelLarge,
             ),
-            child: const Text('Hủy'),
+            child: Text(
+              L10n.of(context).cancel,
+            ),
             onPressed: () {
               Navigator.of(context).pop();
             },
@@ -504,7 +477,9 @@ Future<void> _dialogBuilder(BuildContext context) {
             style: TextButton.styleFrom(
               textStyle: Theme.of(context).textTheme.labelLarge,
             ),
-            child: const Text('Xác nhận'),
+            child: Text(
+              L10n.of(context).confirm,
+            ),
             onPressed: () async {
               SharedPreferences prefs = await SharedPreferences.getInstance();
               await prefs.remove('token');

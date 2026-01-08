@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/modules/login/forgot_password_screen.dart';
 import 'package:pmp_english/student_repo/customer_repo.dart';
 import 'package:pmp_english/student_repo/login_repo.dart';
@@ -83,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     )),
                 Text(
-                  'Đăng nhập để tiếp tục sử dụng ứng dụng',
+                  L10n.of(context).loginUsingapp,
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.clip,
                   style: TextStyle(
@@ -93,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 Text(
-                  'Thông tin đăng nhập được cung cấp bởi nhà trường',
+                  L10n.of(context).loginTitle,
                   textAlign: TextAlign.right,
                   style: TextStyle(
                     color: const Color(0xff999999),
@@ -108,7 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Row(
                   children: [
                     Text(
-                      'Tài khoản',
+                      L10n.of(context).phone,
                       style: TextStyle(
                         color: key1Color,
                         fontSize: 14.sp,
@@ -153,7 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Row(
                   children: [
                     Text(
-                      'Mật khẩu',
+                      L10n.of(context).password,
                       style: TextStyle(
                         color: key1Color,
                         fontSize: 14.sp,
@@ -227,7 +228,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         );
                       },
                       child: Text(
-                        'Quên mật khẩu',
+                        L10n.of(context).forgotPassword,
                         style: TextStyle(
                           color: main1Color,
                           fontSize: 14.sp,
@@ -265,9 +266,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         context: context,
                         builder: (BuildContext context) {
                           return CupertinoAlertDialog(
-                            title: const Text('Vui lòng thử lại'),
-                            content: const Text(
-                                'Vui lòng kiểm tra lại mã học sinh và mật khẩu của bạn'),
+                            title: Text(
+                              L10n.of(context).pleaseTryAgain,
+                            ),
+                            content: Text(
+                              L10n.of(context).doubleCheck,
+                            ),
                             actions: <Widget>[
                               CupertinoDialogAction(
                                 isDefaultAction: true,
@@ -297,7 +301,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         color: sub1Color),
                     child: Center(
                       child: Text(
-                        'Đăng nhập',
+                        L10n.of(context).login,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white,
@@ -320,16 +324,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       SvgPicture.asset('assets/icons/phone_dialer.svg'),
                       Text(
-                        ' Hotline hỗ trợ ',
+                        L10n.of(context).hotline,
                         style: defaultText12M,
                       ),
                       Container(
                         height: 1.h,
-                        width: 168.w,
+                        width: 120.w,
                         color: key1Color,
                       ),
                       Text(
-                        '1900 8978',
+                        '0909 383 358',
                         style: defaultText14M.copyWith(color: sub1Color),
                       )
                     ],

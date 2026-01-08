@@ -3,11 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/modules/login/login_screen.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import '../../../utils/constants/mediaqury.dart';
-import '../../../utils/constants/vn_languegua.dart';
 import 'wellcom_screen.dart';
 
 class Onbonding extends StatefulWidget {
@@ -107,7 +107,8 @@ class _OnbondingState extends State<Onbonding> {
                                           horizontal: 18.w),
                                       child: RichText(
                                         text: TextSpan(
-                                          text: 'Tiếng anh thực chiến cùng ',
+                                          text: L10n.of(context)
+                                              .practicalEnglishwith,
                                           style: TextStyle(
                                               color: key1Color,
                                               fontSize: 32.sp,
@@ -125,10 +126,14 @@ class _OnbondingState extends State<Onbonding> {
                                       ),
                                     ),
                                     SizedBox(height: height / 40),
-                                    Text(
-                                      VnString.itisrecommended,
-                                      textAlign: TextAlign.center,
-                                      style: defaultText16M,
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 20.w),
+                                      child: Text(
+                                        L10n.of(context).itisrecommended,
+                                        textAlign: TextAlign.center,
+                                        style: defaultText16M,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -154,21 +159,22 @@ class _OnbondingState extends State<Onbonding> {
                                           horizontal: 18.w),
                                       child: RichText(
                                         text: TextSpan(
-                                          text: 'Xây dựng nền tảng ',
+                                          text: L10n.of(context)
+                                              .buildingTheFoundation,
                                           style: TextStyle(
                                               color: key1Color,
                                               fontSize: 32.sp,
                                               fontWeight: FontWeight.bold),
                                           children: <TextSpan>[
                                             TextSpan(
-                                              text: 'ngôn ngữ ',
+                                              text: L10n.of(context).language,
                                               style: TextStyle(
                                                   color: main1Color,
                                                   fontSize: 32.sp,
                                                   fontWeight: FontWeight.bold),
                                             ),
                                             TextSpan(
-                                              text: 'vững vàng',
+                                              text: L10n.of(context).steady,
                                               style: TextStyle(
                                                   color: key1Color,
                                                   fontSize: 32.sp,
@@ -179,10 +185,14 @@ class _OnbondingState extends State<Onbonding> {
                                       ),
                                     ),
                                     SizedBox(height: height / 40),
-                                    Text(
-                                      VnString.thaksforfunevent,
-                                      textAlign: TextAlign.center,
-                                      style: defaultText16M,
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 20.w),
+                                      child: Text(
+                                        L10n.of(context).thaksforfunevent,
+                                        textAlign: TextAlign.center,
+                                        style: defaultText16M,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -203,35 +213,31 @@ class _OnbondingState extends State<Onbonding> {
                                 padding: EdgeInsets.symmetric(horizontal: 18.w),
                                 child: RichText(
                                   text: TextSpan(
-                                    text: 'Đội ngũ giáo viên ',
+                                    text: L10n.of(context).teachingStaff,
                                     style: TextStyle(
                                         color: key1Color,
                                         fontSize: 32.sp,
                                         fontWeight: FontWeight.bold),
                                     children: <TextSpan>[
                                       TextSpan(
-                                        text: 'giàu kinh nghiệm',
+                                        text: L10n.of(context).experienced,
                                         style: TextStyle(
                                             color: main1Color,
                                             fontSize: 32.sp,
                                             fontWeight: FontWeight.bold),
                                       ),
-                                      // TextSpan(
-                                      //   text: 'vững vàng',
-                                      //   style: TextStyle(
-                                      //       color: key1Color,
-                                      //       fontSize: 32.sp,
-                                      //       fontWeight: FontWeight.bold),
-                                      // ),
                                     ],
                                   ),
                                 ),
                               ),
                               SizedBox(height: height / 40),
-                              Text(
-                                VnString.withtimelynotification,
-                                textAlign: TextAlign.center,
-                                style: defaultText16M,
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                                child: Text(
+                                  L10n.of(context).withtimelynotification,
+                                  textAlign: TextAlign.center,
+                                  style: defaultText16M,
+                                ),
                               ),
                             ],
                           ),

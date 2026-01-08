@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/teacher/teacher_model/teacher_class_model.dart';
 import 'package:pmp_english/teacher/teacher_repo/teacher_class_repo.dart';
 import 'package:pmp_english/teacher_modules/teacher_class/teacher_detail_class.dart';
@@ -40,8 +41,8 @@ class _ClassManagementScreenState extends State<ClassManagementScreen>
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text(
-          "Lớp học đang phụ trách",
+        title: Text(
+          L10n.of(context).classInCharge,
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -88,8 +89,8 @@ class _ClassManagementScreenState extends State<ClassManagementScreen>
                                 topLeft: Radius.circular(14.r),
                                 topRight: Radius.circular(14.r)),
                             color: Colors.white),
-                        child: const Tab(
-                          text: "Lớp học trung tâm",
+                        child: Tab(
+                          text: L10n.of(context).centralClassroom,
                         ),
                       ),
                       Container(
@@ -100,7 +101,9 @@ class _ClassManagementScreenState extends State<ClassManagementScreen>
                               color: Colors.white),
                           margin: const EdgeInsets.only(left: 10),
                           width: 200.w,
-                          child: const Tab(text: "Lớp học zoom")),
+                          child: Tab(
+                            text: L10n.of(context).zoomClassroom,
+                          )),
                     ],
                   ),
                 ),

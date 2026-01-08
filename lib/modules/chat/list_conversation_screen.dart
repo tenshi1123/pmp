@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/modules/chat/list_teacher_sreen.dart';
 import 'package:pmp_english/student_models/chat_models.dart';
 import 'package:pmp_english/student_models/profile_model.dart';
@@ -51,7 +52,7 @@ class ListConversationScreen extends StatelessWidget {
                             color: Colors.white,
                           ),
                           Text(
-                            '\tTin nhắn',
+                            '\t${L10n.of(context).mesage}',
                             style: defaultText20B.copyWith(
                               color: Colors.white,
                             ),
@@ -110,8 +111,8 @@ class ListConversationScreen extends StatelessWidget {
                         ]),
                     child: Text(
                       type == 'teacher'
-                          ? 'Danh sách học viên'
-                          : 'Danh sách giáo viên',
+                          ? L10n.of(context).listStudent
+                          : L10n.of(context).listTeacher,
                       style: defaultText14M.copyWith(
                         decoration: TextDecoration.underline,
                       ),

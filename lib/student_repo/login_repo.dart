@@ -100,9 +100,6 @@ class LoginRepo {
 
   Future<String> getToken() async {
     Response response;
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    final String? type = prefs.getString(ConstString.type);
     dio.interceptors.add(LogInterceptor(
       responseBody: true,
       requestBody: true,

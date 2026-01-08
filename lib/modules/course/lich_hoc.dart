@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:pmp_english/core/localization/language_cubit.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/modules/lesson/detail_lesson_screen.dart';
 import 'package:pmp_english/student_models/my_course_model.dart';
 import 'package:pmp_english/student_repo/mycourse_repo.dart';
@@ -29,7 +32,7 @@ class LichHocScreen extends StatelessWidget {
                     padding: EdgeInsets.only(top: 20.h, bottom: 20.h),
                     child: Center(
                       child: Text(
-                        'Chưa có lịch học',
+                        L10n.of(context).notHaveSchedule,
                         style: defaultText16M,
                       ),
                     ),
@@ -39,7 +42,7 @@ class LichHocScreen extends StatelessWidget {
                     type: 1,
                   ),
             Text(
-              'Thời khóa biểu',
+              L10n.of(context).timetable,
               style: defaultText16B,
             ),
             SizedBox(
@@ -106,11 +109,11 @@ class _LichhocTabBarState extends State<LichhocTabBar>
           controller: _tabController,
           tabs: <Widget>[
             homeTab(
-              title: 'Sắp tới',
+              title: L10n.of(context).notYetStudied,
               isSeprator: false,
               hasNumber: false,
             ),
-            homeTab(title: 'Đã tham gia', hasNumber: false),
+            homeTab(title: L10n.of(context).learned, hasNumber: false),
           ],
         ),
         Expanded(
@@ -151,6 +154,7 @@ class _ClassItem extends StatelessWidget {
   final int type;
   @override
   Widget build(BuildContext context) {
+    final systemLocale = context.watch<LanguageCubit>().state;
     return GestureDetector(
       onTap: () async {
         VideoLessonModel videoLesson =
@@ -216,7 +220,12 @@ class _ClassItem extends StatelessWidget {
                         height: 2.h,
                       ),
                       Text(
-                        'Tháng ${model.day.month}',
+                        DateFormat(
+                                'MMMM',
+                                systemLocale.languageCode == 'vi'
+                                    ? 'vi_Vi'
+                                    : 'en_US')
+                            .format(model.day),
                         style: defaultText16M.copyWith(
                           color: Colors.white,
                         ),
@@ -273,7 +282,7 @@ class _ClassItem extends StatelessWidget {
                       SizedBox(
                         width: 80.w,
                         child: Text(
-                          'Phòng học',
+                          L10n.of(context).classroom,
                           style: defaultText14Re,
                         ),
                       ),
@@ -292,7 +301,7 @@ class _ClassItem extends StatelessWidget {
                       SizedBox(
                         width: 80.w,
                         child: Text(
-                          'Cơ sở',
+                          L10n.of(context).campus,
                           style: defaultText14Re,
                         ),
                       ),
@@ -311,7 +320,7 @@ class _ClassItem extends StatelessWidget {
                       SizedBox(
                         width: 80.w,
                         child: Text(
-                          'Địa chỉ',
+                          L10n.of(context).address,
                           style: defaultText14Re,
                         ),
                       ),
@@ -364,7 +373,7 @@ class _ClassItem extends StatelessWidget {
                                 ),
                                 child: Center(
                                   child: Text(
-                                    'Xin nghỉ',
+                                    L10n.of(context).missWithPermission,
                                     style: defaultText14B.copyWith(
                                       color: Colors.white,
                                     ),
@@ -377,7 +386,7 @@ class _ClassItem extends StatelessWidget {
                   )
                 : RichText(
                     text: TextSpan(
-                      text: 'Xin nghỉ: ',
+                      text: L10n.of(context).requestingLeave,
                       style: defaultText16M,
                       children: [
                         TextSpan(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/modules/lesson/video_screen.dart';
 import 'package:pmp_english/student_models/home_model.dart';
 import 'package:pmp_english/student_models/my_course_model.dart';
@@ -43,7 +44,7 @@ class DetailLessonScreen extends StatelessWidget {
                   ),
                   RichText(
                     text: TextSpan(
-                      text: '  Chi tiết buổi học ',
+                      text: '  ${L10n.of(context).lessonDetails} ',
                       style: defaultText16M,
                       recognizer: TapGestureRecognizer()
                         ..onTap = () => Navigator.of(context).pop(),
@@ -308,7 +309,7 @@ class _DetailLessonTabbarState extends State<DetailLessonTabbar>
               hasNumber: false,
             ),
             homeTab(
-              title: 'Bài tập',
+              title: L10n.of(context).assignments,
               hasNumber: false,
             ),
             homeTab(

@@ -50,7 +50,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     CupertinoDialogAction(
                       isDefaultAction: true,
                       child: Text(
-                        'ok',
+                        'Ok',
                         style: TextStyle(fontSize: 20, color: key1Color),
                       ),
                       onPressed: () {
@@ -88,7 +88,7 @@ class _ChatScreenState extends State<ChatScreen> {
               CupertinoDialogAction(
                 isDefaultAction: true,
                 child: Text(
-                  'ok',
+                  'Ok',
                   style: TextStyle(fontSize: 20, color: key1Color),
                 ),
                 onPressed: () {

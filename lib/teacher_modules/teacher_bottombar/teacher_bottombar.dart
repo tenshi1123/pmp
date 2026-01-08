@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/modules/bottombar/screen/extension.dart/testtkb.dart';
 import 'package:pmp_english/student_repo/login_repo.dart';
 import 'package:pmp_english/teacher/teacher_model/home_teacher_model.dart';
@@ -73,7 +74,7 @@ class _TeacherBottomBarState extends State<TeacherBottomBar> {
             icon: SvgPicture.asset(
               'assets/icons/home.svg',
             ),
-            title: "Trang chủ",
+            title: L10n.of(context).home,
             inactiveIcon: SvgPicture.asset(
               'assets/icons/inactive_home.svg',
             ),
@@ -86,7 +87,7 @@ class _TeacherBottomBarState extends State<TeacherBottomBar> {
             icon: SvgPicture.asset(
               'assets/icons/class.svg',
             ),
-            title: "Lớp học",
+            title: L10n.of(context).lopHoc2,
             activeForegroundColor: const Color(0xff273D8C),
             inactiveIcon: SvgPicture.asset(
               'assets/icons/inactive_class.svg',
@@ -102,7 +103,7 @@ class _TeacherBottomBarState extends State<TeacherBottomBar> {
             icon: SvgPicture.asset(
               'assets/icons/calendar.svg',
             ),
-            title: "Lịch dạy",
+            title: L10n.of(context).teachingSchedule,
             activeForegroundColor: const Color(0xff273D8C),
             inactiveForegroundColor:
                 const Color(0xff273D8C).withValues(alpha: 0.4),
@@ -120,7 +121,7 @@ class _TeacherBottomBarState extends State<TeacherBottomBar> {
             icon: SvgPicture.asset(
               'assets/icons/person.svg',
             ),
-            title: "Cá nhân",
+            title: L10n.of(context).profile,
             activeForegroundColor: const Color(0xff273D8C),
             inactiveForegroundColor:
                 const Color(0xff273D8C).withValues(alpha: 0.4),
@@ -145,7 +146,7 @@ class _TeacherBottomBarState extends State<TeacherBottomBar> {
         controller: _controller,
         tabs: _tabs(),
         navBarBuilder: (navBarConfig) => Padding(
-          padding: EdgeInsets.only(bottom: 16.h, right: 16.w, left: 16.w),
+          padding: EdgeInsets.only(bottom: 6.h, right: 16.w, left: 16.w),
           child: Style6BottomNavBar(
             //itemPadding: EdgeInsets.all(5.h),
             navBarConfig: navBarConfig,

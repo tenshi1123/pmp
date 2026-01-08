@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/modules/bottombar/screen/user_info/change_pass_screen.dart';
 import 'package:pmp_english/modules/bottombar/screen/user_info/edit_info_teacher_screen.dart';
 import 'package:pmp_english/teacher/teacher_model/home_teacher_model.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
+import 'package:pmp_english/utils/widget/custom_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../modules/splash/wellcom_screen.dart';
@@ -26,7 +28,7 @@ class TeacherInfo extends StatelessWidget {
             ),
             child: Center(
               child: Text(
-                'Cá nhân',
+                L10n.of(context).profile,
                 style: defaultText20B.copyWith(
                   color: Colors.white,
                 ),
@@ -94,7 +96,7 @@ class TeacherInfo extends StatelessWidget {
             children: [
               _buildMenuItem(
                 icon: Icons.person_outline,
-                text: "Thông tin tài khoản",
+                text: L10n.of(context).accountInfo,
                 onTap: () {
                   Navigator.push(
                     context,
@@ -107,8 +109,15 @@ class TeacherInfo extends StatelessWidget {
                 },
               ),
               _buildMenuItem(
+                icon: Icons.language,
+                text: L10n.of(context).language,
+                onTap: () {
+                  showLanguageDialog(context);
+                },
+              ),
+              _buildMenuItem(
                 icon: Icons.vpn_key_outlined,
-                text: "Đổi mật khẩu",
+                text: L10n.of(context).changePass,
                 onTap: () {
                   Navigator.push(
                     context,
@@ -120,7 +129,7 @@ class TeacherInfo extends StatelessWidget {
               ),
               _buildMenuItem(
                 icon: Icons.logout,
-                text: "Đăng xuất",
+                text: L10n.of(context).logout,
                 onTap: () {
                   _dialogBuilder(context);
                 },
@@ -183,11 +192,11 @@ Future<void> _dialogBuilder(BuildContext context) {
     builder: (BuildContext context) {
       return AlertDialog(
         title: Text(
-          'Đăng xuất',
+          L10n.of(context).logout,
           style: defaultText14M,
         ),
         content: Text(
-          'Bạn có chắc muốn đăng xuất ?',
+          L10n.of(context).confirmLogout,
           style: defaultText14M,
         ),
         actions: <Widget>[
@@ -195,7 +204,9 @@ Future<void> _dialogBuilder(BuildContext context) {
             style: TextButton.styleFrom(
               textStyle: Theme.of(context).textTheme.labelLarge,
             ),
-            child: const Text('Hủy'),
+            child: Text(
+              L10n.of(context).cancel,
+            ),
             onPressed: () {
               Navigator.of(context).pop();
             },
@@ -204,7 +215,9 @@ Future<void> _dialogBuilder(BuildContext context) {
             style: TextButton.styleFrom(
               textStyle: Theme.of(context).textTheme.labelLarge,
             ),
-            child: const Text('Xác nhận'),
+            child: Text(
+              L10n.of(context).confirm,
+            ),
             onPressed: () async {
               // Xóa token và thông tin người dùng khỏi SharedPreferences
               // (Thay thế bằng mã của bạn để xóa token và thông tin người dùng)

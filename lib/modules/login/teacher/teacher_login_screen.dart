@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/student_repo/login_repo.dart';
 import 'package:pmp_english/teacher/teacher_model/home_teacher_model.dart';
 import 'package:pmp_english/teacher/teacher_repo/teacher_repo.dart';
@@ -54,7 +55,7 @@ class _TeacherLoginState extends State<TeacherLogin> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Xin chào!',
+                  L10n.of(context).hello,
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.clip,
                   style: TextStyle(
@@ -72,7 +73,7 @@ class _TeacherLoginState extends State<TeacherLogin> {
               ],
             ),
             Text(
-              'Chào mừng đã trở lại, hãy đăng nhập',
+              L10n.of(context).loginTitle2,
               textAlign: TextAlign.right,
               style: TextStyle(
                 color: const Color(0xff163065).withValues(alpha: 60),
@@ -92,7 +93,7 @@ class _TeacherLoginState extends State<TeacherLogin> {
             ),
             const SizedBox(height: 12),
             _buildTextField(
-              label: "Mật khẩu",
+              label: L10n.of(context).password,
               icon: Icons.lock,
               isPassword: true,
               controller: passwordController,
@@ -129,14 +130,15 @@ class _TeacherLoginState extends State<TeacherLogin> {
                       context: context,
                       builder: (BuildContext context) {
                         return CupertinoAlertDialog(
-                          title: const Text('Vui lòng thử lại'),
-                          content: const Text(
-                              'Vui lòng kiểm tra lại email và mật khẩu của bạn'),
+                          title: Text(L10n.of(context).pleaseTryAgain),
+                          content: Text(
+                            L10n.of(context).doubleCheck,
+                          ),
                           actions: <Widget>[
                             CupertinoDialogAction(
                               isDefaultAction: true,
                               child: Text(
-                                'Đồng ý',
+                                L10n.of(context).agree,
                                 style:
                                     TextStyle(fontSize: 20, color: key1Color),
                               ),
@@ -158,8 +160,8 @@ class _TeacherLoginState extends State<TeacherLogin> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30)),
                 ),
-                child: const Text(
-                  "Đăng nhập",
+                child: Text(
+                  L10n.of(context).login,
                   style: TextStyle(fontSize: 16, color: Colors.white),
                 ),
               ),

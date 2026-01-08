@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/student_repo/customer_repo.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
@@ -53,7 +54,7 @@ class _ChangePassScreenState extends State<ChangePassScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Thay đổi mật khẩu',
+                    L10n.of(context).changePassword,
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.clip,
                     style: TextStyle(
@@ -67,20 +68,6 @@ class _ChangePassScreenState extends State<ChangePassScreen> {
               SizedBox(
                 height: 10.h,
               ),
-              // Row(
-              //   children: [
-              //     Text(
-              //       'Cùng bạn xóa bỏ mọi rào cản trong học tập!',
-              //       textAlign: TextAlign.right,
-              //       style: TextStyle(
-              //         color: subBlack,
-              //         fontSize: 16.sp,
-              //         fontWeight: FontWeight.normal,
-              //       ),
-              //       overflow: TextOverflow.clip,
-              //     ),
-              //   ],
-              // ),
               Container(
                 width: 350.w,
                 height: 58.h,
@@ -121,7 +108,7 @@ class _ChangePassScreenState extends State<ChangePassScreen> {
                         });
                       },
                     ),
-                    hintText: 'Nhập mật khẩu hiện tại',
+                    hintText: L10n.of(context).currentPassword,
                     border:
                         const OutlineInputBorder(borderSide: BorderSide.none),
                     hintStyle: TextStyle(
@@ -174,7 +161,7 @@ class _ChangePassScreenState extends State<ChangePassScreen> {
                         });
                       },
                     ),
-                    hintText: 'Nhập mật khẩu mới',
+                    hintText: L10n.of(context).newPassword,
                     border:
                         const OutlineInputBorder(borderSide: BorderSide.none),
                     hintStyle: TextStyle(
@@ -208,7 +195,7 @@ class _ChangePassScreenState extends State<ChangePassScreen> {
                       height: 20.h,
                       fit: BoxFit.scaleDown,
                     ),
-                    hintText: 'Nhập lại mật khẩu',
+                    hintText: L10n.of(context).rePassword,
                     border:
                         const OutlineInputBorder(borderSide: BorderSide.none),
                     hintStyle: TextStyle(
@@ -265,7 +252,7 @@ class _ChangePassScreenState extends State<ChangePassScreen> {
                         actions: <Widget>[
                           TextButton(
                             child: Text(
-                              'ok',
+                              'Ok',
                               style: defaultText16M.copyWith(
                                   color: const Color(0xff3C3C3C)),
                             ),
@@ -287,7 +274,7 @@ class _ChangePassScreenState extends State<ChangePassScreen> {
                   ),
                   child: Center(
                     child: Text(
-                      'Đổi mật khẩu',
+                      L10n.of(context).changePass,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,

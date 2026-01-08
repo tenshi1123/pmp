@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/student_models/review_models.dart';
 import 'package:pmp_english/student_repo/extension_repo.dart';
 import 'package:pmp_english/utils/constants/color.dart';
@@ -44,7 +45,7 @@ class EvaluateScreen extends StatelessWidget {
                           color: Colors.white,
                         ),
                         Text(
-                          '\tĐánh giá',
+                          '\t${L10n.of(context).feedBack}',
                           style: defaultText20B.copyWith(
                             color: Colors.white,
                           ),
@@ -167,7 +168,7 @@ class _ReviewItem extends StatelessWidget {
                     SizedBox(
                       width: 120.w,
                       child: Text(
-                        'Giảng viên',
+                        L10n.of(context).teacher,
                         style: defaultText14Re,
                       ),
                     ),
@@ -192,7 +193,7 @@ class _ReviewItem extends StatelessWidget {
                     SizedBox(
                       width: 120.w,
                       child: Text(
-                        'Khóa học',
+                        L10n.of(context).course,
                         style: defaultText14Re,
                       ),
                     ),
@@ -217,7 +218,7 @@ class _ReviewItem extends StatelessWidget {
                     SizedBox(
                       width: 120.w,
                       child: Text(
-                        'Lớp',
+                        L10n.of(context).lophoc,
                         style: defaultText14Re,
                       ),
                     ),
@@ -234,7 +235,7 @@ class _ReviewItem extends StatelessWidget {
             ),
           ),
           Text(
-            'Xem chi tiết',
+            L10n.of(context).seeDetail,
             style:
                 defaultText14Re.copyWith(decoration: TextDecoration.underline),
           ),

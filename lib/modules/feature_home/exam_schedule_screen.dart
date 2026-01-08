@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/student_repo/lichthi_repo.dart';
 import 'package:pmp_english/student_models/lichthi_models.dart';
 import 'package:pmp_english/utils/constants/color.dart';
@@ -71,7 +72,7 @@ class _ExamScheduleScreenState extends State<ExamScheduleScreen> {
                             color: Colors.white,
                           ),
                           Text(
-                            '\tLịch thi',
+                            '\t${L10n.of(context).examSchedule}',
                             style: defaultText20B.copyWith(
                               color: Colors.white,
                             ),
@@ -113,7 +114,7 @@ class _ExamScheduleScreenState extends State<ExamScheduleScreen> {
                     height: 10.h,
                   ),
                   Text(
-                    'Đăng kí thi thử tháng ${DateFormat('MM/yyyy').format(DateTime.now())}',
+                    '${L10n.of(context).registerExam} ${DateFormat('MM/yyyy').format(DateTime.now())}',
                     style: defaultText16B,
                     textAlign: TextAlign.center,
                   ),
@@ -434,7 +435,7 @@ class _ExamScheduleScreenState extends State<ExamScheduleScreen> {
                                 CupertinoDialogAction(
                                   isDefaultAction: true,
                                   child: Text(
-                                    'Hủy',
+                                    L10n.of(context).cancel,
                                     style: TextStyle(
                                         fontSize: 20, color: key1Color),
                                   ),

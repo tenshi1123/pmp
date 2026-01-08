@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/student_models/gift_models.dart';
 import 'package:pmp_english/student_repo/home_repo.dart';
 import 'package:pmp_english/utils/constants/color.dart';
@@ -147,7 +148,7 @@ class _RedeemRewardScreenState extends State<RedeemRewardScreen> {
                     children: [
                       RichText(
                         text: TextSpan(
-                          text: 'Đã chọn ',
+                          text: L10n.of(context).selected,
                           style: defaultText16Re,
                           children: <TextSpan>[
                             TextSpan(
@@ -157,7 +158,7 @@ class _RedeemRewardScreenState extends State<RedeemRewardScreen> {
                                   fontSize: 16.sp,
                                   color: main1Color),
                             ),
-                            const TextSpan(text: ' phần thưởng!'),
+                            TextSpan(text: L10n.of(context).gift),
                           ],
                         ),
                       ),
@@ -180,17 +181,17 @@ class _RedeemRewardScreenState extends State<RedeemRewardScreen> {
                           backgroundColor: Colors.white,
                           title: RichText(
                             text: TextSpan(
-                              text: 'Bạn xác nhận đổi ',
+                              text: L10n.of(context).confirmExchange,
                               style: defaultText14M,
                               children: [
                                 TextSpan(
                                   text:
-                                      ' ${_giftModel.value.where((item) => selectedIds.contains(item.id)).map((item) => int.tryParse(item.score) ?? 0).fold(0, (prev, score) => prev + score)} điểm thưởng',
+                                      ' ${_giftModel.value.where((item) => selectedIds.contains(item.id)).map((item) => int.tryParse(item.score) ?? 0).fold(0, (prev, score) => prev + score)} ${L10n.of(context).rewardPoints}',
                                   style: defaultText14B.copyWith(
                                     color: main1Color,
                                   ),
                                 ),
-                                const TextSpan(text: ' lấy phần quà'),
+                                TextSpan(text: L10n.of(context).takeGift),
                                 TextSpan(
                                   text: selectedNames.isNotEmpty
                                       ? ' $selectedNames'
@@ -217,7 +218,8 @@ class _RedeemRewardScreenState extends State<RedeemRewardScreen> {
                                   ),
                                 ),
                                 child: Center(
-                                    child: Text('Hủy', style: defaultText14M)),
+                                    child: Text(L10n.of(context).cancel,
+                                        style: defaultText14M)),
                               ),
                             ),
                             SizedBox(
@@ -232,7 +234,9 @@ class _RedeemRewardScreenState extends State<RedeemRewardScreen> {
                                   context: context,
                                   builder: (context) {
                                     return AlertDialog(
-                                      title: Text('Thông báo'),
+                                      title: Text(
+                                        L10n.of(context).notification,
+                                      ),
                                       content: Text(mesage),
                                       actions: [
                                         TextButton(
@@ -260,7 +264,7 @@ class _RedeemRewardScreenState extends State<RedeemRewardScreen> {
                                   ),
                                 ),
                                 child: Center(
-                                    child: Text('Xác nhận',
+                                    child: Text(L10n.of(context).confirm,
                                         style: defaultText14B.copyWith(
                                           color: Colors.white,
                                         ))),
@@ -281,7 +285,7 @@ class _RedeemRewardScreenState extends State<RedeemRewardScreen> {
                       ),
                       child: Center(
                         child: Text(
-                          'Xác nhận đổi',
+                          L10n.of(context).confirmExchange,
                           style: defaultText14B.copyWith(
                             color: Colors.white,
                           ),

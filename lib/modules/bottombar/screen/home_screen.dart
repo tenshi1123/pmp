@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/modules/chat/list_conversation_screen.dart';
 import 'package:pmp_english/modules/course/recomment_course.dart';
 import 'package:pmp_english/modules/diemdanh/diem_danh_screen.dart';
@@ -99,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Chào mừng trở lại !',
+                              L10n.of(context).wellcome,
                               style:
                                   defaultText14Re.copyWith(color: Colors.white),
                             ),
@@ -182,7 +183,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    'Khóa học đã mua',
+                                    L10n.of(context).purchasedCourse,
                                     style: defaultText14M,
                                   ),
                                   Text(
@@ -213,7 +214,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Chuyên cần',
+                                        L10n.of(context).attendance,
                                         style: defaultText14Re.copyWith(
                                             color: key1Color.withValues(
                                                 alpha: 0.8)),
@@ -231,7 +232,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Mục tiêu',
+                                        L10n.of(context).goals,
                                         style: defaultText14Re.copyWith(
                                             color: key1Color.withValues(
                                                 alpha: 0.8)),
@@ -277,7 +278,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             );
                           },
-                          child: _stackDiemDanh()),
+                          child: _stackDiemDanh(context: context)),
                     ],
                   )
                 ],
@@ -304,7 +305,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     );
                   },
                   child: _homeIcon(
-                      title: 'Lịch thi', image: 'assets/images/lich_thi.png')),
+                      title: L10n.of(context).examSchedule,
+                      image: 'assets/images/lich_thi.png')),
               GestureDetector(
                   onTap: () async {
                     ListExcerciseModel model = await HomeRepo().getListBaiTap();
@@ -318,7 +320,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     );
                   },
                   child: _homeIcon(
-                      title: 'Bài tập', image: 'assets/images/bai_tap.png')),
+                      title: L10n.of(context).assignments,
+                      image: 'assets/images/bai_tap.png')),
               GestureDetector(
                 onTap: () async {
                   BaoCaoHocTapModel model = await HomeRepo().getBaoCaoDiem();
@@ -332,7 +335,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 },
                 child: _homeIcon(
-                    title: 'Báo cáo điểm',
+                    title: L10n.of(context).report,
                     image: 'assets/images/bao_cao_diem.png'),
               ),
               // Nút đánh giá
@@ -350,7 +353,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     );
                   },
                   child: _homeIcon(
-                      title: 'Đánh giá', image: 'assets/images/danh_gia.png')),
+                      title: L10n.of(context).feedBack,
+                      image: 'assets/images/danh_gia.png')),
             ],
           ),
           // Học phí
@@ -387,8 +391,8 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: EdgeInsets.only(left: 20.w),
             child: Text(
               infomodel.lichHocSapToi.isEmpty
-                  ? 'Hôm nay bạn không có lịch học nào'
-                  : 'Lịch học gần nhất',
+                  ? L10n.of(context).noNearSchedule
+                  : L10n.of(context).nearSchedule,
               style: defaultText16B,
             ),
           ),
@@ -410,7 +414,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Padding(
             padding: EdgeInsets.only(left: 20.w, top: 10.h),
             child: Text(
-              'Khóa học đề xuất cho bạn',
+              L10n.of(context).suggestCourse,
               style: defaultText16B,
             ),
           ),
@@ -447,8 +451,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             );
                           },
-                          child:
-                              _reComment(model: infomodel.listCourse[index]));
+                          child: _reComment(
+                              model: infomodel.listCourse[index],
+                              context: context));
                     },
                   ),
           ),
@@ -461,7 +466,7 @@ class _HomeScreenState extends State<HomeScreen> {
 //icon cứ tràn ra ngoài rất là khó chịu
 //lại 1 cái custom widget để render mặc kệ hiệu năng
 
-Widget _stackDiemDanh({bool diemdanh = true}) {
+Widget _stackDiemDanh({bool diemdanh = true, required BuildContext context}) {
   return SizedBox(
     height: 102.h,
     width: 93.w,
@@ -495,7 +500,7 @@ Widget _stackDiemDanh({bool diemdanh = true}) {
           top: 6.h,
           left: 8.w,
           child: Text(
-            'Điểm danh',
+            L10n.of(context).diemdanh,
             style: defaultText14B.copyWith(
               color: key2Color,
             ),
@@ -565,7 +570,8 @@ Widget _homeIcon({required String title, required String image}) {
   );
 }
 
-Widget _reComment({required CourseModels model}) {
+Widget _reComment(
+    {required CourseModels model, required BuildContext context}) {
   return Container(
     height: 228.h,
     width: 242.w,
@@ -606,7 +612,7 @@ Widget _reComment({required CourseModels model}) {
           style: defaultText14M,
         ),
         Text(
-          'Lộ trình: ${model.soBuoiHoc}',
+          '${L10n.of(context).roadmap}: ${model.soBuoiHoc}',
           style: defaultText12Re,
         ),
       ],
@@ -789,7 +795,7 @@ class _Upcoming extends StatelessWidget {
                       SizedBox(
                         width: 80.w,
                         child: Text(
-                          'Địa chỉ',
+                          L10n.of(context).address,
                           style: defaultText14Re,
                         ),
                       ),
@@ -826,7 +832,7 @@ class _Upcoming extends StatelessWidget {
                 model.reason != null
                     ? RichText(
                         text: TextSpan(
-                          text: 'Xin nghỉ: ',
+                          text: L10n.of(context).requestingLeave,
                           style: defaultText16M,
                           children: [
                             TextSpan(
@@ -857,7 +863,7 @@ class _Upcoming extends StatelessWidget {
                           ),
                           child: Center(
                             child: Text(
-                              'Xin nghỉ',
+                              L10n.of(context).missWithPermission,
                               style: defaultText14B.copyWith(
                                 color: Colors.white,
                               ),

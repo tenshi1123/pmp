@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:otp_pin_field/otp_pin_field.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 
 // ignore: must_be_immutable
@@ -84,7 +85,7 @@ class _OtpScreenState extends State<OtpScreen> {
               height: screenHeight * 0.02,
             ),
             Text(
-              'Mã OTP được gửi qua số điện thoại đã đăng kí',
+              L10n.of(context).otp,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 14.sp,

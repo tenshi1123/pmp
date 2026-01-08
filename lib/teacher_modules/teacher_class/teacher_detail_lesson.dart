@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/teacher/teacher_model/teacher_class_model.dart';
 import 'package:pmp_english/teacher/teacher_repo/teacher_class_repo.dart';
 
@@ -37,7 +38,7 @@ class _LessonDetailState extends State<LessonDetail> {
           },
         ),
         title: Text(
-          '    Chi tiết buổi học',
+          '    ${L10n.of(context).detailLesson}',
           style: defaultText18B.copyWith(
             color: Colors.white,
           ),
@@ -88,7 +89,7 @@ class _LessonDetailState extends State<LessonDetail> {
                         ),
                         child: Center(
                           child: Text(
-                            'Điểm danh',
+                            L10n.of(context).attendance,
                             style: defaultText16B.copyWith(
                               color: value == 0
                                   ? const Color(0xff09204E)
@@ -117,7 +118,7 @@ class _LessonDetailState extends State<LessonDetail> {
                         ),
                         child: Center(
                           child: Text(
-                            'Bài tập',
+                            L10n.of(context).assignments,
                             style: defaultText16B.copyWith(
                               color: value == 1
                                   ? const Color(0xff09204E)
@@ -146,7 +147,7 @@ class _LessonDetailState extends State<LessonDetail> {
                         ),
                         child: Center(
                           child: Text(
-                            'Đề thi',
+                            L10n.of(context).exam,
                             style: defaultText16B.copyWith(
                               color: value == 2
                                   ? const Color(0xff09204E)
@@ -234,12 +235,12 @@ class _RollCallItem extends StatelessWidget {
             ),
             child: Text(
               model.status == '0'
-                  ? 'Vắng mặt'
+                  ? L10n.of(context).absent
                   : model.status == '1'
-                      ? 'Xin nghỉ'
+                      ? L10n.of(context).missWithPermission
                       : model.status == '2'
-                          ? 'Đi muộn'
-                          : 'Đúng giờ',
+                          ? L10n.of(context).late
+                          : L10n.of(context).onTime,
               style: defaultText12M.copyWith(
                 color: Colors.white,
               ),

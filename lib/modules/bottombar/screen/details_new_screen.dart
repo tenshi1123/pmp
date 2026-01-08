@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:intl/intl.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/student_models/profile_model.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
@@ -16,7 +17,7 @@ class DetailNewsScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(
-          'Chi tiết ',
+          L10n.of(context).detail,
           style: defaultText14M,
         ),
       ),
@@ -65,7 +66,9 @@ class DetailNewsScreen extends StatelessWidget {
                           throw Exception('Could not launch');
                         }
                       },
-                      child: const Text('Mở trên web')),
+                      child: Text(
+                        L10n.of(context).openWeb,
+                      )),
                   HtmlWidget(
                     model.postContent,
                     textStyle: defaultText14M,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/modules/course/lich_hoc.dart';
 import 'package:pmp_english/modules/course/reportage.dart';
 import 'package:pmp_english/student_models/my_course_model.dart';
@@ -25,11 +26,7 @@ class _CourseDetailsState extends State<CourseDetails>
     with TickerProviderStateMixin {
   late TabController _tabController;
   late final DetailMyCourse model;
-  final _tabs = [
-    const Tab(text: 'Lịch học'),
-    const Tab(text: 'Bài tập'),
-    const Tab(text: 'Báo cáo'),
-  ];
+
   @override
   void initState() {
     _tabController = TabController(length: 3, vsync: this);
@@ -39,6 +36,11 @@ class _CourseDetailsState extends State<CourseDetails>
 
   @override
   Widget build(BuildContext context) {
+    final tabs = [
+      Tab(text: L10n.of(context).schedule),
+      Tab(text: L10n.of(context).assignments),
+      Tab(text: L10n.of(context).report),
+    ];
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
@@ -96,7 +98,7 @@ class _CourseDetailsState extends State<CourseDetails>
                           fontSize: 14, fontWeight: FontWeight.w500),
                       labelColor: Colors.white,
                       unselectedLabelColor: Colors.black,
-                      tabs: _tabs,
+                      tabs: tabs,
                     ),
                   ),
                 ),

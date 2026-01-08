@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/modules/feature_home/exercise/test_detail_screen.dart';
 import 'package:pmp_english/student_models/excercise_model.dart';
 import 'package:pmp_english/student_models/home_model.dart';
@@ -25,7 +26,7 @@ class TestScreen extends StatelessWidget {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
-          'Chi tiết bài tập',
+          L10n.of(context).detailExam,
           style: defaultText18B.copyWith(
             color: Colors.white,
           ),

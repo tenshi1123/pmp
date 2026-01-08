@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:intl/intl.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/student_models/customer_models.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
@@ -127,7 +128,7 @@ class _RecommentCourseState extends State<RecommentCourse>
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        'Lộ trình học',
+                                        L10n.of(context).learningPath,
                                         style: defaultText14B,
                                       ),
                                       Text(
@@ -365,7 +366,7 @@ class _RecommentCourseState extends State<RecommentCourse>
                                     textStyle:
                                         Theme.of(context).textTheme.labelLarge,
                                   ),
-                                  child: const Text('ok'),
+                                  child: const Text('Ok'),
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },

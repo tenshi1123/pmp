@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/student_models/home_model.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
@@ -42,7 +43,7 @@ class AcademicReportScreen extends StatelessWidget {
                           color: Colors.white,
                         ),
                         Text(
-                          '\tBáo cáo học tập',
+                          '\t${L10n.of(context).academicReport}',
                           style: defaultText20B.copyWith(
                             color: Colors.white,
                           ),
@@ -121,7 +122,7 @@ class AcademicReportScreen extends StatelessWidget {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'Chuyên cần',
+                                      L10n.of(context).attendance,
                                       style: defaultText14B,
                                     ),
                                     Text(
@@ -235,7 +236,7 @@ class AcademicReportScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        'Chi tiết bài thi',
+                        L10n.of(context).detailTest,
                         style: defaultText16B,
                       ),
                       Divider(

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
+import 'package:pmp_english/core/localization/language_cubit.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/modules/chat/list_conversation_screen.dart';
 import 'package:pmp_english/modules/notification/notification.dart';
 import 'package:pmp_english/student_models/chat_models.dart';
@@ -89,7 +92,7 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
                         Padding(
                           padding: EdgeInsets.only(left: 16.w),
                           child: Text(
-                            'Lịch dạy gần nhất',
+                            L10n.of(context).lastestTeachingSchedule,
                             style: defaultText16B,
                           ),
                         ),
@@ -305,6 +308,7 @@ class _CommingSchedule extends StatelessWidget {
       },
       child: LayoutBuilder(
         builder: (context, constraints) {
+          final systemLocale = context.watch<LanguageCubit>().state;
           return Container(
             margin: EdgeInsets.symmetric(horizontal: 5.w, vertical: 10.h),
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
@@ -342,7 +346,12 @@ class _CommingSchedule extends StatelessWidget {
                                   color: Colors.white, fontSize: 26.sp),
                             ),
                             Text(
-                              'Tháng ${lichHocModel.day.month}',
+                              DateFormat(
+                                      'MMMM',
+                                      systemLocale.languageCode == 'vi'
+                                          ? 'vi_Vi'
+                                          : 'en_US')
+                                  .format(lichHocModel.day),
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 16.sp,
@@ -391,9 +400,11 @@ class _CommingSchedule extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildInfoLine('Phòng học: ', lichHocModel.phongHoc),
+                      _buildInfoLine('${L10n.of(context).classroom}: ',
+                          lichHocModel.phongHoc),
                       SizedBox(height: 8.h),
-                      _buildInfoLine('Chi nhánh: ', lichHocModel.coSo),
+                      _buildInfoLine(
+                          '${L10n.of(context).branch}: ', lichHocModel.coSo),
                       SizedBox(height: 8.h),
                       Html(
                         data: lichHocModel.noidung,
@@ -492,8 +503,8 @@ class AppointmentCard extends StatelessWidget {
                 height: 40.h,
               ),
               const SizedBox(width: 12),
-              const Text(
-                "Lịch hẹn học viên",
+              Text(
+                L10n.of(context).studentApointmentSchedule,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
