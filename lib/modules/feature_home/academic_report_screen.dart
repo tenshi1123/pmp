@@ -71,7 +71,7 @@ class AcademicReportScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Tổng quan',
+                  L10n.of(context).overview,
                   style: defaultText16B,
                 ),
                 Container(
@@ -165,7 +165,7 @@ class AcademicReportScreen extends StatelessWidget {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'Điểm bài tập',
+                                      L10n.of(context).assignmentScore,
                                       style: defaultText14B,
                                     ),
                                     Text(
@@ -189,7 +189,7 @@ class AcademicReportScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Báo cáo thi thử',
+                      L10n.of(context).mockTestReport,
                       style: defaultText16B,
                     ),
                     // Container(
@@ -250,7 +250,7 @@ class AcademicReportScreen extends StatelessWidget {
                               height: 100.h,
                               child: Center(
                                 child: Text(
-                                  'Chưa có lịch thi nào',
+                                  L10n.of(context).noExamSchedule,
                                   style: defaultText14B,
                                 ),
                               ),

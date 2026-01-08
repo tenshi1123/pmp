@@ -68,7 +68,7 @@ class EvaluateScreen extends StatelessWidget {
             ),
           ),
           Text(
-            'Đánh giá từ Giáo viên',
+            L10n.of(context).teacherFeedback,
             style: defaultText16B,
           ),
           Expanded(

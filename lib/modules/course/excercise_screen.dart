@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/student_models/my_course_model.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
@@ -79,16 +80,16 @@ class _ExcerciseTabBarState extends State<_ExcerciseTabBar>
             controller: _tabController,
             tabs: <Widget>[
               homeTab(
-                title: 'Toàn bộ',
+                title: L10n.of(context).all,
                 isSeprator: false,
                 number: widget.baiTapModel.value.length,
               ),
               homeTab(
-                title: 'Chưa làm',
+                title: L10n.of(context).notStarted,
                 number: baitapChuaLam.length,
               ),
               homeTab(
-                title: 'Hoàn thành',
+                title: L10n.of(context).complete,
                 number: baitapDaLam.length,
               ),
             ],

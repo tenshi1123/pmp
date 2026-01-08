@@ -20,7 +20,7 @@ class ReportageScreen extends StatelessWidget {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: Text(
-            'Đánh giá tổng quan',
+            L10n.of(context).overviewFeedback,
             style: defaultText16B,
           ),
         ),

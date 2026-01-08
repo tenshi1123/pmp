@@ -445,4 +445,52 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get chooseLanguage => 'Chọn ngôn ngữ';
+
+  @override
+  String get chooseCampus => 'Chọn cơ sở';
+
+  @override
+  String get registerToJoin => 'Đăng ký tham gia';
+
+  @override
+  String get myExamSchedule => 'Lịch thi của tôi';
+
+  @override
+  String get onTimeExam => 'Đúng hạn';
+
+  @override
+  String get overdue => 'Quá hạn';
+
+  @override
+  String get notStarted => 'Chưa làm';
+
+  @override
+  String get statistics => 'Thống kê';
+
+  @override
+  String get upcomingDeadline => 'Sắp đến hạn';
+
+  @override
+  String get noUpcomingAssignments => 'Không có bài tập sắp đến hạn';
+
+  @override
+  String get overview => 'Tổng quan';
+
+  @override
+  String get assignmentScore => 'Điểm bài tập';
+
+  @override
+  String get mockTestReport => 'Báo cáo thi thử';
+
+  @override
+  String get noExamSchedule => 'Chưa có lịch thi nào';
+
+  @override
+  String get teacherFeedback => 'Đánh giá từ giáo viên';
+
+  @override
+  String get overviewFeedback => 'Đánh giá tổng quan';
+
+  @override
+  String get gradeAssignment => 'Chấm điểm bài tập';
 }

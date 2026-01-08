@@ -74,7 +74,7 @@ class ExerciseScreen extends StatelessWidget {
             SizedBox(
               width: 350.w,
               child: Text(
-                'Thống kê',
+                L10n.of(context).statistics,
                 style: defaultText16B,
                 textAlign: TextAlign.left,
               ),
@@ -101,7 +101,7 @@ class ExerciseScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Đúng hạn',
+                            L10n.of(context).onTimeExam,
                             style: defaultText14B.copyWith(color: main1Color),
                           ),
                           Text(
@@ -114,7 +114,7 @@ class ExerciseScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Quá hạn',
+                            L10n.of(context).overdue,
                             style: defaultText14B.copyWith(color: sub2Color),
                           ),
                           Text(
@@ -127,7 +127,7 @@ class ExerciseScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Chưa làm',
+                            L10n.of(context).notStarted,
                             style: defaultText14B.copyWith(
                               color: key1Color.withOpacity(0.5),
                             ),
@@ -151,7 +151,7 @@ class ExerciseScreen extends StatelessWidget {
             SizedBox(
               width: 350.w,
               child: Text(
-                'Sắp đến hạn',
+                L10n.of(context).upcomingDeadline,
                 style: defaultText16B,
                 textAlign: TextAlign.left,
               ),
@@ -186,7 +186,7 @@ class ExerciseScreen extends StatelessWidget {
                   //     :
                   Center(
                 child: Text(
-                  'Không có bài tập sắp đến hạn',
+                  L10n.of(context).noUpcomingAssignments,
                   style: defaultText14M,
                 ),
               ),
@@ -259,9 +259,13 @@ class _ExcerciseTabBarState extends State<_ExcerciseTabBar>
           controller: _tabController,
           tabs: <Widget>[
             homeTab(
-                title: 'Toàn bộ', number: listTotal.length, isSeprator: false),
-            homeTab(title: 'Chưa làm', number: listChuaLam.length),
-            homeTab(title: 'Hoàn thành', number: listHoanThanh.length),
+                title: L10n.of(context).all,
+                number: listTotal.length,
+                isSeprator: false),
+            homeTab(
+                title: L10n.of(context).notStarted, number: listChuaLam.length),
+            homeTab(
+                title: L10n.of(context).complete, number: listHoanThanh.length),
           ],
         ),
         Expanded(

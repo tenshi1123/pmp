@@ -147,5 +147,21 @@
     "listLesson": "List lessons",
     "nameClass": "Class : ",
     "learningFormat": "Learning Format : ",
-    "chooseLanguage": "Select Language"
+    "chooseLanguage": "Select Language",
+    "chooseCampus": "Select campus",
+    "registerToJoin": "Register to join",
+    "myExamSchedule": "My exam schedule",
+    "onTimeExam": "On time",
+    "overdue": "Overdue",
+    "notStarted": "Not started",
+    "statistics": "Statistics",
+    "upcomingDeadline": "Upcoming deadline",
+    "noUpcomingAssignments": "No upcoming assignments",
+    "overview": "Overview",
+    "assignmentScore": "Assignment score",
+    "mockTestReport": "Mock test report",
+    "noExamSchedule": "No exam schedule available",
+    "teacherFeedback": "Teacher feedback",
+    "overviewFeedback": "Overview Feedback",
+    "gradeAssignment": "Chấm điểm bài tập"
 }

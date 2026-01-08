@@ -192,7 +192,7 @@ class _ExamScheduleScreenState extends State<ExamScheduleScreen> {
                     enableFilter: true,
                     requestFocusOnTap: true,
                     label: Text(
-                      'Chọn cơ sở',
+                      L10n.of(context).chooseCampus,
                       style: defaultText14Re,
                     ),
                     textStyle: defaultText14M,
@@ -453,7 +453,7 @@ class _ExamScheduleScreenState extends State<ExamScheduleScreen> {
                       },
                       child: Center(
                         child: Text(
-                          'Đăng kí tham gia',
+                          L10n.of(context).registerToJoin,
                           style: defaultText14B.copyWith(
                             color: Colors.white,
                           ),
@@ -468,7 +468,7 @@ class _ExamScheduleScreenState extends State<ExamScheduleScreen> {
               height: 10.h,
             ),
             Text(
-              'Lịch thi của tôi',
+              L10n.of(context).myExamSchedule,
               style: defaultText16B,
             ),
             SizedBox(

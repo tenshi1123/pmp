@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/teacher/teacher_model/teacher_class_model.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -31,7 +32,7 @@ class _BaiThiScreenState extends State<BaiThiScreen> {
           },
         ),
         title: Text(
-          '    Chấm điểm bài tập',
+          '    ${L10n.of(context).gradeAssignment}',
           style: defaultText18B.copyWith(
             color: Colors.white,
           ),

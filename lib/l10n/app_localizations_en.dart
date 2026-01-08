@@ -406,10 +406,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get classInCharge => 'Assigned classes';
 
   @override
-  String get centralClassroom => 'On-campus classes';
+  String get centralClassroom => 'Offline Classes';
 
   @override
-  String get zoomClassroom => 'Zoom classes';
+  String get zoomClassroom => 'Online Classes';
 
   @override
   String get exam => 'Exam';
@@ -446,4 +446,52 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chooseLanguage => 'Select Language';
+
+  @override
+  String get chooseCampus => 'Select campus';
+
+  @override
+  String get registerToJoin => 'Register to join';
+
+  @override
+  String get myExamSchedule => 'My exam schedule';
+
+  @override
+  String get onTimeExam => 'On time';
+
+  @override
+  String get overdue => 'Overdue';
+
+  @override
+  String get notStarted => 'Not started';
+
+  @override
+  String get statistics => 'Statistics';
+
+  @override
+  String get upcomingDeadline => 'Upcoming deadline';
+
+  @override
+  String get noUpcomingAssignments => 'No upcoming assignments';
+
+  @override
+  String get overview => 'Overview';
+
+  @override
+  String get assignmentScore => 'Assignment score';
+
+  @override
+  String get mockTestReport => 'Mock test report';
+
+  @override
+  String get noExamSchedule => 'No exam schedule available';
+
+  @override
+  String get teacherFeedback => 'Teacher feedback';
+
+  @override
+  String get overviewFeedback => 'Overview Feedback';
+
+  @override
+  String get gradeAssignment => 'Chấm điểm bài tập';
 }

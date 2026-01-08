@@ -967,6 +967,102 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Chọn ngôn ngữ'**
   String get chooseLanguage;
+
+  /// No description provided for @chooseCampus.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chọn cơ sở'**
+  String get chooseCampus;
+
+  /// No description provided for @registerToJoin.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đăng ký tham gia'**
+  String get registerToJoin;
+
+  /// No description provided for @myExamSchedule.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lịch thi của tôi'**
+  String get myExamSchedule;
+
+  /// No description provided for @onTimeExam.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đúng hạn'**
+  String get onTimeExam;
+
+  /// No description provided for @overdue.
+  ///
+  /// In vi, this message translates to:
+  /// **'Quá hạn'**
+  String get overdue;
+
+  /// No description provided for @notStarted.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa làm'**
+  String get notStarted;
+
+  /// No description provided for @statistics.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thống kê'**
+  String get statistics;
+
+  /// No description provided for @upcomingDeadline.
+  ///
+  /// In vi, this message translates to:
+  /// **'Sắp đến hạn'**
+  String get upcomingDeadline;
+
+  /// No description provided for @noUpcomingAssignments.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không có bài tập sắp đến hạn'**
+  String get noUpcomingAssignments;
+
+  /// No description provided for @overview.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tổng quan'**
+  String get overview;
+
+  /// No description provided for @assignmentScore.
+  ///
+  /// In vi, this message translates to:
+  /// **'Điểm bài tập'**
+  String get assignmentScore;
+
+  /// No description provided for @mockTestReport.
+  ///
+  /// In vi, this message translates to:
+  /// **'Báo cáo thi thử'**
+  String get mockTestReport;
+
+  /// No description provided for @noExamSchedule.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa có lịch thi nào'**
+  String get noExamSchedule;
+
+  /// No description provided for @teacherFeedback.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đánh giá từ giáo viên'**
+  String get teacherFeedback;
+
+  /// No description provided for @overviewFeedback.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đánh giá tổng quan'**
+  String get overviewFeedback;
+
+  /// No description provided for @gradeAssignment.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chấm điểm bài tập'**
+  String get gradeAssignment;
 }
 
 class _AppLocalizationsDelegate

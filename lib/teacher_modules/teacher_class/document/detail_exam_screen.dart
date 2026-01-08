@@ -41,7 +41,7 @@ class _DetailExamScreenState extends State<DetailExamScreen> {
           },
         ),
         title: Text(
-          '    Chấm điểm bài tập',
+          '    ${L10n.of(context).gradeAssignment}',
           style: defaultText18B.copyWith(
             color: Colors.white,
           ),
@@ -173,7 +173,7 @@ class _DetailExamScreenState extends State<DetailExamScreen> {
                 SizedBox(
                   width: 16.w,
                 ),
-                Text("Điểm bài tập", style: defaultText18B),
+                Text(L10n.of(context).gradeAssignment, style: defaultText18B),
               ],
             ),
             Padding(
