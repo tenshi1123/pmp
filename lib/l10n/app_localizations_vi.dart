@@ -417,6 +417,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get missWithPermission => 'Xin nghỉ';
 
   @override
+  String get reasonMiss => 'Lý do xin nghỉ';
+
+  @override
   String get late => 'Đi muộn';
 
   @override

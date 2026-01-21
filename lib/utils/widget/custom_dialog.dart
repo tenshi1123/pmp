@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:pmp_english/core/localization/language_cubit.dart';
 import 'package:pmp_english/l10n/l10n.dart';
@@ -30,7 +31,7 @@ class LeaveRequestDialog extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              'Lý do xin nghỉ',
+              L10n.of(context).reasonMiss,
               style: defaultText16M,
             ),
             const SizedBox(height: 8),
@@ -40,12 +41,12 @@ class LeaveRequestDialog extends StatelessWidget {
               decoration: InputDecoration(
                 hintText: L10n.of(context).enterReasonForLeave,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(8.r),
                 ),
-                contentPadding: const EdgeInsets.all(12),
+                contentPadding: EdgeInsets.all(12.r),
               ),
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24.h),
             Row(
               children: [
                 Expanded(
@@ -56,7 +57,7 @@ class LeaveRequestDialog extends StatelessWidget {
                     style: OutlinedButton.styleFrom(
                       foregroundColor: Colors.black,
                       backgroundColor: const Color(0xFFF7F4F6),
-                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      padding: EdgeInsets.symmetric(vertical: 14.h),
                     ),
                     child: Text(
                       L10n.of(context).cancel,

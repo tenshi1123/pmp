@@ -138,6 +138,7 @@
     "zoomClassroom": "Online Classes",
     "exam": "Exam",
     "missWithPermission": "Excused Absence",
+    "reasonMiss": "Reason for requesting leave",
     "late": "Late",
     "onTime": "On time",
     "examSchedule": "Test Schedule",

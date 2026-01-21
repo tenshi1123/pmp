@@ -24,7 +24,7 @@ class LichHocScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Lịch học gần nhất',
+              L10n.of(context).nearSchedule,
               style: defaultText16B,
             ),
             model.saptoi.isEmpty

@@ -355,7 +355,7 @@ class ListFbDinhKy extends StatelessWidget {
           child: Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              'Lớp',
+              L10n.of(context).lophoc,
               style: defaultText20B.copyWith(
                 color: const Color(0xff273D8C),
               ),

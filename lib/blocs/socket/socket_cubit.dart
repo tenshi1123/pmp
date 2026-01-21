@@ -1,83 +1,46 @@
-import 'dart:convert';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
-import 'package:http/http.dart' as http;
+import 'package:pmp_english/services/socket_services.dart';
+import 'package:pmp_english/student_models/chat_models.dart';
 
-part 'socket_state.dart';
+abstract class SocketState {}
+
+class SocketInitial extends SocketState {}
+
+class SocketConnected extends SocketState {}
+
+class SocketDisconnected extends SocketState {}
+
+class SocketMessageReceived extends SocketState {
+  final List<ChatMessageModel> messages;
+  SocketMessageReceived(this.messages);
+}
 
 class SocketCubit extends Cubit<SocketState> {
-  WebSocketChannel? _channel;
+  final SocketService _service = SocketService();
 
   SocketCubit() : super(SocketInitial());
 
-  Future<void> connect({
-    required String site,
-    required String role,
-    required String userId,
-  }) async {
-    emit(SocketConnecting());
+  void connect({
+    required String url,
+    required Map<String, dynamic> payload,
+  }) {
+    _service.connect(url: url, registerPayload: payload);
 
-    try {
-      // 1️⃣ Lấy token từ API
-      final tokenResponse = await http.get(
-        Uri.parse(
-          "https://lms.pmpenglish.edu.vn/auth/token?site=$site&role=$role&userId=$userId",
-        ),
-      );
+    emit(SocketConnected());
 
-      if (tokenResponse.statusCode != 200) {
-        emit(SocketError("Không thể lấy token (${tokenResponse.statusCode})"));
-        return;
-      }
-
-      final tokenData = jsonDecode(tokenResponse.body);
-      final token = tokenData["token"];
-      if (token == null) {
-        emit(SocketError("Token không hợp lệ"));
-        return;
-      }
-
-      // 2️⃣ Kết nối WebSocket
-      _channel = WebSocketChannel.connect(Uri.parse('wss://ws.hvgcloud.net'));
-
-      _channel!.sink.add(jsonEncode({
-        "event": "register",
-        "site": site,
-        "type": role, // user, customer, teachers
-        "id": userId,
-        "token": token,
-      }));
-
-      // 3️⃣ Lắng nghe dữ liệu
-      _channel!.stream.listen(
-        (data) {
-          final decoded = jsonDecode(data);
-          emit(SocketMessage(decoded));
-        },
-        onDone: () => emit(SocketDisconnected()),
-        onError: (error) => emit(SocketError(error.toString())),
-      );
-
-      emit(SocketConnected());
-    } catch (e) {
-      emit(SocketError(e.toString()));
-    }
+    _service.stream.listen(
+      (data) => emit(SocketMessageReceived(data)),
+      onDone: () => emit(SocketDisconnected()),
+      onError: (_) => emit(SocketDisconnected()),
+    );
   }
 
-  void send(Map<String, dynamic> data) {
-    if (_channel != null) {
-      _channel!.sink.add(jsonEncode(data));
-    }
+  void send(dynamic data) {
+    _service.send(data);
   }
 
   void disconnect() {
-    _channel?.sink.close();
+    _service.disconnect();
     emit(SocketDisconnected());
-  }
-
-  @override
-  Future<void> close() {
-    _channel?.sink.close();
-    return super.close();
   }
 }

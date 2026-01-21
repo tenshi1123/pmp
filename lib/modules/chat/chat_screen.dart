@@ -126,250 +126,236 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<SocketCubit, SocketState>(
-      listener: (context, state) {
-        if (state is SocketConnected) {}
-
-        if (state is SocketDisconnected) {}
-
-        if (state is SocketError) {}
-
-        if (state is SocketMessage) {
-          setState(() {});
-        }
-      },
-      child: Scaffold(
-          backgroundColor: Colors.white,
-          appBar: AppBar(
-            title: Row(
-              children: [
-                CircleAvatar(
-                  radius: 21.r,
-                  backgroundColor: Colors.grey[200],
-                  backgroundImage: NetworkImage(widget.model.teacherAvatar),
-                  onBackgroundImageError: (_, __) {},
-                  child: Icon(
-                    Icons.person,
-                    size: 21.r,
-                    color: Colors.grey,
-                  ),
-                ),
-                SizedBox(
-                  width: 10.w,
-                ),
-                Text(
-                  widget.model.chatName ?? 'No name',
-                  style: defaultText18B.copyWith(
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ),
-            toolbarHeight: 60.h,
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-            flexibleSpace: Container(
-              decoration: BoxDecoration(
-                gradient: mainGradient,
-              ),
-            ),
-            // actions: [
-            //   IconButton(
-            //     icon: const Icon(
-            //       Icons.phone,
-            //       color: Colors.white,
-            //     ),
-            //     onPressed: () {
-            //       _makePhoneCall(widget.model.customerPhone ?? '0');
-            //     },
-            //   ),
-            // ],
-          ),
-          body: Stack(
+    return Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          title: Row(
             children: [
-              SizedBox(
-                height: 700.h,
-                width: MediaQuery.of(context).size.width,
-                child: ListView.builder(
-                  itemCount: widget.model.messages.length,
-                  shrinkWrap: true,
-                  padding: EdgeInsets.only(bottom: 60.h),
-                  reverse: true,
-                  //physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    final message = listMessage[index];
-                    final isMine = (message.senderId == id);
-                    final isLastMessage = (index == 0 &&
-                        isMine); // tin nhắn mới nhất và là của mình
-
-                    return Container(
-                      padding: const EdgeInsets.only(
-                          left: 14, right: 14, top: 10, bottom: 10),
-                      child: Align(
-                        alignment:
-                            isMine ? Alignment.topRight : Alignment.topLeft,
-                        child: Column(
-                          crossAxisAlignment: isMine
-                              ? CrossAxisAlignment.end
-                              : CrossAxisAlignment.start,
-                          children: [
-                            // 👉 Hiển thị tên người gửi nếu không phải mình
-                            if (!isMine)
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 4),
-                                child: Text(
-                                  message.userName ??
-                                      message.customerName ??
-                                      message.teacherName ??
-                                      '',
-                                  style: defaultText14M.copyWith(
-                                    color: keyBlack,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-
-                            // 👉 Bubble tin nhắn
-                            Container(
-                                constraints: BoxConstraints(maxWidth: 300.w),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20.r),
-                                  color: isMine ? key1Color : state1,
-                                ),
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 12.w,
-                                  vertical: 6.w,
-                                ),
-                                child: (message.messageType == '1')
-                                    ? ChatImageGrid(
-                                        images: parseImageUrls(message.content),
-                                        isMine: isMine,
-                                      )
-
-                                    //  Html(
-                                    //     data: message.content,
-                                    //   )
-                                    //  Text(
-                                    //     message.content,
-                                    //     style: defaultText14M.copyWith(
-                                    //       color: isMine ? Colors.white : keyBlack,
-                                    //     ),
-                                    //   )
-                                    : AutoLinkText(
-                                        text: prepareHtmlForDisplay(
-                                            message.content),
-                                        isMine: isMine,
-                                      )),
-
-                            // 👉 Thêm chữ "Đã gửi" nếu là tin nhắn cuối cùng của mình
-                            if (isLastMessage)
-                              Padding(
-                                padding: const EdgeInsets.only(top: 4),
-                                child: Text(
-                                  "Đã gửi",
-                                  style: defaultText14M.copyWith(
-                                    fontSize: 12,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                              ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
+              CircleAvatar(
+                radius: 21.r,
+                backgroundColor: Colors.grey[200],
+                backgroundImage: NetworkImage(widget.model.teacherAvatar),
+                onBackgroundImageError: (_, __) {},
+                child: Icon(
+                  Icons.person,
+                  size: 21.r,
+                  color: Colors.grey,
                 ),
               ),
-              Align(
-                alignment: Alignment.bottomLeft,
-                child: Container(
-                  padding: const EdgeInsets.only(left: 10, bottom: 10, top: 10),
-                  margin: EdgeInsets.only(bottom: 16.h),
-                  //height: 60.h,
-                  width: double.infinity,
+              SizedBox(
+                width: 10.w,
+              ),
+              Text(
+                widget.model.chatName ?? 'No name',
+                style: defaultText18B.copyWith(
                   color: Colors.white,
-                  child: Row(
-                    children: <Widget>[
-                      GestureDetector(
-                          onTap: () {
-                            openCamera();
-                          },
-                          child:
-                              SvgPicture.asset('assets/icons/camera_icon.svg')),
-                      const SizedBox(
-                        width: 15,
+                ),
+              ),
+            ],
+          ),
+          toolbarHeight: 60.h,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: mainGradient,
+            ),
+          ),
+          // actions: [
+          //   IconButton(
+          //     icon: const Icon(
+          //       Icons.phone,
+          //       color: Colors.white,
+          //     ),
+          //     onPressed: () {
+          //       _makePhoneCall(widget.model.customerPhone ?? '0');
+          //     },
+          //   ),
+          // ],
+        ),
+        body: Stack(
+          children: [
+            SizedBox(
+              height: 700.h,
+              width: MediaQuery.of(context).size.width,
+              child: ListView.builder(
+                itemCount: widget.model.messages.length,
+                shrinkWrap: true,
+                padding: EdgeInsets.only(bottom: 60.h),
+                reverse: true,
+                //physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  final message = listMessage[index];
+                  final isMine = (message.senderId == id);
+                  final isLastMessage = (index == 0 &&
+                      isMine); // tin nhắn mới nhất và là của mình
+
+                  return Container(
+                    padding: const EdgeInsets.only(
+                        left: 14, right: 14, top: 10, bottom: 10),
+                    child: Align(
+                      alignment:
+                          isMine ? Alignment.topRight : Alignment.topLeft,
+                      child: Column(
+                        crossAxisAlignment: isMine
+                            ? CrossAxisAlignment.end
+                            : CrossAxisAlignment.start,
+                        children: [
+                          // 👉 Hiển thị tên người gửi nếu không phải mình
+                          if (!isMine)
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 4),
+                              child: Text(
+                                message.userName ??
+                                    message.customerName ??
+                                    message.teacherName ??
+                                    '',
+                                style: defaultText14M.copyWith(
+                                  color: keyBlack,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+
+                          // 👉 Bubble tin nhắn
+                          Container(
+                              constraints: BoxConstraints(maxWidth: 300.w),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20.r),
+                                color: isMine ? key1Color : state1,
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 12.w,
+                                vertical: 6.w,
+                              ),
+                              child: (message.messageType == '1')
+                                  ? ChatImageGrid(
+                                      images: parseImageUrls(message.content),
+                                      isMine: isMine,
+                                    )
+
+                                  //  Html(
+                                  //     data: message.content,
+                                  //   )
+                                  //  Text(
+                                  //     message.content,
+                                  //     style: defaultText14M.copyWith(
+                                  //       color: isMine ? Colors.white : keyBlack,
+                                  //     ),
+                                  //   )
+                                  : AutoLinkText(
+                                      text: prepareHtmlForDisplay(
+                                          message.content),
+                                      isMine: isMine,
+                                    )),
+
+                          // 👉 Thêm chữ "Đã gửi" nếu là tin nhắn cuối cùng của mình
+                          if (isLastMessage)
+                            Padding(
+                              padding: const EdgeInsets.only(top: 4),
+                              child: Text(
+                                "Đã gửi",
+                                style: defaultText14M.copyWith(
+                                  fontSize: 12,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ),
+                        ],
                       ),
-                      GestureDetector(
-                          onTap: () {
-                            _pickImageFromGallery();
-                          },
-                          child: SvgPicture.asset(
-                              'assets/icons/picture_icon.svg')),
-                      const SizedBox(
-                        width: 15,
-                      ),
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: state2,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(15)),
-                          ),
-                          padding: EdgeInsets.symmetric(horizontal: 10.w),
-                          child: TextField(
-                            controller: messageController,
-                            decoration: InputDecoration(
-                                hintText: "Nhập tin nhắn...",
-                                hintStyle: TextStyle(
-                                    color:
-                                        Colors.black.withValues(alpha: 0.95)),
-                                border: InputBorder.none),
-                            style: defaultText14M,
-                            textAlign: TextAlign.center,
-                          ),
+                    ),
+                  );
+                },
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: Container(
+                padding: const EdgeInsets.only(left: 10, bottom: 10, top: 10),
+                margin: EdgeInsets.only(bottom: 16.h),
+                //height: 60.h,
+                width: double.infinity,
+                color: Colors.white,
+                child: Row(
+                  children: <Widget>[
+                    GestureDetector(
+                        onTap: () {
+                          openCamera();
+                        },
+                        child:
+                            SvgPicture.asset('assets/icons/camera_icon.svg')),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    GestureDetector(
+                        onTap: () {
+                          _pickImageFromGallery();
+                        },
+                        child:
+                            SvgPicture.asset('assets/icons/picture_icon.svg')),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: state2,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(15)),
+                        ),
+                        padding: EdgeInsets.symmetric(horizontal: 10.w),
+                        child: TextField(
+                          controller: messageController,
+                          decoration: InputDecoration(
+                              hintText: "Nhập tin nhắn...",
+                              hintStyle: TextStyle(
+                                  color: Colors.black.withValues(alpha: 0.95)),
+                              border: InputBorder.none),
+                          style: defaultText14M,
+                          textAlign: TextAlign.center,
                         ),
                       ),
-                      const SizedBox(
-                        width: 15,
-                      ),
-                      GestureDetector(
-                          onTap: () async {
-                            if (messageController.text.isNotEmpty) {
-                              await ChatRepo().sendMessage(
-                                  widget.model.id, messageController.text);
+                    ),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    GestureDetector(
+                        onTap: () async {
+                          if (messageController.text.isNotEmpty) {
+                            await ChatRepo().sendMessage(
+                                widget.model.id, messageController.text);
 
-                              setState(() {
-                                listMessage.insert(
-                                  0,
-                                  ChatMessageModel(
-                                    content: messageController.text,
-                                    messageType: "0",
-                                    senderType: "1",
-                                    createdAt: DateTime.now(),
-                                    teacherName: '',
-                                    senderId: id,
-                                    customerName: '',
-                                    userName: '',
-                                  ),
-                                );
-                              });
-                              messageController.clear();
-                            }
-                          },
-                          child: SvgPicture.asset(
-                              'assets/icons/plane_outline.svg')),
-                      const SizedBox(
-                        width: 15,
-                      ),
-                    ],
-                  ),
+                            setState(() {
+                              listMessage.insert(
+                                0,
+                                ChatMessageModel(
+                                  content: messageController.text,
+                                  messageType: "0",
+                                  senderType: "1",
+                                  createdAt: DateTime.now(),
+                                  teacherName: '',
+                                  senderId: id,
+                                  customerName: '',
+                                  userName: '',
+                                ),
+                              );
+                            });
+                            messageController.clear();
+                          }
+                        },
+                        child:
+                            SvgPicture.asset('assets/icons/plane_outline.svg')),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                  ],
                 ),
-              )
-            ],
-          )),
-    );
+              ),
+            )
+          ],
+        ));
   }
 
   void _showDialog(BuildContext context, String message) {

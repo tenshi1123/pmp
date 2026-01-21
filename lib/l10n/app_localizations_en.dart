@@ -418,6 +418,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get missWithPermission => 'Excused Absence';
 
   @override
+  String get reasonMiss => 'Reason for requesting leave';
+
+  @override
   String get late => 'Late';
 
   @override

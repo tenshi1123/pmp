@@ -267,10 +267,13 @@ class ConversationItem extends StatelessWidget {
                     model.chatName ?? model.teacherName,
                     style: defaultText14B,
                   ),
-                  Text(
-                    model.content.replaceAll(RegExp(r'<[^>]*>'), ''),
-                    style: defaultText12M,
-                    overflow: TextOverflow.ellipsis,
+                  SizedBox(
+                    height: 30.h,
+                    child: Text(
+                      model.content.replaceAll(RegExp(r'<[^>]*>'), ''),
+                      style: defaultText12M,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ],
               ),

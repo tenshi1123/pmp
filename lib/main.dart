@@ -21,14 +21,8 @@ Future<void> main() async {
       MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (_) => SocketCubit()
-              ..connect(
-                site: "pmpenglish",
-                role: "teachers",
-                userId: "1",
-              ),
+            create: (_) => SocketCubit(),
           ),
-
           // ⭐ THÊM DÒNG NÀY
           BlocProvider(
             create: (_) => LanguageCubit(),

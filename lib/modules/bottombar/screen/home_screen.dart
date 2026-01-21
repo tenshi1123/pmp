@@ -592,6 +592,23 @@ Widget _reComment(
               fit: BoxFit.cover,
               width: 222.w,
               height: 141.h,
+              loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress == null) return child;
+                return Container(
+                  width: 222.w,
+                  height: 141.h,
+                  alignment: Alignment.center,
+                  child: const CircularProgressIndicator(strokeWidth: 2),
+                );
+              },
+              errorBuilder: (context, error, stackTrace) {
+                return Image.asset(
+                  'assets/images/loading_placeholder.png', // ảnh mặc định
+                  width: 222.w,
+                  height: 141.h,
+                  fit: BoxFit.cover,
+                );
+              },
             )),
         Container(
           padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 6.w),
@@ -854,7 +871,10 @@ class _Upcoming extends StatelessWidget {
                         },
                         child: Container(
                           height: 29.h,
-                          width: 90.w,
+                          //width: 90.w,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 6.w,
+                          ),
                           decoration: BoxDecoration(
                             color: sub2Color,
                             borderRadius: BorderRadius.all(

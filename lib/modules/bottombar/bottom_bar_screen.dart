@@ -1,8 +1,11 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:pmp_english/blocs/socket/socket_cubit.dart';
 import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/modules/bottombar/screen/extension.dart/schedule_screen.dart';
 import 'package:pmp_english/modules/bottombar/screen/user_info/account_screen.dart';
@@ -13,8 +16,10 @@ import 'package:pmp_english/student_repo/login_repo.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:pmp_english/utils/onesignal.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'screen/course_screen.dart';
 import 'screen/home_screen.dart';
+import 'package:http/http.dart' as http;
 
 class Bottombar extends StatefulWidget {
   final int index;
@@ -40,6 +45,34 @@ class _BottombarState extends State<Bottombar> {
     setState(() {
       _selectedIndex = widget.index;
     });
+    _initSocket();
+  }
+
+  Future<void> _initSocket() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String id = prefs.getString('id_user') ?? '';
+    final res = await http.get(
+      Uri.parse("https://lms.pmpenglish.edu.vn/auth/token"),
+      headers: {
+        "site": "pmpenglish",
+        "role": "customer",
+        "userId": id,
+        "Content-Type": "application/json",
+      },
+    );
+
+    final token = jsonDecode(res.body)['token'];
+
+    context.read<SocketCubit>().connect(
+      url: "wss://ws.hvgcloud.net",
+      payload: {
+        "event": "register",
+        "site": "pmpenglish",
+        "type": "customer",
+        "id": id,
+        "token": token,
+      },
+    );
   }
 
   Future<void> setupOneSignal() async {

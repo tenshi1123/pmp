@@ -39,7 +39,7 @@ class _TeacherBottomBarState extends State<TeacherBottomBar> {
     // Enable verbose logging for debugging (remove in production)
     // OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
     // Initialize with your OneSignal App ID
-    OneSignal.initialize("9eed43b6-3e7d-4d7b-a8fb-621e889f71c9");
+    OneSignal.initialize("9b072e8d-445c-405a-9733-9508dfe1e79e");
     OneSignal.Notifications.requestPermission(true).then((value) {});
     var onesignalId = await OneSignal.User.getOnesignalId();
     await LoginRepo().pushTeacherOnesignal(

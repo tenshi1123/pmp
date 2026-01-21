@@ -317,7 +317,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    _makePhoneCall('0935 404 641');
+                    _makePhoneCall('0909 383 358');
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,

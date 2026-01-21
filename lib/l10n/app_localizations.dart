@@ -908,6 +908,12 @@ abstract class AppLocalizations {
   /// **'Xin nghỉ'**
   String get missWithPermission;
 
+  /// No description provided for @reasonMiss.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lý do xin nghỉ'**
+  String get reasonMiss;
+
   /// No description provided for @late.
   ///
   /// In vi, this message translates to:
