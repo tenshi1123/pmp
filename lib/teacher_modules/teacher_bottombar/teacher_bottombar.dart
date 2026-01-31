@@ -140,7 +140,7 @@ class _TeacherBottomBarState extends State<TeacherBottomBar> {
       showLater: true,
       upgrader: Upgrader(
         languageCode: "vi",
-        durationUntilAlertAgain: const Duration(minutes: 5),
+        durationUntilAlertAgain: const Duration(hours: 6),
       ),
       child: PersistentTabView(
         controller: _controller,

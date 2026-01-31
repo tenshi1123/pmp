@@ -103,4 +103,16 @@ class ChatMessageModel {
       teacherName: json['teachers_full_name'],
     );
   }
+  Map<String, dynamic> toJson() {
+    return {
+      'content': content,
+      'sender_id': senderId,
+      'message_type': messageType,
+      'sender_type': senderType,
+      'created_at': createdAt.toIso8601String(),
+      'customer_full_name': customerName,
+      'user_name': userName,
+      'teachers_full_name': teacherName,
+    };
+  }
 }

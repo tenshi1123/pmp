@@ -11,6 +11,7 @@ import 'package:pmp_english/student_repo/mycourse_repo.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:pmp_english/utils/widget/custom_widget.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DetailLessonScreen extends StatelessWidget {
@@ -407,6 +408,11 @@ class _FeedbackItem extends StatelessWidget {
   final EvaluationModel? evaModel;
   @override
   Widget build(BuildContext context) {
+    if (evaModel == null) {
+      return const SizedBox();
+    }
+
+    final displayList = buildEvaluationResult(evaModel!);
     return Container(
       width: 350.w,
       //height: 166.h,
@@ -432,7 +438,7 @@ class _FeedbackItem extends StatelessWidget {
                   child: Row(
                     children: [
                       Image.network(
-                        evaModel?.avatar ?? '',
+                        evaModel!.avatar,
                         width: 40.w,
                         height: 40.h,
                         fit: BoxFit.fill,
@@ -449,7 +455,7 @@ class _FeedbackItem extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text(
-                            evaModel?.fullName ?? 'Nguyễn Văn A',
+                            evaModel!.fullName,
                             style: defaultText14B,
                           ),
                           Text(
@@ -480,21 +486,33 @@ class _FeedbackItem extends StatelessWidget {
                 const Divider(
                   thickness: 2,
                 ),
-                Text(
-                  'Nhận xét:',
-                  style: defaultText12B,
-                ),
+                // Text(
+                //   'Nhận xét:',
+                //   style: defaultText12B,
+                // ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: evaModel!.value
-                      .map(
-                        (e) => Text(
-                          '- $e\n',
-                          style: defaultText12B,
-                        ),
-                      )
-                      .toList(),
-                ),
+                  children: displayList.map((e) {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 12),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            e['title'] ?? '',
+                            style: defaultText14B,
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            '  • ${e['value']}',
+                            style: defaultText14Re.copyWith(
+                                fontWeight: FontWeight.w400),
+                          ),
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                )
               ],
             )
           : Center(

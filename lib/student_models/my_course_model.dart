@@ -281,23 +281,101 @@ class VideoLessonModel {
   }
 }
 
+class EvaCriteriaDataModel {
+  final String id;
+  final String name;
+  final String type;
+
+  EvaCriteriaDataModel({
+    required this.id,
+    required this.name,
+    required this.type,
+  });
+  factory EvaCriteriaDataModel.fromJson(Map<String, dynamic> json) {
+    return EvaCriteriaDataModel(
+      id: json['id'] ?? '',
+      name: json['name'] ?? json['text'] ?? '',
+      type: json['type'] ?? '',
+    );
+  }
+}
+
+class EvaluationCriteriaModel {
+  final String id;
+  final String name;
+  final String type;
+  final List<EvaCriteriaDataModel> data;
+  EvaluationCriteriaModel({
+    required this.id,
+    required this.name,
+    required this.type,
+    required this.data,
+  });
+  factory EvaluationCriteriaModel.fromJson(Map<String, dynamic> json) {
+    return EvaluationCriteriaModel(
+        id: json['id'] ?? '',
+        name: json['name'] ?? '',
+        type: json['type'] ?? '',
+        data: (json['evaluation_criteria_data'] as List)
+            .map((e) => EvaCriteriaDataModel.fromJson(e))
+            .toList());
+  }
+}
+
 class EvaluationModel {
   final String avatar;
   final String fullName;
   final String star;
-  final List<String> value;
+  final List<EvaCriteriaDataModel> value;
+  final List<EvaluationCriteriaModel> criteria;
   EvaluationModel({
     required this.avatar,
     required this.fullName,
     required this.star,
     required this.value,
+    required this.criteria,
   });
   factory EvaluationModel.fromJson(Map<String, dynamic> json) {
     return EvaluationModel(
-      avatar: json['avatar'] ?? '',
-      fullName: json['full_name'] ?? '',
-      star: json['star'] ?? '',
-      value: (json['value'] as List).map((e) => e['text'].toString()).toList(),
-    );
+        avatar: json['avatar'] ?? '',
+        fullName: json['full_name'] ?? '',
+        star: json['star'] ?? '',
+        value: (json['value'] as List)
+            .map((e) => EvaCriteriaDataModel.fromJson(e))
+            .toList(),
+        criteria: (json['evaluationCriteria'] as List)
+            .map((e) => EvaluationCriteriaModel.fromJson(e))
+            .toList());
   }
+}
+
+List<Map<String, String>> buildEvaluationResult(EvaluationModel model) {
+  final Map<String, String> valueMap = {
+    for (var v in model.value) v.id: v.name
+  };
+  final List<Map<String, String>> result = [];
+  for (final criteria in model.criteria) {
+    // Trường hợp type = 0 (có danh sách chọn)
+    if (criteria.type == '0') {
+      for (final item in criteria.data) {
+        if (valueMap.containsKey(item.id)) {
+          result.add({
+            'title': criteria.name,
+            'value': valueMap[item.id]!,
+          });
+        }
+      }
+    }
+    // Trường hợp type = 2 (ghi chú)
+    if (criteria.type == '2') {
+      final note = model.value.where((e) => e.id == criteria.id).toList();
+      if (note.isNotEmpty) {
+        result.add({
+          'title': criteria.name,
+          'value': note.first.name,
+        });
+      }
+    }
+  }
+  return result;
 }

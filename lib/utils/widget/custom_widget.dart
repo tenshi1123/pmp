@@ -213,14 +213,13 @@ class ConversationItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        ConverastionModel conversationModel = type == 'teacher'
-            ? await ChatRepo().getConversationDetailTeacher(model.chatId)
-            : await ChatRepo().getConversationDetail(model.chatId);
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => ChatScreen(
-              model: conversationModel,
+              chatId: model.chatId,
+              avatar: model.teacherAvatar,
+              name: model.chatName ?? model.teacherName,
               type: type,
             ),
           ),
@@ -295,13 +294,13 @@ class ConversationTeacher extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        ConverastionModel conversationModel = await ChatRepo()
-            .createChatConversation(teacherId: model.id, type: '');
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => ChatScreen(
-              model: conversationModel,
+              chatId: model.id,
+              avatar: model.avatar,
+              name: model.fullName,
               type: 'teacher',
             ),
           ),
