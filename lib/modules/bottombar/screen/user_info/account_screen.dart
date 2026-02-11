@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pmp_english/utils/app_image.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pmp_english/l10n/l10n.dart';
@@ -210,13 +211,10 @@ class _AccountScreenState extends State<AccountScreen> {
                       borderRadius: BorderRadius.circular(
                         56.r,
                       ),
-                      child: Image.network(
-                        'https://lms.pmpenglish.edu.vn/images/${widget.profileModel.img}',
+                      child: AppImage(
+                        url: 'https://lms.pmpenglish.edu.vn/images/${widget.profileModel.img}',
                         fit: BoxFit.fill,
-                        errorBuilder: (BuildContext context, Object exception,
-                            StackTrace? stackTrace) {
-                          return const Text('N/A');
-                        },
+                        errorAsset: null, // Default
                       ),
                     ),
                   ),

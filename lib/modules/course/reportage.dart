@@ -15,76 +15,65 @@ class ReportageScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: Text(
-            L10n.of(context).overviewFeedback,
-            style: defaultText16B,
+    return CustomScrollView(
+      slivers: [
+        SliverToBoxAdapter(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                child: Text(
+                  L10n.of(context).overviewFeedback,
+                  style: defaultText16B,
+                ),
+              ),
+              SizedBox(height: 10.h),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                child: chartItem(
+                  width: 350,
+                  percents: detailBaoCao.chuyenCan,
+                  title: L10n.of(context).attendance,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                child: chartItem(
+                  width: 350,
+                  percents: detailBaoCao.baiTap,
+                  title: L10n.of(context).assignments,
+                ),
+              ),
+              SizedBox(height: 20.h),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                child: Text(
+                  'Liên hệ giảng viên',
+                  style: defaultText16B,
+                ),
+              ),
+              SizedBox(height: 10.h),
+              SizedBox(height: 20.h),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                child: Text(
+                  'Nhận xét',
+                  style: defaultText16B,
+                ),
+              ),
+              SizedBox(height: 10.h),
+            ],
           ),
         ),
-        SizedBox(height: 10.h),
-
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: chartItem(
-            width: 350,
-            percents: detailBaoCao.chuyenCan,
-            title: L10n.of(context).attendance,
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (BuildContext context, int index) {
+              return _FeedbackItem(detailBaoCao.monthlyReview[index]);
+            },
+            childCount: detailBaoCao.monthlyReview.length,
           ),
         ),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: chartItem(
-            width: 350,
-            percents: detailBaoCao.baiTap,
-            title: L10n.of(context).assignments,
-          ),
-        ),
-
-        SizedBox(height: 20.h),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: Text(
-            'Liên hệ giảng viên',
-            style: defaultText16B,
-          ),
-        ),
-        SizedBox(height: 10.h),
-
-        // Ví dụ chỗ này nếu cần
-        // ConversationItem(
-        //   index: 1,
-        //   title1: detailBaoCao.fullName,
-        //   title2: detailBaoCao.content,
-        // ),
-
-        SizedBox(height: 20.h),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: Text(
-            'Nhận xét',
-            style: defaultText16B,
-          ),
-        ),
-        SizedBox(height: 10.h),
-
-        // Dùng ListView.separated để có Divider ngăn block
-        ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(), // chỉ render
-          itemCount: detailBaoCao.monthlyReview.length,
-          itemBuilder: (BuildContext context, int index) {
-            return _FeedbackItem(detailBaoCao.monthlyReview[index]);
-          },
-          // separatorBuilder: (context, index) => Divider(
-          //   height: 20,
-          //   indent: 20.w,
-          //   endIndent: 20.w,
-          //   thickness: 1,
-          // ),
-        )
       ],
     );
   }
@@ -130,12 +119,9 @@ class _FeedbackItem extends StatelessWidget {
           SizedBox(
             height: 10.h,
           ),
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: model.listValue.length,
-            itemBuilder: (BuildContext context, int index) {
-              final item = model.listValue[index];
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: model.listValue.map((item) {
               return Padding(
                 padding: EdgeInsets.symmetric(
                   vertical: 8.h,
@@ -184,7 +170,7 @@ class _FeedbackItem extends StatelessWidget {
                   ),
                 ),
               );
-            },
+            }).toList(),
           )
         ],
       ),

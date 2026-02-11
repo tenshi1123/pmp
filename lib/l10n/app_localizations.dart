@@ -1069,6 +1069,42 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Chấm điểm bài tập'**
   String get gradeAssignment;
+
+  /// No description provided for @content.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nội dung'**
+  String get content;
+
+  /// No description provided for @shift.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ca học'**
+  String get shift;
+
+  /// No description provided for @lecturer.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giảng viên'**
+  String get lecturer;
+
+  /// No description provided for @videoLabel.
+  ///
+  /// In vi, this message translates to:
+  /// **'Video'**
+  String get videoLabel;
+
+  /// No description provided for @materials.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tài liệu'**
+  String get materials;
+
+  /// No description provided for @classroomLabel.
+  ///
+  /// In vi, this message translates to:
+  /// **'Phòng học'**
+  String get classroomLabel;
 }
 
 class _AppLocalizationsDelegate

@@ -9,13 +9,13 @@ import 'package:pmp_english/utils/constants/api_path.dart';
 import 'package:pmp_english/utils/constants/api_path_teacher.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:pmp_english/utils/DioClient.dart';
+
 class ChatRepo {
-  Dio dio = Dio();
+  // Dio dio = Dio(); // Removed
 
   Future<List<ChatModel>> getListConversation() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     Response response;
     response = await dio.post(
       ApiPath.chat,
@@ -28,9 +28,7 @@ class ChatRepo {
   }
 
   Future<List<ProfileModel>> getListTeacher() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     Response response;
     response = await dio.post(
       ApiPath.listTeachers,
@@ -43,9 +41,7 @@ class ChatRepo {
   }
 
   Future<List<ProfileModel>> getListCustomer() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     Response response;
     response = await dio.post(
       ApiPathTeacher.listCustomers,
@@ -58,9 +54,7 @@ class ChatRepo {
   }
 
   Future<List<ChatModel>> getTeacherListConversation() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     Response response;
     response = await dio.post(
       ApiPath.teacherChat,
@@ -76,9 +70,7 @@ class ChatRepo {
     required String teacherId,
     required String type,
   }) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     Response response;
     // in ra log lỗi
     dio.interceptors.add(LogInterceptor(
@@ -113,9 +105,7 @@ class ChatRepo {
   }
 
   Future<ConverastionModel> getConversationDetail(String chatId) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     Response response;
     response = await dio.post(
       ApiPath.chatTeacher,
@@ -127,9 +117,7 @@ class ChatRepo {
   }
 
   Future<ConverastionModel> getConversationDetailTeacher(String chatId) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     Response response;
     response = await dio.post(
       ApiPathTeacher.chatMessages,
@@ -141,9 +129,7 @@ class ChatRepo {
   }
 
   Future<bool> sendMessage(String chatId, String message) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     Response response;
     response = await dio.post(ApiPath.sendMessage,
         data: jsonEncode(
@@ -156,9 +142,7 @@ class ChatRepo {
   }
 
   Future<bool> sendImageMessage(String chatId, File photo) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     var formData = FormData.fromMap({
       'chat_id': int.parse(chatId),
       'files[]': await MultipartFile.fromFile(photo.path,

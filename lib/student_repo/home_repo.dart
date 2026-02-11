@@ -13,12 +13,11 @@ import 'package:pmp_english/utils/constants/api_path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeRepo {
-  Dio dio = Dio();
+  // Dio dio = Dio(); // Removed
   //Lấy danh sách bài tập
   Future<ListExcerciseModel> getListBaiTap() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
+    // Interceptor handle Auth
     Response response;
     response = await dio.post(
       ApiPath.baiTap,
@@ -30,9 +29,7 @@ class HomeRepo {
   //Lấy chi tiết bài tập chi tiet bai tap
   Future<DetailExcerciseModel> getDetailExsercise(
       {required String id, required String customerCourseScheduleId}) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     Response response;
     response = await dio.post(ApiPath.detailBaiTap,
         data: jsonEncode({
@@ -100,9 +97,7 @@ class HomeRepo {
       required String courseScheduleId,
       required String note,
       File? photo}) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     FormData formData;
     if (photo == null) {
       formData = FormData.fromMap({

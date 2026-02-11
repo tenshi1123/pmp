@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pmp_english/utils/app_image.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/modules/bottombar/screen/user_info/change_pass_screen.dart';
@@ -50,8 +51,8 @@ class TeacherInfo extends StatelessWidget {
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(16.r),
-            child: Image.network(
-              teacherProfileModel.avatar, // Thay bằng ảnh của bạn
+            child: AppImage(
+              url: teacherProfileModel.avatar, // Thay bằng ảnh của bạn
               width: 80.w,
               height: 80.h,
               fit: BoxFit.cover,

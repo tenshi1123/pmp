@@ -1,6 +1,7 @@
+import 'package:pmp_english/utils/app_image.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -143,7 +144,7 @@ class _ChatScreenState extends State<ChatScreen> {
               CircleAvatar(
                 radius: 21.r,
                 backgroundColor: Colors.grey[200],
-                backgroundImage: NetworkImage(widget.avatar),
+                backgroundImage: CachedNetworkImageProvider(widget.avatar),
                 onBackgroundImageError: (_, __) {},
                 child: Icon(
                   Icons.person,
@@ -406,52 +407,10 @@ class _ChatScreenState extends State<ChatScreen> {
         ));
   }
 
-  void _showDialog(BuildContext context, String message) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Thông báo Socket'),
-        content: Text(message),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Đóng'),
-          ),
-        ],
-      ),
-    );
-  }
+
 }
 
-class _FullsizeImage extends StatelessWidget {
-  const _FullsizeImage({
-    required this.url,
-  });
-  final String url;
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(),
-        body: Center(
-          child: InteractiveViewer(
-            panEnabled: true,
-            boundaryMargin: const EdgeInsets.all(200),
-            minScale: 0.5,
-            maxScale: 4,
-            child: Image.network(
-              url,
-              fit: BoxFit.fitWidth,
-              height: double.infinity,
-              width: double.infinity,
-              alignment: Alignment.center,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
+
 
 String prepareHtmlForDisplay(String html) {
   final text = html.replaceAll(RegExp(r'<[^>]+>'), '\n');
@@ -587,13 +546,11 @@ class ChatImageGrid extends StatelessWidget {
       },
       child: ClipRRect(
         borderRadius: radius,
-        child: Image.network(
-          url,
+        child: AppImage(
+          url: url,
           fit: BoxFit.cover,
-          loadingBuilder: (c, w, p) =>
-              p == null ? w : const Center(child: CircularProgressIndicator()),
-          errorBuilder: (_, __, ___) =>
-              const Center(child: Icon(Icons.broken_image)),
+          borderRadius: radius,
+          showLoading: true,
         ),
       ),
     );
@@ -639,7 +596,7 @@ class _ImageViewerState extends State<ImageViewer> {
         itemCount: widget.images.length,
         builder: (context, index) {
           return PhotoViewGalleryPageOptions(
-            imageProvider: NetworkImage(widget.images[index]),
+            imageProvider: CachedNetworkImageProvider(widget.images[index]),
             minScale: PhotoViewComputedScale.contained,
             maxScale: PhotoViewComputedScale.covered * 3,
           );

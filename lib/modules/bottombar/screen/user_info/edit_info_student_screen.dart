@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/student_models/profile_model.dart';
@@ -75,7 +76,7 @@ class _EditInfoStudentScreenState extends State<EditInfoStudentScreen> {
                   radius: 60,
                   backgroundImage: _avatarFile != null
                       ? FileImage(_avatarFile!)
-                      : NetworkImage(
+                      : CachedNetworkImageProvider(
                           'https://lms.pmpenglish.edu.vn/images/${widget.profileModel.img}',
                         ) as ImageProvider,
                 ),

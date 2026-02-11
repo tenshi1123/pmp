@@ -5,12 +5,12 @@ import 'package:pmp_english/student_models/lichthi_models.dart';
 import 'package:pmp_english/utils/constants/api_path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:pmp_english/utils/DioClient.dart';
+
 class ExamScheduleRepo {
-  Dio dio = Dio();
+  // Dio dio = Dio(); // Removed
   Future<LichthiModel> getLichThi() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     Response response;
     response = await dio.post(
       ApiPath.offlineExamSchedule,
@@ -20,9 +20,7 @@ class ExamScheduleRepo {
 
   Future<List<String>> changeCoso(
       {required String cosoId, required int type}) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     Response response;
     response = await dio.post(ApiPath.changeCoso,
         data: jsonEncode({
@@ -38,9 +36,7 @@ class ExamScheduleRepo {
 
   Future<List<ValueModel>> changeDay(
       {required String cosoId, required int type, required String day}) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     Response response;
     response = await dio.post(ApiPath.changeDay,
         data: jsonEncode({
@@ -56,9 +52,7 @@ class ExamScheduleRepo {
   }
 
   Future dkiThi({required String id}) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     Response response;
     response = await dio.post(ApiPath.dangKyThi,
         data: jsonEncode({

@@ -8,9 +8,13 @@ import 'package:pmp_english/utils/constants/const_string.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sp_util/sp_util.dart';
 
+import 'package:pmp_english/utils/DioClient.dart';
+
 class LoginRepo {
-  Dio dio = Dio();
+  // Dio dio = Dio(); // Removed
+  
   Future<bool> login(String code, String password) async {
+    final dio = await DioClient.getInstance();
     dio.options.headers['Token'] = 'PMP123456789';
     Response response;
     try {
@@ -33,7 +37,7 @@ class LoginRepo {
   }
 
   Future<String> refreshToken() async {
-    Dio dio = Dio();
+    final dio = await DioClient.getInstance();
     dio.options.headers['Token'] = 'BT123456789';
     Response response;
     response = await dio.post(ApiPath.login,
@@ -47,6 +51,7 @@ class LoginRepo {
   }
 
   Future<bool> loginTeacher(String email, String password) async {
+    final dio = await DioClient.getInstance();
     dio.options.headers['Token'] = 'PMP123456789';
     Response response;
     try {
@@ -69,9 +74,11 @@ class LoginRepo {
   }
 
   Future pushOnesignalId({required String onesignalId}) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
+    // Interceptor handles Authorization with Token
+    // final SharedPreferences prefs = await SharedPreferences.getInstance();
+    // final String? token = prefs.getString('token');
+    // dio.options.headers['Authorization'] = 'Bearer $token';
 
     await dio.post(
       ApiPath.pushOnesignal,
@@ -82,9 +89,11 @@ class LoginRepo {
   }
 
   Future pushTeacherOnesignal({required String onesignalId}) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
+    // Interceptor handles Authorization
+    // final SharedPreferences prefs = await SharedPreferences.getInstance();
+    // final String? token = prefs.getString('token');
+    // dio.options.headers['Authorization'] = 'Bearer $token';
     dio.interceptors.add(LogInterceptor(
       responseBody: true,
       requestBody: true,
@@ -100,6 +109,7 @@ class LoginRepo {
 
   Future<String> getToken() async {
     Response response;
+    final dio = await DioClient.getInstance();
     dio.interceptors.add(LogInterceptor(
       responseBody: true,
       requestBody: true,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/teacher/teacher_model/home_teacher_model.dart';
@@ -30,7 +31,7 @@ class InfoUser extends StatelessWidget {
             CircleAvatar(
               radius: 32.r,
               backgroundColor: Colors.grey,
-              backgroundImage: NetworkImage(teacherProfileModel.avatar),
+              backgroundImage: CachedNetworkImageProvider(teacherProfileModel.avatar),
               //child: const Text('AH'),
             ),
             SizedBox(

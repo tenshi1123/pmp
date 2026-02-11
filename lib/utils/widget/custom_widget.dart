@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
@@ -10,7 +11,7 @@ import 'package:pmp_english/student_models/chat_models.dart';
 import 'package:pmp_english/student_models/home_model.dart';
 import 'package:pmp_english/student_models/my_course_model.dart';
 import 'package:pmp_english/student_models/profile_model.dart';
-import 'package:pmp_english/student_repo/chat_repo.dart';
+
 import 'package:pmp_english/student_repo/home_repo.dart';
 import 'package:pmp_english/teacher/teacher_model/home_teacher_model.dart';
 import 'package:pmp_english/utils/constants/color.dart';
@@ -248,7 +249,7 @@ class ConversationItem extends StatelessWidget {
             CircleAvatar(
               radius: 21.r,
               backgroundColor: Colors.grey[200],
-              backgroundImage: NetworkImage(model.teacherAvatar),
+              backgroundImage: CachedNetworkImageProvider(model.teacherAvatar),
               onBackgroundImageError: (_, __) {},
               child: Icon(
                 Icons.person,
@@ -330,7 +331,7 @@ class ConversationTeacher extends StatelessWidget {
               radius: 21.r,
               backgroundColor: Colors.grey[300],
               backgroundImage:
-                  model.avatar.isNotEmpty ? NetworkImage(model.avatar) : null,
+                  model.avatar.isNotEmpty ? CachedNetworkImageProvider(model.avatar) : null,
               child: (model.avatar.isEmpty)
                   ? const Icon(
                       Icons.person,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pmp_english/utils/app_image.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:intl/intl.dart';
@@ -34,8 +35,8 @@ class DetailNewsScreen extends StatelessWidget {
                   ),
                   color: main2Color),
               child: Center(
-                  child: Image.network(
-                model.thumbnail,
+                  child: AppImage(
+                url: model.thumbnail,
                 fit: BoxFit.fitWidth,
               )),
             ),

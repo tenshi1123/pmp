@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pmp_english/utils/app_image.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/student_models/gift_models.dart';
@@ -335,8 +336,8 @@ class PresentItem extends StatelessWidget {
               ),
             ],
           ),
-          Image.network(
-            'https://lms.pmpenglish.edu.vn/images/${model.img}',
+          AppImage(
+            url: 'https://lms.pmpenglish.edu.vn/images/${model.img}',
             height: 88.h,
             fit: BoxFit.fitHeight,
           ),

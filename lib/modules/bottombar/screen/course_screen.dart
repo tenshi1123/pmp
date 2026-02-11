@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pmp_english/utils/app_image.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/modules/course/course_details_screen.dart';
@@ -181,8 +182,8 @@ class CourseItem extends StatelessWidget {
               topLeft: Radius.circular(16),
               topRight: Radius.circular(16),
             ),
-            child: Image.network(
-                'https://lms.pmpenglish.edu.vn/images/${model.img}'),
+            child: AppImage(
+                url: 'https://lms.pmpenglish.edu.vn/images/${model.img}'),
           ),
           SizedBox(
             height: 10.h,

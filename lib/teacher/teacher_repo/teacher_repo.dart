@@ -5,12 +5,13 @@ import 'package:pmp_english/utils/constants/api_path_teacher.dart';
 import 'package:pmp_english/utils/constants/const_string.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:pmp_english/utils/DioClient.dart';
+
 class TeacherRepo {
-  Dio dio = Dio();
+  // Dio dio = Dio(); // Removed
   Future<TeacherHomeModel?> getHomeInfo() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
+    // Interceptor handles Auth
     Response response;
     try {
       response = await dio.post(
@@ -31,9 +32,7 @@ class TeacherRepo {
 
   Future<List<LichHocModel>> getLichDay(
       {required String day1, required String day2}) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     Response response;
     response = await dio.post(
       ApiPathTeacher.lichDay,
@@ -50,9 +49,7 @@ class TeacherRepo {
   }
 
   Future<TeacherProfileModel> getCustomerProfile() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     Response response;
     response = await dio.post(
       ApiPathTeacher.profile,
@@ -61,9 +58,7 @@ class TeacherRepo {
   }
 
   Future<List<NotiModel>> getListNoti() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     Response response;
     response = await dio.post(
       ApiPathTeacher.notification,

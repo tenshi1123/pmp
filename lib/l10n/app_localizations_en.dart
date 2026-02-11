@@ -496,5 +496,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get overviewFeedback => 'Overview Feedback';
 
   @override
-  String get gradeAssignment => 'Chấm điểm bài tập';
+  String get gradeAssignment => 'Grade Assignment';
+
+  @override
+  String get content => 'Content';
+
+  @override
+  String get shift => 'Shift';
+
+  @override
+  String get lecturer => 'Lecturer';
+
+  @override
+  String get videoLabel => 'Video';
+
+  @override
+  String get materials => 'Materials';
+
+  @override
+  String get classroomLabel => 'Classroom';
 }

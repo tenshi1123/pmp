@@ -3,13 +3,14 @@ import 'package:pmp_english/student_models/review_models.dart';
 import 'package:pmp_english/utils/constants/api_path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:pmp_english/utils/DioClient.dart';
+
 class ExtensionRepo {
-  Dio dio = Dio();
+  // Dio dio = Dio(); // Removed
   // Lấy danh sách đánh giá của học viên
   Future<List<ReviewModels>> getListReview() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
+    // Interceptor handle Auth
     Response response;
     response = await dio.post(
       ApiPath.listFeedback,
@@ -23,9 +24,7 @@ class ExtensionRepo {
 
   // Lấy chi tiết đánh giá của học viên
   Future<ReviewDetailModels> getDetailReview(String id) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     Response response;
     response = await dio.post(
       ApiPath.detailsFeedback,

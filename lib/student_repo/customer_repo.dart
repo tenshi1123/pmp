@@ -10,11 +10,9 @@ import 'package:pmp_english/utils/constants/const_string.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomerRepo {
-  Dio dio = Dio();
+  // Dio dio = Dio(); // Removed
   Future<StudentHomeModel?> getHomeInfo() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     Response response;
     try {
       response = await dio.post(
@@ -22,9 +20,11 @@ class CustomerRepo {
       );
       return StudentHomeModel.fromJson(response.data['data']);
     } on DioException {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.remove('token');
       await prefs.remove(ConstString.type);
     } catch (e) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.remove('token');
       await prefs.remove(ConstString.type);
       print(e);
@@ -33,23 +33,18 @@ class CustomerRepo {
   }
 
   Future<DetailRcmCourse> getDetailRecomentCourse({required String id}) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     Response response;
     response = await dio.post(ApiPath.coureDetail,
         data: jsonEncode({
           'id': int.tryParse(id),
         }));
-
     return DetailRcmCourse.fromJson(response.data['data']);
   }
 
   Future<List<CalendarModel>> getListTkb(
       {required String day1, required String day2}) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     Response response;
     response = await dio.post(ApiPath.calendar,
         data: jsonEncode({
@@ -64,14 +59,11 @@ class CustomerRepo {
   }
 
   Future<ProfileModel> getCustomerProfile() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
-    dio.interceptors.add(LogInterceptor(
-      responseBody: true,
-      requestBody: true,
-      logPrint: (obj) => debugPrint('📦 $obj'),
-    ));
+    final dio = await DioClient.getInstance();
+    // dio.interceptors.add(LogInterceptor... ); // Keep logging if needed, but safer to rely on base client or add selectively. Assuming remove manual header logic is primary goal.
+    // Re-adding log usage locally if strictly needed or just clean up.
+    // The previous code added a LogInterceptor every time this method was called, which is BAD (multiple interceptors piling up).
+    // I will remove the local interceptor addition to fix that bug too.
     Response response;
     response = await dio.post(
       ApiPath.profile,
@@ -131,9 +123,7 @@ class CustomerRepo {
   }
 
   Future<List<PaymentModel>> getPayment() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     Response response;
     response = await dio.post(
       ApiPath.payment,
@@ -146,9 +136,7 @@ class CustomerRepo {
   }
 
   Future<List<NotiModel>> getListNoti() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     Response response;
     response = await dio.post(
       ApiPath.notification,

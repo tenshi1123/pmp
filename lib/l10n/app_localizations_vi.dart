@@ -496,4 +496,22 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get gradeAssignment => 'Chấm điểm bài tập';
+
+  @override
+  String get content => 'Nội dung';
+
+  @override
+  String get shift => 'Ca học';
+
+  @override
+  String get lecturer => 'Giảng viên';
+
+  @override
+  String get videoLabel => 'Video';
+
+  @override
+  String get materials => 'Tài liệu';
+
+  @override
+  String get classroomLabel => 'Phòng học';
 }

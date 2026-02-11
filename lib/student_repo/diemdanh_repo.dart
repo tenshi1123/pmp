@@ -5,12 +5,12 @@ import 'package:pmp_english/student_models/diem_danh_model.dart';
 import 'package:pmp_english/utils/constants/api_path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:pmp_english/utils/DioClient.dart';
+
 class DiemdanhRepo {
-  Dio dio = Dio();
+  // Dio dio = Dio(); // Removed
   Future<List<DiemDanhModel>> getListDiemDanh() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     Response response;
     response = await dio.post(
       ApiPath.diemDanh,
@@ -23,9 +23,7 @@ class DiemdanhRepo {
   }
 
   Future<InfoDiemDanh> getDetailDiemDanh(String id) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     Response response;
     response =
         await dio.post(ApiPath.detailDiemdanh, data: jsonEncode({"id": id}));

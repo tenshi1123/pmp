@@ -1,4 +1,5 @@
 import 'package:flutter/gestures.dart';
+import 'package:pmp_english/utils/app_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,7 +12,7 @@ import 'package:pmp_english/student_repo/mycourse_repo.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:pmp_english/utils/widget/custom_widget.dart';
-import 'package:qr_flutter/qr_flutter.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 
 class DetailLessonScreen extends StatelessWidget {
@@ -92,7 +93,7 @@ class DetailLessonScreen extends StatelessWidget {
                       thickness: 2,
                     ),
                     Text(
-                      'Nội dung',
+                      L10n.of(context).content,
                       style: defaultText14B,
                     ),
                     // AutoLinkText(
@@ -166,7 +167,7 @@ class DetailLessonScreen extends StatelessWidget {
                               SizedBox(
                                 width: 120.w,
                                 child: Text(
-                                  'Phòng học',
+                                  L10n.of(context).classroomLabel,
                                   style: defaultText14Re,
                                 ),
                               ),
@@ -188,7 +189,7 @@ class DetailLessonScreen extends StatelessWidget {
                               SizedBox(
                                 width: 120.w,
                                 child: Text(
-                                  'Giảng viên',
+                                  L10n.of(context).lecturer,
                                   style: defaultText14Re,
                                 ),
                               ),
@@ -207,7 +208,7 @@ class DetailLessonScreen extends StatelessWidget {
                               SizedBox(
                                 width: 120.w,
                                 child: Text(
-                                  'Ca học',
+                                  L10n.of(context).shift,
                                   style: defaultText14Re,
                                 ),
                               ),
@@ -305,7 +306,7 @@ class _DetailLessonTabbarState extends State<DetailLessonTabbar>
           controller: _tabController,
           tabs: <Widget>[
             homeTab(
-              title: 'Video',
+              title: L10n.of(context).videoLabel,
               isSeprator: false,
               hasNumber: false,
             ),
@@ -314,11 +315,11 @@ class _DetailLessonTabbarState extends State<DetailLessonTabbar>
               hasNumber: false,
             ),
             homeTab(
-              title: 'Tài liệu',
+              title: L10n.of(context).materials,
               hasNumber: false,
             ),
             homeTab(
-              title: 'Đánh giá',
+              title: L10n.of(context).feedBack,
               hasNumber: false,
             ),
           ],
@@ -337,6 +338,12 @@ class _DetailLessonTabbarState extends State<DetailLessonTabbar>
               _DocumentItem(
                 listdoc: listdoc,
               ),
+              // QrImageView(
+              //   data: 'https://testflight.apple.com/join/G82m3UGP',
+              //   version: QrVersions.auto,
+              //   size: 220,
+              // ),
+
               Column(children: [
                 SizedBox(
                   height: 10.h,
@@ -437,15 +444,17 @@ class _FeedbackItem extends StatelessWidget {
                   width: 310.w,
                   child: Row(
                     children: [
-                      Image.network(
-                        evaModel!.avatar,
+                      AppImage(
+                        url: evaModel!.avatar,
                         width: 40.w,
                         height: 40.h,
                         fit: BoxFit.fill,
-                        errorBuilder: (BuildContext context, Object exception,
-                            StackTrace? stackTrace) {
-                          return const Text('N/A');
-                        },
+                        errorAsset:
+                            null, // Use default or N/A logic if needed, but AppImage handle error with icon.
+                        // If we want "N/A" text on error, AppImage needs custom error widget or we wrap.
+                        // The original code returned Text('N/A'). AppImage shows error icon.
+                        // I'll stick to AppImage standard for now or I can add errorBuilder to AppImage if requested.
+                        // For now accepting icon/asset error.
                       ),
                       SizedBox(
                         width: 10.w,
@@ -459,7 +468,7 @@ class _FeedbackItem extends StatelessWidget {
                             style: defaultText14B,
                           ),
                           Text(
-                            'Giảng viên',
+                            L10n.of(context).lecturer,
                             style: defaultText12Re,
                           )
                         ],
@@ -563,8 +572,8 @@ class _ExerciseItemState extends State<ExerciseItem> {
             ),
           )
         : ListView.builder(
-            shrinkWrap: true,
-            physics: const ClampingScrollPhysics(),
+            // shrinkWrap: true, // Removed for performance
+            // physics: const ClampingScrollPhysics(),
             itemCount: baiTapValueModel.length,
             itemBuilder: (BuildContext context, int index) {
               return ExcerciseItem(
@@ -589,86 +598,13 @@ class _DocumentItem extends StatelessWidget {
             ),
           )
         : ListView.builder(
-            shrinkWrap: true,
-            physics: const ClampingScrollPhysics(),
+            // shrinkWrap: true, // Removed for performance
+            // physics: const ClampingScrollPhysics(),
             itemCount: listdoc.length,
             itemBuilder: (BuildContext context, int index) {
               return DocumentItem(
                 model: listdoc[index],
               );
             });
-  }
-}
-
-class HtmlCopyAndOpenDemo extends StatelessWidget {
-  const HtmlCopyAndOpenDemo({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    const htmlData = """
-      <p>
-        Đây là đoạn nội dung có link:
-        <a href="https://flutter.dev">Flutter.dev</a> và
-        <a href="https://pub.dev">Pub.dev</a>.
-      </p>
-    """;
-
-    return Scaffold(
-      appBar: AppBar(title: const Text('HTML Copy & Open Demo')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Html(
-          data: htmlData,
-
-          // ✅ Xử lý khi bấm vào link
-          onAnchorTap: (url, attributes, element) {
-            if (url == null) return;
-            _launchUrl(url);
-          },
-
-          // ✅ Tuỳ chỉnh render riêng cho <a> để hỗ trợ long-press copy
-          // customRenders: {
-          //   tagMatcher("a"): CustomRender.widget(
-          //     widget: (context, buildChildren) {
-          //       final href = context.tree.element?.attributes['href'];
-          //       final child = buildChildren(context);
-
-          //       return GestureDetector(
-          //         behavior: HitTestBehavior.translucent,
-          //         onTap: () {
-          //           if (href != null) _launchUrl(href);
-          //         },
-          //         onLongPress: () {
-          //           if (href != null) {
-          //             Clipboard.setData(ClipboardData(text: href));
-          //             ScaffoldMessenger.of(context.buildContext).showSnackBar(
-          //               SnackBar(
-          //                 content: Text('Đã copy link: $href'),
-          //                 duration: const Duration(seconds: 2),
-          //               ),
-          //             );
-          //           }
-          //         },
-          //         child: DefaultTextStyle.merge(
-          //           style: const TextStyle(
-          //             color: Colors.blue,
-          //             decoration: TextDecoration.underline,
-          //           ),
-          //           child: Wrap(children: child),
-          //         ),
-          //       );
-          //     },
-          //   ),
-          // },
-        ),
-      ),
-    );
-  }
-
-  void _launchUrl(String url) async {
-    final uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    }
   }
 }

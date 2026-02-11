@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/modules/course/lich_hoc.dart';
@@ -56,7 +57,7 @@ class _CourseDetailsState extends State<CourseDetails>
                     height: 140.h,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: NetworkImage(
+                        image: CachedNetworkImageProvider(
                           'https://lms.pmpenglish.edu.vn/images/${model.img}',
                         ),
                         fit: BoxFit.cover,

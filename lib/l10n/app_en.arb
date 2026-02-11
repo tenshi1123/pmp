@@ -164,5 +164,11 @@
     "noExamSchedule": "No exam schedule available",
     "teacherFeedback": "Teacher feedback",
     "overviewFeedback": "Overview Feedback",
-    "gradeAssignment": "Chấm điểm bài tập"
+    "gradeAssignment": "Grade Assignment",
+    "content": "Content",
+    "shift": "Shift",
+    "lecturer": "Lecturer",
+    "videoLabel": "Video",
+    "materials": "Materials",
+    "classroomLabel": "Classroom"
 }

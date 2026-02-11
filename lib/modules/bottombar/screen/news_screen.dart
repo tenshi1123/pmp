@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pmp_english/utils/app_image.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
@@ -179,8 +180,8 @@ class CourseItem extends StatelessWidget {
                   ),
                   color: main2Color),
               child: Center(
-                  child: Image.network(
-                model.img,
+                  child: AppImage(
+                url: model.img,
                 fit: BoxFit.fill,
               )),
             ),

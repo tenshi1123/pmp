@@ -1,0 +1,119 @@
+﻿Analyzing pmp...                                                
+
+warning - The value of the field '_socket' isn't used - lib\blocs\socket\socket_cubit.dart:32:14 - unused_field
+   info - The imported package 'http' isn't a dependency of the importing package - lib\modules\bottombar\bottom_bar_screen.dart:22:8 - depend_on_referenced_packages
+   info - Invalid use of a private type in a public API - lib\modules\bottombar\bottom_bar_screen.dart:36:3 - library_private_types_in_public_api
+   info - Don't use 'BuildContext's across async gaps - lib\modules\bottombar\bottom_bar_screen.dart:66:5 - use_build_context_synchronously
+   info - 'onPopInvoked' is deprecated and shouldn't be used. Use onPopInvokedWithResult instead. This feature was deprecated after v3.22.0-12.0.pre - lib\modules\bottombar\bottom_bar_screen.dart:109:7 - deprecated_member_use
+   info - Don't use 'BuildContext's across async gaps - lib\modules\bottombar\screen\course_screen.dart:306:17 - use_build_context_synchronously
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\bottombar\screen\extension.dart\schedule_screen.dart:164:37 - deprecated_member_use
+   info - Don't use 'BuildContext's across async gaps - lib\modules\bottombar\screen\extension.dart\schedule_screen.dart:311:11 - use_build_context_synchronously
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\bottombar\screen\extension.dart\testtkb.dart:144:39 - deprecated_member_use
+   info - Don't use 'BuildContext's across async gaps - lib\modules\bottombar\screen\extension.dart\testtkb.dart:293:13 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\modules\bottombar\screen\home_widgets.dart:91:15 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\modules\bottombar\screen\home_widgets.dart:110:15 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\modules\bottombar\screen\home_widgets.dart:238:17 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\modules\bottombar\screen\home_widgets.dart:264:17 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\modules\bottombar\screen\home_widgets.dart:279:17 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\modules\bottombar\screen\home_widgets.dart:294:15 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\modules\bottombar\screen\home_widgets.dart:312:17 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\modules\bottombar\screen\home_widgets.dart:416:27 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\modules\bottombar\screen\home_widgets.dart:647:22 - use_build_context_synchronously
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\bottombar\screen\home_widgets.dart:666:36 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\bottombar\screen\home_widgets.dart:735:34 - deprecated_member_use
+   info - Don't use 'BuildContext's across async gaps - lib\modules\bottombar\screen\news_screen.dart:139:13 - use_build_context_synchronously
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\bottombar\screen\news_screen.dart:156:36 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\bottombar\screen\user_info\account_screen.dart:128:47 - deprecated_member_use
+   info - Don't use 'BuildContext's across async gaps - lib\modules\bottombar\screen\user_info\account_screen.dart:238:21 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\modules\bottombar\screen\user_info\account_screen.dart:289:17 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\modules\bottombar\screen\user_info\account_screen.dart:485:17 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\modules\bottombar\screen\user_info\change_pass_screen.dart:240:21 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\modules\bottombar\screen\user_info\edit_info_student_screen.dart:152:21 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\modules\chat\chat_screen.dart:53:15 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\modules\chat\chat_screen.dart:91:9 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\modules\chat\chat_screen.dart:385:29 - use_build_context_synchronously
+warning - The declaration '_showDialog' isn't referenced - lib\modules\chat\chat_screen.dart:410:8 - unused_element
+warning - The declaration '_FullsizeImage' isn't referenced - lib\modules\chat\chat_screen.dart:427:7 - unused_element
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\course\course_details_screen.dart:84:48 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\course\excercise_screen.dart:77:44 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\course\lich_hoc.dart:107:42 - deprecated_member_use
+   info - Don't use 'BuildContext's across async gaps - lib\modules\course\lich_hoc.dart:164:11 - use_build_context_synchronously
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\course\lich_hoc.dart:268:34 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\course\recomment_course.dart:111:58 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\course\recomment_course.dart:156:58 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\course\recomment_course.dart:308:42 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\course\recomment_course.dart:326:42 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\course\recomment_course.dart:425:34 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\diemdanh\attendance_details.dart:182:50 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\diemdanh\attendance_details.dart:221:46 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\diemdanh\attendance_details.dart:359:33 - deprecated_member_use
+   info - Don't use 'BuildContext's across async gaps - lib\modules\diemdanh\diem_danh_screen.dart:83:25 - use_build_context_synchronously
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\diemdanh\diem_danh_screen.dart:122:34 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\diemdanh\diem_danh_screen.dart:156:41 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\feature_home\academic_report_screen.dart:86:46 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\feature_home\academic_report_screen.dart:299:38 - deprecated_member_use
+   info - Don't use 'BuildContext's across async gaps - lib\modules\feature_home\evaluate\evaluate_screen.dart:89:23 - use_build_context_synchronously
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\feature_home\evaluate\evaluate_screen.dart:127:32 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\feature_home\exam_schedule_screen.dart:104:40 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\feature_home\exam_schedule_screen.dart:142:49 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\feature_home\exam_schedule_screen.dart:169:49 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\feature_home\exam_schedule_screen.dart:534:46 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\feature_home\exam_schedule_screen.dart:606:44 - deprecated_member_use
+   info - The import of 'package:flutter/gestures.dart' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart' - lib\modules\feature_home\exercise\exercise_detail_screen.dart:1:8 - unnecessary_import
+   info - Don't use 'BuildContext's across async gaps - lib\modules\feature_home\exercise\exercise_detail_screen.dart:193:36 - use_build_context_synchronously
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\feature_home\exercise\exercise_screen.dart:132:48 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\feature_home\exercise\exercise_screen.dart:138:48 - deprecated_member_use
+   info - Don't use 'BuildContext's across async gaps - lib\modules\feature_home\exercise\exercise_screen.dart:327:24 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\modules\feature_home\exercise\exercise_screen.dart:333:24 - use_build_context_synchronously
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\feature_home\exercise\exercise_screen.dart:350:34 - deprecated_member_use
+   info - Don't use 'BuildContext's across async gaps - lib\modules\feature_home\exercise\test_detail_screen.dart:263:47 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\modules\feature_home\exercise\test_detail_screen.dart:266:35 - use_build_context_synchronously
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\infoAccount\my_certificate_screen.dart:67:32 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\infoAccount\payment_history.dart:57:46 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\infoAccount\redeem_reward_screen.dart:137:38 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\infoAccount\redeem_reward_screen.dart:169:44 - deprecated_member_use
+   info - Don't use 'BuildContext's across async gaps - lib\modules\infoAccount\redeem_reward_screen.dart:235:35 - use_build_context_synchronously
+warning - Unused import: 'package:qr_flutter/qr_flutter.dart' - lib\modules\lesson\detail_lesson_screen.dart:15:8 - unused_import
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\lesson\detail_lesson_screen.dart:70:42 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\lesson\detail_lesson_screen.dart:303:42 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\lesson\detail_lesson_screen.dart:431:32 - deprecated_member_use
+   info - Don't use 'BuildContext's across async gaps - lib\modules\login\login_screen.dart:259:40 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\modules\login\login_screen.dart:266:25 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\modules\login\teacher\teacher_login_screen.dart:119:25 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\modules\login\teacher\teacher_login_screen.dart:130:23 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\modules\splash\splash_screen.dart:40:32 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\modules\splash\splash_screen.dart:46:17 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\modules\splash\splash_screen.dart:58:17 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\modules\splash\splash_screen.dart:70:13 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\modules\splash\splash_screen.dart:78:11 - use_build_context_synchronously
+warning - Unused import: 'package:shared_preferences/shared_preferences.dart' - lib\student_repo\chat_repo.dart:10:8 - unused_import
+warning - Unused import: 'package:flutter/foundation.dart' - lib\student_repo\customer_repo.dart:4:8 - unused_import
+   info - Don't invoke 'print' in production code - lib\student_repo\customer_repo.dart:30:7 - avoid_print
+warning - Unused import: 'package:shared_preferences/shared_preferences.dart' - lib\student_repo\diemdanh_repo.dart:6:8 - unused_import
+warning - Unused import: 'package:shared_preferences/shared_preferences.dart' - lib\student_repo\extension_repo.dart:4:8 - unused_import
+warning - Unused import: 'package:shared_preferences/shared_preferences.dart' - lib\student_repo\home_repo.dart:13:8 - unused_import
+warning - Unused import: 'package:shared_preferences/shared_preferences.dart' - lib\student_repo\lichthi_repo.dart:6:8 - unused_import
+warning - Unused import: 'package:shared_preferences/shared_preferences.dart' - lib\student_repo\mycourse_repo.dart:6:8 - unused_import
+warning - Unused import: 'package:shared_preferences/shared_preferences.dart' - lib\teacher\teacher_repo\teacher_class_repo.dart:7:8 - unused_import
+   info - Don't use 'BuildContext's across async gaps - lib\teacher_modules\teacher_bottombar\home\teacher_homescreen.dart:231:15 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\teacher_modules\teacher_bottombar\home\teacher_homescreen.dart:254:15 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\teacher_modules\teacher_bottombar\home\teacher_homescreen.dart:297:11 - use_build_context_synchronously
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\teacher_modules\teacher_bottombar\home\teacher_homescreen.dart:488:33 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\teacher_modules\teacher_bottombar\home\teacher_homescreen.dart:525:37 - deprecated_member_use
+   info - Don't use 'BuildContext's across async gaps - lib\teacher_modules\teacher_bottombar\screen\teacher_class.dart:164:13 - use_build_context_synchronously
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\teacher_modules\teacher_bottombar\screen\teacher_class.dart:186:35 - deprecated_member_use
+   info - Don't use 'BuildContext's across async gaps - lib\teacher_modules\teacher_class\teacher_detail_class.dart:257:22 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\teacher_modules\teacher_class\teacher_detail_lesson.dart:286:22 - use_build_context_synchronously
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\teacher_modules\teacher_info\teacher_info.dart:46:37 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\teacher_modules\teacher_info\teacher_info.dart:90:37 - deprecated_member_use
+   info - Don't use 'BuildContext's across async gaps - lib\teacher_modules\teacher_info\teacher_info.dart:229:17 - use_build_context_synchronously
+   info - The file name 'DioClient.dart' isn't a lower_case_with_underscores identifier - lib\utils\DioClient.dart:1:1 - file_names
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\utils\constants\color.dart:62:15 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\utils\constants\color.dart:63:15 - deprecated_member_use
+   info - Don't invoke 'print' in production code - lib\utils\widget\custom_dialog.dart:72:23 - avoid_print
+   info - Don't use 'BuildContext's across async gaps - lib\utils\widget\custom_dialog.dart:76:25 - use_build_context_synchronously
+warning - Unused import: 'package:pmp_english/student_repo/chat_repo.dart' - lib\utils\widget\custom_widget.dart:14:8 - unused_import
+   info - Don't use 'BuildContext's across async gaps - lib\utils\widget\custom_widget.dart:46:24 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\utils\widget\custom_widget.dart:52:24 - use_build_context_synchronously
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\utils\widget\custom_widget.dart:73:34 - deprecated_member_use
+

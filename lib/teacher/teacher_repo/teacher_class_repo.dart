@@ -6,12 +6,13 @@ import 'package:pmp_english/teacher/teacher_model/teacher_class_model.dart';
 import 'package:pmp_english/utils/constants/api_path_teacher.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:pmp_english/utils/DioClient.dart';
+
 class TeacherClassRepo {
-  Dio dio = Dio();
+  // Dio dio = Dio(); // Removed
   Future<TeacherClassModel> getTeacherClass() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
+    // Interceptor handle Auth
     Response response;
     response = await dio.post(
       ApiPathTeacher.getClass,
@@ -20,9 +21,7 @@ class TeacherClassRepo {
   }
 
   Future<DetailClass> getDetailLopHoc(String id) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     Response response;
     response = await dio.post(ApiPathTeacher.detailsClass,
         data: jsonEncode({'id': id}));
@@ -31,9 +30,7 @@ class TeacherClassRepo {
 
   Future<List<DiemDanhHSModel>> getListDiemDanh(
       {required String courseScheduleId, required String id}) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     Response response;
     response = await dio.post(
       ApiPathTeacher.detailBuoihoc,
@@ -55,9 +52,7 @@ class TeacherClassRepo {
     required String id,
     required int type,
   }) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     Response response;
     response = await dio.post(
       ApiPathTeacher.detailBuoihoc,
@@ -77,9 +72,7 @@ class TeacherClassRepo {
   Future<DetailedExamModel> getDetailedExam({
     required String id,
   }) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     Response response;
     response = await dio.post(
       ApiPathTeacher.detailsExam,
@@ -93,9 +86,7 @@ class TeacherClassRepo {
   Future<DetailedExamModel> getStudentHomework({
     required String id,
   }) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    final dio = await DioClient.getInstance();
     Response response;
     response = await dio.post(
       ApiPathTeacher.examStudent,
@@ -111,10 +102,7 @@ class TeacherClassRepo {
       required String finalMark,
       required String note,
       File? photo}) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
-
+    final dio = await DioClient.getInstance();
     FormData formData;
     if (photo == null) {
       formData = FormData.fromMap({

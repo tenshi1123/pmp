@@ -164,5 +164,11 @@
     "noExamSchedule": "Chưa có lịch thi nào",
     "teacherFeedback": "Đánh giá từ giáo viên",
     "overviewFeedback": "Đánh giá tổng quan",
-    "gradeAssignment": "Chấm điểm bài tập"
+    "gradeAssignment": "Chấm điểm bài tập",
+    "content": "Nội dung",
+    "shift": "Ca học",
+    "lecturer": "Giảng viên",
+    "videoLabel": "Video",
+    "materials": "Tài liệu",
+    "classroomLabel": "Phòng học"
 }

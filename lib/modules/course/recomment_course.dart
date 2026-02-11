@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pmp_english/utils/app_image.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
@@ -45,8 +46,8 @@ class _RecommentCourseState extends State<RecommentCourse>
                         Positioned(
                           top: 0,
                           child: SizedBox(
-                            child: Image.network(
-                              'https://lms.pmpenglish.edu.vn/images/${_rcmModel.img}',
+                            child: AppImage(
+                              url: 'https://lms.pmpenglish.edu.vn/images/${_rcmModel.img}',
                               width: 390.w,
                               height: 259.h,
                               //fit: BoxFit.cover,
