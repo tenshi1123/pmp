@@ -45,8 +45,9 @@ class _LichHenScreenState extends State<LichHenScreen>
             Navigator.of(context).pop(false);
           },
         ),
+        centerTitle: true,
         title: Text(
-          '    ${L10n.of(context).listStudentApoint}',
+          L10n.of(context).listStudentApoint,
           style: defaultText18B.copyWith(
             color: Colors.white,
           ),

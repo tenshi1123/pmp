@@ -40,8 +40,9 @@ class _DetailExamScreenState extends State<DetailExamScreen> {
             Navigator.of(context).pop(false);
           },
         ),
+        centerTitle: true,
         title: Text(
-          '    ${L10n.of(context).gradeAssignment}',
+          L10n.of(context).gradeAssignment,
           style: defaultText18B.copyWith(
             color: Colors.white,
           ),

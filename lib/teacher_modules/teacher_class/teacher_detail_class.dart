@@ -58,8 +58,9 @@ class _TeacherDetailState extends State<TeacherDetail>
             Navigator.of(context).pop(false);
           },
         ),
+        centerTitle: true,
         title: Text(
-          '    ${L10n.of(context).detailClass}',
+          L10n.of(context).detailClass,
           style: defaultText18B.copyWith(
             color: Colors.white,
           ),
@@ -384,7 +385,9 @@ Widget _detailItem({required String title1, required String title2}) {
         width: 150.w,
         child: Text(
           title1,
-          style: defaultText16M,
+          style: defaultText16M.copyWith(
+            color: const Color(0xff09204E).withValues(alpha: 0.60),
+          ),
         ),
       ),
       SizedBox(

@@ -31,8 +31,9 @@ class _BaiThiScreenState extends State<BaiThiScreen> {
             Navigator.of(context).pop(false);
           },
         ),
+        centerTitle: true,
         title: Text(
-          '    ${L10n.of(context).gradeAssignment}',
+          L10n.of(context).gradeAssignment,
           style: defaultText18B.copyWith(
             color: Colors.white,
           ),

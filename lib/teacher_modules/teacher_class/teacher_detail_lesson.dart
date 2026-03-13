@@ -37,8 +37,9 @@ class _LessonDetailState extends State<LessonDetail> {
             Navigator.of(context).pop(false);
           },
         ),
+        centerTitle: true,
         title: Text(
-          '    ${L10n.of(context).detailLesson}',
+          L10n.of(context).detailLesson,
           style: defaultText18B.copyWith(
             color: Colors.white,
           ),
