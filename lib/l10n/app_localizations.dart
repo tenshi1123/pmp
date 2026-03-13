@@ -1105,6 +1105,12 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Phòng học'**
   String get classroomLabel;
+
+  /// No description provided for @verifyPhoneNumber.
+  ///
+  /// In vi, this message translates to:
+  /// **'xác thực số điện thoại'**
+  String get verifyPhoneNumber;
 }
 
 class _AppLocalizationsDelegate

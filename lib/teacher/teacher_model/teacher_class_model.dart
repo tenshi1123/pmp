@@ -315,3 +315,16 @@ class DocumentModel {
     );
   }
 }
+
+DateTime getLessonDateTime(DateTime day, String timeStart) {
+  final parts = timeStart.split(':');
+
+  return DateTime(
+    day.year,
+    day.month,
+    day.day,
+    int.parse(parts[0]),
+    int.parse(parts[1]),
+    int.parse(parts[2]),
+  );
+}

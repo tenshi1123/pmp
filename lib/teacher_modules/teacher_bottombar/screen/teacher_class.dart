@@ -168,54 +168,60 @@ class ClassCard extends StatelessWidget {
                     )));
       },
       child: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 16.w,
-          vertical: 12.h,
-        ),
-        margin: EdgeInsets.only(
-          top: 16.h,
-          right: 16.w,
-          left: 16.w,
-        ),
-        decoration: BoxDecoration(
-          color: const Color(0xffF5F7FA),
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: const Color(0xffCFF2FF)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 5,
-              offset: const Offset(0, 3),
-            ),
-          ],
-        ),
-        child: Row(
-          children: [
-            Image.asset(
-              'assets/images/computer.png',
-              width: 40.w,
-              height: 40.h,
-            ),
-            const SizedBox(width: 12),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  model.name,
-                  style: defaultText16M.copyWith(color: Colors.black),
+          padding: EdgeInsets.symmetric(
+            horizontal: 16.w,
+            vertical: 12.h,
+          ),
+          margin: EdgeInsets.only(
+            top: 16.h,
+            right: 16.w,
+            left: 16.w,
+          ),
+          decoration: BoxDecoration(
+            color: const Color(0xffF5F7FA),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: const Color(0xffCFF2FF)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.05),
+                blurRadius: 5,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          child: Row(
+            children: [
+              Image.asset(
+                'assets/images/computer.png',
+                width: 40.w,
+                height: 40.h,
+              ),
+              SizedBox(width: 12.w),
+              Expanded(
+                // thêm cái này
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      model.name,
+                      style: defaultText16M.copyWith(color: Colors.black),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    SizedBox(height: 4.h),
+                    Text(
+                      model.alias,
+                      style: defaultText14Re.copyWith(
+                        color: const Color(0xff09204E).withValues(alpha: 0.48),
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 4),
-                Text(
-                  model.alias,
-                  style: defaultText14Re.copyWith(
-                    color: const Color(0xff09204E).withValues(alpha: 0.48),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
+              ),
+            ],
+          )),
     );
   }
 }

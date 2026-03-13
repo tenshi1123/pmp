@@ -213,7 +213,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dealine => 'Dealine : ';
 
   @override
-  String get see => 'see';
+  String get see => 'view';
 
   @override
   String get yourCourse => 'Your courses';
@@ -436,7 +436,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notYetStudied => 'Not started';
 
   @override
-  String get learned => 'Complete';
+  String get learned => 'Completed';
 
   @override
   String get listLesson => 'List lessons';
@@ -515,4 +515,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get classroomLabel => 'Classroom';
+
+  @override
+  String get verifyPhoneNumber => 'Verify phone number';
 }

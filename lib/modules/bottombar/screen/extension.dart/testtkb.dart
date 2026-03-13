@@ -15,6 +15,7 @@ import 'package:pmp_english/teacher_modules/teacher_class/teacher_detail_lesson.
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ScheduleScreen extends StatefulWidget {
   const ScheduleScreen({super.key});
@@ -408,6 +409,12 @@ class _ItemTableCalenderState extends State<ItemTableCalender> {
             ),
             Html(
               data: widget.model.noidung,
+              onLinkTap: (url, attributes, element) async {
+                if (url != null) {
+                  final uri = Uri.parse(url);
+                  await launchUrl(uri, mode: LaunchMode.externalApplication);
+                }
+              },
               style: {
                 "table": Style(
                   backgroundColor: const Color.fromARGB(0x50, 0xee, 0xee, 0xee),

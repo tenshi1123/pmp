@@ -55,7 +55,9 @@ class _OtpScreenState extends State<OtpScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: const BackButton(color: Colors.black),
-        title: const Text("Xác thực SĐT"),
+        title: Text(
+          L10n.of(context).verifyPhoneNumber,
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(

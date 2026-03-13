@@ -514,4 +514,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get classroomLabel => 'Phòng học';
+
+  @override
+  String get verifyPhoneNumber => 'xác thực số điện thoại';
 }

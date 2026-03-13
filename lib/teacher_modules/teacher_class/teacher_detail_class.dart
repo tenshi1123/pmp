@@ -6,6 +6,7 @@ import 'package:pmp_english/teacher/teacher_model/teacher_class_model.dart';
 import 'package:pmp_english/teacher/teacher_repo/teacher_class_repo.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:url_launcher/url_launcher.dart';
 //import 'package:flutter_html_all/flutter_html_all.dart';
 import 'teacher_detail_lesson.dart';
 
@@ -37,6 +38,16 @@ class _TeacherDetailState extends State<TeacherDetail>
 
   @override
   Widget build(BuildContext context) {
+    final now = DateTime.now();
+
+    final pastLessons = widget.detailClass.dsBuoiHoc.where((e) {
+      final lessonTime = getLessonDateTime(e.day, e.timeStart);
+      return lessonTime.isBefore(now);
+    }).toList();
+    final upcomingLessons = widget.detailClass.dsBuoiHoc.where((e) {
+      final lessonTime = getLessonDateTime(e.day, e.timeStart);
+      return lessonTime.isAfter(now);
+    }).toList();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -61,7 +72,7 @@ class _TeacherDetailState extends State<TeacherDetail>
             color: const Color(0xff00AEEF),
             child: Container(
               width: 390.w,
-              height: 128.h,
+              //height: 128.h,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20.r),
@@ -72,15 +83,27 @@ class _TeacherDetailState extends State<TeacherDetail>
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+                  SizedBox(
+                    height: 12.h,
+                  ),
                   _detailItem(
                       title1: L10n.of(context).nameClass,
                       title2: widget.detailClass.name),
+                  SizedBox(
+                    height: 16.h,
+                  ),
                   _detailItem(
                       title1: L10n.of(context).learningFormat,
                       title2: widget.detailClass.hinhThucHoc),
+                  SizedBox(
+                    height: 16.h,
+                  ),
                   _detailItem(
                       title1: '${L10n.of(context).course} :',
                       title2: widget.detailClass.alias),
+                  SizedBox(
+                    height: 12.h,
+                  ),
                 ],
               ),
             ),
@@ -174,15 +197,10 @@ class _TeacherDetailState extends State<TeacherDetail>
                   child: ListView.builder(
                       shrinkWrap: true,
                       physics: const ClampingScrollPhysics(),
-                      itemCount: widget.detailClass.dsBuoiHoc
-                          .where((e) => e.day.isAfter(DateTime.now()))
-                          .toList()
-                          .length,
+                      itemCount: upcomingLessons.length,
                       itemBuilder: (BuildContext context, int index) {
                         return ListFbDaily(
-                          model: widget.detailClass.dsBuoiHoc
-                              .where((e) => e.day.isAfter(DateTime.now()))
-                              .toList()[index],
+                          model: upcomingLessons[index],
                           courseScheduleId: widget.detailClass.id,
                         );
                       }),
@@ -210,15 +228,10 @@ class _TeacherDetailState extends State<TeacherDetail>
                   child: ListView.builder(
                       shrinkWrap: true,
                       physics: const ClampingScrollPhysics(),
-                      itemCount: widget.detailClass.dsBuoiHoc
-                          .where((e) => e.day.isBefore(DateTime.now()))
-                          .toList()
-                          .length,
+                      itemCount: pastLessons.length,
                       itemBuilder: (BuildContext context, int index) {
                         return ListFbDaily(
-                          model: widget.detailClass.dsBuoiHoc
-                              .where((e) => e.day.isBefore(DateTime.now()))
-                              .toList()[index],
+                          model: pastLessons[index],
                           courseScheduleId: widget.detailClass.id,
                         );
                       }),
@@ -301,6 +314,12 @@ class ListFbDaily extends StatelessWidget {
           ),
           Html(
             data: model.noiDungBuoiHoc,
+            onLinkTap: (url, attributes, element) async {
+              if (url != null) {
+                final uri = Uri.parse(url);
+                await launchUrl(uri, mode: LaunchMode.externalApplication);
+              }
+            },
             style: {
               "table": Style(
                 backgroundColor: const Color.fromARGB(0x50, 0xee, 0xee, 0xee),
@@ -312,18 +331,6 @@ class ListFbDaily extends StatelessWidget {
               "td": Style(
                 padding: HtmlPaddings.all(6),
                 border: const Border(bottom: BorderSide(color: Colors.grey)),
-              ),
-              'h5': Style(maxLines: 2, textOverflow: TextOverflow.ellipsis),
-              'flutter': Style(
-                display: Display.block,
-                fontSize: FontSize(5, Unit.em),
-              ),
-              ".second-table": Style(
-                backgroundColor: Colors.transparent,
-              ),
-              ".second-table tr td:first-child": Style(
-                fontWeight: FontWeight.bold,
-                textAlign: TextAlign.end,
               ),
               "p": Style(
                 color: Colors.black,
@@ -374,14 +381,14 @@ Widget _detailItem({required String title1, required String title2}) {
         width: 18.w,
       ),
       SizedBox(
-        width: 132.w,
+        width: 150.w,
         child: Text(
           title1,
           style: defaultText16M,
         ),
       ),
       SizedBox(
-        width: 240.w,
+        width: 220.w,
         child: Text(
           title2,
           style: defaultText16B,

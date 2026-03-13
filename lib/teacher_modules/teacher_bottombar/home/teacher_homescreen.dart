@@ -18,6 +18,7 @@ import 'package:pmp_english/teacher/teacher_repo/teacher_repo.dart';
 import 'package:pmp_english/teacher_modules/teacher_bottombar/home/lichhen_screen.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../teacher_class/teacher_detail_lesson.dart';
 
@@ -408,6 +409,13 @@ class _CommingSchedule extends StatelessWidget {
                       SizedBox(height: 8.h),
                       Html(
                         data: lichHocModel.noidung,
+                        onLinkTap: (url, attributes, element) async {
+                          if (url != null) {
+                            final uri = Uri.parse(url);
+                            await launchUrl(uri,
+                                mode: LaunchMode.externalApplication);
+                          }
+                        },
                         style: {
                           "table": Style(
                             backgroundColor:

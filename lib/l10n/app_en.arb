@@ -70,7 +70,7 @@
     "saveChange": "Save change",
     "back": "Back",
     "dealine": "Dealine : ",
-    "see": "see",
+    "see": "view",
     "yourCourse": "Your courses",
     "detail": "Details",
     "purchasedCourse": "Purchased courses",
@@ -144,7 +144,7 @@
     "examSchedule": "Test Schedule",
     "feedBack": "Feedback",
     "notYetStudied": "Not started",
-    "learned": "Complete",
+    "learned": "Completed",
     "listLesson": "List lessons",
     "nameClass": "Class : ",
     "learningFormat": "Learning Format : ",
@@ -170,5 +170,6 @@
     "lecturer": "Lecturer",
     "videoLabel": "Video",
     "materials": "Materials",
-    "classroomLabel": "Classroom"
+    "classroomLabel": "Classroom",
+    "verifyPhoneNumber": "Verify phone number"
 }

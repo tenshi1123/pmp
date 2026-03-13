@@ -160,15 +160,16 @@ Widget _buildMenuItem({
       child: Row(
         children: [
           Container(
-              height: 36.h,
-              width: 36.w,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(16.r),
-                ),
+            height: 36.h,
+            width: 36.w,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(
+                Radius.circular(16.r),
               ),
-              child: Icon(icon, color: iconColor)),
+            ),
+            child: Icon(icon, color: iconColor),
+          ),
           const SizedBox(width: 10),
           Expanded(
             child: Text(

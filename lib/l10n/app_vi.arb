@@ -170,5 +170,6 @@
     "lecturer": "Giảng viên",
     "videoLabel": "Video",
     "materials": "Tài liệu",
-    "classroomLabel": "Phòng học"
+    "classroomLabel": "Phòng học",
+    "verifyPhoneNumber": "xác thực số điện thoại"
 }
