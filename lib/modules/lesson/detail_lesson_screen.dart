@@ -12,8 +12,43 @@ import 'package:pmp_english/student_repo/mycourse_repo.dart';
 import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:pmp_english/utils/widget/custom_widget.dart';
-
 import 'package:url_launcher/url_launcher.dart';
+
+String parseVideoUrl(String content) {
+  if (content.contains('<iframe')) {
+    final regex = RegExp(r'src="([^"]+)"');
+    final match = regex.firstMatch(content);
+    return match?.group(1) ?? '';
+  }
+  return content;
+}
+
+bool isYoutubeUrl(String url) {
+  return url.contains('youtube.com') || url.contains('youtu.be');
+}
+
+String getYoutubeId(String url) {
+  Uri uri = Uri.parse(url);
+
+  if (uri.queryParameters.containsKey('v')) {
+    return uri.queryParameters['v']!;
+  }
+
+  if (uri.host.contains('youtu.be')) {
+    return uri.pathSegments.first;
+  }
+
+  if (uri.pathSegments.contains('embed')) {
+    return uri.pathSegments.last;
+  }
+
+  return '';
+}
+
+String getThumbnail(String url) {
+  final id = getYoutubeId(url);
+  return 'https://img.youtube.com/vi/$id/0.jpg';
+}
 
 class DetailLessonScreen extends StatelessWidget {
   const DetailLessonScreen({super.key, required this.videoLessonModel});
@@ -344,12 +379,14 @@ class _DetailLessonTabbarState extends State<DetailLessonTabbar>
               //   size: 220,
               // ),
 
-              Column(children: [
-                SizedBox(
-                  height: 10.h,
-                ),
-                _FeedbackItem(evaModel),
-              ]),
+              SingleChildScrollView(
+                child: Column(children: [
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  _FeedbackItem(evaModel),
+                ]),
+              ),
             ],
           ),
         ),
@@ -364,7 +401,11 @@ class _VideoWidget extends StatelessWidget {
   final VideoLessonModel videoLessonModel;
   @override
   Widget build(BuildContext context) {
-    return videoLessonModel.content == ''
+    final rawContent = videoLessonModel.content;
+    final videoUrl = parseVideoUrl(rawContent); // ✅ FIX
+    final isYoutube = isYoutubeUrl(videoUrl); // ✅ FIX
+
+    return rawContent == ''
         ? Center(
             child: Image.asset(
               'assets/images/empty2.png',
@@ -373,38 +414,59 @@ class _VideoWidget extends StatelessWidget {
           )
         : Column(
             children: [
-              SizedBox(
-                height: 10.h,
-              ),
+              SizedBox(height: 10.h),
               GestureDetector(
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => VideoPlayerPage(
-                        videoUrl: videoLessonModel.content,
+                        videoUrl: videoUrl, // ✅ FIX
                       ),
                     ),
                   );
                 },
-                child: Image.asset('assets/images/demoVideo.png'),
-              ),
-              Row(
-                children: [
-                  const Icon(
-                    Icons.hourglass_top,
-                    color: Colors.pink,
-                    size: 24.0,
-                    semanticLabel: 'Text to announce in accessibility modes',
-                  ),
-                  Text(
-                    videoLessonModel.noteVideo,
-                    style: defaultText14M.copyWith(
-                      color: main1Color,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    isYoutube
+                        ? Image.network(
+                            getThumbnail(videoUrl), // ✅ FIX
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                            height: 200,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Image.asset(
+                                'assets/images/demoVideo.png',
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                                height: 200,
+                              );
+                            },
+                          )
+                        : Image.asset(
+                            'assets/images/demoVideo.png',
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                            height: 200,
+                          ),
+
+                    /// 🔥 luôn show play button
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.4),
+                        shape: BoxShape.circle,
+                      ),
+                      padding: const EdgeInsets.all(12),
+                      child: const Icon(
+                        Icons.play_arrow,
+                        color: Colors.white,
+                        size: 30,
+                      ),
                     ),
-                  ),
-                ],
-              )
+                  ],
+                ),
+              ),
             ],
           );
   }
@@ -449,12 +511,7 @@ class _FeedbackItem extends StatelessWidget {
                         width: 40.w,
                         height: 40.h,
                         fit: BoxFit.fill,
-                        errorAsset:
-                            null, // Use default or N/A logic if needed, but AppImage handle error with icon.
-                        // If we want "N/A" text on error, AppImage needs custom error widget or we wrap.
-                        // The original code returned Text('N/A'). AppImage shows error icon.
-                        // I'll stick to AppImage standard for now or I can add errorBuilder to AppImage if requested.
-                        // For now accepting icon/asset error.
+                        errorAsset: null,
                       ),
                       SizedBox(
                         width: 10.w,
@@ -474,21 +531,21 @@ class _FeedbackItem extends StatelessWidget {
                         ],
                       ),
                       const Spacer(),
-                      Icon(
-                        Icons.star,
-                        color: const Color(0xffFFCF68),
-                        size: 24.dg,
-                      ),
-                      Icon(
-                        Icons.star,
-                        color: const Color(0xffFFCF68),
-                        size: 24.dg,
-                      ),
-                      Icon(
-                        Icons.star_border_outlined,
-                        color: const Color(0xffFFCF68),
-                        size: 24.dg,
-                      ),
+                      // Icon(
+                      //   Icons.star,
+                      //   color: const Color(0xffFFCF68),
+                      //   size: 24.dg,
+                      // ),
+                      // Icon(
+                      //   Icons.star,
+                      //   color: const Color(0xffFFCF68),
+                      //   size: 24.dg,
+                      // ),
+                      // Icon(
+                      //   Icons.star_border_outlined,
+                      //   color: const Color(0xffFFCF68),
+                      //   size: 24.dg,
+                      // ),
                     ],
                   ),
                 ),
