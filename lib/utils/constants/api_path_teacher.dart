@@ -1,33 +1,32 @@
 class ApiPathTeacher {
   //baseurl
-  static const String baseUrl = 'https://lms.pmpenglish.edu.vn/';
-  static const String teachersUrl = '${baseUrl}api/teachers';
-  static const String pushTeacherOnesignal = '${baseUrl}api/teachers/onesignal';
+  static String baseUrl = 'https://lms.pmpenglish.edu.vn/';
+  static String teachersUrl = '${baseUrl}api/teachers';
+  static String pushTeacherOnesignal = '${baseUrl}api/teachers/onesignal';
   //api về đăng nhập, các thông tin của học sinh
-  static const String refreshToken = '$teachersUrl/refresh_token/';
-  static const String login = '${baseUrl}api/teachers/login';
-  static const String getClass = '$teachersUrl/lop-hoc';
-  static const String detailsClass = '$teachersUrl/lop-hoc/detail';
-  static const String detailBuoihoc = '$teachersUrl/lop-hoc/detail/buoi_hoc';
+  static String refreshToken = '$teachersUrl/refresh_token/';
+  static String login = '${baseUrl}api/teachers/login';
+  static String getClass = '$teachersUrl/lop-hoc';
+  static String detailsClass = '$teachersUrl/lop-hoc/detail';
+  static String detailBuoihoc = '$teachersUrl/lop-hoc/detail/buoi_hoc';
   //api chi tiet bai tap, de thi
-  static const String detailsExam =
+  static String detailsExam =
       '$teachersUrl/lop-hoc/detail/buoi_hoc/detail_bai_tap_de_thi';
   //chi tiet bai tap tu luan hoc vien lam
-  static const String examStudent =
+  static String examStudent =
       '$teachersUrl/lop-hoc/detail/buoi_hoc/view_bai_hoc_vien_lam';
   //cham bai
-  static const String chamBai =
+  static String chamBai =
       '$teachersUrl/lop-hoc/detail/buoi_hoc/cham_bai_hoc_vien_lam';
   //Thông tin và đổi thông tin học viên
-  static const String profile = '$teachersUrl/profile';
+  static String profile = '$teachersUrl/profile';
   //api thông báo
-  static const String notification = '$teachersUrl/notification';
+  static String notification = '$teachersUrl/notification';
   //lich-day
-  static const String lichDay = '$teachersUrl/lich-day';
+  static String lichDay = '$teachersUrl/lich-day';
   //chat
-  static const String chat = '$teachersUrl/chat';
-  static const String chatMessages = '$teachersUrl/chat_messages';
-  static const String listCustomers = '$teachersUrl/chat/list_customer';
-  static const String createConversation =
-      '$teachersUrl/chat/chat_teachers_customer';
+  static String chat = '$teachersUrl/chat';
+  static String chatMessages = '$teachersUrl/chat_messages';
+  static String listCustomers = '$teachersUrl/chat/list_customer';
+  static String createConversation = '$teachersUrl/chat/chat_teachers_customer';
 }

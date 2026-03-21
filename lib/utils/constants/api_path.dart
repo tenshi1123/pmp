@@ -1,79 +1,78 @@
 class ApiPath {
   //baseurl
-  static const String baseUrl = 'https://lms.pmpenglish.edu.vn/';
+  static String baseUrl = 'https://lms.pmpenglish.edu.vn/';
 
-  static const String hocvienUrl = '${baseUrl}api/customer';
+  static String hocvienUrl = '${baseUrl}api/customer';
 
   //api về đăng nhập, các thông tin của học sinh
-  static const String refreshToken = '$hocvienUrl/refresh_token/';
-  static const String login = '$hocvienUrl/login';
+  static String refreshToken = '$hocvienUrl/refresh_token/';
+  static String login = '$hocvienUrl/login';
 
   //Thông tin và đổi thông tin học viên
-  static const String profile = '$hocvienUrl/profile';
-  static const String changePassword = '$hocvienUrl/profile/change_password';
-  static const String changeAvatar = '$hocvienUrl/change_avatar';
-  static const String changeInfo = '$hocvienUrl/profile/edit';
+  static String profile = '$hocvienUrl/profile';
+  static String changePassword = '$hocvienUrl/profile/change_password';
+  static String changeAvatar = '$hocvienUrl/change_avatar';
+  static String changeInfo = '$hocvienUrl/profile/edit';
 
   //Danh sách tin tức
-  static const String post = '$hocvienUrl/post';
-  static const String postDetail = '$hocvienUrl/post/detail';
+  static String post = '$hocvienUrl/post';
+  static String postDetail = '$hocvienUrl/post/detail';
 
   //Diem danh
-  static const String diemDanh = '$hocvienUrl/diem_danh';
-  static const String detailDiemdanh = '$hocvienUrl/detail_diem_danh';
-  static const String notification = '$hocvienUrl/notification';
-  static const String chat = '$hocvienUrl/chat';
-  static const String teacherChat = '${baseUrl}api/teachers/chat';
-  static const String chatTeacherCustomer =
-      '$hocvienUrl/chat_teachers_customer';
-  static const String chatTeacher = '$hocvienUrl/chat_messages';
-  static const String sendMessage = '$hocvienUrl/send_chat_messages';
-  static const String sendImageMessage = '$hocvienUrl/send_chat_img';
-  static const String listTeachers = '$hocvienUrl/list_teachers';
+  static String diemDanh = '$hocvienUrl/diem_danh';
+  static String detailDiemdanh = '$hocvienUrl/detail_diem_danh';
+  static String notification = '$hocvienUrl/notification';
+  static String chat = '$hocvienUrl/chat';
+  static String teacherChat = '${baseUrl}api/teachers/chat';
+  static String chatTeacherCustomer = '$hocvienUrl/chat_teachers_customer';
+  static String chatTeacher = '$hocvienUrl/chat_messages';
+  static String sendMessage = '$hocvienUrl/send_chat_messages';
+  static String sendImageMessage = '$hocvienUrl/send_chat_img';
+  static String listTeachers = '$hocvienUrl/list_teachers';
   //Lịch thi
-  static const String offlineExamSchedule = '$hocvienUrl/offline_exam_schedule';
-  static const String changeCoso = '$offlineExamSchedule/change_coso';
-  static const String changeDay = '$offlineExamSchedule/change_day';
-  static const String dangKyThi = '$offlineExamSchedule/dang_ky';
+  static String offlineExamSchedule = '$hocvienUrl/offline_exam_schedule';
+  static String changeCoso = '$offlineExamSchedule/change_coso';
+  static String changeDay = '$offlineExamSchedule/change_day';
+  static String dangKyThi = '$offlineExamSchedule/dang_ky';
 
   //Bài tập + báo báo cáo học tập + feedback
-  static const String baiTap = '$hocvienUrl/bai_tap';
-  static const String detailBaiTap = '$hocvienUrl/mycourse/detail_exercise';
-  static const String reportExercise = '$hocvienUrl/bao_cao_hoc_tap';
-  static const String listFeedback = '$hocvienUrl/danh_gia';
-  static const String detailsFeedback = '$hocvienUrl/detail_danh_gia';
+  static String baiTap = '$hocvienUrl/bai_tap';
+  static String detailBaiTap = '$hocvienUrl/mycourse/detail_exercise';
+  static String reportExercise = '$hocvienUrl/bao_cao_hoc_tap';
+  static String listFeedback = '$hocvienUrl/danh_gia';
+  static String detailsFeedback = '$hocvienUrl/detail_danh_gia';
   //TKB
-  static const String calendar = '$hocvienUrl/calendar';
+  static String calendar = '$hocvienUrl/calendar';
 
   //Khóa học của tôi khoa hoc
-  static const String myCourse = '$hocvienUrl/mycourse';
-  static const String detailMyCourse = '$myCourse/detail';
-  static const String detailBaoCao = '$myCourse/detail/bao_cao';
-  static const String myCoursedetailBaiTap = '$myCourse/detail/bai_tap';
+  static String myCourse = '$hocvienUrl/mycourse';
+  static String detailMyCourse = '$myCourse/detail';
+  static String detailBaoCao = '$myCourse/detail/bao_cao';
+  static String myCoursedetailBaiTap = '$myCourse/detail/bai_tap';
   //Chi tiet khoa hoc
-  static const String coureDetail = '$hocvienUrl/course/detail';
+  static String coureDetail = '$hocvienUrl/course/detail';
   //Xin nghi
-  static const String xinNghi = '$myCourse/xin_nghi';
+  static String xinNghi = '$myCourse/xin_nghi';
   //Buổi học
-  static const String detailBuoihoc = '$myCourse/detail/buoi_hoc';
-  static const String submitExeTL = '$myCourse/submit_exercise_tu_luan';
-  static const String submitTracNghiem = '$myCourse/nop_bai_trac_nghiem';
-  static const String submitSpeaking = '$myCourse/nop_bai_speaking';
-  static const String viewTracNghiem = '$myCourse/view_trac_nghiem';
-  static const String viewTestDone = '$myCourse/xem_lai_bai_trac_nghiem';
+  static String detailBuoihoc = '$myCourse/detail/buoi_hoc';
+  static String submitExeTL = '$myCourse/submit_exercise_tu_luan';
+  static String submitTracNghiem = '$myCourse/nop_bai_trac_nghiem';
+  static String submitSpeaking = '$myCourse/nop_bai_speaking';
+  static String viewTracNghiem = '$myCourse/view_trac_nghiem';
+  static String viewTestDone = '$myCourse/xem_lai_bai_trac_nghiem';
   //quà tặng
-  static const String gift = '$hocvienUrl/gift';
-  static const String giftChange = '$hocvienUrl/gift/change';
+  static String gift = '$hocvienUrl/gift';
+  static String giftChange = '$hocvienUrl/gift/change';
   //payment
-  static const String payment = '$hocvienUrl/payment';
+  static String payment = '$hocvienUrl/payment';
 
   //push onesignal
-  static const String pushOnesignal = '$hocvienUrl/onesignal';
+  static String pushOnesignal = '$hocvienUrl/onesignal';
 
   // get token for socket
-  static const String getSocketToken = '${baseUrl}auth/token';
-  static const String getInfoSocket = '${baseUrl}auth/get_info_socket';
+  static String getSocketToken = '${baseUrl}auth/token';
+  static String getInfoSocket = '${baseUrl}auth/get_info_socket';
   //api do oneSignal cung cấp
-  // static const String oneSignal =
+  // static  String oneSignal =
   //     'https://api.onesignal.com/notifications?app_id=1f643336-9d73-4c65-ac00-38d499b8c462';
 }

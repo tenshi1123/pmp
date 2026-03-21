@@ -421,7 +421,7 @@ class _VideoWidget extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => VideoPlayerPage(
-                        videoUrl: videoUrl, // ✅ FIX
+                        videoUrl: videoLessonModel.content, // ✅ FIX
                       ),
                     ),
                   );
