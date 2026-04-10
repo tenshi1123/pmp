@@ -364,6 +364,7 @@ class _ClassItem extends StatelessWidget {
                               },
                               child: Container(
                                 height: 29.h,
+                                padding: EdgeInsets.symmetric(horizontal: 12.w),
                                 //width: 90.w,
                                 decoration: BoxDecoration(
                                   color: sub2Color,

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:pmp_english/l10n/l10n.dart';
@@ -174,6 +175,7 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
     }
     return Scaffold(
       backgroundColor: Colors.white,
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(
@@ -196,7 +198,7 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
       ),
       body: Column(
         children: [
-          SizedBox(height: 10.h),
+          //SizedBox(height: 10.h),
           // if (widget.skill == '4')
           //   Padding(
           //     padding: EdgeInsetsGeometry.symmetric(horizontal: 20.w),
@@ -305,8 +307,8 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
                     );
                   },
                   child: Container(
-                    height: 35.h,
-                    width: 74.w,
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(10.r)),
                       color: sub1Color,
@@ -322,7 +324,7 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
                 SizedBox(width: 20.w),
               ],
             ),
-          SizedBox(height: 10.h),
+          //SizedBox(height: 10.h),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             padding: EdgeInsets.symmetric(horizontal: 12.w),
@@ -441,7 +443,7 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
           (_selectedQuestion?.value.values.toList() ?? []).isEmpty
               ? const SizedBox.shrink()
               : SizedBox(
-                  height: 60,
+                  height: 80.h,
                   child: Row(
                     children: [
                       IconButton(
@@ -649,29 +651,32 @@ class CauHoiHtmlWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final transformedHtml = _injectPlaceholders(htmlContent);
-    return HtmlWidget(
-      transformedHtml,
-      customWidgetBuilder: (element) {
-        if (element.localName == 'input-placeholder') {
-          final idx = int.tryParse(element.attributes['data-idx'] ?? '0') ?? 0;
-          final textController = controller.controllerOf(idx);
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: SizedBox(
-              width: 200,
-              child: TextField(
-                controller: textController,
-                decoration: InputDecoration(
-                  hintText: L10n.of(context).enterAnswer,
-                  border: OutlineInputBorder(),
-                  isDense: true,
+    return SingleChildScrollView(
+      child: HtmlWidget(
+        transformedHtml,
+        customWidgetBuilder: (element) {
+          if (element.localName == 'input-placeholder') {
+            final idx =
+                int.tryParse(element.attributes['data-idx'] ?? '0') ?? 0;
+            final textController = controller.controllerOf(idx);
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: SizedBox(
+                width: 200,
+                child: TextField(
+                  controller: textController,
+                  decoration: InputDecoration(
+                    hintText: L10n.of(context).enterAnswer,
+                    border: OutlineInputBorder(),
+                    isDense: true,
+                  ),
                 ),
               ),
-            ),
-          );
-        }
-        return null;
-      },
+            );
+          }
+          return null;
+        },
+      ),
     );
   }
 }
@@ -990,12 +995,14 @@ class _AnswerInputState extends State<AnswerInput> {
   @override
   Widget build(BuildContext context) {
     return widget.answer != ''
-        ? Text(
-            widget.answer,
-            style: defaultText16B,
+        ? Padding(
+            padding: EdgeInsets.only(left: 8.w),
+            child: Html(
+              data: widget.answer,
+            ),
           )
         : Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.only(left: 8.w),
             child: TextField(
               controller: widget.controller,
               decoration: InputDecoration(
