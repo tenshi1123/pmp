@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -117,6 +118,37 @@ class CustomerRepo {
     } catch (e) {
       if (e is DioException) {
         return 'Lỗi mạng hoặc server: ${e.message}';
+      }
+      return 'Đã xảy ra lỗi: ${e.toString()}';
+    }
+  }
+
+  Future<String> changeAvatar(File file) async {
+    try {
+      final dio = await DioClient.getInstance();
+      // Lấy tên file từ đường dẫn
+      String fileName = file.path.split(Platform.pathSeparator).last;
+
+      FormData formData = FormData.fromMap({
+        "file": await MultipartFile.fromFile(file.path, filename: fileName),
+      });
+
+      final response = await dio.post(
+        ApiPath.changeAvatar,
+        data: formData,
+      );
+
+      final data = response.data;
+      if (data['type'] == 'success') {
+        return 'Cập nhật avatar thành công';
+      } else if (data['type'] == 'error') {
+        return data['message']?.toString() ?? 'Cập nhật thất bại';
+      } else {
+        return data['message']?.toString() ?? 'Có lỗi không xác định xảy ra.';
+      }
+    } catch (e) {
+      if (e is DioException) {
+        return 'Lỗi mạng: ${e.message}';
       }
       return 'Đã xảy ra lỗi: ${e.toString()}';
     }

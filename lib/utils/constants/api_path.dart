@@ -11,7 +11,7 @@ class ApiPath {
   //Thông tin và đổi thông tin học viên
   static String profile = '$hocvienUrl/profile';
   static String changePassword = '$hocvienUrl/profile/change_password';
-  static String changeAvatar = '$hocvienUrl/change_avatar';
+  static String changeAvatar = '$hocvienUrl/profile/change_avatar';
   static String changeInfo = '$hocvienUrl/profile/edit';
 
   //Danh sách tin tức

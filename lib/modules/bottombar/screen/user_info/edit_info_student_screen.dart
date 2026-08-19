@@ -147,6 +147,14 @@ class _EditInfoStudentScreenState extends State<EditInfoStudentScreen> {
                     dob: birthdayController.text,
                     address: addressController.text,
                   );
+
+                  // Cập nhật avatar nếu có chọn ảnh mới
+                  if (_avatarFile != null) {
+                    String avatarMsg = await CustomerRepo().changeAvatar(_avatarFile!);
+                    // Nối thông báo của việc đổi avatar vào thông báo chung
+                    message = "$message\n$avatarMsg";
+                  }
+                  
                   //show dialog
                   showDialog(
                     context: context,

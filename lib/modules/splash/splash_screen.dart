@@ -82,15 +82,6 @@ class _SplshscreenState extends State<Splshscreen> {
         );
       }
     });
-    // Timer(
-    //   const Duration(seconds: 2),
-    //   () => Navigator.pushReplacement(
-    //     context,
-    //     MaterialPageRoute(
-    //       builder: (context) => const Onbonding(),
-    //     ),
-    //   ),
-    // );
   }
 
   @override
