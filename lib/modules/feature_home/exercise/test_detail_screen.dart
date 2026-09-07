@@ -376,8 +376,21 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
               child: Padding(
                 padding: EdgeInsets.only(left: 16.w, right: 12.w, top: 8.h),
                 child: SingleChildScrollView(
-                  child: HtmlContentWidget(
-                    htmlContent: _selectedQuestion?.content ?? '',
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      HtmlContentWidget(
+                        htmlContent: _selectedQuestion?.content ?? '',
+                      ),
+                      if (_selectedQuestion?.audioAttachment != null &&
+                          _selectedQuestion!.audioAttachment!.isNotEmpty)
+                        Padding(
+                          padding: EdgeInsets.only(top: 8.h),
+                          child: SimpleAudioPlayer(
+                            url: _selectedQuestion!.audioAttachment!,
+                          ),
+                        ),
+                    ],
                   ),
                 ),
               ),
