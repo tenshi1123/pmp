@@ -14,7 +14,6 @@ import 'package:pmp_english/utils/constants/color.dart';
 import 'package:pmp_english/utils/constants/styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:camera_camera/camera_camera.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:photo_view/photo_view.dart';
@@ -41,40 +40,35 @@ class _ChatScreenState extends State<ChatScreen> {
   String id = '';
   List<ChatMessageModel> listMessage = <ChatMessageModel>[];
 
-  void openCamera() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => CameraCamera(
-          onFile: (file) async {
-            //Navigator.pop(context);
-            await ChatRepo().sendImageMessage(widget.chatId, file);
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return CupertinoAlertDialog(
-                  title: const Text('Tin nhắn đã được gửi'),
-                  actions: <Widget>[
-                    CupertinoDialogAction(
-                      isDefaultAction: true,
-                      child: Text(
-                        'Ok',
-                        style: TextStyle(fontSize: 20, color: key1Color),
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                        Navigator.pop(context);
-                      },
-                    )
-                  ],
-                );
-              },
+  Future openCamera() async {
+    final returnedImage = await ImagePicker().pickImage(source: ImageSource.camera);
+    if (returnedImage != null) {
+      final file = File(returnedImage.path);
+      await ChatRepo().sendImageMessage(widget.chatId, file);
+      if (mounted) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return CupertinoAlertDialog(
+              title: const Text('Tin nhắn đã được gửi'),
+              actions: <Widget>[
+                CupertinoDialogAction(
+                  isDefaultAction: true,
+                  child: Text(
+                    'Ok',
+                    style: TextStyle(fontSize: 20, color: key1Color),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                )
+              ],
             );
-            setState(() {});
           },
-        ),
-      ),
-    );
+        );
+        setState(() {});
+      }
+    }
   }
 
   Future _pickImageFromGallery() async {

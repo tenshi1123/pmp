@@ -32,7 +32,6 @@ dependencies:
   flutter_widget_from_html_core: ^0.17.0
   number_paginator: ^1.1.0
   otp_pin_field: ^1.4.0
-  camera_camera: ^3.0.0
   image_picker: ^1.1.2
   persistent_bottom_nav_bar_v2: ^6.0.1
   upgrader: ^11.3.1
