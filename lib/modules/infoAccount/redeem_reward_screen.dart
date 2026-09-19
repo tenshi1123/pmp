@@ -78,7 +78,7 @@ class _RedeemRewardScreenState extends State<RedeemRewardScreen> {
                             ),
                           ),
                           Text(
-                            '${_giftModel.totalCustomerScore} điểm',
+                            '${_giftModel.totalCustomerScore} ${L10n.of(context).point}',
                             style: defaultText20B.copyWith(
                               color: Colors.white,
                             ),

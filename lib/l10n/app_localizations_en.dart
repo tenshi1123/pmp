@@ -291,7 +291,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get rewardPoints => 'Reward points';
 
   @override
-  String get point => 'points';
+  String get point => 'stars';
 
   @override
   String get accountManagement => 'Account management';

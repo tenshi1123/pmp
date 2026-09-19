@@ -291,7 +291,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                 ),
                               ),
                               Text(
-                                '30 ${L10n.of(context).point}',
+                                '${_profileModel.totalCustomerScore} ${L10n.of(context).point}',
                                 style: defaultText16B.copyWith(
                                   color: Colors.white,
                                 ),

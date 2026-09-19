@@ -291,7 +291,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get rewardPoints => 'Điểm thưởng';
 
   @override
-  String get point => 'điểm';
+  String get point => 'sao';
 
   @override
   String get accountManagement => 'Quản lý tài khoản';

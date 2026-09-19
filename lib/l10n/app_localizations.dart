@@ -659,7 +659,7 @@ abstract class AppLocalizations {
   /// No description provided for @point.
   ///
   /// In vi, this message translates to:
-  /// **'điểm'**
+  /// **'sao'**
   String get point;
 
   /// No description provided for @accountManagement.
