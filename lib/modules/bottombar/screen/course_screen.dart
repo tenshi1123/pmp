@@ -198,7 +198,7 @@ class CourseItem extends StatelessWidget {
                   SizedBox(
                     width: 200.w,
                     child: Text(
-                      model.name,
+                      '${model.name} (${model.fullNameOther})',
                       style: TextStyle(
                         color: key1Color,
                         fontWeight: FontWeight.w500,

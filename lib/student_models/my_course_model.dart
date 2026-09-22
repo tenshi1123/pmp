@@ -13,6 +13,7 @@ class MyCourseModel {
   final int totalBuoiHoc;
   final int totalAttended;
   final String statusName;
+  final String fullNameOther;
   MyCourseModel({
     required this.id,
     required this.cosoName,
@@ -25,6 +26,7 @@ class MyCourseModel {
     required this.totalBuoiHoc,
     required this.totalAttended,
     required this.statusName,
+    required this.fullNameOther,
   });
   factory MyCourseModel.fromJson(Map<String, dynamic> json) {
     return MyCourseModel(
@@ -39,6 +41,7 @@ class MyCourseModel {
       totalBuoiHoc: int.tryParse(json['total_buoi_hoc']) ?? 0,
       totalAttended: int.tryParse(json['total_attended']) ?? 0,
       statusName: json['status_name'],
+      fullNameOther: json['full_name_other'] ?? '',
     );
   }
 }
