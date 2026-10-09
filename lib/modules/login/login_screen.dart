@@ -4,7 +4,10 @@ import 'package:crypto/crypto.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pmp_english/modules/login/bloc/login_cubit.dart';
+import 'package:pmp_english/modules/login/bloc/login_state.dart';
 import 'package:pmp_english/l10n/l10n.dart';
 import 'package:pmp_english/modules/login/forgot_password_screen.dart';
 import 'package:pmp_english/student_repo/customer_repo.dart';
@@ -39,309 +42,322 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: true,
-      backgroundColor: Colors.white,
-      body: GestureDetector(
-        onTap: () {
-          _focusNode.unfocus();
-        },
-        child: Padding(
-          padding: EdgeInsets.only(
-            left: 20.w,
-            right: 20.w,
+    return BlocProvider(
+      create: (context) => LoginCubit(
+        loginRepo: LoginRepo(),
+        customerRepo: CustomerRepo(),
+      ),
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        backgroundColor: Colors.white,
+        body: BlocConsumer<LoginCubit, LoginState>(
+          listener: (context, state) {
+            if (state is LoginSuccess) {
+              AppRouter.toPage(context, AppPages.BottomNavBarPage, arguments: {
+                'infoModel': state.infoModel,
+                'profileModel': state.profileModel,
+              });
+            } else if (state is LoginFailure) {
+              showDialog(
+                context: context,
+                builder: (BuildContext dialogContext) {
+                  return CupertinoAlertDialog(
+                    title: Text(L10n.of(context).pleaseTryAgain),
+                    content: Text(L10n.of(context).doubleCheck),
+                    actions: <Widget>[
+                      CupertinoDialogAction(
+                        isDefaultAction: true,
+                        child: Text(
+                          'Đồng ý',
+                          style: TextStyle(fontSize: 20, color: key1Color),
+                        ),
+                        onPressed: () {
+                          Navigator.of(dialogContext, rootNavigator: true)
+                              .pop();
+                        },
+                      )
+                    ],
+                  );
+                },
+              );
+            }
+          },
+          builder: (context, state) {
+            return GestureDetector(
+                onTap: () {
+                  _focusNode.unfocus();
+                },
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: 20.w,
+                    right: 20.w,
 
-            //bottom: MediaQuery.of(context).viewInsets.bottom,
-          ),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(height: 20.h),
-                Container(
-                    width: 340.w,
-                    height: 309.h,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage('assets/images/login.png'),
-                          fit: BoxFit.fitWidth),
-                    ),
-                    child: Stack(
+                    //bottom: MediaQuery.of(context).viewInsets.bottom,
+                  ),
+                  child: SingleChildScrollView(
+                    child: Column(
                       children: [
-                        Positioned(
-                          top: 20.h,
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: Image.asset(
-                              "assets/images/back_icon.png",
-                              width: 48.w,
-                              height: 48.h,
-                              fit: BoxFit.fill,
+                        SizedBox(height: 20.h),
+                        Container(
+                            width: 340.w,
+                            height: 309.h,
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage('assets/images/login.png'),
+                                  fit: BoxFit.fitWidth),
                             ),
+                            child: Stack(
+                              children: [
+                                Positioned(
+                                  top: 20.h,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Image.asset(
+                                      "assets/images/back_icon.png",
+                                      width: 48.w,
+                                      height: 48.h,
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )),
+                        Text(
+                          L10n.of(context).loginUsingapp,
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.clip,
+                          style: TextStyle(
+                            fontSize: 18.sp,
+                            color: key1Color,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          L10n.of(context).loginTitle,
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                            color: const Color(0xff999999),
+                            fontSize: 13.sp,
+                            fontWeight: FontWeight.normal,
+                          ),
+                          overflow: TextOverflow.clip,
+                        ),
+                        SizedBox(
+                          height: 30.h,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              L10n.of(context).phone,
+                              style: TextStyle(
+                                color: key1Color,
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            const Spacer()
+                          ],
+                        ),
+                        SizedBox(
+                          height: 5.h,
+                        ),
+                        Container(
+                          width: 350.w,
+                          height: 58.h,
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(8.r)),
+                            //color: const Color(0xffF4F1F3),
+                          ),
+                          child: TextField(
+                            keyboardType:
+                                const TextInputType.numberWithOptions(),
+                            controller: studenIdController,
+                            focusNode: _focusNode1,
+                            style: defaultText14M,
+                            scrollPadding: EdgeInsets.symmetric(
+                                vertical:
+                                    MediaQuery.of(context).viewInsets.bottom),
+                            decoration: InputDecoration(
+                              border: const OutlineInputBorder(
+                                  borderSide: BorderSide.none),
+                              hintStyle: TextStyle(
+                                fontSize: 16.sp,
+                                color: Colors.black,
+                              ),
+                              fillColor: Color(0xffF2F2F2),
+                              filled: true,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              L10n.of(context).password,
+                              style: TextStyle(
+                                color: key1Color,
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            const Spacer()
+                          ],
+                        ),
+                        SizedBox(
+                          height: 5.h,
+                        ),
+                        Container(
+                          width: 350.w,
+                          height: 58.h,
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(8.r)),
+                            //color: const Color(0xffF4F1F3),
+                          ),
+                          child: TextField(
+                            obscureText: _isObscure,
+                            obscuringCharacter: "*",
+                            controller: passController,
+                            focusNode: _focusNode,
+                            style: defaultText14M,
+                            scrollPadding: EdgeInsets.symmetric(
+                                vertical:
+                                    MediaQuery.of(context).viewInsets.bottom),
+                            decoration: InputDecoration(
+                              border: const OutlineInputBorder(
+                                  borderSide: BorderSide.none),
+                              hintStyle: TextStyle(
+                                fontSize: 16.sp,
+                                color: Colors.black,
+                              ),
+                              fillColor: Color(0xffF2F2F2),
+                              filled: true,
+                              suffix: IconButton(
+                                padding: const EdgeInsets.all(0),
+                                iconSize: 20.0,
+                                icon: _isObscure
+                                    ? const Icon(
+                                        Icons.visibility_off,
+                                        color: Colors.grey,
+                                      )
+                                    : const Icon(
+                                        Icons.visibility,
+                                        color: Colors.black,
+                                      ),
+                                onPressed: () {
+                                  setState(() {
+                                    _isObscure = !_isObscure;
+                                  });
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5.h,
+                        ),
+                        Row(
+                          children: [
+                            const Spacer(),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: ((context) =>
+                                        const ForgotPassScreen()),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                L10n.of(context).forgotPassword,
+                                style: TextStyle(
+                                  color: main1Color,
+                                  fontSize: 14.sp,
+                                  decoration: TextDecoration.underline,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 30.h,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            if (state is! LoginLoading) {
+                              context.read<LoginCubit>().login(
+                                    studenIdController?.text ?? '',
+                                    passController?.text ?? '',
+                                  );
+                            }
+                          },
+                          child: Container(
+                            height: 48.h,
+                            width: 191.w,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(9.r),
+                                color: sub1Color),
+                            child: Center(
+                              child: state is LoginLoading
+                                  ? SizedBox(
+                                      width: 24.w,
+                                      height: 24.w,
+                                      child: const CircularProgressIndicator(
+                                          color: Colors.white,
+                                          strokeWidth: 2.0),
+                                    )
+                                  : Text(
+                                      L10n.of(context).login,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 140.h,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            _makePhoneCall('0909 383 358');
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              SvgPicture.asset('assets/icons/phone_dialer.svg'),
+                              Text(
+                                L10n.of(context).hotline,
+                                style: defaultText12M,
+                              ),
+                              Container(
+                                height: 1.h,
+                                width: 120.w,
+                                color: key1Color,
+                              ),
+                              Text(
+                                '0909 383 358',
+                                style:
+                                    defaultText14M.copyWith(color: sub1Color),
+                              )
+                            ],
                           ),
                         ),
                       ],
-                    )),
-                Text(
-                  L10n.of(context).loginUsingapp,
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.clip,
-                  style: TextStyle(
-                    fontSize: 18.sp,
-                    color: key1Color,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  L10n.of(context).loginTitle,
-                  textAlign: TextAlign.right,
-                  style: TextStyle(
-                    color: const Color(0xff999999),
-                    fontSize: 13.sp,
-                    fontWeight: FontWeight.normal,
-                  ),
-                  overflow: TextOverflow.clip,
-                ),
-                SizedBox(
-                  height: 30.h,
-                ),
-                Row(
-                  children: [
-                    Text(
-                      L10n.of(context).phone,
-                      style: TextStyle(
-                        color: key1Color,
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    const Spacer()
-                  ],
-                ),
-                SizedBox(
-                  height: 5.h,
-                ),
-                Container(
-                  width: 350.w,
-                  height: 58.h,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(8.r)),
-                    //color: const Color(0xffF4F1F3),
-                  ),
-                  child: TextField(
-                    keyboardType: const TextInputType.numberWithOptions(),
-                    controller: studenIdController,
-                    focusNode: _focusNode1,
-                    style: defaultText14M,
-                    scrollPadding: EdgeInsets.symmetric(
-                        vertical: MediaQuery.of(context).viewInsets.bottom),
-                    decoration: InputDecoration(
-                      border:
-                          const OutlineInputBorder(borderSide: BorderSide.none),
-                      hintStyle: TextStyle(
-                        fontSize: 16.sp,
-                        color: Colors.black,
-                      ),
-                      fillColor: Color(0xffF2F2F2),
-                      filled: true,
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                Row(
-                  children: [
-                    Text(
-                      L10n.of(context).password,
-                      style: TextStyle(
-                        color: key1Color,
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    const Spacer()
-                  ],
-                ),
-                SizedBox(
-                  height: 5.h,
-                ),
-                Container(
-                  width: 350.w,
-                  height: 58.h,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(8.r)),
-                    //color: const Color(0xffF4F1F3),
-                  ),
-                  child: TextField(
-                    obscureText: _isObscure,
-                    obscuringCharacter: "*",
-                    controller: passController,
-                    focusNode: _focusNode,
-                    style: defaultText14M,
-                    scrollPadding: EdgeInsets.symmetric(
-                        vertical: MediaQuery.of(context).viewInsets.bottom),
-                    decoration: InputDecoration(
-                      border:
-                          const OutlineInputBorder(borderSide: BorderSide.none),
-                      hintStyle: TextStyle(
-                        fontSize: 16.sp,
-                        color: Colors.black,
-                      ),
-                      fillColor: Color(0xffF2F2F2),
-                      filled: true,
-                      suffix: IconButton(
-                        padding: const EdgeInsets.all(0),
-                        iconSize: 20.0,
-                        icon: _isObscure
-                            ? const Icon(
-                                Icons.visibility_off,
-                                color: Colors.grey,
-                              )
-                            : const Icon(
-                                Icons.visibility,
-                                color: Colors.black,
-                              ),
-                        onPressed: () {
-                          setState(() {
-                            _isObscure = !_isObscure;
-                          });
-                        },
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 5.h,
-                ),
-                Row(
-                  children: [
-                    const Spacer(),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: ((context) => const ForgotPassScreen()),
-                          ),
-                        );
-                      },
-                      child: Text(
-                        L10n.of(context).forgotPassword,
-                        style: TextStyle(
-                          color: main1Color,
-                          fontSize: 14.sp,
-                          decoration: TextDecoration.underline,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 30.h,
-                ),
-                GestureDetector(
-                  onTap: () async {
-                    // "code": "2302682572",
-                    // "password": "123456"
-                    bool loged = await LoginRepo().login(
-                        studenIdController?.text ?? '',
-                        md5
-                            .convert(utf8.encode(passController?.text ?? ''))
-                            .toString());
-                    if (loged == true) {
-                      StudentHomeModel? infoModel =
-                          await CustomerRepo().getHomeInfo();
-                      ProfileModel profileModel =
-                          await CustomerRepo().getCustomerProfile();
-                      AppRouter.toPage(context, AppPages.BottomNavBarPage,
-                          arguments: {
-                            'infoModel': infoModel,
-                            'profileModel': profileModel,
-                          });
-                    } else {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return CupertinoAlertDialog(
-                            title: Text(
-                              L10n.of(context).pleaseTryAgain,
-                            ),
-                            content: Text(
-                              L10n.of(context).doubleCheck,
-                            ),
-                            actions: <Widget>[
-                              CupertinoDialogAction(
-                                isDefaultAction: true,
-                                child: Text(
-                                  'Đồng ý',
-                                  style:
-                                      TextStyle(fontSize: 20, color: key1Color),
-                                ),
-                                onPressed: () {
-                                  Navigator.of(context, rootNavigator: true)
-                                      .pop(
-                                    (_) => false,
-                                  );
-                                },
-                              )
-                            ],
-                          );
-                        },
-                      );
-                    }
-                  },
-                  child: Container(
-                    height: 48.h,
-                    width: 191.w,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(9.r),
-                        color: sub1Color),
-                    child: Center(
-                      child: Text(
-                        L10n.of(context).login,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 140.h,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    _makePhoneCall('0909 383 358');
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      SvgPicture.asset('assets/icons/phone_dialer.svg'),
-                      Text(
-                        L10n.of(context).hotline,
-                        style: defaultText12M,
-                      ),
-                      Container(
-                        height: 1.h,
-                        width: 120.w,
-                        color: key1Color,
-                      ),
-                      Text(
-                        '0909 383 358',
-                        style: defaultText14M.copyWith(color: sub1Color),
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
+                ));
+          },
         ),
       ),
     );
